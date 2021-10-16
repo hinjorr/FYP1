@@ -76,76 +76,77 @@
 										<span class="menu-section text-muted text-uppercase fs-8 ls-1">Crafted</span>
 									</div>
 								</div>
+
+								<!--Users::Menu-->
 								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
 									<span class="menu-link">
 										<span class="menu-icon">
-											<i class="bi bi-archive fs-3"></i>
+											<i class="bi bi-person fs-2"></i>
 										</span>
-										<span class="menu-title">Pages</span>
+										<span class="menu-title">Users</span>
 										<span class="menu-arrow"></span>
 									</span>
 									<div class="menu-sub menu-sub-accordion menu-active-bg">
+										<div class="menu-item">
+											<a class="menu-link" href="account/overview.html">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Browse List of Users</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link" href="account/overview.html">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Add new User</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link" href="account/overview.html">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Upload Users</span>
+											</a>
+										</div>
 										
-										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<span class="menu-link">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Projects</span>
-												<span class="menu-arrow"></span>
-											</span>
-											<div class="menu-sub menu-sub-accordion menu-active-bg">
-												<div class="menu-item">
-													<a class="menu-link" href="pages/projects/list.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">My Projects</span>
-													</a>
-												</div>
-												<div class="menu-item">
-													<a class="menu-link" href="pages/projects/project.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">View Project</span>
-													</a>
-												</div>
-												
-											</div>
-										</div>
-										<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-											<span class="menu-link">
-												<span class="menu-bullet">
-													<span class="bullet bullet-dot"></span>
-												</span>
-												<span class="menu-title">Wizards</span>
-												<span class="menu-arrow"></span>
-											</span>
-											<div class="menu-sub menu-sub-accordion menu-active-bg">
-												<div class="menu-item">
-													<a class="menu-link" href="pages/wizards/horizontal.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Horizontal</span>
-													</a>
-												</div>
-												<div class="menu-item">
-													<a class="menu-link" href="pages/wizards/vertical.html">
-														<span class="menu-bullet">
-															<span class="bullet bullet-dot"></span>
-														</span>
-														<span class="menu-title">Vertical</span>
-													</a>
-												</div>
-											</div>
-										</div>
 										
 									</div>
 								</div>
 							
-								
+							<!--Courses::Menu-->
+								<div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+									<span class="menu-link">
+										<span class="menu-icon">
+											<i class="bi bi-person fs-2"></i>
+										</span>
+										<span class="menu-title">Courses</span>
+										<span class="menu-arrow"></span>
+									</span>
+									<div class="menu-sub menu-sub-accordion menu-active-bg">
+										<div class="menu-item">
+											<a class="menu-link" href="account/overview.html">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Browse List of Courses</span>
+											</a>
+										</div>
+										<div class="menu-item">
+											<a class="menu-link" href="account/overview.html">
+												<span class="menu-bullet">
+													<span class="bullet bullet-dot"></span>
+												</span>
+												<span class="menu-title">Add new Course</span>
+											</a>
+										</div>
+										
+										
+									</div>
+								</div>
+							
 								
 							</div>
 							<!--end::Menu-->
@@ -2391,7 +2392,7 @@
 											<!--begin::Menu-->
 											<div class="menu menu-sub menu-sub-dropdown menu-column w-250px w-lg-325px" data-kt-menu="true">
 												<!--begin::Heading-->
-												<div class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10" style="background-image:url('~/LMS/src/assets/media//misc/pattern-1.jpg')">
+												<div class="d-flex flex-column flex-center bgi-no-repeat rounded-top px-9 py-10" style="background-image:url('/LMS/src/assets/media//misc/pattern-1.jpg')">
 													<!--begin::Title-->
 													<h3 class="text-white fw-bold mb-3">Quick Links</h3>
 													<!--end::Title-->
@@ -2514,7 +2515,7 @@
 											<!--begin::Menu-->
 											<div class="menu menu-sub menu-sub-dropdown menu-column w-350px w-lg-375px" data-kt-menu="true">
 												<!--begin::Heading-->
-												<div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('~/LMS/src/assets/media//misc/pattern-1.jpg')">
+												<div class="d-flex flex-column bgi-no-repeat rounded-top" style="background-image:url('/LMS/src/assets/media//misc/pattern-1.jpg')">
 													<!--begin::Title-->
 													<h3 class="text-white fw-bold px-9 mt-10 mb-6">Notifications
 													<span class="fs-8 opacity-75 ps-3">24 reports</span></h3>
@@ -3227,7 +3228,27 @@
 						<!--end::Container-->
 					</div>
 					<!--end::Header-->
-					@RenderBody();
+					<!--begin::Post-->
+						<div class="post d-flex flex-column-fluid" id="kt_post">
+							<!--begin::Container-->
+							<div id="kt_content_container" class="container">
+								<!--begin::Card-->
+								<div class="card">
+									<!--begin::Card body-->
+									<div class="card-body p-0">
+										<!--begin::Heading-->
+										@RenderBody()
+										<!--end::Heading-->
+									
+									</div>
+									<!--end::Card body-->
+								</div>
+								<!--end::Card-->
+							</div>
+							<!--end::Container-->
+						</div>
+						<!--end::Post-->
+					
 					
 				</div>
 				<!--end::Wrapper-->
