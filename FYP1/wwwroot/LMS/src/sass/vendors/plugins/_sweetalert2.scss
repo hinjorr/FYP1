@@ -4,11 +4,11 @@
 
 // Base
 html.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown),
-body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown):not(.modal-open) {
+body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown) {
 	overflow-y: initial !important;
 
 	&:not(.sweetalert2-nopadding) {
-		padding-right: 0 !important; 
+		padding-right: 0 !important;
 	}
 }
 
@@ -32,7 +32,7 @@ body.swal2-shown:not(.swal2-no-backdrop):not(.swal2-toast-shown):not(.modal-open
 		font-weight: normal;
 		font-size: 1.1rem;
 		margin-top: 1.5rem;
-		color: $gray-800;
+		color: $dark-75;
 	}
 
 	.btn {

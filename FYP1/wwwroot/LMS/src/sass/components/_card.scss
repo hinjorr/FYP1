@@ -3,7 +3,7 @@
 //
 
 // Base
-.card {
+.card.card-custom {
     box-shadow: $card-box-shadow;
     border: 0;
 
@@ -13,21 +13,19 @@
         justify-content: space-between;
         align-items: stretch;
         flex-wrap: wrap;
+        //height: $card-header-height;
         min-height: $card-header-height;
-        padding: 0 $card-px;
+        padding-top: 0;
+        padding-bottom: 0;
         background-color: transparent;
 
         // Title
         .card-title {
             display: flex;
             align-items: center;
-            margin: $card-header-py;
+            margin: $card-header-spacer-y;
             margin-left: 0;
-
-            &.flex-column {
-                align-items: flex-start;
-                justify-content: center;
-            }
+            //flex-wrap: wrap;
 
             .card-icon {
                 margin-right: 0.75rem;
@@ -35,7 +33,7 @@
 
                 i {
                     font-size: 1.25rem;
-                    color: $gray-600;
+                    color: $dark-50;
                     line-height: 0;
 
                     &:after,
@@ -46,7 +44,7 @@
 
                 .svg-icon {
                     @include svg-icon-size(24px);
-                    @include svg-icon-color($gray-600);
+                    @include svg-icon-color($dark-50);
                 }
             }
 
@@ -67,30 +65,52 @@
                 color: $text-muted;
                 font-size: 1rem;
             }
-
-            // Headings
-            h1, h2, h3, h4, h5, h6 {
-                margin-bottom: 0;
-            }
         }
 
         // Toolbar
         .card-toolbar {
             display: flex;
             align-items: center;
-            margin: $card-header-py 0;
+            margin: $card-header-spacer-y 0;
             flex-wrap: wrap;
+        }
+
+        // Line tabs integration
+        &.card-header-tabs-line {
+            padding-top: 0 !important;
+            padding-bottom: 0 !important;
+            align-items: stretch;
+
+            .card-toolbar {
+                margin: 0;
+            }
+
+            .nav {
+                border-bottom-color: transparent;
+
+                .nav-item {
+                    align-items: stretch;
+                }
+
+                .nav-link {
+                    padding-top: $card-spacer-y;
+                    padding-bottom: $card-spacer-y;
+                }
+            }
+        }
+
+        &.card-header-right {
+            justify-content: flex-end;
         }
     }
 
     // Body
     > .card-body {
-         padding: $card-py $card-px;
+         padding: $card-spacer-y $card-spacer-x;
     }
 
     // Footer
     > .card-footer {
-        padding: $card-py $card-px;
         background-color: transparent;
     }
 
@@ -100,7 +120,106 @@
         overflow: auto;
     }
 
-    // Reset padding x
+    // Make full height
+    &.card-stretch {
+        display: flex;
+        align-items: stretch !important;
+        flex-direction: column;
+        height: 100%;
+
+        &.gutter-b {
+            height: calc(100% - #{$grid-gutter-width});
+        }
+
+        &.card-stretch-half {
+            height: 50%;
+
+            &.gutter-b {
+                height: calc(50% - #{$grid-gutter-width});
+            }
+        }
+
+        &.card-stretch-third {
+            height: 33.33%;
+
+            &.gutter-b {
+                height: calc(33.33% - #{$grid-gutter-width});
+            }
+        }
+
+        &.card-stretch-fourth {
+            height: 25%;
+
+            &.gutter-b {
+                height: calc(25% - #{$grid-gutter-width});
+            }
+        }
+    }
+
+    // Card header fit style
+    &.card-fit {
+        > .card-header {
+            border-bottom: 0;
+        }
+
+        > .card-footer {
+            border-top: 0;
+        }
+    }
+
+    // Card space style
+    &.card-space {
+        padding-left: $card-spacer-x;
+        padding-right: $card-spacer-x;
+
+        > .card-header {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        > form > .card-body,
+        > .card-body {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        > form > .card-footer,
+        > .card-footer {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    }
+
+    // Sticky card
+    &.card-sticky {
+        > .card-header {
+            transition: left 0.3s, right 0.3s, height 0.3s;
+    		//height: $card-sticky-header-height;
+    		min-height: $card-sticky-header-height;
+    	}
+    }
+
+    .card-sticky-on &.card-sticky {
+        > .card-header {
+            transition: left 0.3s, right 0.3s, height 0.3s;
+			position: fixed;
+			box-shadow: $card-sticky-shadow;
+			z-index: $card-sticky-zindex;
+			background: $card-sticky-header-bg;
+    	}
+    }
+
+    // Transparent Background
+    &.card-transparent {
+        background-color: transparent;
+    }
+
+    // No Shadow
+    &.card-shadowless {
+        box-shadow: none;
+    }
+
+    // Reset Padding X
     &.card-px-0 {
         .card-header,
         .card-body,
@@ -110,111 +229,62 @@
         }
     }
 
-    // Dashed style
-    &.card-dashed {
-        box-shadow: none;
-        border: 1px dashed $card-border-dashed-color;
-
-        > .card-header {
-            border-bottom: 1px dashed $card-border-dashed-color;
-        }
-
-        > .card-footer {
-            border-top: 1px dashed $card-border-dashed-color;
-        }
-    }
-
-    // Bordered style
-    &.card-bordered {
+    // Border style
+    &.card-border {
         box-shadow: none;
         border: 1px solid $card-border-color;
     }
 
-    // Flush borders
-    &.card-flush {
-        > .card-header {
-            border-bottom: 0;
-        }
+    // Collapsed Mode
+	&.card-collapsed {
+		> form,
+		> .card-body {
+			display: none;
+		}
+	}
 
-        > .card-footer {
-            border-top: 0;
-        }
-    }
-}
-
-// Responsive stretch heights
-.card {
-    @each $breakpoint in map-keys($grid-breakpoints) {
-    	@include media-breakpoint-up($breakpoint) {
-    		$infix: breakpoint-infix($breakpoint, $grid-breakpoints);
-
-            // Stretch
-            &.card#{$infix}-stretch {
-                height: calc(100% - var(--bs-gutter-y));
-            }
-
-            // Stretch 75
-            &.card#{$infix}-stretch-75 {
-                height: calc(75% - var(--bs-gutter-y));
-            }
-
-            // Stretch 50
-            &.card#{$infix}-stretch-50 {
-                height: calc(50% - var(--bs-gutter-y));
-            }
-
-             // Stretch 33
-            &.card#{$infix}-stretch-33 {
-                height: calc(33.333% - var(--bs-gutter-y));
-            }
-
-            // Stretch 25
-            &.card#{$infix}-stretch-25 {
-                height: calc(25% - var(--bs-gutter-y));
-            }
-
-            // Header stretch
-            .card-header#{$infix}-stretch {
-                padding-top: 0 !important;
-                padding-bottom: 0 !important;
-                align-items: stretch;
-    
-                .card-toolbar {
-                    margin: 0;
-                    align-items: stretch;
+    .card-header  {
+        .card-toolbar {
+            [data-card-tool="toggle"] {
+                i {
+                    transition: $transition;
                 }
             }
         }
     }
+
+	&.card-collapsed,
+	&.card-collapse {
+		.card-header  {
+			.card-toolbar {
+                [data-card-tool="toggle"] {
+                    i {
+                        transition: $transition;
+                        transform: rotate(180deg);
+                    }
+                }
+			}
+		}
+	}
 }
 
 // Utilities
-.card-p {
-    padding: $card-py $card-px !important;
+.card-spacer {
+    padding: $card-spacer-y $card-spacer-x !important;
 }
 
-.card-px {
-    padding-left: $card-px !important;
-    padding-right: $card-px !important;
+.card-spacer-x {
+    padding-left: $card-spacer-x !important;
+    padding-right: $card-spacer-x !important;
 }
 
-.card-py {
-    padding-top: $card-py !important;
-    padding-bottom: $card-py !important;
+.card-spacer-y {
+    padding-top: $card-spacer-y !important;
+    padding-bottom: $card-spacer-y !important;
 }
 
 .card-rounded {
     border-radius: $card-border-radius;
-}
-
-.card-rounded-start {
-    border-top-left-radius: $card-border-radius;
-    border-bottom-left-radius: $card-border-radius;
-}
-
-.card-rounded-end {
-    border-top-right-radius: $card-border-radius;
-    border-bottom-right-radius: $card-border-radius;
 }
 
 .card-rounded-top {
@@ -228,11 +298,28 @@
 }
 
 // Mobile mode
-@include media-breakpoint-down(md) {
-    .card {
+@include media-breakpoint-down(sm) {
+    .card.card-custom {
+        // Header
         > .card-header:not(.flex-nowrap) {
-            padding-top: $card-header-py;
-            padding-bottom: $card-header-py;
+            min-height: 0;
+            padding-top: $card-header-spacer-y;
+            padding-bottom: $card-header-spacer-y;
         }
     }
+}
+
+// Card related helper classes
+.rounded-card {
+    @include border-radius($card-border-radius);
+}
+
+.rounded-card-top {
+    @include border-top-left-radius($card-border-radius);
+    @include border-top-right-radius($card-border-radius);
+}
+
+.rounded-card-bottom {
+    @include border-bottom-left-radius($card-border-radius);
+    @include border-bottom-right-radius($card-border-radius);
 }

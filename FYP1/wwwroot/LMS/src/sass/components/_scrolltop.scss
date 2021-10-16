@@ -6,18 +6,18 @@
     display: none;
     justify-content: center;
     align-items: center;
-    width: get($scrolltop, size, desktop);
-    height: get($scrolltop, size, desktop);
+    width: get($scrolltop-config, size, desktop);
+    height: get($scrolltop-config, size, desktop);
     position: fixed;
-    bottom: get($scrolltop, bottom, desktop);
-    right: get($scrolltop, right, desktop);
+    bottom: get($scrolltop-config, bottom, desktop);
+    right: get($scrolltop-config, right, desktop);
     cursor: pointer;
     z-index: 100;
     background-color: $primary;
     box-shadow: $box-shadow;
     opacity: 0;
     transition: $transition-link;
-    @include border-radius($border-radius);
+    @include border-radius($border-radius !important);
 
     .svg-icon {
         @include svg-icon-size(24px);
@@ -39,7 +39,7 @@
         }
     }
 
-    [data-kt-scrolltop="on"] & {
+    [data-scrolltop="on"] & {
         opacity: 0.3;
         animation: animation-scrolltop .4s ease-out 1;
         display: flex;
@@ -51,11 +51,11 @@
     }
 
     // Tablet & Mobile Modess
-    @include media-breakpoint-down(lg) {
-        bottom: get($scrolltop, bottom, tablet-and-mobile);
-        right: get($scrolltop, right, tablet-and-mobile);
-        width: get($scrolltop, size, tablet-and-mobile);
-        height: get($scrolltop, size, tablet-and-mobile);
+    @include media-breakpoint-down(md) {
+        bottom: get($scrolltop-config, bottom, tablet-and-mobile);
+        right: get($scrolltop-config, right, tablet-and-mobile);
+        width: get($scrolltop-config, size, tablet-and-mobile);
+        height: get($scrolltop-config, size, tablet-and-mobile);
     }
 }
 

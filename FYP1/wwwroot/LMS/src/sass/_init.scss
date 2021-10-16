@@ -3,24 +3,24 @@
 //
 
 
-// Custom functions & mixins
+// Functions
 @import "base/functions";
+
+// Mixins
 @import "base/mixins";
 @import "components/mixins";
 @import "vendors/plugins/mixins";
 
-// Custom variables
-@import "components/variables.custom";
-@import "components/variables";
+// Bootstrap mixins
+@import "../../../tools/node_modules/bootstrap/scss/_mixins.scss";
 
-// Bootstrap initializaton
-@import "bootstrap/scss/functions";
-@import "bootstrap/scss/variables";
-@import "bootstrap/scss/mixins";
-@import "bootstrap/scss/utilities";
+// Global variables
+@import "components/variables.demo";
+@import "components/variables.bootstrap";
+@import "components/variables.custom";
 
 // 3rd-Party plugins variables
 @import "vendors/plugins/variables";
 
-// Custom layout variables
+// Theme layout variables
 @import "layout/variables";

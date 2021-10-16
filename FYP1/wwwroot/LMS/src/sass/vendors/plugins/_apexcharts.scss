@@ -6,7 +6,7 @@
 .apexcharts-text,
 .apexcharts-title-text,
 .apexcharts-legend-text {
-	font-family: $font-family-sans-serif !important;
+	font-family: $font-family-base !important;
 }
 
 .apexcharts-title-text {
@@ -34,7 +34,7 @@
 
 	.apexcharts-menu-item {
 		padding: $dropdown-item-padding-y $dropdown-item-padding-x;
-		transition: $transition-base;
+		transition: $transition;
 
 		&:hover{
 			background-color: $hover-bg !important;
@@ -120,15 +120,6 @@
 	.apexcharts-canvas {
 		svg {
 			border-radius: $border-radius-xl !important;
-		}
-	}
-}
-
-// Bar charts hover text colors
-@each $name, $color in $theme-text-colors {
-	.apexcharts-bar-hover-#{$name} {
-		.apexcharts-bar-area:hover {
-			fill: $color !important;
 		}
 	}
 }

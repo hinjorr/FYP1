@@ -12,10 +12,10 @@ define(["require", "exports", "../../algorithms/luhn"], function (require, expor
                 valid: false,
             };
         }
-        if (v.substr(2, 4) !== '000') {
+        if (!luhn_1.default(v.substr(2))) {
             return {
                 meta: {},
-                valid: luhn_1.default(v.substr(2)),
+                valid: false,
             };
         }
         if (/^[0-9]{2}$/.test(v.substr(0, 2))) {

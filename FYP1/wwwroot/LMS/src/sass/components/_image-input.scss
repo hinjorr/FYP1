@@ -11,11 +11,6 @@
 	background-repeat: no-repeat;
 	background-size: cover;
 
-	// Empty state
-	&:not(.image-input-empty) {
-		background-image: none !important;
-	}
-
 	// Wrapper
 	.image-input-wrapper {
 		width: 120px;
@@ -26,7 +21,7 @@
 	}
 
 	// Change Button
-	[data-kt-image-input-action="change"] {
+	[data-action="change"] {
 		cursor: pointer;
 		position: absolute;
 		right: -10px;
@@ -41,32 +36,32 @@
 	}
 
 	// Cancel & Remove Buttons
-	[data-kt-image-input-action="cancel"],
-	[data-kt-image-input-action="remove"] {
+	[data-action="cancel"],
+	[data-action="remove"] {
 		position: absolute;
 		right: -10px;
 		bottom: -5px;
 	}
 
-	[data-kt-image-input-action="cancel"] {
+	[data-action="cancel"] {
 		display: none;
 	}
 
 	// Input Changed State
 	&.image-input-changed {
-		[data-kt-image-input-action="cancel"] {
+		[data-action="cancel"] {
 			display: flex;
 		}
 
-		[data-kt-image-input-action="remove"] {
+		[data-action="remove"] {
 			display: none;
 		}
 	}
 
 	// Input Empty State
 	&.image-input-empty {
-		[data-kt-image-input-action="remove"],
-		[data-kt-image-input-action="cancel"] {
+		[data-action="remove"],
+		[data-action="cancel"] {
 			display: none;
 		}
 	}
@@ -74,7 +69,7 @@
 	// Circle style
 	&.image-input-circle {
 		border-radius: 50%;
-
+		
 		// Wrapper
 		.image-input-wrapper {
 			border-radius: 50%;

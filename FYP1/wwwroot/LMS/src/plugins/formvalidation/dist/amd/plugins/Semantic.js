@@ -17,7 +17,7 @@ define(["require", "exports", "../utils/classSet", "../utils/hasClass", "./Frame
     var Semantic = (function (_super) {
         __extends(Semantic, _super);
         function Semantic(opts) {
-            return _super.call(this, Object.assign({}, {
+            var _this = _super.call(this, Object.assign({}, {
                 formClass: 'fv-plugins-semantic',
                 messageClass: 'ui pointing red label',
                 rowInvalidClass: 'error',
@@ -25,7 +25,17 @@ define(["require", "exports", "../utils/classSet", "../utils/hasClass", "./Frame
                 rowSelector: '.fields',
                 rowValidClass: 'fv-has-success',
             }, opts)) || this;
+            _this.messagePlacedHandler = _this.onMessagePlaced.bind(_this);
+            return _this;
         }
+        Semantic.prototype.install = function () {
+            _super.prototype.install.call(this);
+            this.core.on('plugins.message.placed', this.messagePlacedHandler);
+        };
+        Semantic.prototype.uninstall = function () {
+            _super.prototype.uninstall.call(this);
+            this.core.off('plugins.message.placed', this.messagePlacedHandler);
+        };
         Semantic.prototype.onIconPlaced = function (e) {
             var type = e.element.getAttribute('type');
             if ('checkbox' === type || 'radio' === type) {

@@ -2,9 +2,6 @@
 // Forms
 //
 
-// Import Dependencies
-@import "forms/form-control";
-@import "forms/form-select";
-@import "forms/form-check";
-@import "forms/input-group";
-@import "forms/required";
+
+// Include Form Components
+@import "forms/base";

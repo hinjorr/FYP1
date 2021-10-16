@@ -1,163 +1,172 @@
 "use strict";
 
-// Class definition
-var KTScrolltop = function(element, options) {
-    ////////////////////////////
-    // ** Private variables  ** //
-    ////////////////////////////
+// Component Definition
+var KTScrolltop = function(elementId, options) {
+    // Main object
     var the = this;
-    var body = document.getElementsByTagName("BODY")[0];
+    var init = false;
 
-    if ( typeof element === "undefined" || element === null ) {
+    // Get element object
+    var element = KTUtil.getById(elementId);
+    var body = KTUtil.getBody();
+
+    if (!element) {
         return;
     }
 
     // Default options
     var defaultOptions = {
         offset: 300,
-        speed: 600
+        speed: 6000
     };
 
     ////////////////////////////
-    // ** Private methods  ** //
+    // ** Private Methods  ** //
     ////////////////////////////
 
-    var _construct = function() {
-        if (KTUtil.data(element).has('scrolltop')) {
-            the = KTUtil.data(element).get('scrolltop');
-        } else {
-            _init();
-        }
-    }
+    var Plugin = {
+        /**
+         * Run plugin
+         * @returns {mscrolltop}
+         */
+        construct: function(options) {
+            if (KTUtil.data(element).has('scrolltop')) {
+                the = KTUtil.data(element).get('scrolltop');
+            } else {
+                // reset scrolltop
+                Plugin.init(options);
 
-    var _init = function() {
-        // Variables
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
-        the.uid = KTUtil.getUniqueId('scrolltop');
-        the.element = element;
+                // build scrolltop
+                Plugin.build();
 
-        // Event Handlers
-        _handlers();
+                KTUtil.data(element).set('scrolltop', the);
+            }
 
-        // Bind Instance
-        KTUtil.data(the.element).set('scrolltop', the);
-    }
+            return the;
+        },
 
-    var _handlers = function() {
-        var timer;
+        /**
+         * Handles subscrolltop click toggle
+         * @returns {mscrolltop}
+         */
+        init: function(options) {
+            the.events = [];
 
-        window.addEventListener('scroll', function() {
-            KTUtil.throttle(timer, function() {
-                _scroll();
-            }, 200);
-        });
+            // merge default and user defined options
+            the.options = KTUtil.deepExtend({}, defaultOptions, options);
+        },
 
-        KTUtil.addEvent(the.element, 'click', function(e) {
+        build: function() {
+            var timer;
+
+            window.addEventListener('scroll', function() {
+                KTUtil.throttle(timer, function() {
+                    Plugin.handle();
+                }, 200);
+            });
+
+            // handle button click
+            KTUtil.addEvent(element, 'click', Plugin.scroll);
+        },
+
+        /**
+         * Handles scrolltop click scrollTop
+         */
+        handle: function() {
+            var pos = KTUtil.getScrollTop(); // current vertical position
+
+            if (pos > the.options.offset) {
+                if (body.hasAttribute('data-scrolltop') === false) {
+                    body.setAttribute('data-scrolltop', 'on');
+                }
+            } else {
+                if (body.hasAttribute('data-scrolltop') === true) {
+                    body.removeAttribute('data-scrolltop');
+                }
+            }
+        },
+
+        /**
+         * Handles scrolltop click scrollTop
+         */
+        scroll: function(e) {
             e.preventDefault();
 
-            _go();
-        });
-    }
+            KTUtil.scrollTop(0, the.options.speed);
+        },
 
-    var _scroll = function() {
-        var offset = parseInt(_getOption('offset'));
 
-        var pos = KTUtil.getScrollTop(); // current vertical position
-
-        if ( pos > offset ) {
-            if ( body.hasAttribute('data-kt-scrolltop') === false ) {
-                body.setAttribute('data-kt-scrolltop', 'on');
+        /**
+         * Trigger events
+         */
+        eventTrigger: function(name, args) {
+            for (var i = 0; i < the.events.length; i++) {
+                var event = the.events[i];
+                if (event.name == name) {
+                    if (event.one == true) {
+                        if (event.fired == false) {
+                            the.events[i].fired = true;
+                            return event.handler.call(this, the, args);
+                        }
+                    } else {
+                       return event.handler.call(this, the, args);
+                    }
+                }
             }
-        } else {
-            if ( body.hasAttribute('data-kt-scrolltop') === true ) {
-                body.removeAttribute('data-kt-scrolltop');
-            }
+        },
+
+        addEvent: function(name, handler, one) {
+            the.events.push({
+                name: name,
+                handler: handler,
+                one: one,
+                fired: false
+            });
         }
-    }
+    };
 
-    var _go = function() {
-        var speed = parseInt(_getOption('speed'));
+    //////////////////////////
+    // ** Public Methods ** //
+    //////////////////////////
 
-        KTUtil.scrollTop(0, speed);
-    }
+    /**
+     * Set default options
+     */
 
-    var _getOption = function(name) {
-        if ( the.element.hasAttribute('data-kt-scrolltop-' + name) === true ) {
-            var attr = the.element.getAttribute('data-kt-scrolltop-' + name);
-            var value = KTUtil.getResponsiveValue(attr);
+    the.setDefaults = function(options) {
+        defaultOptions = options;
+    };
 
-            if ( value !== null && String(value) === 'true' ) {
-                value = true;
-            } else if ( value !== null && String(value) === 'false' ) {
-                value = false;
-            }
+    /**
+     * Get subscrolltop mode
+     */
+    the.on = function(name, handler) {
+        return Plugin.addEvent(name, handler);
+    };
 
-            return value;
-        } else {
-            var optionName = KTUtil.snakeToCamel(name);
+    /**
+     * Set scrolltop content
+     * @returns {mscrolltop}
+     */
+    the.one = function(name, handler) {
+        return Plugin.addEvent(name, handler, true);
+    };
 
-            if ( the.options[optionName] ) {
-                return KTUtil.getResponsiveValue(the.options[optionName]);
-            } else {
-                return null;
-            }
-        }
-    }
+    ///////////////////////////////
+    // ** Plugin Construction ** //
+    ///////////////////////////////
 
-    // Construct class
-    _construct();
+    // Run plugin
+    Plugin.construct.apply(the, [options]);
 
-    ///////////////////////
-    // ** Public API  ** //
-    ///////////////////////
+    // Init done
+    init = true;
 
-    // Plugin API
-    the.go = function() {
-        return _go();
-    }
-
-    the.getElement = function() {
-        return the.element;
-    }
+    // Return plugin instance
+    return the;
 };
 
-// Static methods
-KTScrolltop.getInstance = function(element) {
-    if (element && KTUtil.data(element).has('scrolltop')) {
-        return KTUtil.data(element).get('scrolltop');
-    } else {
-        return null;
-    }
-}
-
-// Create instances
-KTScrolltop.createInstances = function(selector) {
-    var body = document.getElementsByTagName("BODY")[0];
-
-    // Initialize Menus
-    var elements = body.querySelectorAll(selector);
-    var scrolltop;
-
-    if ( elements && elements.length > 0 ) {
-        for (var i = 0, len = elements.length; i < len; i++) {
-            scrolltop = new KTScrolltop(elements[i]);
-        }
-    }
-}
-
-// Global initialization
-KTScrolltop.init = function() {
-    KTScrolltop.createInstances('[data-kt-scrolltop="true"]');
-};
-
-// On document ready
-if (document.readyState === 'loading') {
-   document.addEventListener('DOMContentLoaded', KTScrolltop.init);
-} else {
-    KTScrolltop.init();
-}
-
-// Webpack support
+// webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = KTScrolltop;
 }

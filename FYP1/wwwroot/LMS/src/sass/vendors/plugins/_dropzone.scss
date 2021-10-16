@@ -3,90 +3,67 @@
 //
 
 
-// Basic
+// Base
 .dropzone {
     min-height: auto;
-    padding: 1.5rem 1.75rem;
+}
+
+.dropzone.dropzone-default {
+    padding: 20px;
 	text-align: center;
 	cursor: pointer;
-    border: 1px dashed $primary;
-    background-color: $primary-light;
-    border-radius: $border-radius !important;
+    border: 2px dashed $gray-200;
+    @include border-radius($border-radius);
 
-    .dz-message{
-        margin: 0;
-        display: flex;
-        text-align: left;
-    }
+    .dropzone-msg-title {
+		color:  $dark-75;
+		margin: 0 0 5px 0;
+		padding: 0;
+		font-weight: 500;
+		font-size: 1.2rem;
+	}
+
+    .dropzone-msg-desc {
+        color:  $text-muted;
+        font-weight: 400;
+		font-size: 1rem;
+	}
 
     .dz-preview {
-        border-radius: $border-radius !important;
-        margin: 0.75rem;
-
 		.dz-image {
-			border-radius: $border-radius !important;
-            z-index: 1;
+			@include border-radius($border-radius);
 		}
-
-        &.dz-file-preview {
-            .dz-image {
-                background: $gray-200;
-            }
-        }
-    }
-
-    .dz-success-mark,
-    .dz-error-mark {
-        $size: 40px;
-
-        margin-left: -($size/2) !important;
-        margin-top: -($size/2) !important;
-        
-        svg {
-            height: $size !important;
-            width: $size !important;
-        }
-    }
-
-    .dz-remove {
-        $size: 1.5rem;
-
-        display:flex;
-		justify-content: center;
-		align-items: center;
-		height: $size;
-		width: $size;
-		font-size: 1rem;
-        text-indent: -9999px;
-        white-space: nowrap;  
-        position: absolute;
-        z-index: 2;
-        background-size: 40%;
-        background-color: $white !important;
-        box-shadow: $box-shadow-sm;        
-		border-radius: 100%;
-        top: -($size/2);
-        right: -($size/2);
-
-        @include svg-bg-icon(close, $gray-500);
-
-        &:hover {
-            @include svg-bg-icon(close, $primary);
-        }
     }
 
     .dz-error-message {
-        color: $danger-inverse;
-        background: $danger;
+        top: 145px;
     }
+
+    .dz-remove {
+        color: $dark-50;
+        font-size: 0.9rem;
+        font-weight: 500;
+        font-weight: 500;
+        transition: $transition-link;
+
+        &:hover {
+            transition: $transition-link;
+            color: $primary;
+        }
+    }
+
+	// State colors
+	@each $name, $color in $theme-colors {
+		&.dropzone-#{$name} {
+			border-color: $color;
+		}
+	}
 }
 
-// Queue upload
-.dropzone.dropzone-queue {
+// Multipe upload
+.dropzone.dropzone-multi {
     border: 0;
     padding: 0;
-    background-color: transparent;
-    text-align: left;
 
     .dz-message{
         display: none;
@@ -117,8 +94,10 @@
                 text-overflow: ellipsis;
                 margin-right: 0.5rem;
 
-                &:hover {
-                    color: $primary;
+                b {
+                    font-size: 0.9rem;
+                    font-weight: 500;
+                    color: $text-muted;
                 }
             }
 

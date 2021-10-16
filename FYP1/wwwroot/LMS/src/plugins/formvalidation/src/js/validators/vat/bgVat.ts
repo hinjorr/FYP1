@@ -1,7 +1,7 @@
 /**
  * FormValidation (https://formvalidation.io)
  * The best validation library for JavaScript
- * (c) 2013 - 2021 Nguyen Huu Phuoc <me@phuoc.ng>
+ * (c) 2013 - 2020 Nguyen Huu Phuoc <me@phuoc.ng>
  */
 
 import isValidDate from '../../utils/isValidDate';
@@ -37,7 +37,6 @@ export default function bgVat(value: string) {
             for (i = 0; i < 8; i++) {
                 sum += parseInt(v.charAt(i), 10) * (i + 3);
             }
-            sum = sum % 11;
         }
         sum = sum % 10;
         return {

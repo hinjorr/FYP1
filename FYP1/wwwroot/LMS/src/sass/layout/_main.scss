@@ -1,63 +1,63 @@
 //
-// Main
+// Base
 //
 
+// Body
+body {
+	background: $page-bg;
+}
 
 // Desktop Mode
 @include media-breakpoint-up(lg) {
-	// Containers
-	.container,
-	.container-fluid {
-		padding: 0 get($content-spacing, desktop);
-	}
-
 	// Wrapper
 	.wrapper {
-		transition: padding-left get($aside-config, transition-speed) ease,  margin-right get($aside-config, transition-speed) ease;
-
-		// Aside default enabled and aside fixed modes
-		.aside-enabled.aside-fixed & {
-			transition: padding-left get($aside-config, transition-speed) ease;
-			padding-left: get($aside-config, width);
-		}
-
-		// Aside default enabled, aside fixed and aside minimize modes
-		.aside-enabled.aside-fixed[data-kt-aside-minimize="on"] & {
-			transition: padding-left get($aside-config, transition-speed) ease;
-			padding-left: get($aside-config, minimized-width);
-		}
-
-		// Fixed header mode
+		// Fixed Header
 		.header-fixed & {
-			padding-top: get($header-config, fixed, height, desktop);
+			padding-top: get($header-config, desktop, fixed, height);
 		}
 
-		// Fixed header & fixed toolbar modes
-		.header-fixed.toolbar-fixed & {
-			padding-top: calc(#{get($header-config, fixed, height, desktop)} + var(--kt-toolbar-height));
+		// Fixed Content Head
+		.header-fixed.subheader-fixed.subheader-enabled & {
+			padding-top: get($header-config, desktop, fixed, height) + get($subheader-config, fixed, height);
 		}
+
+		// Fixed Aside
+		.aside-fixed & {
+			padding-left: get($aside-config, base, width);
+		}
+
+		// Minimize Aside
+		.aside-fixed.aside-minimize:not(.aside-minimize-hover) & {
+			padding-left: get($aside-config, base, minimized-width);
+		}
+	}
+
+	// Container
+	.container,
+	.container-fluid {
+		padding: 0 get($page-padding, desktop);
 	}
 }
 
-// Tablet & mobile modes
-@include media-breakpoint-down(lg) {
-	// Containers
+// Tablet & Mobile Modes
+@include media-breakpoint-down(md) {
+	// Wrapper
+	.wrapper {
+		// Fixed Header
+		.header-mobile-fixed & {
+			padding-top: get($header-config, tablet-and-mobile, fixed, height);
+		}
+
+		// Fixed Subheader
+		.header-mobile-fixed.subheader-mobile-fixed.subheader-enabled & {
+			padding-top: get($header-config, tablet-and-mobile, fixed, height) + get($subheader-config, fixed, height-mobile);
+		}
+	}
+
+	// Container
 	.container,
 	.container-fluid {
 		max-width: none;
-		padding: 0 get($content-spacing, tablet-and-mobile);
-	}
-
-	// Wrapper
-	.wrapper {
-		// Fixed header mode
-		.header-tablet-and-mobile-fixed & {
-			padding-top: get($header-config, fixed, height, tablet-and-mobile);
-		}
-
-		// Fixed header & fixed toolbar modes
-		.header-tablet-and-mobile-fixed.toolbar-tablet-and-mobile-fixed & {
-			padding-top: calc(#{get($header-config, fixed, height, tablet-and-mobile)} + var(--kt-toolbar-height-tablet-and-mobile));
-		}
+		padding: 0 get($page-padding, tablet-and-mobile);
 	}
 }

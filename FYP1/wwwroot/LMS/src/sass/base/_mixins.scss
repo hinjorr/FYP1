@@ -2,10 +2,9 @@
 // Mixins
 //
 
-// Import Dependencies
-@import "mixins/attr";
-@import "mixins/browsers";
-@import "mixins/fixes";
-@import "mixins/reset";
-@import "mixins/placeholder";
-@import "mixins/breakpoints";
+@import
+    "mixins/attr",
+    "mixins/browsers",
+    "mixins/fixes",
+    "mixins/reset",
+    "mixins/placeholder";

@@ -4,7 +4,7 @@
 
 // Base
 .ql-toolbar {
-    font-family: $font-family-sans-serif;
+    font-family: $font-family-base;
 
     &.ql-snow {
         border: 1px solid $border-color;
@@ -125,12 +125,12 @@
         }
 
         .ql-preview {
-            color: $gray-600;
+            color: $dark-50;
         }
 
         .ql-action {
             transition: color 0.3s ease;
-            color: $gray-600;
+            color: $dark-50;
 
             &:hover {
                 transition: color 0.3s ease;

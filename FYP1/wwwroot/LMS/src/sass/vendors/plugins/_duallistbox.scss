@@ -34,14 +34,14 @@
         }
 
         .dual-listbox__title {
-            color: $gray-800;
+            color: $dark-75;
             font-weight: 500;
             font-size: 1.1rem;
             padding: 0.75rem 0.75rem;
             border: 1px solid $gray-200;
             border-bottom: 0;
-            @include border-top-start-radius($border-radius);
-            @include border-top-end-radius($border-radius);
+            @include border-top-left-radius($border-radius);
+            @include border-top-right-radius($border-radius);
         }
 
         .dual-listbox__buttons {
@@ -52,24 +52,24 @@
                 @include border-radius($border-radius);
                 margin-bottom: 0.5rem !important;
                 padding: $input-btn-padding-y-sm $input-btn-padding-x-sm;
-                color: $gray-600;
+                color: $dark-50;
                 font-weight: 500;
                 font-size: 0.9rem;
                 background-color: $gray-100;
                 transition: all 0.3s ease;
 
                 i {
-                    transition: $transition-base;
+                    transition: $transition;
                     font-size: 0.6rem;
                     color: $text-muted;
                 }
 
                 &:hover {
-                    transition: $transition-base;
+                    transition: $transition;
                     color: $primary;
 
                     i {
-                        transition: $transition-base;
+                        transition: $transition;
                         color: $primary;
                     }
                 }
@@ -81,8 +81,8 @@
             width: auto;
             color: $input-plaintext-color;
             border: 1px solid $gray-200;
-            @include border-bottom-start-radius($border-radius);
-            @include border-bottom-end-radius($border-radius);
+            @include border-bottom-left-radius($border-radius);
+            @include border-bottom-right-radius($border-radius);
 
             .dual-listbox__item {
                 padding: 0.75rem 0.75rem;

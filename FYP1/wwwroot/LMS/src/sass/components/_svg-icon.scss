@@ -3,15 +3,16 @@
 //
 
 .svg-icon {
-    line-height: 1;
-    
-    @include svg-icon-size(get($font-sizes, 5));
+    @include svg-icon-size(get($svg-icon-sizes, md));
     @include svg-icon-color($text-muted);
 
     // Theme colors
     @each $name, $color in $theme-text-colors {
         &.svg-icon-#{$name} {
-            @include svg-icon-color($color);
+            @include svg-icon-color($color, true);
+        }
+        &.svg-logo-#{$name} {
+            @include svg-logo-color($color, true);
         }
     }
 
@@ -21,11 +22,17 @@
             $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
 
             // Sizes
-            @each $name, $value in $font-sizes {
+            @each $name, $value in $svg-icon-sizes {
                 &.svg-icon#{$infix}-#{$name} {
                     @include svg-icon-size($value, true);
                 }
             }
+        }
+    }
+
+    &.svg-icon-flip {
+        svg {
+            transform: scaleX(-1);
         }
     }
 }

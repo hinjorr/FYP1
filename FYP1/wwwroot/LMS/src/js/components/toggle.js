@@ -1,209 +1,243 @@
 "use strict";
 
-// Class definition
-var KTToggle = function(element, options) {
-    ////////////////////////////
-    // ** Private variables  ** //
-    ////////////////////////////
+// Component Definition
+var KTToggle = function(toggleElement, targetElement, options) {
+    // Main object
     var the = this;
-    var body = document.getElementsByTagName("BODY")[0];
+    var init = false;
+
+    // Get element object
+    var element = toggleElement;
+    var target = targetElement;
 
     if (!element) {
         return;
     }
 
-    // Default Options
+    // Default options
     var defaultOptions = {
-        saveState: true
+        targetToggleMode: 'class' // class|attribute
     };
 
     ////////////////////////////
-    // ** Private methods  ** //
+    // ** Private Methods  ** //
     ////////////////////////////
 
-    var _construct = function() {
-        if ( KTUtil.data(element).has('toggle') === true ) {
-            the = KTUtil.data(element).get('toggle');
-        } else {
-            _init();
-        }
-    }
+    var Plugin = {
+        /**
+         * Construct
+         */
 
-    var _init = function() {
-        // Variables
-        the.options = KTUtil.deepExtend({}, defaultOptions, options);
-        the.uid = KTUtil.getUniqueId('toggle');
+        construct: function(options) {
+            if (KTUtil.data(element).has('toggle')) {
+                the = KTUtil.data(element).get('toggle');
+            } else {
+                // reset menu
+                Plugin.init(options);
 
-        // Elements
-        the.element = element;
+                // build menu
+                Plugin.build();
 
-        the.target = document.querySelector(the.element.getAttribute('data-kt-toggle-target'));
-        the.state = the.element.hasAttribute('data-kt-toggle-state') ? the.element.getAttribute('data-kt-toggle-state') : '';
-        the.attribute = 'data-kt-' + the.element.getAttribute('data-kt-toggle-name');
+                KTUtil.data(element).set('toggle', the);
+            }
 
-        // Event Handlers
-        _handlers();
+            return the;
+        },
 
-        // Bind Instance
-        KTUtil.data(the.element).set('toggle', the);
-    }
+        /**
+         * Handles subtoggle click toggle
+         */
+        init: function(options) {
+            the.element = element;
+            the.events = [];
 
-    var _handlers = function() {
-        KTUtil.addEvent(the.element, 'click', function(e) {
+            // Merge default and user defined options
+            the.options = KTUtil.deepExtend({}, defaultOptions, options);
+
+            //alert(the.options.target.tagName);
+            the.target = target;
+
+            the.targetState = the.options.targetState;
+            the.toggleState = the.options.toggleState;
+
+            if (the.options.targetToggleMode == 'class') {
+                the.state = KTUtil.hasClasses(the.target, the.targetState) ? 'on' : 'off';
+            } else {
+                the.state = KTUtil.hasAttr(the.target, 'data-' + the.targetState) ? KTUtil.attr(the.target, 'data-' + the.targetState) : 'off';
+            }
+        },
+
+        /**
+         * Setup toggle
+         */
+        build: function() {
+            KTUtil.addEvent(element, 'mouseup', Plugin.toggle);
+        },
+
+        /**
+         * Handles offcanvas click toggle
+         */
+        toggle: function(e) {
+            Plugin.eventTrigger('beforeToggle');
+
+            if (the.state == 'off') {
+                Plugin.toggleOn();
+            } else {
+                Plugin.toggleOff();
+            }
+
+            Plugin.eventTrigger('afterToggle');
+
             e.preventDefault();
 
-            _toggle();
-        });
-    }
+            return the;
+        },
 
-    // Event handlers
-    var _toggle = function() {
-        // Trigger "after.toggle" event
-        KTEventHandler.trigger(the.element, 'kt.toggle.change', the);
+        /**
+         * Handles toggle click toggle
+         */
+        toggleOn: function() {
+            Plugin.eventTrigger('beforeOn');
 
-        if ( _isEnabled() ) {
-            _disable();
-        } else {
-            _enable();
+            if (the.options.targetToggleMode == 'class') {
+                KTUtil.addClass(the.target, the.targetState);
+            } else {
+                KTUtil.attr(the.target, 'data-' + the.targetState, 'on');
+            }
+
+            if (the.toggleState) {
+                KTUtil.addClass(element, the.toggleState);
+            }
+
+            the.state = 'on';
+
+            Plugin.eventTrigger('afterOn');
+
+            Plugin.eventTrigger('toggle');
+
+            return the;
+        },
+
+        /**
+         * Handles toggle click toggle
+         */
+        toggleOff: function() {
+            Plugin.eventTrigger('beforeOff');
+
+            if (the.options.targetToggleMode == 'class') {
+                KTUtil.removeClass(the.target, the.targetState);
+            } else {
+                KTUtil.removeAttr(the.target, 'data-' + the.targetState);
+            }
+
+            if (the.toggleState) {
+                KTUtil.removeClass(element, the.toggleState);
+            }
+
+            the.state = 'off';
+
+            Plugin.eventTrigger('afterOff');
+
+            Plugin.eventTrigger('toggle');
+
+            return the;
+        },
+
+        /**
+         * Trigger events
+         */
+        eventTrigger: function(name) {
+            for (var i = 0; i < the.events.length; i++) {
+                var event = the.events[i];
+
+                if (event.name == name) {
+                    if (event.one == true) {
+                        if (event.fired == false) {
+                            the.events[i].fired = true;
+                            return event.handler.call(this, the);
+                        }
+                    } else {
+                        return event.handler.call(this, the);
+                    }
+                }
+            }
+        },
+
+        addEvent: function(name, handler, one) {
+            the.events.push({
+                name: name,
+                handler: handler,
+                one: one,
+                fired: false
+            });
+
+            return the;
         }
+    };
 
-        // Trigger "before.toggle" event
-        KTEventHandler.trigger(the.element, 'kt.toggle.changed', the);
+    //////////////////////////
+    // ** Public Methods ** //
+    //////////////////////////
 
-        return the;
-    }
+    /**
+     * Set default options
+     */
 
-    var _enable = function() {
-        if ( _isEnabled() === true ) {
-            return;
-        }
+    the.setDefaults = function(options) {
+        defaultOptions = options;
+    };
 
-        KTEventHandler.trigger(the.element, 'kt.toggle.enable', the);
+    /**
+     * Get toggle state
+     */
+    the.getState = function() {
+        return the.state;
+    };
 
-        the.target.setAttribute(the.attribute, 'on');
-
-        if (the.state.length > 0) {
-            the.element.classList.add(the.state);
-        }        
-
-        if ( typeof KTCookie !== 'undefined' && the.options.saveState === true ) {
-            KTCookie.set(the.attribute, 'on');
-        }
-
-        KTEventHandler.trigger(the.element, 'kt.toggle.enabled', the);
-
-        return the;
-    }
-
-    var _disable = function() {
-        if ( _isEnabled() === false ) {
-            return;
-        }
-
-        KTEventHandler.trigger(the.element, 'kt.toggle.disable', the);
-
-        the.target.removeAttribute(the.attribute);
-
-        if (the.state.length > 0) {
-            the.element.classList.remove(the.state);
-        } 
-
-        if ( typeof KTCookie !== 'undefined' && the.options.saveState === true ) {
-            KTCookie.remove(the.attribute);
-        }
-
-        KTEventHandler.trigger(the.element, 'kt.toggle.disabled', the);
-
-        return the;
-    }
-
-    var _isEnabled = function() {
-        return (String(the.target.getAttribute(the.attribute)).toLowerCase() === 'on');
-    }
-
-    // Construct class
-    _construct();
-
-    ///////////////////////
-    // ** Public API  ** //
-    ///////////////////////
-
-    // Plugin API
+    /**
+     * Toggle
+     */
     the.toggle = function() {
-        return _toggle();
-    }
+        return Plugin.toggle();
+    };
 
-    the.enable = function() {
-        return _enable();
-    }
+    /**
+     * Toggle on
+     */
+    the.toggleOn = function() {
+        return Plugin.toggleOn();
+    };
 
-    the.disable = function() {
-        return _disable();
-    }
+    /**
+     * Toggle off
+     */
+    the.toggleOff = function() {
+        return Plugin.toggleOff();
+    };
 
-    the.isEnabled = function() {
-        return _isEnabled();
-    }
-
-    the.goElement = function() {
-        return the.element;
-    }
-
-    // Event API
+    /**
+     * Attach event
+     * @returns {KTToggle}
+     */
     the.on = function(name, handler) {
-        return KTEventHandler.on(the.element, name, handler);
-    }
+        return Plugin.addEvent(name, handler);
+    };
 
+    /**
+     * Attach event that will be fired once
+     * @returns {KTToggle}
+     */
     the.one = function(name, handler) {
-        return KTEventHandler.one(the.element, name, handler);
-    }
+        return Plugin.addEvent(name, handler, true);
+    };
 
-    the.off = function(name) {
-        return KTEventHandler.off(the.element, name);
-    }
+    // Construct plugin
+    Plugin.construct.apply(the, [options]);
 
-    the.trigger = function(name, event) {
-        return KTEventHandler.trigger(the.element, name, event, the, event);
-    }
+    return the;
 };
 
-// Static methods
-KTToggle.getInstance = function(element) {
-    if ( element !== null && KTUtil.data(element).has('toggle') ) {
-        return KTUtil.data(element).get('toggle');
-    } else {
-        return null;
-    }
-}
-
-// Create instances
-KTToggle.createInstances = function(selector) {
-    var body = document.getElementsByTagName("BODY")[0];
-
-    // Get instances
-    var elements = body.querySelectorAll(selector);
-
-    if ( elements && elements.length > 0 ) {
-        for (var i = 0, len = elements.length; i < len; i++) {
-            // Initialize instances
-            new KTToggle(elements[i]);
-        }
-    }
-}
-
-// Global initialization
-KTToggle.init = function() {
-    KTToggle.createInstances('[data-kt-toggle]');
-};
-
-// On document ready
-if (document.readyState === 'loading') {
-   document.addEventListener('DOMContentLoaded', KTToggle.init);
-} else {
-    KTToggle.init();
-}
-
-// Webpack support
+// webpack support
 if (typeof module !== 'undefined' && typeof module.exports !== 'undefined') {
     module.exports = KTToggle;
 }

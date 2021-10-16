@@ -2,94 +2,206 @@
 // Tagify
 //
 
-// Base
+
 .tagify {
-    --tags-border-color         : #{$input-border-color};
-    --tags-hover-border-color   : #{$input-border-color};
-    --tags-focus-border-color   : #{$input-focus-border-color};
-    --tag-bg                    : #{$gray-200};
-    --tag-hover                 : #{$gray-200};
-    --tag-text-color            : #{$gray-700};
-    --tag-text-color--edit      : #{$gray-700};
-    --tag-pad                   : 0 0.5rem;
-    --tag-inset-shadow-size     : 1rem;
-    --tag-invalid-color         : #{$danger};
-    --tag-invalid-bg            : #{$danger-light};
-    --tag-remove-bg             : #{$gray-200};
-    --tag-remove-btn-color      : transparent;
-    --tag-remove-btn-bg         : transparent;
-    --tag-remove-btn-bg--hover  : transparent;
-    --input-color               : #{$gray-700};
-    --placeholder-color         : #{$gray-400};
-    --placeholder-color-focus   : #{$gray-500};
-    --loader-size               : .8rem;
-    
+    @include border-radius($border-radius);
+    border-color: $input-border-color;
+    padding: 0;
+    display: flex;
+    height: auto;
+
+    &:hover {
+        border-color: $input-border-color;
+    }
+
+    &.tagify--focus {
+        border: 1px solid $input-focus-border-color;
+    }
+
     .tagify__tag {
-        background-color: var(--tag-bg);
-        
+        background-color: $gray-200;
+        display: inline-flex;
+        align-items: center;
+        padding: 0 0.5rem;
+        @include border-radius($border-radius);
+
         div {
-            border-radius: inherit;
+            order: 1;
+            padding-right: 0.25rem;
+
+            .tagify__tag-text {
+                color: $dark-50;
+                font-weight: 400;
+            }
+
+            &:before {
+                box-shadow: none !important;
+                animation: none;
+                transition: none;
+            }
         }
 
         .tagify__tag__removeBtn {
+            display: flex;
+            align-items: center;
+            order: 2;
+            transform: none;
+            position: static;
             border-radius: 0;
-            content: " ";
-            @include svg-bg-icon(close, $gray-400);
+            margin-left: 0.25rem;
+            margin-right: 0;
+            line-height: 0;
 
             &:after {
-                display: none;
+                transition: $transition-link;
+                line-height: 0;
+                @include ki(get($ki-types, close));
+                font-size: 0.6rem;
+                color: $text-muted;
             }
 
             &:hover {
-                @include svg-bg-icon(close, $gray-700);
+                background: transparent;
+                color: $primary;
+
+                & + div > span {
+                    opacity: .4;
+                }
+
+                &:after {
+                    transition: $transition-link;
+                    color: $primary;
+                }
             }
         }
 
-        // Not allowed
+
+
+        // State colors
+        @each $name, $color in $theme-colors {
+            &.tagify__tag--#{$name}:not(.tagify--notAllowed) {
+                 background-color: $color;
+
+                 div {
+                     .tagify__tag-text {
+                         color: $white;
+                         font-weight: 500;
+                     }
+                 }
+
+                 .tagify__tag__removeBtn {
+                     &:after {
+                         color: $white;
+                     }
+
+                     &:hover {
+                         background: transparent;
+                         color: $white;
+
+                         & + div > span {
+                             opacity: .3;
+                         }
+                     }
+                 }
+             }
+
+             &.tagify__tag-light--#{$name}:not(.tagify--notAllowed) {
+                  background-color: rgba($color, 0.12);
+
+                  div {
+                      .tagify__tag-text {
+                          color: $color;
+                          font-weight: 500;
+                      }
+                  }
+
+                  .tagify__tag__removeBtn {
+                      &:after {
+                          color: $color;
+                      }
+
+                      &:hover {
+                          background: transparent;
+                          color: $white;
+
+                          & + div > span {
+                              opacity: .3;
+                          }
+                      }
+                  }
+             }
+        }
+
+        // Not Allowed Mode
         &.tagify--notAllowed {
+            background-color: $danger;
+
             div {
+                &:before {
+                    box-shadow: none !important;
+                    animation: none;
+                    transition: none;
+                }
+
                 .tagify__tag-text {
-                    color: $danger;
-                    opacity: .5;
+                    color: $danger-inverse;
+                    opacity: .75;
                 }
             }
 
             .tagify__tag__removeBtn {
-                opacity: .5;
-                @include svg-bg-icon(close, $danger);
-                
+                &:after {
+                    opacity: .5;
+                    color: $danger-inverse;
+                }
+
                 &:hover {
                     background: transparent;
-                    opacity: .75;
+                    color: $danger-inverse;
+
+                    & + div > span {
+                        opacity: .3;
+                    }
                 }
             }
         }
     }
+}
 
-    .tagify__input {
-        &:before {
-            font-size: inherit;
-            line-height: inherit;
-            font-weight: inherit;
-        }
-    }
+.tagify[readonly] .tagify__tag__removeBtn {
+    display: none;
+}
 
-    // Sizes
-    &:not(.form-control-sm):not(.form-control-lg) {
-        // $input-padding-y, $input-height-border, $tag-font-size, $tag-border-radius, $tag-padding-y, $tag-padding-x, $tag-margin-y, $tag-margin-x, $remove-size, $remove-margin
-        @include tagify-size($input-padding-y, $input-height-border, 0.9rem, $input-border-radius, 0.2rem, 0.4rem, 0.2rem, 0.4rem, 0.6rem, 0.5rem);
-    }
+.tagify__input {
+    color: $input-plaintext-color;
 
-    &.form-control-lg {
-        @include tagify-size($input-padding-y-lg, $input-height-border, 1rem, $input-border-radius-lg, 0.2rem, 0.4rem, 0.2rem, 0.4rem, 0.6rem, 0.5rem);
-    }
-
-    &.form-control-sm {
-        @include tagify-size($input-padding-y-sm, $input-height-border, 0.8rem, $input-border-radius-sm, 0.15rem, 0.4rem, 0.15rem, 0.4rem, 0.5rem, 0.5rem);
+    &::before {
+        top: auto;
+        bottom: auto;
+        height: auto;
+        position: relative;
+        display: none !important;
     }
 }
 
-// Dropdown
+.tagify__input ~ .tagify.form-control {
+    margin: 1rem;
+    padding: 0;
+    @include button-reset();
+}
+
+.tagify__input.form-control {
+    margin: 0;
+}
+
+.tagify__input--outside{
+    display: block;
+    max-width: 600px;
+    border: 1px solid $gray-200;
+    margin-top: 1.5em;
+    margin-bottom: 1em;
+}
+
 .tagify__dropdown {
     box-shadow: $dropdown-box-shadow;
     background: $white;
@@ -99,7 +211,6 @@
     z-index: $zindex-dropdown;
     @include border-radius($border-radius);
 
-    // In modal
     .modal-open & {
         z-index: $zindex-modal + 1;
     }
@@ -111,38 +222,15 @@
     }
 
     .tagify__dropdown__item {
-        color: $gray-700;
+        color: $dark-75;
         border-radius: 0;
         padding: 0.75rem 1.5rem;
         margin: 0;
         box-shadow: none;
-        font-weight: $font-weight-bold;
 
-        &:hover,
         &.tagify__dropdown__item--active {
-            background-color: $component-hover-bg;
-            color: $component-hover-color;
-        }
-    }
-
-    // Suggestions
-    &.tagify__inline__suggestions {        
-        padding: $input-padding-y $input-padding-x;
-
-        .tagify__dropdown__item {
-            display: inline-block;
-            font-size: $font-size-sm;
-            padding: 0.35rem 0.5rem;
-            margin: 0.25rem 0.5rem 0.25rem 0;  
-            background-color: $gray-200;
-            color: $gray-700;
-            @include border-radius($border-radius);
-
-            &:hover,
-            &.tagify__dropdown__item--active {
-                background-color: $component-hover-bg;
-                color: $component-hover-color;
-            }
+            background: $gray-100;
+            color: $primary;
         }
     }
 }

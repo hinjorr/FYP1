@@ -39,7 +39,7 @@
                     font-size: 1rem;
                     line-height: 0;
                     padding-right: 0;
-                    color: $gray-600;
+                    color: $dark-50;
                 }
 
                 &:hover,
@@ -86,8 +86,8 @@
 
     .panel-heading.note-toolbar {
         padding: 0.5rem 0.74rem 0.74rem 0.74rem;
-        @include border-top-start-radius($border-radius);
-        @include border-top-end-radius($border-radius);
+        @include border-top-left-radius($border-radius);
+        @include border-top-right-radius($border-radius);
 
         .btn {
             outline: none !important;
