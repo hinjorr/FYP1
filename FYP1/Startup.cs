@@ -50,8 +50,7 @@ namespace FYP1
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Login}/{action=Login}/{id?}");
-                //masood brnach merge in master branch
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
             });
         }
     }
