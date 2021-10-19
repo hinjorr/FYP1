@@ -1,0 +1,5 @@
+//kill port
+sudo kill -9 $(sudo lsof -t -i:8080)
+
+//chekck pot running
+sudo netstat -tulpn  | grep LISTEN 

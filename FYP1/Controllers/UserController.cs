@@ -11,7 +11,7 @@ namespace FYP1.Controllers
 {
     public class UserController : Controller
     {
-     
+
         public IActionResult AddNewUser()
         {
             return View();
@@ -20,10 +20,10 @@ namespace FYP1.Controllers
         {
             return View();
         }
-          public IActionResult UploadBulkUsers()
+        public IActionResult UploadBulkUsers()
         {
             return View();
         }
-       
+
     }
 }
