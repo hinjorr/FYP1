@@ -51,7 +51,7 @@ namespace FYP1
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                //Pull
+                //Pull osama
             });
         }
     }
