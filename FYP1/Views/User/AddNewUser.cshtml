@@ -3,13 +3,16 @@ ViewData["Title"] = "AddNewUser";
 Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+
 <div class="form-panel">
     <h4 class="mb"><i class="fa fa-angle-right"></i> Add new User</h4>
     <form>
         <div class="form-group row">
 
             <div class="col-sm-3">
-                <label>Name</label>
+                <label>Name
+                    <span class="error">*</span>
+                </label>
                 <input type="text" class="form-control" placeholder="">
             </div>
             <div class="col-sm-3">
@@ -17,11 +20,15 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <input type="text" class="form-control" placeholder="">
             </div>
             <div class="col-sm-3">
-                <label>Phone Number</label>
+                <label>Phone Number
+                    <span class="error">*</span>
+                </label>
                 <input type="text" class="form-control" placeholder="">
             </div>
             <div class="form-group">
-                <label>Department</label>
+                <label>Department
+                    <span class="error">*</span>
+                </label>
                 <div class="col-sm-3">
                     <select class="form-control">
                         <option>1</option>
@@ -38,12 +45,16 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             <div class="col-sm-9">
                 <div class="form-group row">
                     <div class="col-sm-4">
-                        <label>Email</label>
+                        <label>Email
+                            <span class="error">*</span>
+                        </label>
                         <input type="text" class="form-control" placeholder="">
                     </div>
 
                     <div class="col-sm-4">
-                        <label>Password</label>
+                        <label>Password
+                            <span class="error">*</span>
+                        </label>
                         <input type="password" class="form-control" placeholder="">
                     </div>
                     <div class="form-group">
@@ -62,14 +73,16 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
                 <div class="form-group row">
                     <div class="col-sm-5">
-                        <label>NIC number</label>
+                        <label>NIC number
+                            <span class="error">*</span>
+                        </label>
                         <input type="text" class="form-control" placeholder="">
                     </div>
                     <div class="col-sm-3">
                         <div class="radio">
                             <label>Gender</label><br>
                             <label>
-                                <input type="radio" name="optionsRadios" id="rad1" value="option1" checked>
+                                <input type="radio" name="optionsRadios" id="rad1" value="option1" >
                                 Male
                             </label>
                             <label>

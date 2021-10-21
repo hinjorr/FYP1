@@ -26,9 +26,15 @@
     <link rel="stylesheet" type="text/css" href="~/LMS/lib/bootstrap-daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" type="text/css" href="~/LMS/lib/bootstrap-timepicker/compiled/timepicker.css" />
     <link rel="stylesheet" type="text/css" href="~/LMS/lib/bootstrap-datetimepicker/css/datetimepicker.css" />
+    <link href="~/LMS/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/LMS/lib/advanced-datatable/css/DT_bootstrap.css" />
 
 </head>
-
+<style>
+    .error{
+        color: rgb(255, 0, 0);
+    }
+</style>
 <body>
     <section id="container">
         <!-- **********************************************************************************************************************************************************
@@ -362,7 +368,7 @@
                     &copy; Copyrights <strong>Dashio</strong>. All Rights Reserved
                 </p>
                 <div class="credits">
-                    
+
                     Created with Dashio template by <a href="https://templatemag.com/">TemplateMag</a>
                 </div>
                 <a href="blank.html#" class="go-top">
@@ -373,7 +379,7 @@
         <!--footer end-->
     </section>
     <!-- js placed at the end of the document so the pages load faster -->
-    
+
 
     <script src="~/LMS/lib/jquery/jquery.min.js"></script>
     <script src="~/LMS/lib/bootstrap/js/bootstrap.min.js"></script>
@@ -392,7 +398,44 @@
     <script type="text/javascript" src="~/LMS/lib/bootstrap-daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="~/LMS/lib/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
     <script src="~/LMS/lib/advanced-form-components.js"></script>
-
+    <script type="text/javascript" language="javascript" src="~/LMS/lib/advanced-datatable/js/jquery.js"></script>
+    <script class="include" type="text/javascript" src="~/LMS/lib/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/LMS/lib/jquery.scrollTo.min.js"></script>
+    <script src="~/LMS/lib/jquery.nicescroll.js" type="text/javascript"></script>
+    <script type="text/javascript" language="javascript"
+        src="~/LMS/lib/advanced-datatable/js/jquery.dataTables.js"></script>
+    <script type="text/javascript" src="~/LMS/lib/advanced-datatable/js/DT_bootstrap.js"></script>
 </body>
 
 </html>
+
+<script type="text/javascript">
+    /* Formating function for row details */
+    function fnFormatDetails(oTable, nTr) {
+        var aData = oTable.fnGetData(nTr);
+        var sOut = '<table cellpadding="5" cellspacing="0" border="0" style="padding-left:50px;">';
+        sOut += '<tr><td>Rendering engine:</td><td>' + aData[1] + ' ' + aData[4] + '</td></tr>';
+        sOut += '<tr><td>Link to source:</td><td>Could provide a link here</td></tr>';
+        sOut += '<tr><td>Extra info:</td><td>And any further details here (images etc)</td></tr>';
+        sOut += '</table>';
+
+        return sOut;
+    }
+
+    $(document).ready(function () {
+       
+        /*
+         * Initialse DataTables, with no sorting on the 'details' column
+         */
+        var oTable = $('#hidden-table-info').dataTable({
+            "aoColumnDefs": [{
+                "bSortable": false,
+                "aTargets": [0]
+            }],
+            "aaSorting": [
+                [1, 'asc']
+            ]
+        });
+
+    });
+</script>

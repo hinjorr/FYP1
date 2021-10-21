@@ -1,5 +1,39 @@
 @{
-    ViewData["Title"] = "ViewUsers";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+ViewData["Title"] = "ViewUsers";
+Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+<div class="content-panel">
+    <h4 class="mb"><i class="fa fa-angle-right"></i> View all Users</h4>
+
+    <div class="adv-table">
+        <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>Department</th>
+                    <th>Roll</th>
+                    <th>Actions</th>
+                    <!-- <th>isActive</th> -->
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="gradeX">
+                    <td>23045</td>
+                    <td>Masood Arif</td>
+                    <td class="hidden-phone">BSCS</td>
+                    <td class="center hidden-phone">yes</td>
+                    <td>
+                        <button class="btn btn-success btn-xs"><i class="fa fa-check"></i></button>
+                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                      </td>
+                </tr>
+
+            
+
+            </tbody>
+        </table>
+    </div>
+</div>
