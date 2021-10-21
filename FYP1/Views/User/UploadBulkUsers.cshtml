@@ -13,99 +13,61 @@
 
 <!--end::Header-->
 <div class="card-body pt-4">
-<!--begin::Form-->
-<form>
-    <div class="card-body">
-        <div class="form-group">
-
-            <label>
-                Username
-                <span class="text-danger">*</span>
-            </label>
-
-            <div class="dropdown">
-                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    Dropdown button
-                </button>
-                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                    <a class="dropdown-item" href="#">Contain</a>
-                    <a class="dropdown-item" href="#">Does not contain</a>
-                    <a class="dropdown-item" href="#">is equal to</a>
-                    <a class="dropdown-item" href="#">Starts with</a>
-                    <a class="dropdown-item" href="#">Ends With</a>
-
-                </div>
+    <!--begin::Form-->
+    <!--begin::Form-->
+    <form><div class="form-group row">
+    <label class="col-lg-3 col-form-label text-lg-right">Upload Files:</label>
+    <div class="col-lg-9">
+        <div class="dropzone dropzone-multi" id="kt_dropzone_4">
+            <div class="dropzone-panel mb-lg-0 mb-2">
+                <a class="dropzone-select btn btn-light-primary font-weight-bold btn-sm">Attach files</a>
+                <a class="dropzone-upload btn btn-light-primary font-weight-bold btn-sm">Upload All</a>
+                <a class="dropzone-remove-all btn btn-light-primary font-weight-bold btn-sm">Remove All</a>
             </div>
-            <br />
-            <input type="email" class="form-control form-control-sm" placeholder="input">
-
-        </div>
-        <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>Last Name</label>
-            <input type="text" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label>ID</label>
-            <input type="text" class="form-control" />
-        </div>
-        <div class="form-group">
-            <label for="exampleSelect1">
-                Departments
-                <span class="text-danger">*</span>
-            </label>
-            <select class="form-control" id="exampleSelect1">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </div>
-        <div class="form-group">
-            <label>Users in List</label>
-
-
-            <select multiple="multiple" class="form-control" id="exampleSelect2">
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-            </select>
-        </div>
-        <div class="card-footer">
-            <button type="reset" class="btn btn-primary mr-2">Add to selection</button>
-            <button type="reset" class="btn btn-secondary">Remove from selection</button>
-            <br /><br />
-            <button type="reset" class="btn btn-primary mr-2">Add all</button>
-            <button type="reset" class="btn btn-secondary">Remove all</button>
-            <br />
-            <br />
-            <div class="form-group">
-
-                <label>
-                    With selected Uers
-                </label>
-
-                <div class="dropdown">
-                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Dropdown button
-                    </button>
-                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                        <a class="dropdown-item" href="#">Confirm</a>
-                        <a class="dropdown-item" href="#">Send a message</a>
-                        <a class="dropdown-item" href="#">Delete</a>
-                        <a class="dropdown-item" href="#">Display on page</a>
-                        <a class="dropdown-item" href="#">Download</a>
-
+            <div class="dropzone-items">
+                <div class="dropzone-item" style="display:none">
+                    <div class="dropzone-file">
+                        <div class="dropzone-filename" title="some_image_file_name.jpg">
+                            <span data-dz-name="">some_image_file_name.jpg</span>
+                            <strong>
+                                (
+                                <span data-dz-size="">340kb</span>)
+                            </strong>
+                        </div>
+                        <div class="dropzone-error" data-dz-errormessage=""></div>
+                    </div>
+                    <div class="dropzone-progress">
+                        <div class="progress">
+                            <div class="progress-bar bg-primary" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-dz-uploadprogress=""></div>
+                        </div>
+                    </div>
+                    <div class="dropzone-toolbar">
+                        <span class="dropzone-start">
+                            <i class="flaticon2-arrow"></i>
+                        </span>
+                        <span class="dropzone-cancel" data-dz-remove="" style="display: none;">
+                            <i class="flaticon2-cross"></i>
+                        </span>
+                        <span class="dropzone-delete" data-dz-remove="">
+                            <i class="flaticon2-cross"></i>
+                        </span>
                     </div>
                 </div>
             </div>
+        </div>
+        <span class="form-text text-muted">Max file size is 1MB and max number of files is 5.</span>
+    </div>
+</div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-lg-3"></div>
+                <div class="col-lg-4">
+                    <button type="reset" class="btn btn-light-primary mr-2">Upload Users</button>
+                    <br /> <br />
+                    <button type="reset" class="btn btn-primary">Cancel</button>
+                </div>
             </div>
         </div>
-</form>
+    </form>
+    <!--end::Form-->
 </div>
