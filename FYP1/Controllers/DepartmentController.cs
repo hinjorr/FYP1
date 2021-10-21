@@ -19,7 +19,7 @@ namespace FYP1.Controllers
         {
             return View();
         }
-        public IActionResult CourseEnoll()
+        public IActionResult EnrollClasses()
         {
             return View();
         }

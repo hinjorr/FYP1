@@ -12,7 +12,7 @@ namespace FYP1.Controllers
     public class RolesController : Controller
     {
         
-        public IActionResult AddRole()
+        public IActionResult AssignRole()
         {
             return View();
         }
