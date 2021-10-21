@@ -10,4 +10,102 @@
         <span class="font-weight-bolder text-dark">Upload Bulk Users</span>
     </h3>
 </div>
+
 <!--end::Header-->
+<div class="card-body pt-4">
+<!--begin::Form-->
+<form>
+    <div class="card-body">
+        <div class="form-group">
+
+            <label>
+                Username
+                <span class="text-danger">*</span>
+            </label>
+
+            <div class="dropdown">
+                <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Dropdown button
+                </button>
+                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                    <a class="dropdown-item" href="#">Contain</a>
+                    <a class="dropdown-item" href="#">Does not contain</a>
+                    <a class="dropdown-item" href="#">is equal to</a>
+                    <a class="dropdown-item" href="#">Starts with</a>
+                    <a class="dropdown-item" href="#">Ends With</a>
+
+                </div>
+            </div>
+            <br />
+            <input type="email" class="form-control form-control-sm" placeholder="input">
+
+        </div>
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>Last Name</label>
+            <input type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label>ID</label>
+            <input type="text" class="form-control" />
+        </div>
+        <div class="form-group">
+            <label for="exampleSelect1">
+                Departments
+                <span class="text-danger">*</span>
+            </label>
+            <select class="form-control" id="exampleSelect1">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label>Users in List</label>
+
+
+            <select multiple="multiple" class="form-control" id="exampleSelect2">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+        </div>
+        <div class="card-footer">
+            <button type="reset" class="btn btn-primary mr-2">Add to selection</button>
+            <button type="reset" class="btn btn-secondary">Remove from selection</button>
+            <br /><br />
+            <button type="reset" class="btn btn-primary mr-2">Add all</button>
+            <button type="reset" class="btn btn-secondary">Remove all</button>
+            <br />
+            <br />
+            <div class="form-group">
+
+                <label>
+                    With selected Uers
+                </label>
+
+                <div class="dropdown">
+                    <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown button
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                        <a class="dropdown-item" href="#">Confirm</a>
+                        <a class="dropdown-item" href="#">Send a message</a>
+                        <a class="dropdown-item" href="#">Delete</a>
+                        <a class="dropdown-item" href="#">Display on page</a>
+                        <a class="dropdown-item" href="#">Download</a>
+
+                    </div>
+                </div>
+            </div>
+            </div>
+        </div>
+</form>
+</div>
