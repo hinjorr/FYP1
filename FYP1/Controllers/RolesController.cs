@@ -12,10 +12,6 @@ namespace FYP1.Controllers
     public class RolesController : Controller
     {
         
-        public IActionResult AssignRole()
-        {
-            return View();
-        }
         public IActionResult AssignPermissions()
         {
             return View();

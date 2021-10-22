@@ -1,5 +1,175 @@
 @{
-    ViewData["Title"] = "AssignNewClass";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+ViewData["Title"] = "AssignNewClass";
+Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
+<div class="row">
+    <div class="col-lg-5">
+        <div class="form-panel">
+            <h4 class="mb"><i class="fa fa-angle-right"></i> Assign new Class</h4>
+            <form>
+                <label>Select Couses 
+                    <span class="error">*</span>
+                </label>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+               
+                <label>Department
+                    <span class="error">*</span>
+                </label>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <select class="form-control">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-10">
+                        <label>Class Strength
+                            <span class="error">*</span>
+                        </label>
+                        <input type="text" class="form-control" placeholder="">
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-sm-5">
+                        <label>Class Day
+                            <span class="error">*</span>
+                        </label>
+                        <select class="form-control">
+                            <option>Monday</option>
+                            <option>Tuesday</option>
+                            <option>Wednesday</option>
+                            <option>Thursday</option>
+                            <option>Friday</option>
+                            <option>Saturday</option>
+                            <option>Sunday</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-5">
+                        <label>Class Time
+                            <span class="error">*</span>
+                        </label>
+                        <select class="form-control">
+                            <option>9:00-12:00 (morning)</option>
+                            <option>1:00-4:00 (noon)</option>
+                            <option>6:00-9:00  (evening)</option>
+    
+                        </select>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
+    
+    
+            </form>
+        </div>
+    </div>
+    <div class="col-lg-7">
+        <div class="form-panel">
+            <h4 class="mb"><i class="fa fa-angle-right"></i> View Classes</h4>
+            <form>             
+                <div class="form-group row">
+                    <div class="col-sm-4">
+                        <label>Course</label>
+                        <select class="form-control">
+                            <option>Monday</option>
+                            <option>Tuesday</option>
+                            <option>Wednesday</option>
+                            <option>Thursday</option>
+                            <option>Friday</option>
+                            <option>Saturday</option>
+                            <option>Sunday</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-4">
+                        <label>Department</label>
+                        <select class="form-control">
+                            <option>9:00-12:00 (morning)</option>
+                            <option>1:00-4:00 (noon)</option>
+                            <option>6:00-9:00  (evening)</option>
+                        </select>
+                    </div>
+                    <div class="col-sm-3">
+                        <br>
+                        <button type="button" class="btn btn-primary">View</button>
+                    </div>
+                </div>
+    
+    
+            </form>
+            <section id="no-more-tables">
+                <table class="table table-bordered table-striped table-condensed cf">
+                  <thead class="cf">
+                    <tr>
+                      <th>CID</th>
+                      <th>Day</th>
+                      <th class="numeric">Time</th>
+                      <th class="numeric">Strength</th>
+                      <th class="numeric">Enrolled</th>
+                      <th class="numeric">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td data-title="Code">AAC</td>
+                      <td data-title="Company">AUSTRALIAN.</td>
+                      <td class="numeric" data-title="Price">$1.38</td>
+                      <td class="numeric" data-title="Change">-0.01</td>
+                      <td class="numeric" data-title="Change %">-0.36%</td>
+                      <td>
+                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                      </td>                    </tr>
+                    <tr>
+                      <td data-title="Code">123342</td>
+                      <td data-title="Company">ARDENT</td>
+                      <td class="numeric" data-title="Price">$1.15</td>
+                      <td class="numeric" data-title="Change"> +0.02</td>
+                      <td class="numeric" data-title="Change %">1.32%</td>
+                      <td>
+                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                      </td>                    </tr>
+                   
+                    <tr>
+                      <td data-title="Code">ACR</td>
+                      <td data-title="Company">ACRUX</td>
+                      <td class="numeric" data-title="Price">$3.71</td>
+                      <td class="numeric" data-title="Change"> +0.01</td>
+                      <td class="numeric" data-title="Change %">0.14%</td>
+                      <td>
+                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                      </td>                    </tr>
+                    <tr>
+                      <td data-title="Code">ADU</td>
+                      <td data-title="Company">ADAMUS RESOURCES LIMITED</td>
+                      <td class="numeric" data-title="Price">$0.72</td>
+                      <td class="numeric" data-title="Change">0.00</td>
+                      <td class="numeric" data-title="Change %">0.00%</td>
+                      <td>
+                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                      </td>                    </tr>
+                    
+                  </tbody>
+                </table>
+              </section>
+        </div>
+    </div>
+    
+</div>
