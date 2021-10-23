@@ -8,25 +8,14 @@ using Microsoft.Extensions.Logging;
 
 namespace FYP1.Controllers
 {
-    [Route("[controller]")]
     public class CourseController : Controller
     {
-        private readonly ILogger<CourseController> _logger;
 
-        public CourseController(ILogger<CourseController> logger)
-        {
-            _logger = logger;
-        }
+     
 
-        public IActionResult Index()
+        public IActionResult ViewCourses()
         {
             return View();
-        }
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View("Error!");
         }
     }
 }
