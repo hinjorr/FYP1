@@ -8,14 +8,14 @@ using Microsoft.Extensions.Logging;
 
 namespace FYP1.Controllers
 {
-    public class DepartmentController : Controller
+    public class ProgramsController : Controller
     {
 
-        public IActionResult AddNewDpt()
+        public IActionResult AddNewProgram()
         {
             return View();
         }
-        public IActionResult ViewDpt()
+        public IActionResult ViewPrograms()
         {
             return View();
         }

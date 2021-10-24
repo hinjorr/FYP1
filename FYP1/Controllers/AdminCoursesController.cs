@@ -8,7 +8,7 @@ using Microsoft.Extensions.Logging;
 
 namespace FYP1.Controllers
 {
-    public class CoursesController : Controller
+    public class AdminCoursesController : Controller
     {
        
         

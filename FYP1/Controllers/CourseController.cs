@@ -10,10 +10,15 @@ namespace FYP1.Controllers
 {
     public class CourseController : Controller
     {
-        public IActionResult Index()
+
+        public IActionResult ViewCourse()
         {
             return View();
         }
-
+        public IActionResult ViewAllClasses()
+        {
+            return View();
+        }
+        
     }
 }
