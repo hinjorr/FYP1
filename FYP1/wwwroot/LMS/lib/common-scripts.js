@@ -73,7 +73,7 @@ var Script = function() {
   // custom scrollbar
   $("#sidebar").niceScroll({
     styler: "fb",
-    cursorcolor: "#4ECDC4",
+    cursorcolor: "#a6265c",
     cursorwidth: '3',
     cursorborderradius: '10px',
     background: '#404040',
