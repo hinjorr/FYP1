@@ -14,6 +14,7 @@ namespace FYP1.dbModels
 
         public int RoleId { get; set; }
         public string RoleName { get; set; }
+        public ulong? IsActive { get; set; }
 
         public virtual ICollection<TblUser> TblUsers { get; set; }
     }

@@ -7,7 +7,19 @@ namespace FYP1.dbModels
 {
     public partial class TblProgram
     {
+        public TblProgram()
+        {
+            TblCourseEligiblities = new HashSet<TblCourseEligiblity>();
+            TblProgramSyllabi = new HashSet<TblProgramSyllabus>();
+            TblStudents = new HashSet<TblStudent>();
+        }
+
         public int ProgramId { get; set; }
         public string ProgramName { get; set; }
+        public ulong? IsActive { get; set; }
+
+        public virtual ICollection<TblCourseEligiblity> TblCourseEligiblities { get; set; }
+        public virtual ICollection<TblProgramSyllabus> TblProgramSyllabi { get; set; }
+        public virtual ICollection<TblStudent> TblStudents { get; set; }
     }
 }
