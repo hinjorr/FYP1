@@ -13,7 +13,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 </label>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <select class="form-control">
+                        <select class="form-control" id="DpDownCourse">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -28,7 +28,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 </label>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <select class="form-control">
+                        <select class="form-control" id="dpDownDepart">
                             <option>1</option>
                             <option>2</option>
                             <option>3</option>
@@ -42,7 +42,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         <label>Class Strength
                             <span class="error">*</span>
                         </label>
-                        <input type="text" class="form-control" placeholder="">
+                        <input type="text" class="form-control" placeholder="" id="txtClasStrength">
                     </div>
                 </div>
                 <div class="form-group row">
@@ -50,7 +50,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         <label>Class Day
                             <span class="error">*</span>
                         </label>
-                        <select class="form-control">
+                        <select class="form-control" id="dpDownClassDay">
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
@@ -64,7 +64,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         <label>Class Time
                             <span class="error">*</span>
                         </label>
-                        <select class="form-control">
+                        <select class="form-control" id="dpDownClassTime">
                             <option>9:00-12:00 (morning)</option>
                             <option>1:00-4:00 (noon)</option>
                             <option>6:00-9:00  (evening)</option>
@@ -72,7 +72,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         </select>
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-lg btn-block">Submit</button>
+                <button type="button" class="btn btn-primary btn-lg btn-block" id="btnSubmit">Submit</button>
     
     
             </form>
@@ -85,7 +85,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <div class="form-group row">
                     <div class="col-sm-4">
                         <label>Course</label>
-                        <select class="form-control">
+                        <select class="form-control" id="dpDownViewClasses">
                             <option>Monday</option>
                             <option>Tuesday</option>
                             <option>Wednesday</option>
@@ -97,7 +97,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     </div>
                     <div class="col-sm-4">
                         <label>Department</label>
-                        <select class="form-control">
+                        <select class="form-control" id="dpDownVCDepart">
                             <option>9:00-12:00 (morning)</option>
                             <option>1:00-4:00 (noon)</option>
                             <option>6:00-9:00  (evening)</option>
@@ -105,7 +105,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     </div>
                     <div class="col-sm-3">
                         <br>
-                        <button type="button" class="btn btn-primary">View</button>
+                        <button type="button" class="btn btn-primary" id="btnView">View</button>
                     </div>
                 </div>
     
