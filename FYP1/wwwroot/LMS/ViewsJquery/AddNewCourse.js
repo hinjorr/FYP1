@@ -5,8 +5,9 @@ $(document).ready(function () {
       CourseCrHr: $("#txtCoursecrhr").val(),
       RequiredCrHr: $("#txtRequired").val(),
       CourseShortName: $("#txtShrtname").val(),
-    };
-   console.log(CourseDTO)
+      };
+      console.log(CourseDTO)
+
     
   });
 });
