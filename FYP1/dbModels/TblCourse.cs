@@ -11,5 +11,6 @@ namespace FYP1.dbModels
         public string CourseName { get; set; }
         public int? CourseCrHr { get; set; }
         public int? RequiredCrHr { get; set; }
+        public string CourseShortName { get; set; }
     }
 }

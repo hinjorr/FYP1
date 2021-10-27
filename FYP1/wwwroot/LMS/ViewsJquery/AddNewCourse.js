@@ -7,7 +7,7 @@ $(document).ready(function () {
       CourseShortName: $("#txtShrtname").val(),
       };
       console.log(CourseDTO)
-    
+
     
   });
 });

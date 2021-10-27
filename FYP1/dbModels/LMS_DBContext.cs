@@ -50,6 +50,8 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.CourseName).HasMaxLength(50);
 
+                entity.Property(e => e.CourseShortName).HasMaxLength(50);
+
                 entity.Property(e => e.RequiredCrHr).HasColumnType("int(50)");
             });
 
