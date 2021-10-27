@@ -6,9 +6,7 @@ $(document).ready(function () {
       RequiredCrHr: $("#txtRequired").val(),
       CourseShortName: $("#txtShrtname").val(),
     };
-    if (CourseDTO.CourseName==null) {
-        $("#lblFullname")
-    }
+   console.log(CourseDTO)
     
   });
 });
