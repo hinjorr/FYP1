@@ -5,20 +5,14 @@
 }
 <div class="form-panel">
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-4">
             <h1><i class="fa fa-angle-right"></i> ROLES MANAGEMENT</h1>
-            <div class="btn-group">
-                <button type="button" class="btn btn-theme dropdown-toggle" data-toggle="dropdown">
-                    ROLES <span class="caret"></span>
-                </button>
-                <ul class="dropdown-menu" role="menu" id="dpdownRoles">
-                    <li><a href="#">ADMIN</a></li>
-                    <li><a href="#">USER</a></li>
-                    <li><a href="#">FACULTY</a></li>
-                    <li class="divider"></li>
-                    <li><a href="#">MANAGEMENT</a></li>
-                </ul>
-            </div>
+            <select class="form-control" id="dpDownClassDay">
+                <option>Roles</option>
+                <option>Admin</option>
+                <option>Faculty</option>
+                <option>User</option>
+            </select>
         </div>
 
     </div>
@@ -27,7 +21,7 @@
 <div class="form-panel">
     <div class="row">
         <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">ADD NEW USER</a></h3>
+            <h3><a href="~/User/AddNewUser" class="link-primary">ADD NEW USER</a></h3>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="checkbox">
@@ -44,7 +38,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">VIEW ALL USERS</a></h3>
+            <h3><a href="~/User/ViewUsers" class="link-primary">VIEW ALL USERS</a></h3>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="checkbox">
@@ -61,7 +55,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">UPLOAD BULK USERS</a></h3>
+            <h3><a href="~/User/UploadBulkUsers" class="link-primary">UPLOAD BULK USERS</a></h3>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="checkbox">
@@ -78,7 +72,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">ASSIGN NEW COURSE</a></h3>
+            <h3><a href="~/AdminCourses/AssignNewClass" class="link-primary">ASSIGN NEW COURSE</a></h3>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="checkbox">
@@ -95,7 +89,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">ADD NEW COURSE</a></h3>
+            <h3><a href="~/AdminCourses/AddNewCourse" class="link-primary">ADD NEW COURSE</a></h3>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="checkbox">
@@ -112,7 +106,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">MANUALLY ENROLL USER</a></h3>
+            <h3><a href="~/AdminCourses/EnrollUsers" class="link-primary">MANUALLY ENROLL USER</a></h3>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="checkbox">
@@ -129,7 +123,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">ROLES MANAGEMENT</a></h3>
+            <h3><a href="~/Roles/AssignPermissions" class="link-primary">ROLES MANAGEMENT</a></h3>
         </div>
         <div class="col-md-6 col-sm-12">
             <div class="checkbox">
@@ -230,3 +224,4 @@
         </div>
     </div>
 </div>
+<script type="text/javascript" src="~/LMS/ViewsJquery/RolesManagement.js"></script>
