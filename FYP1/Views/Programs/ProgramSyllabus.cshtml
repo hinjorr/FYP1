@@ -1,0 +1,79 @@
+﻿@{
+    ViewData["Title"] = "ProgramSyllabus";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<form>
+    <div class="form-panel">
+
+        <div class="form-group row">
+            <div class="col-lg-10">
+                <h1><i class="fa fa-angle-right"></i> Program Syllabus</h1>
+            </div>
+            <div class="col-sm-6 mt col-lg-offset-6">
+                <label>
+                    Required Cr.Hr
+                    <span class="error">*</span>
+                </label>
+                <input type="text" class="form-control" placeholder="">
+            </div>
+        </div>
+    </div>
+    <div class="form-panel">
+        <div class="form-group row">
+            <div class="col-lg-7">
+
+                    
+                        <section id="no-more-tables">
+                            <table class="table table-bordered table-striped table-condensed cf">
+                                <thead class="cf">
+                                    <tr>
+                                        <th>S#</th>
+                                        <th>Course</th>
+                                        <th class="numeric">Pre Registration</th>
+                                        <th class="numeric">Cr .Hr</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td data-title="Code">1</td>
+                                        <td data-title="Company">
+                                            
+                                            <select class="form-control" id="dpDownClassDay">
+                                                <option>Monday</option>
+                                                <option>Tuesday</option>
+                                                <option>Wednesday</option>
+                                                <option>Thursday</option>
+                                                <option>Friday</option>
+                                                <option>Saturday</option>
+                                                <option>Sunday</option>
+                                            </select>
+                                        </td>
+                                        <td>
+                                            <select class="form-control" id="dpDownClassDay">
+                                                <option>Monday</option>
+                                                <option>Tuesday</option>
+                                                <option>Wednesday</option>
+                                                <option>Thursday</option>
+                                                <option>Friday</option>
+                                                <option>Saturday</option>
+                                                <option>Sunday</option>
+                                            </select>
+                                        </td>
+                                        <td>
+
+                                        </td>
+                                        <td>
+                                            <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                            <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </section>
+                    </div>
+                </div>
+            </div>
+        
+
+    
+</form>
