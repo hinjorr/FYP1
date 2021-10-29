@@ -33,14 +33,14 @@ namespace FYP1.dbModels
         public virtual DbSet<TblTime> TblTimes { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
-            }
-        }
+//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//         {
+//             if (!optionsBuilder.IsConfigured)
+//             {
+// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
+//             }
+//         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -473,7 +473,7 @@ namespace FYP1.dbModels
                     .ValueGeneratedNever()
                     .HasColumnName("UserID");
 
-                entity.Property(e => e.IsActie).HasColumnType("bit(1)");
+                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
 
                 entity.Property(e => e.Password)
                     .IsRequired()

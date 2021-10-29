@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using FYP1.DTOs;
 
 namespace FYP1.Controllers
 {
@@ -14,6 +15,12 @@ namespace FYP1.Controllers
 
         public IActionResult AddNewUser()
         {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult AddNewUser(ProfileDTO model)
+        {
+
             return View();
         }
         public IActionResult ViewUsers()

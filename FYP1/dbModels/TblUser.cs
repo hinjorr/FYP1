@@ -18,7 +18,7 @@ namespace FYP1.dbModels
         public string Password { get; set; }
         public int RoleId { get; set; }
         public int ProfileId { get; set; }
-        public ulong? IsActie { get; set; }
+        public ulong? IsActive { get; set; }
 
         public virtual TblProfile Profile { get; set; }
         public virtual TblRole Role { get; set; }
