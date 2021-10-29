@@ -43,21 +43,30 @@
     },
   },
   submitHandler: function (form) {
-    var UserDetails = {
+    var ProfileDTO = {
       Name: $("#txtName").val(),
       FatherName: $("#txtFatherName").val(),
       Number: $("#txtNumber").val(),
-      Role: $("#dpdownRole").val(),
+      RoleId: $("#dpdownRole").val(),
+      ProgramId: $("#dpdownProgram").val(),
       Email: $("#txtEmail").val(),
       Password: $("#txtPassword").val(),
       Nic: $("#txtNic").val(),
       Gender: $("input[name=optionsRadios]:checked").val(),
-      DateOfBirth: $("#timeDOB").val(),
+      DateOfBirth: $("#timeDOB1").val(),
       Address: $("#txtAddress").val(),
       City: $("#txtCity").val(),
       Country: $("#txtCountry").val(),
-      Image: $("#Image").val(),
+      Image: $("#Image1").val(),
     };
-    console.log(UserDetails);
+    $.ajax({
+      type: "Post",
+      url: "/User/AddNewUser",
+      data: ProfileDTO,
+      success: function (resp) {
+        console.log(resp)
+      }
+    });
   },
 });
+

@@ -2,25 +2,33 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using FYP1.DTOs;
+using AutoMapper;
+using FYP1.dbModels;
+using FYP1.Repository;
 
 namespace FYP1.Controllers
 {
     public class UserController : Controller
     {
+        private readonly IUser repo;
+
+        public UserController(IUser _repo)
+        {
+            repo = _repo;
+        }
 
         public IActionResult AddNewUser()
         {
             return View();
         }
         [HttpPost]
-        public IActionResult AddNewUser(ProfileDTO model)
+        public async Task<IActionResult> AddNewUser(ProfileDTO dto)
         {
-
+            bool chk= await repo.AddNewUser(dto);
             return View();
         }
         public IActionResult ViewUsers()
@@ -39,6 +47,6 @@ namespace FYP1.Controllers
         {
             return View();
         }
-       
+
     }
 }
