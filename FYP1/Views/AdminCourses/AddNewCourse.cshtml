@@ -3,71 +3,86 @@ ViewData["Title"] = "AddNewCourse";
 Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-<div class="row mt">
-    <div class="col-lg-5">
-        <div class="form-panel">
-            <h4 class="mb"><i class="fa fa-angle-right"></i> Add new Course</h4>
-            <form>
-                <div class="form-group row">
-                    <div class="col-sm-12">
-                        <label>Course Full Name
-                            <span class="error">*</span>
-                        </label>
-                        <input type="text" class="form-control" placeholder="">
+<html>
+<head></head>
+<body>
+    <div class="row mt">
+        <form class="addnewcourse">
+
+            <div class="col-lg-5">
+                <div class="form-panel">
+                    <h4 class="mb"><i class="fa fa-angle-right"></i> Add new Course</h4>
+                    <div class="form-group row">
+                        <div class="col-sm-12">
+                            <label>
+                                Course Full Name
+                                <span class="error">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="" name="coursefullname">
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <div class="col-sm-6">
-                        <label>Short Name
-                            <span class="error">*</span>
-                        </label>
-                        <input type="text" class="form-control" placeholder="">
+                    <div class="form-group row">
+                        <div class="col-sm-6">
+                            <label>
+                                Short Name
+                                <span class="error">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="" name="shortname">
+                        </div>
+                        <div class="col-sm-6">
+                            <label>
+                                Required Cr.Hr
+                                <span class="error">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="" name="crhr">
+                        </div>
                     </div>
-                    <div class="col-sm-6">
-                        <label>Required Cr.Hr
-                            <span class="error">*</span>
-                        </label>
-                        <input type="text" class="form-control" placeholder="">
-                    </div>
-                </div>
-                <button type="button" class="btn btn-primary btn-lg btn-block">Create</button>
+                    <button type="submit" class="btn btn-primary btn-lg btn-block">Create</button>
 
 
-            </form>
-        </div>
-    </div>
-    <div class="col-lg-7">
-        <div class="form-panel">
-            <h4 class="mb"><i class="fa fa-angle-right"></i> View all Courses</h4>
-            <div class="adv-table">
-                <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
-                    <thead>
-                        <tr>
-                            <th>ID</th>
-                            <th>Course Name</th>
-                            <th>Cr.Hr</th>
-                            <th>Actions</th>
-                            <!-- <th>isActive</th> -->
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="gradeX">
-                            <td>23045</td>
-                            <td>Computer Organization and Assemlbly Language </td>
-                            <td class="hidden-phone">67</td>
-                            <td>
-                                <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                              </td>
-                        </tr>
-                        
-        
-                    
-        
-                    </tbody>
-                </table>
+
+                </div>
             </div>
-        </div>
+            <div class="col-lg-7">
+                <div class="form-panel">
+                    <h4 class="mb"><i class="fa fa-angle-right"></i> View all Courses</h4>
+                    <div class="adv-table">
+                        <table cellpadding="0" cellspacing="0" border="0" class="display table table-bordered" id="hidden-table-info">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Course Name</th>
+                                    <th>Cr.Hr</th>
+                                    <th>Actions</th>
+                                    <!-- <th>isActive</th> -->
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="gradeX">
+                                    <td>23045</td>
+                                    <td>Computer Organization and Assemlbly Language </td>
+                                    <td class="hidden-phone">67</td>
+                                    <td>
+                                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                                    </td>
+                                </tr>
+
+
+
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <!-- col-lg-12-->
+        </form>
     </div>
-    <!-- col-lg-12-->
-</div>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.3/jquery.validate.min.js" integrity="sha512-37T7leoNS06R80c8Ulq7cdCDU5MNQBwlYoy1TX/WUsLFC2eYNqtKlV0QjH7r8JpG/S0GUMZwebnVFLPd6SU5yg==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+
+    <script type="text/javascript" src="~/LMS/ViewsJquery/AddNewCourse.js"></script>
+</body>
+
+</html>
