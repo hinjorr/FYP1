@@ -2,13 +2,13 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using FYP1.dbModels;
 using FYP1.DTOs;
 
 namespace FYP1.Repository
 {
-    public interface IUser
+    public interface IDropDown
     {
-         Task<bool> AddNewUser(ProfileDTO dto);
+         public  Task<List<RoleDTO>> GetRole();
+         public  Task<List<ProgramDTO>> GetPrograms();
     }
 }

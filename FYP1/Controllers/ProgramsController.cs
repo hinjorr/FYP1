@@ -1,19 +1,27 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
+using FYP1.DTOs;
+using FYP1.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace FYP1.Controllers
 {
     public class ProgramsController : Controller
     {
+        private readonly IPrograms repo;
 
+        public ProgramsController(IPrograms _repo)
+        {
+            repo = _repo;
+        }
         public IActionResult AddNewProgram()
         {
             return View();
+        }
+        [HttpPost]
+        public async Task<IActionResult> AddNewProgram(ProgramDTO dto)
+        {
+           var data= await repo.AddProgram(dto);
+            return Ok(data);
         }
         public IActionResult ViewPrograms()
         {

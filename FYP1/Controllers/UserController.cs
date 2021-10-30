@@ -28,9 +28,10 @@ namespace FYP1.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewUser(ProfileDTO dto)
         {
-            bool chk= await repo.AddNewUser(dto);
-            return View();
+            var data = await repo.AddNewUser(dto);
+            return Ok(data);
         }
+
         public IActionResult ViewUsers()
         {
             return View();

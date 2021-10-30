@@ -17,7 +17,6 @@ namespace FYP1.dbModels
         public int? UserId { get; set; }
         public ulong? IsActive { get; set; }
 
-        public virtual TblProgram Program { get; set; }
         public virtual TblUser User { get; set; }
         public virtual ICollection<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }
     }

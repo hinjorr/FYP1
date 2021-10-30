@@ -7,9 +7,15 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
 <div class="form-panel">
     <h4 class="mb"><i class="fa fa-angle-right"></i> Add new User</h4>
-    <form id="newuser" method="post">
+    <form id="newuser">
         <div class="form-group row">
-
+            <div class="col-sm-3">
+                <label>
+                    NIC number
+                    <span class="error">*</span>
+                </label>
+                <input type="text" class="form-control" placeholder="" id="txtNic" name="nic">
+            </div>
             <div class="col-sm-3">
                 <label>
                     Name
@@ -21,13 +27,9 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <label>Father's Name</label>
                 <input type="text" class="form-control" placeholder="" id="txtFatherName">
             </div>
-            <div class="col-sm-3">
-                <label>
-                    Phone Number
-                    <span class="error">*</span>
-                </label>
-                <input type="text" class="form-control" placeholder="" id="txtNumber" name="number">
-            </div>
+            
+
+
             <div class="form-group">
                 <label>
                     Role
@@ -35,11 +37,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 </label>
                 <div class="col-sm-3">
                     <select class="form-control" id="dpdownRole">
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+
                     </select>
                 </div>
             </div>
@@ -65,39 +63,36 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     </div>
 
                     <div class="form-group">
-                        <label>
+                        <label id="lblprogram">
                             Program
                             <span class="error">*</span>
                         </label>
                         <div class="col-sm-4">
                             <select class="form-control" id="dpdownProgram" name="program">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                                <option>5</option>
+
                             </select>
                         </div>
                     </div>
                 </div>
 
                 <div class="form-group row">
-                    <div class="col-sm-5">
+                    
+                    <div class="col-sm-4">
                         <label>
-                            NIC number
+                            Phone Number
                             <span class="error">*</span>
                         </label>
-                        <input type="text" class="form-control" placeholder="" id="txtNic" name="nic">
+                        <input type="text" class="form-control" placeholder="" id="txtNumber" name="number">
                     </div>
                     <div class="col-sm-3">
                         <div class="radio">
                             <label>Gender</label><br>
                             <label>
-                                <input type="radio" name="optionsRadios" id="rad1" value="male">
+                                <input type="radio" name="gender" id="rad1" value="male">
                                 Male
                             </label>
                             <label>
-                                <input type="radio" name="optionsRadios" id="rad2" value="female">
+                                <input type="radio" name="gender" id="rad2" value="female">
                                 Female
                             </label>
                         </div>
@@ -131,31 +126,32 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 </div>
             </div>
             <div class="col-sm-3">
-                <div class="form-group">
-                    <div class="form-group last">
-                        <div class="col-md-3">
-                            <div class="fileupload fileupload-new" data-provides="fileupload">
-                                <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                    <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
-                                </div>
-                                <div class="fileupload-preview fileupload-exists thumbnail"
-                                    style="max-width: 200px; max-height: 150px; line-height: 20px;" id="Image">
-                                </div>
-                                <div>
-                                    <span class="btn btn-theme02 btn-file">
-                                        <span class="fileupload-new"><i class="fa fa-paperclip"></i> Select
-                                            image</span>
-                                        <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                        <input type="file" class="default" id="Image1" />
-                                    </span>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <div class="form-group last">
+                            <div class="col-md-3">
+                                <div class="fileupload fileupload-new" data-provides="fileupload">
+                                    <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
+                                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
+                                    </div>
+                                    <div class="fileupload-preview fileupload-exists thumbnail"
+                                        style="max-width: 200px; max-height: 150px; line-height: 20px;" id="Image">
+                                    </div>
+                                    <div>
+                                        <span class="btn btn-theme02 btn-file">
+                                            <span class="fileupload-new"><i class="fa fa-paperclip"></i> Select
+                                                image</span>
+                                            <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
+                                            <input type="file" class="default" id="Image1" />
+                                        </span>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit">Submit</button>
+            <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit">Submit</button>
 
 
     </form>

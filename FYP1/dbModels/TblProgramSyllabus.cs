@@ -13,7 +13,6 @@ namespace FYP1.dbModels
         public int? RqdCourseId { get; set; }
 
         public virtual TblCourse Course { get; set; }
-        public virtual TblProgram Program { get; set; }
         public virtual TblCourse RqdCourse { get; set; }
     }
 }

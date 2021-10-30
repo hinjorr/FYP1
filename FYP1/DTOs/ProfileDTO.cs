@@ -20,5 +20,8 @@ namespace FYP1.DTOs
         public string Gender { get; set; }
         public string PhoneNumber { get; set; }
         public ulong? IsActive { get; set; }
+        public UserDTO User { get; set; }
+        public StudentDTO Student { get; set; }   
+        public FacultyDTO Faculty { get; set; }   
     }
 }

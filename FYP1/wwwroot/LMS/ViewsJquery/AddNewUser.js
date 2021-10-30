@@ -46,27 +46,114 @@
     var ProfileDTO = {
       Name: $("#txtName").val(),
       FatherName: $("#txtFatherName").val(),
-      Number: $("#txtNumber").val(),
-      RoleId: $("#dpdownRole").val(),
-      ProgramId: $("#dpdownProgram").val(),
+      PhoneNumber: $("#txtNumber").val(),
       Email: $("#txtEmail").val(),
-      Password: $("#txtPassword").val(),
       Nic: $("#txtNic").val(),
-      Gender: $("input[name=optionsRadios]:checked").val(),
-      DateOfBirth: $("#timeDOB1").val(),
+      Gender: $("input[name=gender]:checked").val(),
+      DoB: $("#timeDOB1").val(),
       Address: $("#txtAddress").val(),
       City: $("#txtCity").val(),
       Country: $("#txtCountry").val(),
-      Image: $("#Image1").val(),
+      Picture: $("#Image1").val(),
+      IsActive: 1,
+      User: {
+        RoleId: $("#dpdownRole option:selected").val(),
+        Password: $("#txtPassword").val(),
+        IsActive: 1,
+      },
+      Student: {
+        ProgramId: $("#dpdownProgram option:selected").val(),
+        IsActive: 1,
+      },
     };
+    console.log(ProfileDTO);
     $.ajax({
       type: "Post",
       url: "/User/AddNewUser",
       data: ProfileDTO,
       success: function (resp) {
-        console.log(resp)
-      }
+        console.log(resp);
+      },
     });
   },
 });
 
+$(document).ready(function () {
+  // //NIC ajax
+  $("#txtNic").change(function (e) {
+    var ProfileDTO = {
+      Nic: $("#txtNic").val(),
+    };
+    $.ajax({
+      url: "/UserValidation/NICCheck",
+      data: ProfileDTO,
+      success: function (resp) {
+        console.log(resp);
+
+        $("#txtName").val(resp.name);
+        $("#txtFatherName").val(resp.fatherName);
+        $("#txtNumber").val(resp.phoneNumber);
+        $("#txtEmail").val(resp.email);
+        // $("#txtNic").val();  
+        // $("input[name=gender]:checked").val();
+        $("#timeDOB1").val(resp.doB);
+        $("#txtAddress").val(resp.address);
+        $("#txtCity").val(resp.city);
+        $("#txtCountry").val(resp.country);
+        // $("#Image1").val();
+        // $("#dpdownRole option:selected").val();
+        $("#txtPassword").val();
+        // $("#dpdownProgram option:selected").val();
+      },
+      error: function (resp) {
+        console.log(resp);
+      },
+    });
+  });
+  //faculty role condition
+  $("#dpdownRole").change(function (e) {
+    if ($("#dpdownRole").val() == 2) {
+      $("#lblprogram").hide();
+      $("#dpdownProgram").hide();
+    } else {
+      $("#lblprogram").show();
+      $("#dpdownProgram").show();
+    }
+  });
+
+  //Roles List
+  $.ajax({
+    async: true,
+    type: "Get",
+    url: "/DropDown/GetRoles",
+    success: function (resp) {
+      var html = "";
+      html += "<option value='0'>Select Role</option>";
+      $(resp).each(function (index, item) {
+        html +=
+          "<option value=" + item.roleId + ">" + item.roleName + "</option>";
+      });
+      $("#dpdownRole").append(html);
+    },
+  });
+
+  //Programs List
+  $.ajax({
+    async: true,
+    type: "Get",
+    url: "/DropDown/GetPrograms",
+    success: function (resp) {
+      var html = "";
+      html += "<option value='0'>Select Program</option>";
+      $(resp).each(function (indexInArray, items) {
+        html +=
+          "<option value=" +
+          items.programId +
+          ">" +
+          items.programShortName +
+          "</option>";
+      });
+      $("#dpdownProgram").append(html);
+    },
+  });
+});
