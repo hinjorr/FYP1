@@ -27,8 +27,18 @@ namespace FYP1.Models
             try
             {
                 var data = await db.TblProfiles.Where(x => x.Nic == dto.Nic).FirstOrDefaultAsync();
-                var mapped = mapper.Map(data, dto);
-                return mapped;
+                if (data != null)
+                {
+                    var user = await db.TblUsers.Where(x => x.ProfileId == data.ProfileId).FirstOrDefaultAsync();
+                    var mapped = mapper.Map(data, dto);
+                    mapped.User.RoleId = user.RoleId;
+                    return mapped;
+                }
+                else
+                {
+                    return null;
+                }
+
             }
             catch (System.Exception)
             {

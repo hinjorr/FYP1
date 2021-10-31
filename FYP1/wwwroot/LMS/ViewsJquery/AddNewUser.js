@@ -66,7 +66,6 @@
         IsActive: 1,
       },
     };
-    console.log(ProfileDTO);
     $.ajax({
       type: "Post",
       url: "/User/AddNewUser",
@@ -79,49 +78,99 @@
 });
 
 $(document).ready(function () {
-  // //NIC ajax
-  $("#txtNic").change(function (e) {
-    var ProfileDTO = {
-      Nic: $("#txtNic").val(),
-    };
-    $.ajax({
-      url: "/UserValidation/NICCheck",
-      data: ProfileDTO,
-      success: function (resp) {
-        console.log(resp);
+  var NICvariable = null;
+  var Rolevariable = 0;
 
-        $("#txtName").val(resp.name);
-        $("#txtFatherName").val(resp.fatherName);
-        $("#txtNumber").val(resp.phoneNumber);
-        $("#txtEmail").val(resp.email);
-        // $("#txtNic").val();  
-        // $("input[name=gender]:checked").val();
-        $("#timeDOB1").val(resp.doB);
-        $("#txtAddress").val(resp.address);
-        $("#txtCity").val(resp.city);
-        $("#txtCountry").val(resp.country);
-        // $("#Image1").val();
-        // $("#dpdownRole option:selected").val();
-        $("#txtPassword").val();
-        // $("#dpdownProgram option:selected").val();
-      },
-      error: function (resp) {
-        console.log(resp);
-      },
-    });
-  });
-  //faculty role condition
-  $("#dpdownRole").change(function (e) {
-    if ($("#dpdownRole").val() == 2) {
+  //function for dropdown hide and already registered alert
+  function DropDownAndLable(roleId) {
+    if (roleId == 2) {
+      $("#lblprogram").hide();
+      $("#dpdownProgram").hide();
+      $("#addinfo")
+        .append("User already registered as Faculty")
+        .delay(5000)
+        .fadeOut("slow");
+    } else if (roleId == 1) {
+      $("#lblprogram").hide();
+      $("#dpdownProgram").hide();
+      $("#addinfo")
+        .append("User already registered as Admin")
+        .delay(5000)
+        .fadeOut("slow");
+    } else if (roleId == 3) {
+      $("#lblprogram").show();
+      $("#dpdownProgram").show();
+      $("#addinfo")
+        .append("User already registered as Student")
+        .delay(5000)
+        .fadeOut("slow");
+    }
+  }
+
+  //faculty and admin role condition
+  function ProgramHide(id) {
+    if (id == 2 || id == 1) {
       $("#lblprogram").hide();
       $("#dpdownProgram").hide();
     } else {
       $("#lblprogram").show();
       $("#dpdownProgram").show();
     }
+  }
+
+  //NIC check ajax
+  $("#txtNic").change(function (e) {
+    var ProfileDTO = {
+      Nic: $("#txtNic").val(),
+      User: {
+        IsActive: 1,
+      },
+      Student: {
+        IsActive: 1,
+      },
+    };
+    $.ajax({
+      type: "Post",
+      url: "/UserValidation/NICCheck",
+      data: ProfileDTO,
+      success: function (resp) {
+        if (resp != null) {
+          $("#txtName").val(resp.name);
+          $("#txtFatherName").val(resp.fatherName);
+          $("#txtNumber").val(resp.phoneNumber);
+          $("#txtEmail").val(resp.email);
+          $("input[name=gender][value=" + resp.gender + "]").prop(
+            "checked",
+            true
+          );
+          $("#timeDOB1").val(resp.doB);
+          $("#txtAddress").val(resp.address);
+          $("#txtCity").val(resp.city);
+          $("#txtCountry").val(resp.country);
+          // $("#Image1").val();
+          DropDownAndLable(resp.user.roleId);
+          NICvariable = resp.nic;
+          Rolevariable = resp.user.roleId;
+        }
+      },
+    });
   });
 
-  //Roles List
+  $("#dpdownRole").change(function (e) {
+    var local = $("#dpdownRole").val();
+    ProgramHide(local);
+    if (local == Rolevariable) {
+      $("#roleinfo")
+        .append("User already registered with this Role")
+        .delay(5000)
+        .fadeOut("slow");
+      $("#btnSubmit").attr("disabled", true);
+    } else {
+      $("#btnSubmit").attr("disabled", false);
+    }
+  });
+
+  //display Roles List
   $.ajax({
     async: true,
     type: "Get",
@@ -137,7 +186,7 @@ $(document).ready(function () {
     },
   });
 
-  //Programs List
+  //display Programs List
   $.ajax({
     async: true,
     type: "Get",

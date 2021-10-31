@@ -6,7 +6,16 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
 
 <div class="form-panel">
-    <h4 class="mb"><i class="fa fa-angle-right"></i> Add new User</h4>
+    <div class="row">
+        <h4 class="mb col-md-3"><i class="fa fa-angle-right"></i> Add new User</h4>
+        <!-- <div class="alert alert-danger alert-dismissable col-md-8" id="NicAlert" hidden>
+            <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+            <p id="addinfo"></p>
+        </div> -->
+        <label id="addinfo" class="col-md-8 error" ></label>
+        <label id="roleinfo" class="col-md-8 error" ></label>
+    </div>
+
     <form id="newuser">
         <div class="form-group row">
             <div class="col-sm-3">
@@ -27,7 +36,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <label>Father's Name</label>
                 <input type="text" class="form-control" placeholder="" id="txtFatherName">
             </div>
-            
+
 
 
             <div class="form-group">
@@ -76,7 +85,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 </div>
 
                 <div class="form-group row">
-                    
+
                     <div class="col-sm-4">
                         <label>
                             Phone Number
@@ -84,7 +93,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         </label>
                         <input type="text" class="form-control" placeholder="" id="txtNumber" name="number">
                     </div>
-                    <div class="col-sm-3">
+                    <div class="col-sm-4">
                         <div class="radio">
                             <label>Gender</label><br>
                             <label>

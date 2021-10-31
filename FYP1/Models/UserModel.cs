@@ -23,6 +23,11 @@ namespace FYP1.Models
             db = _db;
         }
 
+        //generating random number for username
+        public static int RandomNumber(int min, int max)
+        {
+            return _random.Next(min, max);
+        }
         public async Task<bool> AddNewUser(ProfileDTO dto)
         {
             using (var transaction = await db.Database.BeginTransactionAsync())
@@ -73,11 +78,8 @@ namespace FYP1.Models
 
 
         }
-        public static int RandomNumber(int min, int max)
-        {
-            return _random.Next(min, max);
-        }
-      
+
+
 
 
     }

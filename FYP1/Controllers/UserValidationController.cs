@@ -1,12 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
 using FYP1.DTOs;
 using FYP1.Models;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace FYP1.Controllers
 {
@@ -18,6 +13,8 @@ namespace FYP1.Controllers
         {
             repo = _repo;
         }
+       
+        [HttpPost]
         public async Task<IActionResult> NICCheck(ProfileDTO dto)
         {
             var data=await repo.CheckNIC(dto);
