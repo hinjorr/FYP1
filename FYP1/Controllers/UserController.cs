@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
-using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 using FYP1.DTOs;
-using AutoMapper;
-using FYP1.dbModels;
 using FYP1.Repository;
 
 namespace FYP1.Controllers
@@ -20,7 +13,6 @@ namespace FYP1.Controllers
         {
             repo = _repo;
         }
-
         public IActionResult AddNewUser()
         {
             return View();
@@ -28,8 +20,16 @@ namespace FYP1.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewUser(ProfileDTO dto)
         {
-            var data = await repo.AddNewUser(dto);
-            return Ok(data);
+            var RoleChk = await repo.Role_NIC_Check(dto);
+            if (RoleChk == null)
+            {
+                var data = await repo.AddNewUser(dto);
+                return Ok(data);
+            }
+            else
+            {
+                return Ok(RoleChk);
+            }
         }
 
         public IActionResult ViewUsers()

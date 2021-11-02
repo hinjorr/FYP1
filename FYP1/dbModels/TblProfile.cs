@@ -7,11 +7,6 @@ namespace FYP1.dbModels
 {
     public partial class TblProfile
     {
-        public TblProfile()
-        {
-            TblUsers = new HashSet<TblUser>();
-        }
-
         public int ProfileId { get; set; }
         public string Name { get; set; }
         public string FatherName { get; set; }
@@ -24,8 +19,7 @@ namespace FYP1.dbModels
         public string DoB { get; set; }
         public string Gender { get; set; }
         public string PhoneNumber { get; set; }
-        public ulong? IsActive { get; set; }
-
-        public virtual ICollection<TblUser> TblUsers { get; set; }
+        public bool IsActive { get; set; }
+        public string ProfileDate { get; set; }
     }
 }

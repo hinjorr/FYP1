@@ -10,8 +10,5 @@ namespace FYP1.dbModels
         public int ScrId { get; set; }
         public int? StudentId { get; set; }
         public int? ElgibiltyId { get; set; }
-
-        public virtual TblCourseEligiblity Elgibilty { get; set; }
-        public virtual TblStudent Student { get; set; }
     }
 }

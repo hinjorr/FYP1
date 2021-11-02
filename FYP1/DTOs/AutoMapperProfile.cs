@@ -12,6 +12,7 @@ namespace FYP1.DTOs
         public AutoMapperProfile()
         {
             CreateMap<UserDTO,TblUser>();
+            CreateMap<AdminDTO,TblAdmin>();
 
             CreateMap<StudentDTO,TblStudent>();
             CreateMap<FacultyDTO,TblFaculty>();

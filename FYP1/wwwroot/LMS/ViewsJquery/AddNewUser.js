@@ -11,10 +11,6 @@
       required: true,
       email: true,
     },
-    password: {
-      required: true,
-      minlength: 5,
-    },
     nic: {
       required: true,
       number: true,
@@ -58,7 +54,6 @@
       IsActive: 1,
       User: {
         RoleId: $("#dpdownRole option:selected").val(),
-        Password: $("#txtPassword").val(),
         IsActive: 1,
       },
       Student: {
@@ -78,46 +73,19 @@
 });
 
 $(document).ready(function () {
-  var NICvariable = null;
+  $("#roleinfo").hide();
   var Rolevariable = 0;
-
-  //function for dropdown hide and already registered alert
-  function DropDownAndLable(roleId) {
-    if (roleId == 2) {
-      $("#lblprogram").hide();
-      $("#dpdownProgram").hide();
-      $("#addinfo")
-        .append("User already registered as Faculty")
-        .delay(5000)
-        .fadeOut("slow");
-    } else if (roleId == 1) {
-      $("#lblprogram").hide();
-      $("#dpdownProgram").hide();
-      $("#addinfo")
-        .append("User already registered as Admin")
-        .delay(5000)
-        .fadeOut("slow");
-    } else if (roleId == 3) {
-      $("#lblprogram").show();
-      $("#dpdownProgram").show();
-      $("#addinfo")
-        .append("User already registered as Student")
-        .delay(5000)
-        .fadeOut("slow");
-    }
-  }
 
   //faculty and admin role condition
   function ProgramHide(id) {
     if (id == 2 || id == 1) {
-      $("#lblprogram").hide();
-      $("#dpdownProgram").hide();
+      $("#lblprogram").attr("disabled", true);
+      $("#dpdownProgram").attr("disabled", true);
     } else {
-      $("#lblprogram").show();
-      $("#dpdownProgram").show();
+      $("#lblprogram").attr("disabled", false);
+      $("#dpdownProgram").attr("disabled", false);
     }
   }
-
   //NIC check ajax
   $("#txtNic").change(function (e) {
     var ProfileDTO = {
@@ -148,24 +116,30 @@ $(document).ready(function () {
           $("#txtCity").val(resp.city);
           $("#txtCountry").val(resp.country);
           // $("#Image1").val();
-          DropDownAndLable(resp.user.roleId);
-          NICvariable = resp.nic;
+          ProgramHide(resp.user.roleId);
           Rolevariable = resp.user.roleId;
+          // if (resp.user.roleId == 1) {
+          //   $("#roleinfo").text("User already registered as Admin").show();
+          // } else if (resp.user.roleId == 2) {
+          //   $("#roleinfo").text("User already registered as Faculty").show();
+          // } else if (resp.user.roleId == 3) {
+          //   $("#roleinfo").text("User already registered as Student").show();
+          // }
+        
         }
       },
     });
   });
 
+  //user already registerd with same role
   $("#dpdownRole").change(function (e) {
     var local = $("#dpdownRole").val();
     ProgramHide(local);
     if (local == Rolevariable) {
-      $("#roleinfo")
-        .append("User already registered with this Role")
-        .delay(5000)
-        .fadeOut("slow");
+      $("#roleinfo").text("This User already registered with this Role").show();
       $("#btnSubmit").attr("disabled", true);
     } else {
+      $("#roleinfo").hide();
       $("#btnSubmit").attr("disabled", false);
     }
   });

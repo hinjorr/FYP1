@@ -9,6 +9,7 @@ namespace FYP1.Repository
 {
     public interface IUser
     {
-         Task<bool> AddNewUser(ProfileDTO dto);
+        Task<bool> AddNewUser(ProfileDTO dto);
+        Task<string> Role_NIC_Check(ProfileDTO dto);
     }
 }
