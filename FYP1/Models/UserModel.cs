@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -51,9 +52,13 @@ namespace FYP1.Models
                         {
                             await AddFaculty(user.UserId);
                         }
-                        else if (dto.Student.ProgramId != null && user.RoleId == 3)
+                        else if (dto.Student.ProgramId != 0 && user.RoleId == 3)
                         {
                             await AddStudent(dto);
+                        }
+                        else
+                        {
+                            return false;
                         }
                     }
                     else
@@ -70,9 +75,14 @@ namespace FYP1.Models
                         {
                             await AddFaculty(user.UserId);
                         }
+
                         else if (dto.Student.ProgramId != null && dto.User.RoleId == 3)
                         {
                             await AddStudent(dto);
+                        }
+                        else
+                        {
+                            return false;
                         }
                     }
                     await transaction.CommitAsync();
@@ -87,7 +97,7 @@ namespace FYP1.Models
         async Task<TblProfile> AddProfile()
         {
             //entring data in TblProfile
-            profile.ProfileDate=datenow.ToString();
+            profile.ProfileDate = datenow.ToString();
             await db.TblProfiles.AddAsync(profile);
             await db.SaveChangesAsync();
             return profile;
@@ -95,10 +105,11 @@ namespace FYP1.Models
         async Task<TblUser> AddUser(ProfileDTO dto)
         {
             //entring data in TblUser
+            mapper.Map(dto.User, user);
             user.RoleId = dto.User.RoleId;
             user.UserDate = datenow.ToString();
             user.Password = RandomNumber(93456, 193123) + profile.ProfileId.ToString();
-            user.ProfileId = dto.ProfileId;
+            user.ProfileId = profile.ProfileId;
             user.UserName = RandomNumber(121, 9131) + user.ProfileId.ToString();
             await db.TblUsers.AddAsync(user);
             await db.SaveChangesAsync();
@@ -136,8 +147,8 @@ namespace FYP1.Models
                 var profile = await db.TblProfiles.Where(x => x.Nic == dto.Nic).FirstOrDefaultAsync();
                 if (profile != null)
                 {
-                    var user = await db.TblUsers.Where(x => x.ProfileId == profile.ProfileId).FirstOrDefaultAsync();
-                    if (user.RoleId == dto.User.RoleId)
+                    var user = await db.TblUsers.Where(x => x.ProfileId == profile.ProfileId && x.RoleId == dto.User.RoleId).FirstOrDefaultAsync();
+                    if (user != null)
                     {
                         return "This User already registered with this Role";
                     }
@@ -151,6 +162,26 @@ namespace FYP1.Models
             }
         }
 
+        public async Task<List<ProfileDTO>> GetUsers()
+        {
+            var data = await db.TblUsers.Include(x => x.Profile).Select(x => new ProfileDTO
+            {
+                Nic = x.Profile.Nic,
+                Name = x.Profile.Name + " " + x.Profile.FatherName,
+                Email = x.Profile.Email,
+                User = new UserDTO()
+                {
+                    UserName = x.UserName,
+                    UserDate = x.UserDate,
+                    IsActive = Convert.ToBoolean(x.IsActive),
+                    Role = new RoleDTO()
+                    {
+                        RoleName = x.Role.RoleName
+                    }
+                },
+            }).ToListAsync();
+            return data;
+        }
 
     }
 }

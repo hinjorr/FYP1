@@ -1,3 +1,4 @@
+using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FYP1.DTOs;
@@ -35,6 +36,11 @@ namespace FYP1.Controllers
         public IActionResult ViewUsers()
         {
             return View();
+        }
+        public async Task<IActionResult> ViewUser()
+        {
+            var data = await repo.GetUsers();
+            return Ok(data);
         }
         public IActionResult UploadBulkUsers()
         {

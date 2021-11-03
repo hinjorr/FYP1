@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FYP1.dbModels;
 
 namespace FYP1.DTOs
 {
@@ -12,6 +13,10 @@ namespace FYP1.DTOs
         public string Password { get; set; }
         public int RoleId { get; set; }
         public int ProfileId { get; set; }
-        public ulong? IsActive { get; set; }
+        public bool IsActive { get; set; }
+        public string UserDate { get; set; }
+
+        public  ProfileDTO Profile { get; set; }
+        public  RoleDTO Role { get; set; }
     }
 }

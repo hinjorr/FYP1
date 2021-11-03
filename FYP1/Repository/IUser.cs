@@ -11,5 +11,6 @@ namespace FYP1.Repository
     {
         Task<bool> AddNewUser(ProfileDTO dto);
         Task<string> Role_NIC_Check(ProfileDTO dto);
+        Task<List<ProfileDTO>> GetUsers();
     }
 }

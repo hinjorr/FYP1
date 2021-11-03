@@ -9,5 +9,9 @@ namespace FYP1.DTOs
     {
         public int SemesterId { get; set; }
         public string SemesterName { get; set; }
+        public string StartDate { get; set; }
+        public string EndDate { get; set; }
+        public ulong? IsActive { get; set; }
+
     }
 }

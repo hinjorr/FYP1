@@ -67,6 +67,8 @@
       data: ProfileDTO,
       success: function (resp) {
         console.log(resp);
+        // $('#newuser').trigger("reset");
+
       },
     });
   },

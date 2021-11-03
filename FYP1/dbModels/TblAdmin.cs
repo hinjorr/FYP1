@@ -9,5 +9,7 @@ namespace FYP1.dbModels
     {
         public int AdminId { get; set; }
         public int? UserId { get; set; }
+
+        public virtual TblUser User { get; set; }
     }
 }

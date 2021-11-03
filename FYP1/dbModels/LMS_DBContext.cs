@@ -34,14 +34,14 @@ namespace FYP1.dbModels
         public virtual DbSet<TblTime> TblTimes { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
 
-//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//         {
-//             if (!optionsBuilder.IsConfigured)
-//             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
-//             }
-//         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -63,6 +63,11 @@ namespace FYP1.dbModels
                 entity.Property(e => e.UserId)
                     .HasColumnType("int(11)")
                     .HasColumnName("UserID");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblAdmins)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Tbl_Admin_ibfk_1");
             });
 
             modelBuilder.Entity<TblClass>(entity =>
@@ -101,6 +106,26 @@ namespace FYP1.dbModels
                 entity.Property(e => e.SemesterId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Semester_Id");
+
+                entity.HasOne(d => d.ClassDayNavigation)
+                    .WithMany(p => p.TblClasses)
+                    .HasForeignKey(d => d.ClassDay)
+                    .HasConstraintName("Tbl_Classes_ibfk_2");
+
+                entity.HasOne(d => d.ClassTimeNavigation)
+                    .WithMany(p => p.TblClasses)
+                    .HasForeignKey(d => d.ClassTime)
+                    .HasConstraintName("Tbl_Classes_ibfk_3");
+
+                entity.HasOne(d => d.Course)
+                    .WithMany(p => p.TblClasses)
+                    .HasForeignKey(d => d.CourseId)
+                    .HasConstraintName("Tbl_Classes_ibfk_4");
+
+                entity.HasOne(d => d.Semester)
+                    .WithMany(p => p.TblClasses)
+                    .HasForeignKey(d => d.SemesterId)
+                    .HasConstraintName("Tbl_Classes_ibfk_1");
             });
 
             modelBuilder.Entity<TblCourse>(entity =>
@@ -112,7 +137,6 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.CourseId)
                     .HasColumnType("int(11)")
-                    .ValueGeneratedNever()
                     .HasColumnName("CourseID");
 
                 entity.Property(e => e.CourseName).HasMaxLength(50);
@@ -150,6 +174,21 @@ namespace FYP1.dbModels
                 entity.Property(e => e.RqdCourseId)
                     .HasColumnType("int(11)")
                     .HasColumnName("RqdCourse_Id");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblCourseEligiblities)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("Tbl_CourseEligiblity_ibfk_1");
+
+                entity.HasOne(d => d.Program)
+                    .WithMany(p => p.TblCourseEligiblities)
+                    .HasForeignKey(d => d.ProgramId)
+                    .HasConstraintName("Tbl_CourseEligiblity_ibfk_2");
+
+                entity.HasOne(d => d.RqdCourse)
+                    .WithMany(p => p.TblCourseEligiblities)
+                    .HasForeignKey(d => d.RqdCourseId)
+                    .HasConstraintName("Tbl_CourseEligiblity_ibfk_3");
             });
 
             modelBuilder.Entity<TblDay>(entity =>
@@ -180,6 +219,11 @@ namespace FYP1.dbModels
                 entity.Property(e => e.UserId)
                     .HasColumnType("int(11)")
                     .HasColumnName("UserID");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblFaculties)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Tbl_Faculty_ibfk_1");
             });
 
             modelBuilder.Entity<TblFacultyCourseRegistration>(entity =>
@@ -204,6 +248,16 @@ namespace FYP1.dbModels
                 entity.Property(e => e.FacultyId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Faculty_ID");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblFacultyCourseRegistrations)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_2");
+
+                entity.HasOne(d => d.Faculty)
+                    .WithMany(p => p.TblFacultyCourseRegistrations)
+                    .HasForeignKey(d => d.FacultyId)
+                    .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_1");
             });
 
             modelBuilder.Entity<TblProfile>(entity =>
@@ -294,6 +348,21 @@ namespace FYP1.dbModels
                 entity.Property(e => e.RqdCourseId)
                     .HasColumnType("int(11)")
                     .HasColumnName("RqdCourse_Id");
+
+                entity.HasOne(d => d.Course)
+                    .WithMany(p => p.TblProgramSyllabusCourses)
+                    .HasForeignKey(d => d.CourseId)
+                    .HasConstraintName("Tbl_ProgramSyllabus_ibfk_2");
+
+                entity.HasOne(d => d.Program)
+                    .WithMany(p => p.TblProgramSyllabi)
+                    .HasForeignKey(d => d.ProgramId)
+                    .HasConstraintName("Tbl_ProgramSyllabus_ibfk_1");
+
+                entity.HasOne(d => d.RqdCourse)
+                    .WithMany(p => p.TblProgramSyllabusRqdCourses)
+                    .HasForeignKey(d => d.RqdCourseId)
+                    .HasConstraintName("Tbl_ProgramSyllabus_ibfk_3");
             });
 
             modelBuilder.Entity<TblRole>(entity =>
@@ -323,7 +392,13 @@ namespace FYP1.dbModels
                     .HasColumnType("int(11)")
                     .HasColumnName("Semester_Id");
 
+                entity.Property(e => e.EndDate).HasMaxLength(50);
+
+                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+
                 entity.Property(e => e.SemesterName).HasMaxLength(50);
+
+                entity.Property(e => e.StartDate).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TblStudent>(entity =>
@@ -350,6 +425,16 @@ namespace FYP1.dbModels
                 entity.Property(e => e.UserId)
                     .HasColumnType("int(11)")
                     .HasColumnName("UserID");
+
+                entity.HasOne(d => d.Program)
+                    .WithMany(p => p.TblStudents)
+                    .HasForeignKey(d => d.ProgramId)
+                    .HasConstraintName("Tbl_Student_ibfk_2");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblStudents)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Tbl_Student_ibfk_1");
             });
 
             modelBuilder.Entity<TblStudentCourseRegistration>(entity =>
@@ -374,6 +459,16 @@ namespace FYP1.dbModels
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Student_ID");
+
+                entity.HasOne(d => d.Elgibilty)
+                    .WithMany(p => p.TblStudentCourseRegistrations)
+                    .HasForeignKey(d => d.ElgibiltyId)
+                    .HasConstraintName("Tbl_StudentCourseRegistration_ibfk_2");
+
+                entity.HasOne(d => d.Student)
+                    .WithMany(p => p.TblStudentCourseRegistrations)
+                    .HasForeignKey(d => d.StudentId)
+                    .HasConstraintName("Tbl_StudentCourseRegistration_ibfk_1");
             });
 
             modelBuilder.Entity<TblTime>(entity =>
@@ -426,6 +521,18 @@ namespace FYP1.dbModels
                 entity.Property(e => e.UserName)
                     .IsRequired()
                     .HasMaxLength(50);
+
+                entity.HasOne(d => d.Profile)
+                    .WithMany(p => p.TblUsers)
+                    .HasForeignKey(d => d.ProfileId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Tbl_User_ibfk_1");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.TblUsers)
+                    .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Tbl_User_ibfk_2");
             });
 
             OnModelCreatingPartial(modelBuilder);

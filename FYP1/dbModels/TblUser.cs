@@ -7,6 +7,13 @@ namespace FYP1.dbModels
 {
     public partial class TblUser
     {
+        public TblUser()
+        {
+            TblAdmins = new HashSet<TblAdmin>();
+            TblFaculties = new HashSet<TblFaculty>();
+            TblStudents = new HashSet<TblStudent>();
+        }
+
         public int UserId { get; set; }
         public string UserName { get; set; }
         public string Password { get; set; }
@@ -14,5 +21,11 @@ namespace FYP1.dbModels
         public int ProfileId { get; set; }
         public ulong? IsActive { get; set; }
         public string UserDate { get; set; }
+
+        public virtual TblProfile Profile { get; set; }
+        public virtual TblRole Role { get; set; }
+        public virtual ICollection<TblAdmin> TblAdmins { get; set; }
+        public virtual ICollection<TblFaculty> TblFaculties { get; set; }
+        public virtual ICollection<TblStudent> TblStudents { get; set; }
     }
 }
