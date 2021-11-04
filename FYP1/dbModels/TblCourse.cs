@@ -16,8 +16,9 @@ namespace FYP1.dbModels
         }
 
         public int CourseId { get; set; }
-        public string CourseName { get; set; }
-        public string CourseShortName { get; set; }
+        public string FullName { get; set; }
+        public string ShortName { get; set; }
+        public int? CrHr { get; set; }
         public ulong? IsActive { get; set; }
 
         public virtual ICollection<TblClass> TblClasses { get; set; }

@@ -139,11 +139,13 @@ namespace FYP1.dbModels
                     .HasColumnType("int(11)")
                     .HasColumnName("CourseID");
 
-                entity.Property(e => e.CourseName).HasMaxLength(50);
+                entity.Property(e => e.CrHr).HasColumnType("int(11)");
 
-                entity.Property(e => e.CourseShortName).HasMaxLength(50);
+                entity.Property(e => e.FullName).HasMaxLength(50);
 
                 entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+
+                entity.Property(e => e.ShortName).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TblCourseEligiblity>(entity =>

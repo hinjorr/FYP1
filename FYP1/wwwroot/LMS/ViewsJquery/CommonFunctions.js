@@ -62,4 +62,18 @@ var CommonFunctions = {
       },
     });
   },
+  GetCourse: function (id) {
+    $.ajax({
+      url: "/DropDown/GetCourses",
+      success: function (resp) {
+        var html = "";
+        html += "<option value='0'>Select Course</option>";
+        $(resp).each(function (index, item) {
+          html +=
+            "<option value=" + item.courseID + ">" + item.shortName + "</option>";
+        });
+        $(id).append(html);
+      },
+    });
+  },
 };

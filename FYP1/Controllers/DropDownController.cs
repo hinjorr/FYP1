@@ -32,6 +32,11 @@ namespace FYP1.Controllers
             var data = await repo.GetTime();
             return Ok(data);
         }
+        public async Task<IActionResult> GetCourses()
+        {
+            var data = await repo.GetCourses();
+            return Ok(data);
+        }
 
     }
 }

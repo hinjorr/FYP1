@@ -1,25 +1,43 @@
-jQuery("#addnewcourse").validate({
+$("#addnewcourse").validate({
   rules: {
-    coursefullname: "required",
+    fullname: "required",
     shortname: "required",
-    crhr: "required",
+    courseCrHr: {
+      digits: true,
+      min: 1,
+      max: 4,
+    },
   },
   messages: {
-    coursefullname: "Please enter course name",
-    shortname: "Please enter short name",
-    crhr: "Please enter credit hours",
+    fullname: {
+      required: "This field is required",
+    },
+    courseCrHr: {
+      min: "Minimum 1 CrHr",
+      max: "Maximum 4 CrHr",
+    },
+  },
+  submitHandler: function (form) {
+    var CourseDTO = {
+      FullName: $("#txtfullName").val(),
+      ShortName: $("#txtshortName").val(),
+      CrHr: $("#txtcourseCrHr").val(),
+    };
+    AddNewCourse(CourseDTO);
+    console.log(CourseDTO);
   },
 });
 
-
-$(document).ready(function () {
-  $("#btnCreate").click(function () {
-    var CourseDTO = {
-      CourseName: $("#txtFullname").val(),
-      CourseCrHr: $("#txtCoursecrhr").val(),
-      RequiredCrHr: $("#txtRequired").val(),
-      CourseShortName: $("#txtShrtname").val(),
-    };
-    console.log(CourseDTO);
+function AddNewCourse(CourseDTO) {
+  $.ajax({
+    type: "Post",
+    url: "/AdminCourses/AddNewCourse",
+    data: CourseDTO,
+    success: function (resp) {
+      console.log(resp);
+    },
   });
+}
+$(document).ready(function () {
+  // alert("s");
 });

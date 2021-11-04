@@ -7,40 +7,31 @@ Layout = "~/Views/Shared/_Layout.cshtml";
     <div class="col-lg-5">
         <div class="form-panel">
             <h4 class="mb"><i class="fa fa-angle-right"></i> Add new Course</h4>
-            <form>
+            <form id="addnewcourse">
                 <div class="form-group row">
                     <div class="col-sm-12">
                         <label>Course Full Name
                             <span class="error">*</span>
                         </label>
-                        <input type="text" class="form-control" id="txtFullname">
-                        <label class="error" id="lblFullname"></label>
+                        <input type="text" class="form-control" id="txtfullName" name="fullName">
                     </div>
                 </div>
                 <div class="form-group row">
-                    <div class="col-sm-4">
+                    <div class="col-sm-5">
                         <label>Short Name
                             <span class="error">*</span>
                         </label>
-                        <input type="text" class="form-control" id="txtShrtname">
-                        <label class="error" id="lblShrtname"></label>
+                        <input type="text" class="form-control" id="txtshortName" name="shortName">
                     </div>
-                    <div class="col-sm-4">
-                        <label>Required Cr.Hr
-                            <span class="error">*</span>
-                        </label>
-                        <input type="text" class="form-control" id="txtRequired">
-                        <label class="error" id="lblRequired"></label>
-                    </div>
-                    <div class="col-sm-4">
+
+                    <div class="col-sm-5">
                         <label>Course Cr.Hr
                             <span class="error">*</span>
                         </label>
-                        <input type="text" class="form-control" id="txtCoursecrhr">
-                        <label class="error" id="lblCoursecrhr"></label>
+                        <input type="text" class="form-control" id="txtcourseCrHr" name="courseCrHr">
                     </div>
                 </div>
-                <button type="button" class="btn btn-primary btn-lg btn-block" id="btnCreate">Create</button>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnCreate">Create</button>
             </form>
         </div>
     </div>

@@ -18,9 +18,9 @@ $(document).ready(function () {
 
   //     };
   //     console.log(ViewClass)
-
   // });
   CommonFunctions.GetPrograms(".dpPrograms");
+  CommonFunctions.GetCourse(".DpDownCourse");
   CommonFunctions.GetDays("#dpDownClassDay");
   CommonFunctions.GetTime("#dpDownClassTime");
 });

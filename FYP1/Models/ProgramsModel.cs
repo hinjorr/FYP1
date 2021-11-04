@@ -26,6 +26,7 @@ namespace FYP1.Models
                 try
                 {
                     mapper.Map(dto, program);
+                    program.ProgramShortName.ToUpper();
                     await db.TblPrograms.AddAsync(program);
                     await db.SaveChangesAsync();
                     await transaction.CommitAsync();
