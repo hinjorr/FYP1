@@ -97,7 +97,7 @@ namespace FYP1.Models
         async Task<TblProfile> AddProfile()
         {
             //entring data in TblProfile
-            profile.ProfileDate = datenow.ToString();
+            profile.ProfileDate = datenow.ToString("dd/MM/yyyy");
             await db.TblProfiles.AddAsync(profile);
             await db.SaveChangesAsync();
             return profile;
@@ -107,9 +107,10 @@ namespace FYP1.Models
             //entring data in TblUser
             mapper.Map(dto.User, user);
             user.RoleId = dto.User.RoleId;
-            user.UserDate = datenow.ToString();
+            user.IsActive=Convert.ToUInt32(true);
+            user.UserDate = datenow.ToString("dd/MM/yyyy");
             user.Password = RandomNumber(93456, 193123) + profile.ProfileId.ToString();
-            user.ProfileId = profile.ProfileId;
+            user.ProfileId = dto.ProfileId;
             user.UserName = RandomNumber(121, 9131) + user.ProfileId.ToString();
             await db.TblUsers.AddAsync(user);
             await db.SaveChangesAsync();

@@ -4,50 +4,96 @@ $("#newsemster").validate({
   },
   messages: {
     Fullname: {
-      required: "Please enter Semester number",
+      required: "Please enter Semester name",
     },
   },
   submitHandler: function (form) {
     var SemesterDTO = {
       SemesterName: $("#txtFullname").val(),
     };
-    $.ajax({
-      type: "Post",
-      url: "/Semester/StartSemester",
-      data: SemesterDTO,
-      success: function (resp) {
-        console.log(resp);
-        // $('#newsemster').trigger("reset");
-      },
-    });
+    AddSemester(SemesterDTO);
   },
 });
-$(document).ready(function () {
-  var SemesterDTO = {
-    SemesterId: 0,
-    SemesterName: "",
-    StartDate: "",
-    EndDate: "",
-    IsActive: "",
-  };
+function AddSemester(SemesterDTO) {
+  $.ajax({
+    type: "Post",
+    url: "/Semester/StartSemester",
+    data: SemesterDTO,
+    success: function (resp) {
+      // debugger;
+      if (resp == true) {
+        GetCurrentSemester();
+      } else {
+        alert.append("Semester didnt started");
+      }
+      // $('#newsemster').trigger("reset");
+    },
+  });
+}
+function YesSemester(semesterName) {
+  // debugger;
+  $("#txtFullname").hide();
+  $("#lblname").hide();
+  $("#btnstart").hide();
+  $("#btnend").show();
+  alert(semesterName + " is running");
+}
+function NoSemester() {
+  $("#txtFullname").show();
+  $("#lblname").show();
+  $("#btnstart").show();
+  $("#btnend").hide();
+  alert("No semester is running");
+}
+
+//Get Currenlty running semester
+function GetCurrentSemester() {
   $.ajax({
     url: "/Semester/GetCurrentSemester",
     success: function (resp) {
-      (SemesterDTO.SemesterId = resp.semesterId),
-        (SemesterDTO.SemesterName = resp.semesterName),
-        (SemesterDTO.StartDate = resp.startDate),
-        (SemesterDTO.IsActive = resp.isActive);
+      // debugger;
+      if (resp != null) {
+        // debugger;
+        (SemesterDTO.SemesterId = resp.semesterId),
+          (SemesterDTO.SemesterName = resp.semesterName),
+          (SemesterDTO.StartDate = resp.startDate),
+          (SemesterDTO.IsActive = resp.isActive);
+        YesSemester(resp.semesterName);
+      } else {
+        NoSemester();
+      }
     },
   });
-  $("#btnend").click(function (e) {
-    console.log(SemesterDTO);
+}
+var SemesterDTO = {
+  SemesterId: 0,
+  SemesterName: "",
+  StartDate: "",
+  EndDate: "",
+  IsActive: "",
+};
+
+//Close the semeter
+$("#btnend").click(function (e) {
+  // debugger;
+  if (SemesterDTO.SemesterId != 0) {
     $.ajax({
       type: "Post",
       url: "/Semester/EndSemester",
-      data: "SemesterDTO",
+      data: SemesterDTO,
       success: function (resp) {
-        console.log(resp);
+        if (resp == true) {
+          NoSemester();
+        } else {
+          alert("Cant close semester");
+        }
       },
     });
-  });
+  } else {
+    alert("Cant close semester");
+  }
+});
+
+$(document).ready(function () {
+  GetCurrentSemester();
 });

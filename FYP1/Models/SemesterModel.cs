@@ -27,7 +27,7 @@ namespace FYP1.Models
             try
             {
                 mapper.Map(dto, semester);
-                semester.StartDate = nowdt.ToString();
+                semester.StartDate = nowdt.ToString("dd/MM/yyyy");
                 semester.IsActive = Convert.ToUInt32(true);
                 await db.TblSemesters.AddAsync(semester);
                 await db.SaveChangesAsync();
@@ -35,7 +35,6 @@ namespace FYP1.Models
             }
             catch (System.Exception e)
             {
-
                 throw e;
             }
         }
@@ -45,25 +44,23 @@ namespace FYP1.Models
             try
             {
                 // mapper.Map(dto, semester);
-                var data=await db.TblSemesters.Where(x=>x.SemesterId==dto.SemesterId).FirstOrDefaultAsync();
-                data.EndDate = nowdt.ToString();
+                var data = await db.TblSemesters.Where(x => x.SemesterId == dto.SemesterId).FirstOrDefaultAsync();
+                data.EndDate = nowdt.ToString("dd/MM/yyyy");
                 data.IsActive = Convert.ToUInt32(false);
-                await db.TblSemesters.AddAsync(data);
                 await db.SaveChangesAsync();
                 return true;
             }
             catch (System.Exception e)
             {
-
                 throw e;
             }
         }
-      
+
 
         public async Task<TblSemester> GetCurrentSemester()
         {
-            ulong IsActive=Convert.ToUInt64(true);
-            var data=await db.TblSemesters.Where(x=>x.IsActive==IsActive).FirstOrDefaultAsync();
+            ulong IsActive = Convert.ToUInt64(true);
+            var data = await db.TblSemesters.Where(x => x.IsActive == IsActive).FirstOrDefaultAsync();
             return data;
         }
     }

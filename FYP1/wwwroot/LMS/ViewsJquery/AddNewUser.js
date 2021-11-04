@@ -148,7 +148,6 @@ $(document).ready(function () {
 
   //display Roles List
   $.ajax({
-    async: true,
     type: "Get",
     url: "/DropDown/GetRoles",
     success: function (resp) {
@@ -164,7 +163,6 @@ $(document).ready(function () {
 
   //display Programs List
   $.ajax({
-    async: true,
     type: "Get",
     url: "/DropDown/GetPrograms",
     success: function (resp) {
