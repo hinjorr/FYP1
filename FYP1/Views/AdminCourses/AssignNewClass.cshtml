@@ -8,7 +8,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         <div class="form-panel">
             <h4 class="mb"><i class="fa fa-angle-right"></i> Assign new Class</h4>
             <form>
-                <label>Select Couses 
+                <label>Select Course
                     <span class="error">*</span>
                 </label>
                 <div class="form-group row">
@@ -22,18 +22,13 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         </select>
                     </div>
                 </div>
-               
+
                 <label>Program
                     <span class="error">*</span>
                 </label>
                 <div class="form-group row">
                     <div class="col-sm-10">
-                        <select class="form-control" id="dpDownDepart">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
-                            <option>5</option>
+                        <select class="form-control dpPrograms">
                         </select>
                     </div>
                 </div>
@@ -51,13 +46,6 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                             <span class="error">*</span>
                         </label>
                         <select class="form-control" id="dpDownClassDay">
-                            <option>Monday</option>
-                            <option>Tuesday</option>
-                            <option>Wednesday</option>
-                            <option>Thursday</option>
-                            <option>Friday</option>
-                            <option>Saturday</option>
-                            <option>Sunday</option>
                         </select>
                     </div>
                     <div class="col-sm-5">
@@ -65,23 +53,20 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                             <span class="error">*</span>
                         </label>
                         <select class="form-control" id="dpDownClassTime">
-                            <option>9:00-12:00 (morning)</option>
-                            <option>1:00-4:00 (noon)</option>
-                            <option>6:00-9:00  (evening)</option>
-    
+
                         </select>
                     </div>
                 </div>
                 <button type="button" class="btn btn-primary btn-lg btn-block" id="btnSubmit">Submit</button>
-    
-    
+
+
             </form>
         </div>
     </div>
     <div class="col-lg-7">
         <div class="form-panel">
             <h4 class="mb"><i class="fa fa-angle-right"></i> View Classes</h4>
-            <form>             
+            <form>
                 <div class="form-group row">
                     <div class="col-sm-4">
                         <label>Course</label>
@@ -96,11 +81,8 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         </select>
                     </div>
                     <div class="col-sm-4">
-                        <label>Department</label>
-                        <select class="form-control" id="dpDownVCDepart">
-                            <option>9:00-12:00 (morning)</option>
-                            <option>1:00-4:00 (noon)</option>
-                            <option>6:00-9:00  (evening)</option>
+                        <label>Programs</label>
+                        <select class="form-control dpPrograms">
                         </select>
                     </div>
                     <div class="col-sm-3">
@@ -108,68 +90,74 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         <button type="button" class="btn btn-primary" id="btnView">View</button>
                     </div>
                 </div>
-    
-    
+
+
             </form>
             <section id="no-more-tables">
                 <table class="table table-bordered table-striped table-condensed cf">
-                  <thead class="cf">
-                    <tr>
-                      <th>CID</th>
-                      <th>Day</th>
-                      <th class="numeric">Time</th>
-                      <th class="numeric">Strength</th>
-                      <th class="numeric">Enrolled</th>
-                      <th class="numeric">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td data-title="Code">AAC</td>
-                      <td data-title="Company">AUSTRALIAN.</td>
-                      <td class="numeric" data-title="Price">$1.38</td>
-                      <td class="numeric" data-title="Change">-0.01</td>
-                      <td class="numeric" data-title="Change %">-0.36%</td>
-                      <td>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                      </td>                    </tr>
-                    <tr>
-                      <td data-title="Code">123342</td>
-                      <td data-title="Company">ARDENT</td>
-                      <td class="numeric" data-title="Price">$1.15</td>
-                      <td class="numeric" data-title="Change"> +0.02</td>
-                      <td class="numeric" data-title="Change %">1.32%</td>
-                      <td>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                      </td>                    </tr>
-                   
-                    <tr>
-                      <td data-title="Code">ACR</td>
-                      <td data-title="Company">ACRUX</td>
-                      <td class="numeric" data-title="Price">$3.71</td>
-                      <td class="numeric" data-title="Change"> +0.01</td>
-                      <td class="numeric" data-title="Change %">0.14%</td>
-                      <td>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                      </td>                    </tr>
-                    <tr>
-                      <td data-title="Code">ADU</td>
-                      <td data-title="Company">ADAMUS RESOURCES LIMITED</td>
-                      <td class="numeric" data-title="Price">$0.72</td>
-                      <td class="numeric" data-title="Change">0.00</td>
-                      <td class="numeric" data-title="Change %">0.00%</td>
-                      <td>
-                        <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                        <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                      </td>                    </tr>
-                    
-                  </tbody>
+                    <thead class="cf">
+                        <tr>
+                            <th>CID</th>
+                            <th>Day</th>
+                            <th class="numeric">Time</th>
+                            <th class="numeric">Strength</th>
+                            <th class="numeric">Enrolled</th>
+                            <th class="numeric">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td data-title="Code">AAC</td>
+                            <td data-title="Company">AUSTRALIAN.</td>
+                            <td class="numeric" data-title="Price">$1.38</td>
+                            <td class="numeric" data-title="Change">-0.01</td>
+                            <td class="numeric" data-title="Change %">-0.36%</td>
+                            <td>
+                                <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-title="Code">123342</td>
+                            <td data-title="Company">ARDENT</td>
+                            <td class="numeric" data-title="Price">$1.15</td>
+                            <td class="numeric" data-title="Change"> +0.02</td>
+                            <td class="numeric" data-title="Change %">1.32%</td>
+                            <td>
+                                <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                            </td>
+                        </tr>
+
+                        <tr>
+                            <td data-title="Code">ACR</td>
+                            <td data-title="Company">ACRUX</td>
+                            <td class="numeric" data-title="Price">$3.71</td>
+                            <td class="numeric" data-title="Change"> +0.01</td>
+                            <td class="numeric" data-title="Change %">0.14%</td>
+                            <td>
+                                <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td data-title="Code">ADU</td>
+                            <td data-title="Company">ADAMUS RESOURCES LIMITED</td>
+                            <td class="numeric" data-title="Price">$0.72</td>
+                            <td class="numeric" data-title="Change">0.00</td>
+                            <td class="numeric" data-title="Change %">0.00%</td>
+                            <td>
+                                <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
+                                <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
+                            </td>
+                        </tr>
+
+                    </tbody>
                 </table>
-              </section>
+            </section>
         </div>
-    </div>  
+    </div>
 </div>
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<script src="~/LMS/lib/jquery.validate.min.js"></script>
 <script type="text/javascript" src="~/LMS/ViewsJquery/AssignNewClass.js"></script>

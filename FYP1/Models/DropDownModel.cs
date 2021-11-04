@@ -37,15 +37,24 @@ namespace FYP1.Models
             }).ToListAsync();
             return roles;
         }
+        public async Task<List<DayDTO>> GetDays()
+        {
+            var days = await db.TblDays.Select(x => new DayDTO
+            {
+                DayId = x.DayId,
+                DayName = x.DayName
+            }).ToListAsync();
+            return days;
+        }
+        public async Task<List<TimeDTO>> GetTime()
+        {
+            var time = await db.TblTimes.Select(x => new TimeDTO
+            {
+                TimeId = x.TimeId,
+                TimeName = x.TimeName
+            }).ToListAsync();
+            return time;
+        }
 
-        // public async Task<ProfileDTO> CheckData(string nic)
-        // {
-        //     var chk=db.TblProfiles.Where(x=>x.Nic==nic).FirstOrDefaultAsync();
-        //     if (chk!=null)
-        //     {
-                
-        //     }
-                 
-        // }
     }
 }

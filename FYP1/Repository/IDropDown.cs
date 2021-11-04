@@ -8,7 +8,9 @@ namespace FYP1.Repository
 {
     public interface IDropDown
     {
-         public  Task<List<RoleDTO>> GetRole();
-         public  Task<List<ProgramDTO>> GetPrograms();
+        Task<List<RoleDTO>> GetRole();
+        Task<List<ProgramDTO>> GetPrograms();
+        Task<List<DayDTO>> GetDays();
+        Task<List<TimeDTO>> GetTime();
     }
 }

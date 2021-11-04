@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 using System.Threading.Tasks;
-using FYP1.dbModels;
-using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace FYP1.Controllers
 {
@@ -26,7 +19,17 @@ namespace FYP1.Controllers
         }
         public async Task<IActionResult> GetPrograms()
         {
-            var data=await repo.GetPrograms();
+            var data = await repo.GetPrograms();
+            return Ok(data);
+        }
+        public async Task<IActionResult> GetDays()
+        {
+            var data = await repo.GetDays();
+            return Ok(data);
+        }
+        public async Task<IActionResult> GetTime()
+        {
+            var data = await repo.GetTime();
             return Ok(data);
         }
 

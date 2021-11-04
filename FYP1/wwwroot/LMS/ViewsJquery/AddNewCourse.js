@@ -1,15 +1,16 @@
-jQuery('#addnewcourse').validate({
-    rules: {
-        coursefullname: "required",
-        shortname: "required",
-        crhr: "required"
-    }, messages: {
-        coursefullname: "Please enter course name",
-        shortname: "Please enter short name",
-        crhr: "Please enter credit hours"
-    }
+jQuery("#addnewcourse").validate({
+  rules: {
+    coursefullname: "required",
+    shortname: "required",
+    crhr: "required",
+  },
+  messages: {
+    coursefullname: "Please enter course name",
+    shortname: "Please enter short name",
+    crhr: "Please enter credit hours",
+  },
+});
 
-})
 
 $(document).ready(function () {
   $("#btnCreate").click(function () {
@@ -18,9 +19,7 @@ $(document).ready(function () {
       CourseCrHr: $("#txtCoursecrhr").val(),
       RequiredCrHr: $("#txtRequired").val(),
       CourseShortName: $("#txtShrtname").val(),
-      };
-      console.log(CourseDTO)
-
-    
+    };
+    console.log(CourseDTO);
   });
 });

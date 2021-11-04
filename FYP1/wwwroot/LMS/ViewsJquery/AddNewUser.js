@@ -68,7 +68,6 @@
       success: function (resp) {
         console.log(resp);
         // $('#newuser').trigger("reset");
-
       },
     });
   },
@@ -127,7 +126,6 @@ $(document).ready(function () {
           // } else if (resp.user.roleId == 3) {
           //   $("#roleinfo").text("User already registered as Student").show();
           // }
-        
         }
       },
     });
@@ -146,37 +144,7 @@ $(document).ready(function () {
     }
   });
 
-  //display Roles List
-  $.ajax({
-    type: "Get",
-    url: "/DropDown/GetRoles",
-    success: function (resp) {
-      var html = "";
-      html += "<option value='0'>Select Role</option>";
-      $(resp).each(function (index, item) {
-        html +=
-          "<option value=" + item.roleId + ">" + item.roleName + "</option>";
-      });
-      $("#dpdownRole").append(html);
-    },
-  });
 
-  //display Programs List
-  $.ajax({
-    type: "Get",
-    url: "/DropDown/GetPrograms",
-    success: function (resp) {
-      var html = "";
-      html += "<option value='0'>Select Program</option>";
-      $(resp).each(function (indexInArray, items) {
-        html +=
-          "<option value=" +
-          items.programId +
-          ">" +
-          items.programShortName +
-          "</option>";
-      });
-      $("#dpdownProgram").append(html);
-    },
-  });
+  CommonFunctions.GetPrograms("#dpdownProgram");
+  CommonFunctions.GetRoles("#dpdownRole");
 });
