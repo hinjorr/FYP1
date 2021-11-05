@@ -8,10 +8,14 @@ using Microsoft.Extensions.Logging;
 
 namespace FYP1.Controllers
 {
-       public class Marksontroller : Controller
+       public class MarksController : Controller
     {
      
-        public IActionResult MarksReport()
+         public IActionResult StudentTestResults()
+        {
+            return View();
+        }
+         public IActionResult UploadTestResults()
         {
             return View();
         }

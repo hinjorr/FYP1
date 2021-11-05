@@ -23,14 +23,7 @@ namespace FYP1.Controllers
            var data= await repo.AddProgram(dto);
             return Ok(data);
         }
-        public IActionResult ViewPrograms()
-        {
-            return View();
-        }
-        public IActionResult EnrollClasses()
-        {
-            return View();
-        }
+       
         public IActionResult ProgramSyllabus()
         {
             return View();

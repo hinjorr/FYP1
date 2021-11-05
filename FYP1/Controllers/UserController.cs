@@ -56,10 +56,7 @@ namespace FYP1.Controllers
         {
             return View();
         }
-        public IActionResult StudentTestResults()
-        {
-            return View();
-        }
+       
 
     }
 }
