@@ -141,7 +141,7 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.CrHr).HasColumnType("int(11)");
 
-                entity.Property(e => e.FullName).HasMaxLength(50);
+                entity.Property(e => e.FullName).HasMaxLength(100);
 
                 entity.Property(e => e.IsActive).HasColumnType("bit(1)");
 
@@ -346,6 +346,10 @@ namespace FYP1.dbModels
                 entity.Property(e => e.ProgramId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Program_Id");
+
+                entity.Property(e => e.RequiredCrHr)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("Required_CrHr");
 
                 entity.Property(e => e.RqdCourseId)
                     .HasColumnType("int(11)")

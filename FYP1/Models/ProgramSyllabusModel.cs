@@ -9,32 +9,31 @@ using FYP1.Repository;
 
 namespace FYP1.Models
 {
-    public class ProgramsModel : IPrograms
+    public class ProgramSyllabusModel : IProgramSyllabus
     {
-        private readonly IMapper mapper;
         private readonly LMS_DBContext db;
-        TblProgram program = new TblProgram();
-        public ProgramsModel(IMapper _mapper, LMS_DBContext _db)
+        private readonly IMapper mapper;
+        TblProgramSyllabus syllabus = new TblProgramSyllabus();
+
+        public ProgramSyllabusModel(LMS_DBContext db, IMapper mapper)
         {
-            mapper = _mapper;
-            db = _db;
+            this.db = db;
+            this.mapper = mapper;
         }
-        public async Task<bool> AddProgram(ProgramDTO dto)
+        public async Task<bool> AddSyllabus(ProgramSyllabusDTO dto)
         {
             try
             {
-                mapper.Map(dto, program);
-                program.ProgramShortName.ToUpper();
-                await db.TblPrograms.AddAsync(program);
+                mapper.Map(dto, syllabus);
+                var data = await db.TblProgramSyllabi.AddAsync(syllabus);
                 await db.SaveChangesAsync();
                 return true;
             }
             catch (System.Exception)
             {
-
                 return false;
+                throw;
             }
         }
-
     }
 }

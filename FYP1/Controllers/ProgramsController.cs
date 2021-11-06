@@ -24,10 +24,6 @@ namespace FYP1.Controllers
             return Ok(data);
         }
        
-        public IActionResult ProgramSyllabus()
-        {
-            return View();
-        }
 
     }
 }
