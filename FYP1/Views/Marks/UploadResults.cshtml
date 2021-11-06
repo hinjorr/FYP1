@@ -1,7 +1,8 @@
 ﻿@{
-    ViewData["Title"] = "UploadResults";
-    Layout = "~/Views/Shared/_Layout.cshtml";
+ViewData["Title"] = "UploadResults";
+Layout = "~/Views/Shared/_Layout.cshtml";
 }
+
 <form id="Upload">
     <div class="form-panel">
 
@@ -32,34 +33,28 @@
     </div>
     <div class="form-panel">
         <div class="form-group row">
-            <div class="col-lg-6">
-
-
+            <div class="col-lg-8">
                 <section id="no-more-tables">
                     <table class="table table-bordered table-striped table-condensed cf">
                         <thead class="cf">
                             <tr>
-                                <th>Username</th>
-                                <th>Student Name</th>
-                                <th class="numeric">Total Marks</th>
-                                <th class="numeric">Obtained Marks</th>
+                                <th style="width: 30%;">Username</th>
+                                <th style="width: 50%;">Student Name</th>
+                                <th class="numeric" style="width: 10%;">Total Marks</th>
+                                <th class="numeric" style="width: 10%;">Obtained Marks</th>
                             </tr>
                         </thead>
                         <tbody>
                             <tr>
-                                <td></td>
-                                <td data-title="Company">
-                                </td>
+                                <td>9763</td>
+                                <td>Masood</td>
                                 <td>
                                     <input type="text" class="form-control" id="txtTotalMarks" name="totalMarks">
                                 </td>
                                 <td>
                                     <input type="text" class="form-control" id="txtObtainedMarks" name="obtainedmarks">
                                 </td>
-                                <td>
-                                    <button class="btn btn-primary btn-xs"><i class="fa fa-pencil"></i></button>
-                                    <button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>
-                                </td>
+
                             </tr>
                         </tbody>
                     </table>
