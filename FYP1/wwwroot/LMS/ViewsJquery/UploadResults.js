@@ -1,8 +1,8 @@
-﻿
-$.validator.addMethod('ge', function (value, element, param) {
-    return this.optional(element) || value >= $(param).val();
-}, 'Invalid value');
-
+﻿$.validator.addMethod("greaterThan",
+    function (value, element, param) {
+        var $otherElement = $(param);
+        return parseInt(value, 10) >= parseInt($otherElement.val(), 10);
+    });
 $("#Upload").validate({
     rules: {
         totalMarks: {
@@ -12,7 +12,7 @@ $("#Upload").validate({
         obtainedmarks: {
             required: true,
             digits: true,
-            ge: '#totalMarks',
+            greaterThan: "#txtTotalMarks",
         },
 
     },
@@ -24,7 +24,7 @@ $("#Upload").validate({
         obtainedmarks: {
             required: "Please enter Obtained Marks",
             digits: "Please enter Digits",
-            ge: 'Must be greater than or equal to Total Marks',
+            greaterThan: 'Must be greater than or equal to Total Marks',
         },
     },
     submitHandler: function (form) {
