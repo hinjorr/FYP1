@@ -13,10 +13,7 @@ namespace FYP1.Controllers
         {
             this.repo = repo;
         }
-        public IActionResult Index()
-        {
-            return View();
-        }
+       
 
         [HttpPost]
         public async Task<IActionResult> AddNewSyllabus(ProgramSyllabusDTO dto)
