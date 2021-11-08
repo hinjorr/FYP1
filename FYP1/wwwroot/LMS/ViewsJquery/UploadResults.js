@@ -14,7 +14,7 @@ $("#Upload").validate({
             required: true,
             digits: true,
         },
-
+        //
     },
     messages: {
         totalMarks: {
