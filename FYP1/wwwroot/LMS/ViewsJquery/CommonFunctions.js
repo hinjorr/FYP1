@@ -7,12 +7,12 @@ var CommonFunctions = {
       success: function (resp) {
         var html = "";
         html += "<option value='0'>Select Program</option>";
-        $(resp).each(function (indexInArray, items) {
+        $(resp).each(function (indexInArray, item) {
           html +=
             "<option value=" +
-            items.programId +
+            item.programId +
             ">" +
-            items.programShortName +
+            item.programShortName +
             "</option>";
         });
         $(id).append(html);
@@ -70,7 +70,29 @@ var CommonFunctions = {
         html += "<option value='0'>Select Course</option>";
         $(resp).each(function (index, item) {
           html +=
-            "<option value=" + item.courseID + ">" + item.shortName + "</option>";
+            "<option value=" +
+            item.courseId +
+            ">" +
+            item.shortName +
+            "</option>";
+        });
+        $(id).append(html);
+      },
+    });
+  },
+  GetCoursesFullName: function (id) {
+    $.ajax({
+      url: "/DropDown/GetCoursesFullName",
+      success: function (resp) {
+        var html = "";
+        html += "<option value='0'>Select Course</option>";
+        $(resp).each(function (index, item) {
+          html +=
+            "<option value=" +
+            item.courseId +
+            ">" +
+            item.fullName +
+            "</option>";
         });
         $(id).append(html);
       },

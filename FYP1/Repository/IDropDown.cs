@@ -13,5 +13,6 @@ namespace FYP1.Repository
         Task<List<DayDTO>> GetDays();
         Task<List<TimeDTO>> GetTime();
         Task<List<CourseDTO>> GetCourses();
+        Task<List<CourseDTO>> GetCoursesFullName();
     }
 }

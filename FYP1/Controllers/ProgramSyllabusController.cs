@@ -13,13 +13,24 @@ namespace FYP1.Controllers
         {
             this.repo = repo;
         }
-       
+
+
+        public IActionResult AddNewSyllabus()
+        {
+            return View();
+        }
 
         [HttpPost]
         public async Task<IActionResult> AddNewSyllabus(ProgramSyllabusDTO dto)
         {
             // var chk = await repo.AddSyllabus(dto);
-            return Ok(dto); 
+            return Ok(dto);
+        }
+        [HttpPost]
+        public async Task<IActionResult> GetCrHr(CourseDTO dto)
+        {
+            var crhr = await repo.GetCrHr(dto);
+            return Ok(crhr);
         }
 
     }

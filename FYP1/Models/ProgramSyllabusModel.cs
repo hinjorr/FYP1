@@ -6,6 +6,7 @@ using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace FYP1.Models
 {
@@ -34,6 +35,13 @@ namespace FYP1.Models
                 return false;
                 throw;
             }
+        }
+
+        public async Task<int?> GetCrHr(CourseDTO dto)
+        {
+            var data = await db.TblCourses.Where(x => x.CourseId == dto.CourseId).FirstOrDefaultAsync();
+            int? CrHr = data.CrHr;
+            return CrHr;
         }
     }
 }

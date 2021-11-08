@@ -66,5 +66,14 @@ namespace FYP1.Models
             return courses;
         }
 
+        public async Task<List<CourseDTO>> GetCoursesFullName()
+        {
+            var courses = await db.TblCourses.Where(y => y.IsActive == Convert.ToUInt32(true)).Select(x => new CourseDTO
+            {
+                CourseId = x.CourseId,
+                FullName = x.FullName,
+            }).ToListAsync();
+            return courses;
+        }
     }
 }

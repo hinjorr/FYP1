@@ -1,93 +1,71 @@
 @{
-    ViewData["Title"] = "ProgramSyllabus";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    <form>
-        <div class="form-panel">
-    
-            <div class="form-group row">
-                <div class="col-lg-10">
-                    <h1><i class="fa fa-angle-right"></i> Program Syllabus</h1>
-                </div>
-                <div class="col-lg-3">
-                    <h3>Select Program</h3>
-                    <select class="form-control" id="dpDownClassDay">
-                        <option>Select Program</option>
-                        <option>Admin</option>
-                        <option>Faculty</option>
-                        <option>User</option>
-                    </select>
-                </div>
-                <div class="col-lg-3"></div>
-                <div class="col-lg-4"></div>
-                <div class="col-lg-2">
-                    <h4>
-                        Total Cr.Hr
-                    </h4>
-                    <input type="text" class="form-control" disabled>
-                </div>
-            </div>
+ViewData["Title"] = "ProgramSyllabus";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-panel">
+    <div class="form-group row">
+        <div class="col-lg-10">
+            <h1><i class="fa fa-angle-right"></i> Program Syllabus</h1>
         </div>
-        <div class="form-panel">
-            <div class="form-group row">
-                <div class="col-lg-7">
-    
-    
-                    <section id="no-more-tables">
-                        <table class="table table-bordered table-striped table-condensed cf">
-                            <thead class="cf">
-                                <tr>
-                                    <th>Cno</th>
-                                    <th>Course</th>
-                                    <th class="numeric">Pre Requisete</th>
-                                    <th class="numeric" style="width: 10%;">Required Cr Hr</th>
-                                    <th class="numeric">Cr .Hr</th>
-    
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td data-title="Company">1</td>
-                                    <td data-title="Company">
-    
-                                        <select class="form-control" id="dpDownClassDay">
-                                            <option>Monday</option>
-                                            <option>Tuesday</option>
-                                            <option>Wednesday</option>
-                                            <option>Thursday</option>
-                                            <option>Friday</option>
-                                            <option>Saturday</option>
-                                            <option>Sunday</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <select class="form-control" id="dpDownClassDay">
-                                            <option>Monday</option>
-                                            <option>Tuesday</option>
-                                            <option>Wednesday</option>
-                                            <option>Thursday</option>
-                                            <option>Friday</option>
-                                            <option>Saturday</option>
-                                            <option>Sunday</option>
-                                        </select>
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" id="txtTotalMarks" name="totalMarks">
-                                    </td>
-                                    <td>
-                                    </td>
-                                    <td>
-                                        <button class="btn btn-success btn-xs">+</i></button>
-                                        <button class="btn btn-danger btn-xs">-</i></button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-                </div>
-            </div>
+        <div class="col-lg-3">
+            <h3>Select Program</h3>
+            <select class="form-control" id="dpPrograms">
+            </select>
         </div>
-    
-    
-    
-    </form>
+        <div class="col-lg-3"></div>
+        <div class="col-lg-4"></div>
+        <div class="col-lg-2">
+            <h4>
+                Total Cr.Hr
+            </h4>
+            <input type="text" class="form-control" disabled>
+        </div>
+    </div>
+</div>
+<div class="form-panel">
+    <div class="form-group row">
+        <div class="col-lg-12">
+            <section>
+                <table class="table table-bordered table-striped table-condensed cf tblsyllabus">
+                    <thead class="cf">
+                        <tr>
+                            <th>Cno</th>
+                            <th>Course</th>
+                            <th class="numeric">Pre Requisete</th>
+                            <th class="numeric" style="width: 10%;">Required Cr Hr</th>
+                            <th class="numeric" style="width: 5%;">Cr .Hr</th>
+                            <th class="numeric" style="width: 5%;"></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr class="trClone">
+                            <td data-title="Company">1</td>
+                            <td data-title="Company"> <select class="form-control dpCourse"> </select> </td>
+                            <td><select class="form-control dpRequisete"></select> </td>
+                            <td><input type="text" class="form-control rqdCrHr"> </td>
+                            <td>
+                                <p id="CrHr"></p>
+                            </td>
+                            <td> <button class="btn btn-success btn-xs btnadd">+</i></button><button
+                                    class="btn btn-danger btn-xs btnremove">-</i></button></td>
+                        </tr>
+
+                    </tbody>
+                </table>
+            </section>
+            <div class="col-md-10"></div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary " id="btnsubmit">Submit</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<script src="~/LMS/lib/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/LMS/ViewsJquery/ProgramSyllabus.js"></script>

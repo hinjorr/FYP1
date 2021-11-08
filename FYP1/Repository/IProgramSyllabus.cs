@@ -9,5 +9,6 @@ namespace FYP1.Repository
     public interface IProgramSyllabus
     {
         Task<bool> AddSyllabus(ProgramSyllabusDTO dto);
+        Task<int?> GetCrHr(CourseDTO dto);
     }
 }
