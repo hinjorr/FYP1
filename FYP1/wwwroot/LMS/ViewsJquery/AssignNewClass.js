@@ -1,15 +1,18 @@
 ﻿$(document).ready(function () {
-  $("#btnSubmit").click(function () {
-    var Classnew = {
-      SelecCourses: $("#DpDownCourse").val(),
-      Depart: $("#dpDownDepart").val(),
-      ClassStrength: $("#txtClasStrength").val(),
-      ClassDay: $("#dpDownClassDay").val(),
-      ClassDay: $("#dpDownClassTime").val(),
-    };
-    console.log(Classnew);
-  });
+  CommonFunctions.GetPrograms(".dpPrograms");
+  CommonFunctions.GetCourse(".DpDownCourse");
+  CommonFunctions.GetDays("#dpDownClassDay");
+  CommonFunctions.GetTime("#dpDownClassTime");
+
 });
+
+var ClassDTO = {
+  CourseId: $("#DpDownCourse").val(),
+  ClassStrength: $("#txtClasStrength").val(),
+  ClassDay: $("#dpDownClassDay").val(),
+  ClassTime: $("#dpDownClassTime").val(),
+  SemesterId:
+};
 $(document).ready(function () {
   // $("#btnView").click(function () {
   //     var ViewClass = {
@@ -19,8 +22,5 @@ $(document).ready(function () {
   //     };
   //     console.log(ViewClass)
   // });
-  CommonFunctions.GetPrograms(".dpPrograms");
-  CommonFunctions.GetCourse(".DpDownCourse");
-  CommonFunctions.GetDays("#dpDownClassDay");
-  CommonFunctions.GetTime("#dpDownClassTime");
+ 
 });
