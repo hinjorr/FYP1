@@ -22,13 +22,13 @@ namespace FYP1.DTOs
             
             CreateMap<ClassDTO,TblClass>();
             CreateMap<CourseDTO,TblCourse>();
-            CreateMap<CourseEligiblityDTO,TblCourseEligiblity>();
+            CreateMap<CourseEligiblityDTO, TblCourseeligiblity>();
             CreateMap<DayDTO,TblDay>();
-            CreateMap<FacultyCourseRegistrationDTO,TblFacultyCourseRegistration>();
-            CreateMap<ProgramSyllabusDTO,TblProgramSyllabus>();
+            CreateMap<FacultyCourseRegistrationDTO,TblFacultycourseregistration>();
+            CreateMap<ProgramSyllabusDTO,TblProgramsyllabus>();
             CreateMap<RoleDTO,TblRole>();
             CreateMap<SemesterDTO,TblSemester>();
-            CreateMap<StudentCourseRegistrationDTO,TblStudentCourseRegistration>();
+            CreateMap<StudentCourseRegistrationDTO,TblStudentcourseregistration>();
             CreateMap<TimeDTO,TblTime>();
             CreateMap<ClassDTO,TblClass>();
             CreateMap<ProgramDTO,TblProgram>();

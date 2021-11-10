@@ -5,13 +5,13 @@ using System.Collections.Generic;
 
 namespace FYP1.dbModels
 {
-    public partial class TblStudentCourseRegistration
+    public partial class TblStudentcourseregistration
     {
         public int ScrId { get; set; }
         public int? StudentId { get; set; }
         public int? ElgibiltyId { get; set; }
 
-        public virtual TblCourseEligiblity Elgibilty { get; set; }
+        public virtual TblCourseeligiblity Elgibilty { get; set; }
         public virtual TblStudent Student { get; set; }
     }
 }

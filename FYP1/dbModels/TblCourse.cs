@@ -10,9 +10,9 @@ namespace FYP1.dbModels
         public TblCourse()
         {
             TblClasses = new HashSet<TblClass>();
-            TblCourseEligiblities = new HashSet<TblCourseEligiblity>();
-            TblProgramSyllabusCourses = new HashSet<TblProgramSyllabus>();
-            TblProgramSyllabusRqdCourses = new HashSet<TblProgramSyllabus>();
+            TblCourseeligiblities = new HashSet<TblCourseeligiblity>();
+            TblProgramsyllabusCourses = new HashSet<TblProgramsyllabus>();
+            TblProgramsyllabusRqdCourses = new HashSet<TblProgramsyllabus>();
         }
 
         public int CourseId { get; set; }
@@ -22,8 +22,8 @@ namespace FYP1.dbModels
         public ulong? IsActive { get; set; }
 
         public virtual ICollection<TblClass> TblClasses { get; set; }
-        public virtual ICollection<TblCourseEligiblity> TblCourseEligiblities { get; set; }
-        public virtual ICollection<TblProgramSyllabus> TblProgramSyllabusCourses { get; set; }
-        public virtual ICollection<TblProgramSyllabus> TblProgramSyllabusRqdCourses { get; set; }
+        public virtual ICollection<TblCourseeligiblity> TblCourseeligiblities { get; set; }
+        public virtual ICollection<TblProgramsyllabus> TblProgramsyllabusCourses { get; set; }
+        public virtual ICollection<TblProgramsyllabus> TblProgramsyllabusRqdCourses { get; set; }
     }
 }

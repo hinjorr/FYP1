@@ -9,8 +9,8 @@ namespace FYP1.dbModels
     {
         public TblClass()
         {
-            TblCourseEligiblities = new HashSet<TblCourseEligiblity>();
-            TblFacultyCourseRegistrations = new HashSet<TblFacultyCourseRegistration>();
+            TblCourseeligiblities = new HashSet<TblCourseeligiblity>();
+            TblFacultycourseregistrations = new HashSet<TblFacultycourseregistration>();
         }
 
         public int ClassId { get; set; }
@@ -24,7 +24,7 @@ namespace FYP1.dbModels
         public virtual TblTime ClassTimeNavigation { get; set; }
         public virtual TblCourse Course { get; set; }
         public virtual TblSemester Semester { get; set; }
-        public virtual ICollection<TblCourseEligiblity> TblCourseEligiblities { get; set; }
-        public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
+        public virtual ICollection<TblCourseeligiblity> TblCourseeligiblities { get; set; }
+        public virtual ICollection<TblFacultycourseregistration> TblFacultycourseregistrations { get; set; }
     }
 }

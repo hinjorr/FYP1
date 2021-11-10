@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace FYP1.dbModels
 {
-    public partial class TblFacultyCourseRegistration
+    public partial class TblFacultycourseregistration
     {
         public int FcrId { get; set; }
         public int? FacultyId { get; set; }

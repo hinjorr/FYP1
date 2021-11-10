@@ -22,14 +22,24 @@ $(".tblsyllabus").on("click", ".btnadd", function () {
   // };
   // console.log(ProgramSyllabusDTO);
   
-  var currentRow = $(this).closest("tr");
-  var col1 = currentRow.find(".dpCourse").val(); // get current row 1st TD value
+    var currentRow = $(this).closest("tr");
+    var col1 = $("#dpCourse").val(); // get current row 1st TD value
   var col2 = currentRow.find(".dpRequisete").val(); // get current row 2nd TD
   var col3 = currentRow.find(".rqdCrHr").val(); // get current row 3rd TD
   var data = col1 + "\n" + col2 + "\n" + col3;
   
-  alert(data);
+    
 });
+$("#ProgramSyl").validate({
+    submitHandler: function (form) {
+
+        $("#dpCourse :selected").map(function (i, el) {
+            return console.log($(el).val())
+        }).get();
+    }
+
+
+})
 
 $(document).on("click", ".btnremove", function () {
   $(this).closest(".trClone").remove();

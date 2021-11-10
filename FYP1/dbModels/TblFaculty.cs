@@ -9,13 +9,13 @@ namespace FYP1.dbModels
     {
         public TblFaculty()
         {
-            TblFacultyCourseRegistrations = new HashSet<TblFacultyCourseRegistration>();
+            TblFacultycourseregistrations = new HashSet<TblFacultycourseregistration>();
         }
 
         public int FacultyId { get; set; }
         public int? UserId { get; set; }
 
         public virtual TblUser User { get; set; }
-        public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
+        public virtual ICollection<TblFacultycourseregistration> TblFacultycourseregistrations { get; set; }
     }
 }

@@ -9,6 +9,6 @@ ef core tools
 pomelo mysql
 ef core tool
 
-dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=masood1050;database=LMS" Pomelo.EntityFrameworkCore.MySql -c LMS_DBContext -o dbModels -f 
+dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=1050;database=lms" Pomelo.EntityFrameworkCore.MySql -c LMS_DBContext -o dbModels -f 
 
 

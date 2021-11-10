@@ -9,7 +9,7 @@ namespace FYP1.dbModels
     {
         public TblStudent()
         {
-            TblStudentCourseRegistrations = new HashSet<TblStudentCourseRegistration>();
+            TblStudentcourseregistrations = new HashSet<TblStudentcourseregistration>();
         }
 
         public int StudentId { get; set; }
@@ -19,6 +19,6 @@ namespace FYP1.dbModels
 
         public virtual TblProgram Program { get; set; }
         public virtual TblUser User { get; set; }
-        public virtual ICollection<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }
+        public virtual ICollection<TblStudentcourseregistration> TblStudentcourseregistrations { get; set; }
     }
 }

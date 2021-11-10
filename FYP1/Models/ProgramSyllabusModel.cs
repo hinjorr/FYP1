@@ -14,7 +14,7 @@ namespace FYP1.Models
     {
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
-        TblProgramSyllabus syllabus = new TblProgramSyllabus();
+        TblProgramsyllabus syllabus = new TblProgramsyllabus();
 
         public ProgramSyllabusModel(LMS_DBContext db, IMapper mapper)
         {
@@ -26,7 +26,7 @@ namespace FYP1.Models
             try
             {
                 mapper.Map(dto, syllabus);
-                var data = await db.TblProgramSyllabi.AddAsync(syllabus);
+                var data = await db.TblProgramsyllabi.AddAsync(syllabus);
                 await db.SaveChangesAsync();
                 return true;
             }
