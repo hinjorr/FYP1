@@ -75,5 +75,17 @@ namespace FYP1.Models
             }).ToListAsync();
             return courses;
         }
-    }
+
+        public async Task<List<ProgramSyllabusDTO>>GetCoursesbyPrograms(int id)
+        {
+            var courses = await db.TblProgramSyllabi.Where(y=>y.ProgramId==id).Select(x => new ProgramSyllabusDTO
+            {
+                CourseId=x.CourseId,
+                Courses=new CourseDTO{
+                    FullName=x.Course.FullName
+                }
+            }).ToListAsync();
+            return courses;
+        }
+}
 }

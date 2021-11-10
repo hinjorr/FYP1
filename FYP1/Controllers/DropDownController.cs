@@ -42,6 +42,12 @@ namespace FYP1.Controllers
             var data = await repo.GetCoursesFullName();
             return Ok(data);
         }
+        [HttpGet("GetCoursesbyPrograms")]
+        public async Task<IActionResult> GetCoursesbyPrograms(int id)
+        {
+            var data = await repo.GetCoursesbyPrograms(id);
+            return Ok(data);
+        }
 
     }
 }

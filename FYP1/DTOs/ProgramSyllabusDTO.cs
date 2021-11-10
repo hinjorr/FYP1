@@ -8,7 +8,7 @@ namespace FYP1.DTOs
         public int? RqdCourseId { get; set; }
         public int? RequiredCrHr { get; set; }
 
-        // public  CourseDTO Course { get; set; }
+         public  CourseDTO Courses { get; set; }
         // public  ProgramDTO Program { get; set; }
         // public  CourseDTO RqdCourse { get; set; }
     }

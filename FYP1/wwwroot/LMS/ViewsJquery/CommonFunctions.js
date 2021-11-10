@@ -98,4 +98,22 @@ var CommonFunctions = {
       },
     });
   },
+  GetCoursesbyPrograms: function (dpid,pid) {
+    $.ajax({
+      url: "/GetCoursesbyPrograms?id="+pid,
+      success: function (resp) {
+        var html = "";
+        html += "<option value='0'>Select Course</option>";
+        $(resp).each(function (index, item) {
+          html +=
+            "<option value=" +
+            item.courseId +
+            ">" +
+            item.courses.fullName +
+            "</option>";
+        });
+        $(dpid).append(html);
+      },
+    });
+  },
 };
