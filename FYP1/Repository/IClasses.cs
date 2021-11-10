@@ -6,9 +6,8 @@ using FYP1.DTOs;
 
 namespace FYP1.Repository
 {
-    public interface IProgramSyllabus
+    public interface IClasses
     {
-        Task<bool> AddSyllabus(List<ProgramSyllabusDTO> dto);
-        Task<int?> GetCrHr(CourseDTO dto);
+        Task<bool> AddNewClass(ClassDTO dto);
     }
 }

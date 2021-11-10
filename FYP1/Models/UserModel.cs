@@ -110,7 +110,7 @@ namespace FYP1.Models
             user.IsActive=Convert.ToUInt32(true);
             user.UserDate = datenow.ToString("dd/MM/yyyy");
             user.Password = RandomNumber(93456, 193123) + profile.ProfileId.ToString();
-            user.ProfileId = dto.ProfileId;
+            user.ProfileId = profile.ProfileId;
             user.UserName = RandomNumber(121, 9131) + user.ProfileId.ToString();
             await db.TblUsers.AddAsync(user);
             await db.SaveChangesAsync();

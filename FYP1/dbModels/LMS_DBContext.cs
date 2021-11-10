@@ -349,11 +349,13 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.RequiredCrHr)
                     .HasColumnType("int(11)")
-                    .HasColumnName("Required_CrHr");
+                    .HasColumnName("Required_CrHr")
+                    .HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.RqdCourseId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("RqdCourse_Id");
+                    .HasColumnName("RqdCourse_Id")
+                    .HasDefaultValueSql("'0'");
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.TblProgramSyllabusCourses)

@@ -25,7 +25,10 @@ namespace FYP1.DTOs
             CreateMap<CourseEligiblityDTO,TblCourseEligiblity>();
             CreateMap<DayDTO,TblDay>();
             CreateMap<FacultyCourseRegistrationDTO,TblFacultyCourseRegistration>();
+
             CreateMap<ProgramSyllabusDTO,TblProgramSyllabus>();
+
+
             CreateMap<RoleDTO,TblRole>();
             CreateMap<SemesterDTO,TblSemester>();
             CreateMap<StudentCourseRegistrationDTO,TblStudentCourseRegistration>();

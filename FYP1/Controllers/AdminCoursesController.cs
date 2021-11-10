@@ -25,22 +25,5 @@ namespace FYP1.Controllers
             return Ok(data);
         }
 
-        public IActionResult ViewCourses()
-        {
-            return View();
-        }
-        public IActionResult AssignNewClass()
-        {
-            return View();
-        }
-        public IActionResult ViewClasses()
-        {
-            return View();
-        }
-        public IActionResult EnrollUsers()
-        {
-            return View();
-        }
-
     }
 }

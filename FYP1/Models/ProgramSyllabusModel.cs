@@ -21,13 +21,17 @@ namespace FYP1.Models
             this.db = db;
             this.mapper = mapper;
         }
-        public async Task<bool> AddSyllabus(ProgramSyllabusDTO dto)
+        public async Task<bool> AddSyllabus(List<ProgramSyllabusDTO> dto)
         {
             try
             {
-                mapper.Map(dto, syllabus);
-                var data = await db.TblProgramSyllabi.AddAsync(syllabus);
-                await db.SaveChangesAsync();
+                foreach (var item in dto)
+                {
+                    mapper.Map(item, syllabus);
+                    var data = await db.TblProgramSyllabi.AddAsync(syllabus);
+                    await db.SaveChangesAsync();
+
+                }
                 return true;
             }
             catch (System.Exception)

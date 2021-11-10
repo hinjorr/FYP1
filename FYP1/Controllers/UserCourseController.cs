@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    public class CourseController : Controller
+    public class UserCourseController : Controller
     {
 
         public IActionResult ViewCourse()

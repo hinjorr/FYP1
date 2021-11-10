@@ -1,11 +1,8 @@
-using System;
-using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
 
 namespace FYP1.Controllers
 {
