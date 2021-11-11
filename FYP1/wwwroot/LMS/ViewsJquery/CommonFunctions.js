@@ -98,9 +98,9 @@ var CommonFunctions = {
       },
     });
   },
-  GetCoursesbyPrograms: function (dpid,pid) {
+  GetCoursesbyPrograms: function (dpid, pid) {
     $.ajax({
-      url: "/GetCoursesbyPrograms?id="+pid,
+      url: "/GetCoursesbyPrograms?id=" + pid,
       success: function (resp) {
         var html = "";
         html += "<option value='0'>Select Course</option>";
@@ -114,6 +114,11 @@ var CommonFunctions = {
         });
         $(dpid).append(html);
       },
+    });
+  },
+  GetCurrentSemester: function () {
+   return $.ajax({
+      url: "/Semester/GetCurrentSemester",
     });
   },
 };

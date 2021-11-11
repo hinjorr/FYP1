@@ -51,9 +51,7 @@ function GetCurrentSemester() {
   $.ajax({
     url: "/Semester/GetCurrentSemester",
     success: function (resp) {
-      // debugger;
       if (resp != null) {
-        // debugger;
         (SemesterDTO.SemesterId = resp.semesterId),
           (SemesterDTO.SemesterName = resp.semesterName),
           (SemesterDTO.StartDate = resp.startDate),

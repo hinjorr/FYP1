@@ -83,6 +83,8 @@ namespace FYP1.dbModels
 
                 entity.HasIndex(e => e.CourseId, "Course_Id");
 
+                entity.HasIndex(e => e.ProgramId, "Program_Id");
+
                 entity.HasIndex(e => e.SemesterId, "Semester_Id");
 
                 entity.Property(e => e.ClassId)
@@ -103,6 +105,10 @@ namespace FYP1.dbModels
                     .HasColumnType("int(11)")
                     .HasColumnName("Course_Id");
 
+                entity.Property(e => e.ProgramId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("Program_Id");
+
                 entity.Property(e => e.SemesterId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Semester_Id");
@@ -121,6 +127,11 @@ namespace FYP1.dbModels
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.CourseId)
                     .HasConstraintName("Tbl_Classes_ibfk_4");
+
+                entity.HasOne(d => d.Program)
+                    .WithMany(p => p.TblClasses)
+                    .HasForeignKey(d => d.ProgramId)
+                    .HasConstraintName("Tbl_Classes_ibfk_5");
 
                 entity.HasOne(d => d.Semester)
                     .WithMany(p => p.TblClasses)
@@ -143,7 +154,9 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.FullName).HasMaxLength(100);
 
-                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+                entity.Property(e => e.IsActive)
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("b'1'");
 
                 entity.Property(e => e.ShortName).HasMaxLength(50);
             });
@@ -354,8 +367,7 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.RqdCourseId)
                     .HasColumnType("int(11)")
-                    .HasColumnName("RqdCourse_Id")
-                    .HasDefaultValueSql("'0'");
+                    .HasColumnName("RqdCourse_Id");
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.TblProgramSyllabusCourses)

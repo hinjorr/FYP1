@@ -7,56 +7,58 @@ Layout = "~/Views/Shared/_Layout.cshtml";
     <div class="col-lg-5">
         <div class="form-panel">
             <h4 class="mb"><i class="fa fa-angle-right"></i> Assign new Class</h4>
-            <form>
-
-
-                <label>Program
-                    <span class="error">*</span>
-                </label>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <select class="form-control dpPrograms">
-                        </select>
-                    </div>
+            <div class="row">
+                <div class="col-sm-5"></div>
+                <div class="col-sm-5">
+                    <label>Current Semester
+                    </label>
+                    <input type="text" class="form-control" id="txtSemesterName" disabled>
                 </div>
-                <label>Select Course
-                    <span class="error">*</span>
-                </label>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <select class="form-control DpDownCourse">
-                        </select>
-                    </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-10">
+                    <label>Program
+                        <span class="error">*</span>
+                    </label>
+                    <select class="form-control " id="dpPrograms">
+                    </select>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-10">
-                        <label>Class Strength
-                            <span class="error">*</span>
-                        </label>
-                        <input type="text" class="form-control" placeholder="" id="txtClasStrength">
-                    </div>
+            </div>
+            <label>Select Course
+                <span class="error">*</span>
+            </label>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <select class="form-control " id="DpDownCourse">
+                    </select>
                 </div>
-                <div class="form-group row">
-                    <div class="col-sm-5">
-                        <label>Class Day
-                            <span class="error">*</span>
-                        </label>
-                        <select class="form-control" id="dpDownClassDay">
-                        </select>
-                    </div>
-                    <div class="col-sm-5">
-                        <label>Class Time
-                            <span class="error">*</span>
-                        </label>
-                        <select class="form-control" id="dpDownClassTime">
-
-                        </select>
-                    </div>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-10">
+                    <label>Class Strength
+                        <span class="error">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="" id="txtClasStrength">
                 </div>
-                <button type="button" class="btn btn-primary btn-lg btn-block" id="btnSubmit">Submit</button>
+            </div>
+            <div class="form-group row">
+                <div class="col-sm-5">
+                    <label>Class Day
+                        <span class="error">*</span>
+                    </label>
+                    <select class="form-control" id="dpDownClassDay">
+                    </select>
+                </div>
+                <div class="col-sm-5">
+                    <label>Class Time
+                        <span class="error">*</span>
+                    </label>
+                    <select class="form-control" id="dpDownClassTime">
 
-
-            </form>
+                    </select>
+                </div>
+            </div>
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="btnSubmit">Submit</button>
         </div>
     </div>
     <div class="col-lg-7">
@@ -66,12 +68,12 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <div class="form-group row">
                     <div class="col-sm-4">
                         <label>Programs</label>
-                        <select class="form-control dpPrograms">
+                        <select class="form-control " id="dpProgramsView">
                         </select>
                     </div>
                     <div class="col-sm-4">
                         <label>Course</label>
-                        <select class="form-control DpDownCourse">
+                        <select class="form-control " id="DpDownCourseView">
                         </select>
                     </div>
 

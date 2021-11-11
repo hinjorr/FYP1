@@ -16,7 +16,8 @@ $(document).ready(function () {
         +'<td>'+items.user.userDate+'</td>'
         +'<td>'+items.user.userDate+'</td></tr>'
       });
-      $("#tblusers").append(html);
+      // alert($("#tblusers").html());
+      $("#tblusers").html(html);
     },
   });
 });

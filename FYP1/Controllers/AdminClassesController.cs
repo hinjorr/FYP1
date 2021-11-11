@@ -22,9 +22,13 @@ namespace FYP1.Controllers
         [HttpPost("AssignClass")]
         public async Task<IActionResult> AssignNewClass(ClassDTO dto)
         {
-            var chk=await repo.AddNewClass(dto);
-            return Ok(chk);
+            if (dto.CourseId != null)
+            {
+                var chk = await repo.AddNewClass(dto);
+                return Ok(chk);
+            }
+            return Ok(false);
         }
-        
+
     }
 }
