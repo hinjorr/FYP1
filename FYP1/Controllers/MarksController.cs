@@ -1,15 +1,18 @@
+using System.Net;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
     public class MarksController : Controller
     {
-     
-         public IActionResult StudentTestResults()
+
+        [HttpGet("ViewResults")]
+        public IActionResult StudentTestResults()
         {
             return View();
         }
-         public IActionResult UploadTestResults()
+        [HttpGet("UploadResults")]
+        public IActionResult UploadTestResults()
         {
             return View();
         }

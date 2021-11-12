@@ -10,7 +10,7 @@ namespace FYP1.Controllers
 {
     public class AttendenceController : Controller
     {
-
+        [HttpGet("MarkAttendence")]
         public IActionResult MarkAttedence()
         {
             return View();

@@ -13,6 +13,8 @@ namespace FYP1.Controllers
         {
             repo = _repo;
         }
+
+        [HttpGet("AddNewProgram")]
         public IActionResult AddNewProgram()
         {
             return View();

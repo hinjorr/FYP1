@@ -11,7 +11,7 @@ namespace FYP1.Controllers
    
     public class RolesController : Controller
     {
-        
+        [HttpGet("Permissions")]
         public IActionResult AssignPermissions()
         {
             return View();

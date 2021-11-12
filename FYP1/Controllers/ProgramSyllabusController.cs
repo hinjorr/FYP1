@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using FYP1.DTOs;
 using FYP1.Repository;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
@@ -9,6 +10,7 @@ namespace FYP1.Controllers
     // [ApiController]
     // [Route("api/[controller]")]
 
+    // [Authorize(Roles ="Admin")]
     public class ProgramSyllabusController : Controller
     {
         private readonly IProgramSyllabus repo;
@@ -18,7 +20,7 @@ namespace FYP1.Controllers
             this.repo = repo;
         }
 
-        [HttpGet]
+        [HttpGet("NewSyllabus")]
         public IActionResult AddNewSyllabus()
         {
             return View();

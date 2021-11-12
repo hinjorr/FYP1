@@ -13,6 +13,10 @@
     <link href="~/LMS/img/favicon.png" rel="icon">
     <link href="~/LMS/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+
+    <link href="~/LMS/css/select2.min.css" rel="stylesheet" />
+
+
     <!-- Bootstrap core CSS -->
     <link href="~/LMS/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <!--external css-->
@@ -49,14 +53,14 @@
                 <div class="fa fa-bars tooltips" data-placement="right" data-original-title="Toggle Navigation"></div>
             </div>
             <!--logo start-->
-            <a href="/Home/Index" class="logo"><b>DASH<span>IO</span></b></a>
+            <a href="/Home" class="logo"><b>DASH<span>IO</span></b></a>
             <!--logo end-->
             <div class="nav notify-row" id="top_menu">
                 <!--  notification start -->
                 <ul class="nav top-menu">
                     <!-- settings start -->
                     <li class="dropdown">
-                        <a data-toggle="dropdown" class="dropdown-toggle" href="/Home/Index">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="/Home">
                             <i class="fa fa-tasks"></i>
                             <span class="badge bg-theme">4</span>
                         </a>
@@ -244,7 +248,7 @@
             </div>
             <div class="top-menu">
                 <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="/Login/Login">Logout</a></li>
+                    <li><a class="logout" href="/Login">Logout</a></li>
                 </ul>
             </div>
         </header>
@@ -263,13 +267,13 @@
                     </p>
                     <h5 class="centered">Sam Soffes</h5>
                     <li class="mt">
-                        <a href="/Home/Index">
+                        <a href="/Home">
                             <i class="fa fa-dashboard"></i>
                             <span>Dashboard</span>
                         </a>
                     </li>
                     <li class="mt">
-                        <a href="/Semester/Index">
+                        <a href="/Semester">
                             <i class="fa fa-dashboard"></i>
                             <span>Semester</span>
                         </a>
@@ -280,9 +284,9 @@
                             <span>Users > </span>
                         </a>
                         <ul class="sub">
-                            <li><a href="/User/AddNewUser">Add new user</a></li>
-                            <li><a href="/User/ViewUsers">View all users</a></li>
-                            <li><a href="/User/UploadBulkUsers">Upload bulk users</a></li>
+                            <li><a href="/NewUser">Add new user</a></li>
+                            <li><a href="/ViewUsers">View all users</a></li>
+                            <li><a href="/UploadUsers">Upload bulk users</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -291,14 +295,12 @@
                             <span>Courses ></span>
                         </a>
                         <ul class="sub">
-                            <li><a href="/AdminCourses/AddNewCourse">Add new Course</a></li>
-                            <li><a href="/AdminCourses/AssignNewClass">Assign new class</a></li>
-                            <li><a href="/AdminCourses/EnrollUsers">Manaully Enroll Users</a></li>
-
+                            <li><a href="/AddNewCourse">Add new Course</a></li>
+                            <li><a href="/AssignClasses">Assign new class</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
-                        <a href="/Roles/AssignPermissions">
+                        <a href="/Permissions">
                             <i class="fa fa-desktop"></i>
                             <span>Roles Management<span class="error">**</span></span>
                         </a>
@@ -309,8 +311,8 @@
                             <span>Programs > </span>
                         </a>
                         <ul class="sub">
-                            <li><a href="/Programs/AddNewProgram">Add new Program</a></li>
-                            <li><a href="/ProgramSyllabus/AddNewSyllabus">Programs Syllabus</a></li>
+                            <li><a href="/AddNewProgram">Add new Program</a></li>
+                            <li><a href="/NewSyllabus">Programs Syllabus</a></li>
                         </ul>
                     </li>
                     <li class="sub-menu">
@@ -319,39 +321,39 @@
                             <span>Current Classes ></span>
                         </a>
                         <ul class="sub">
-                            <li><a href="/Course/Viewallclasses">View all Classes</a></li>
+                            <li><a href="/ViewAllClasses">View all Classes</a></li>
                             <hr style="margin-bottom: -2px;">
-                            <li><a href="/Course/ViewCourse">OOP</a></li>
-                            <li><a href="/Course/ViewCourse">OOP</a></li>
-                            <li><a href="/Course/ViewCourse">OOP</a></li>
+                            <li><a href="/ViewClass">OOP</a></li>
+                            <li><a href="/ViewClass">OOP</a></li>
+                            <li><a href="/ViewClass">OOP</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="/RegisterCourses/RegsiterCourse">
+                        <a href="/RegisterCourse">
                             <i class="fa fa-map-marker"></i>
                             <span>Register Courses </span>
                         </a>
                     </li>
                     <li>
-                        <a href="/Marks/StudentTestResults">
+                        <a href="/ViewResults">
                             <i class="fa fa-map-marker"></i>
                             <span>Test Results </span>
                         </a>
                     </li>
                     <li>
-                        <a href="/Marks/UploadTestResults">
+                        <a href="/UploadResults">
                             <i class="fa fa-map-marker"></i>
                             <span>Upload Results</span>
                         </a>
                     </li>
                     <li>
-                        <a href="/Attendence/MarkAttedence">
+                        <a href="/MarkAttendence">
                             <i class="fa fa-map-marker"></i>
                             <span>Attendence Report </span>
                         </a>
                     </li>
                     <li>
-                        <a href="/User/Calender">
+                        <a href="/Calender">
                             <i class="fa fa-map-marker"></i>
                             <span>Calender </span>
                         </a>
@@ -418,6 +420,7 @@
     <script src="~/LMS/lib/fullcalendar/fullcalendar.min.js"></script>
     <script src="~/LMS/lib/calendar-conf-events.js"></script>
     <script type="text/javascript" src="~/LMS/ViewsJquery/CommonFunctions.js"></script>
+    <script src="~/LMS/css/select2.min.js"></script>
 
 
 </body>

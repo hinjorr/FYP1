@@ -1,23 +1,24 @@
-﻿@{
+@{
 ViewData["Title"] = "Login";
 Layout = "~/Views/Shared/LoginShared.cshtml";
 }
 
 <div id="login-page">
     <div class="container">
-        <form class="form-login" action="index.html">
+        <div class="form-login">
             <h2 class="form-login-heading">sign in now</h2>
             <div class="login-wrap">
-                <input type="text" class="form-control" placeholder="User ID" autofocus>
+                <input type="text" class="form-control" placeholder="User ID" autofocus id="username" name="username">
                 <br>
-                <input type="password" class="form-control" placeholder="Password">
+                <input type="password" class="form-control" id="password" name="password">
                 <label class="checkbox">
                     <span class="pull-right">
                         <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
                     </span>
                     <br>
                 </label>
-                <button class="btn btn-theme btn-block" type="submit"><i class="fa fa-lock"></i> SIGN IN</button>
+                <button class="btn btn-theme btn-block" type="submit" id="btnlogin"><i class="fa fa-lock"></i> SIGN
+                    IN</button>
             </div>
             <!-- Modal -->
             <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal"
@@ -41,6 +42,11 @@ Layout = "~/Views/Shared/LoginShared.cshtml";
                 </div>
             </div>
             <!-- modal -->
-        </form>
+        </div>
     </div>
 </div>
+
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<script src="~/LMS/lib/jquery.validate.min.js"></script>
+
+<script type="text/javascript" src="~/LMS/ViewsJquery/AddNewCourse.js"></script>

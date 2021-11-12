@@ -78,6 +78,13 @@ namespace FYP1.Models
 
         public async Task<List<ProgramSyllabusDTO>> GetCoursesbyPrograms(int id)
         {
+            // var courses = await db.TblProgramSyllabi.Where(y=>y.ProgramId==id).Select(x => new ProgramSyllabusDTO
+            // {
+            //     CourseId=x.CourseId,
+            //     Courses=new CourseDTO{
+            //         FullName=x.Course.FullName
+            //     }
+            // }).ToListAsync();
             var courses = await (from x in db.TblProgramSyllabi
                                  where x.ProgramId == id
                                  select new ProgramSyllabusDTO
@@ -90,5 +97,7 @@ namespace FYP1.Models
                                  }).Distinct().ToListAsync();
             return courses;
         }
+
+     
     }
 }

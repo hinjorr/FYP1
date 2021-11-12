@@ -7,6 +7,8 @@
     $("#txtSemesterName").val(resp.semesterName);
     ClassDTO.SemesterId = resp.semesterId;
   });
+  $("#DpDownCourse").select2();
+  $("#DpDownCourseView").select2();
 });
 
 $("#dpPrograms").change(function (e) {

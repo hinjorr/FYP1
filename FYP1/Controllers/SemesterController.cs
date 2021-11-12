@@ -14,6 +14,7 @@ namespace FYP1.Controllers
             this.repo = repo;
 
         }
+        [HttpGet("Semester")]
         public IActionResult Index()
         {
             return View();

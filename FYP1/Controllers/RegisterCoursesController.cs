@@ -1,3 +1,4 @@
+using System.Net;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -10,7 +11,8 @@ namespace FYP1.Controllers
 {
     public class RegisterCoursesController : Controller
     {
-      
+
+        [HttpGet("RegisterCourse")]
         public IActionResult RegsiterCourse()
         {
             return View();

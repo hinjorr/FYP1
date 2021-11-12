@@ -65,6 +65,7 @@ namespace FYP1.Models
                     {
                         mapper.Map(dto, profile);
                         await AddProfile();
+                        dto.ProfileId=profile.ProfileId;
                         await AddUser(dto);
                         //condition whether the user is Student/ Faculty/Admin
                         if (dto.User.RoleId == 1)
@@ -100,6 +101,7 @@ namespace FYP1.Models
             profile.ProfileDate = datenow.ToString("dd/MM/yyyy");
             await db.TblProfiles.AddAsync(profile);
             await db.SaveChangesAsync();
+            
             return profile;
         }
         async Task<TblUser> AddUser(ProfileDTO dto)
@@ -110,7 +112,7 @@ namespace FYP1.Models
             user.IsActive=Convert.ToUInt32(true);
             user.UserDate = datenow.ToString("dd/MM/yyyy");
             user.Password = RandomNumber(93456, 193123) + profile.ProfileId.ToString();
-            user.ProfileId = profile.ProfileId;
+            user.ProfileId = dto.ProfileId;
             user.UserName = RandomNumber(121, 9131) + user.ProfileId.ToString();
             await db.TblUsers.AddAsync(user);
             await db.SaveChangesAsync();

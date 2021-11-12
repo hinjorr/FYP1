@@ -14,6 +14,8 @@ namespace FYP1.Controllers
         {
             this.repo = repo;
         }
+
+        [HttpGet("AddNewCourse")]
         public IActionResult AddNewCourse()
         {
             return View();
