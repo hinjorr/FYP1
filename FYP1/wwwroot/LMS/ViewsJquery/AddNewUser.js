@@ -16,7 +16,13 @@
       number: true,
       minlength: 13,
       maxlength: 13,
-    },
+        },
+        dpRole: {
+            required: true,
+        },
+        program: {
+            required: true,
+        },
   },
   messages: {
     password: {
@@ -36,7 +42,14 @@
       required: "Please enter NIC number",
       minlength: "Please enter valid 13 NIC digits",
       maxlength: "Please enter valid 13 NIC digits",
-    },
+      },
+      dpRole: {
+          required: "Please Enter Role",
+      },
+      program: {
+          required: "Please enter Program",
+      },
+     
   },
   submitHandler: function (form) {
     var ProfileDTO = {

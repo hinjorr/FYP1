@@ -1,12 +1,13 @@
 $("#addnewcourse").validate({
-  rules: {
-    fullname: "required",
-    shortname: "required",
-    courseCrHr: {
-      digits: true,
-      min: 1,
-      max: 4,
-    },
+    rules: {
+        fullname: "required",
+        shortname: "required",
+        courseCrHr: {
+            digits: true,
+            min: 1,
+            max: 4,
+        },
+        
   },
   messages: {
     fullname: {

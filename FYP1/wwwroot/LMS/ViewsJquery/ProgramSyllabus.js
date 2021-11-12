@@ -39,14 +39,16 @@ $("#btnsubmit").click(function () {
     //    })
 
     //})
-    console.log(data)
+    console.log(data);
+    GetProgramSyllabus(data);
 });
 
 
 
 
 $(document).on("click", ".btnremove", function () {
-  $(this).closest(".trClone").remove();
+    $(this).closest(".trClone").remove();
+    data.pop()
 });
 
 function GetCrHr(CourseDTO) {
@@ -58,4 +60,14 @@ function GetCrHr(CourseDTO) {
       $("#CrHr").text(resp);
     },
   });
+}
+function GetProgramSyllabus(data) {
+    $.ajax({
+        type: "Post",
+        url: "ProgramSyllabus/AddNewSyllabus",
+        data: data,
+        success: function (resp) {
+            console.log(resp);
+        },
+    });
 }
