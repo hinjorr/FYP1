@@ -45,6 +45,8 @@ namespace FYP1.Models
             {
                 // mapper.Map(dto, semester);
                 var data = await db.TblSemesters.Where(x => x.SemesterId == dto.SemesterId).FirstOrDefaultAsync();
+                var endclassees = await db.TblClasses.Where(x => x.SemesterId == data.SemesterId).ToListAsync();
+                endclassees.ForEach(x => x.IsActive = Convert.ToUInt32(false));
                 data.EndDate = nowdt.ToString("dd/MM/yyyy");
                 data.IsActive = Convert.ToUInt32(false);
                 await db.SaveChangesAsync();

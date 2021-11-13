@@ -6,7 +6,8 @@ namespace FYP1.DTOs
         public string FullName { get; set; }
         public string ShortName { get; set; }
         public int? CrHr { get; set; }
-        public ulong? IsActive { get; set; }
+        public bool IsActive { get; set; }
+        public ClassDTO Classes { get; set; }
 
     }
 }

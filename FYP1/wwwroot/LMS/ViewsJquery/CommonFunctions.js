@@ -112,7 +112,7 @@ var CommonFunctions = {
             item.courses.fullName +
             "</option>";
         });
-        $(dpid).append(html);
+        $(dpid).html(html);
       },
     });
   },

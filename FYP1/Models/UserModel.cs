@@ -167,6 +167,7 @@ namespace FYP1.Models
 
         public async Task<List<ProfileDTO>> GetUsers()
         {
+            
             var data = await db.TblUsers.Include(x => x.Profile).Select(x => new ProfileDTO
             {
                 Nic = x.Profile.Nic,

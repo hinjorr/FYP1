@@ -23,9 +23,29 @@ namespace FYP1.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewCourse(CourseDTO dto)
         {
-            var data = await repo.AddNewCourse(dto);
-            return Ok(data);
+            if (dto.CourseId != 0)
+            {
+                var chk = await repo.UpdateDetails(dto);
+                return Ok(chk);
+            }
+            else
+            {
+                var data = await repo.AddNewCourse(dto);
+                return Ok(data);
+            }
+
         }
 
+        public async Task<JsonResult> GetCourses()
+        {
+            var courses = await repo.GetCourses();
+            return Json(new { data = courses });
+        }
+
+        public async Task<IActionResult> GetCoursebyID(int id)
+        {
+            var course = await repo.GetCoursebyID(id);
+            return Ok(course);
+        }
     }
 }

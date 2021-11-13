@@ -1,4 +1,13 @@
-﻿$("#newuser").validate({
+﻿$(document).ready(function () {
+  $("#roleinfo").hide();
+  var Rolevariable = 0;
+
+  CommonFunctions.GetPrograms("#dpdownProgram");
+  CommonFunctions.GetRoles("#dpdownRole");
+  
+});
+
+$("#newuser").validate({
   rules: {
     name: "required",
     number: {
@@ -66,85 +75,130 @@
       url: "/User/AddNewUser",
       data: ProfileDTO,
       success: function (resp) {
-        console.log(resp);
-        // $('#newuser').trigger("reset");
+        if (resp == true) {
+          cuteToast({
+            type: "success", 
+            message: "User Registered!",
+            timer: 3000
+          })
+          $("#newuser").trigger("reset");
+        } else if (resp == false) {
+          cuteToast({
+            type: "error", 
+            message: "Registration Failed!",
+            timer: 3000
+          })
+        } else {
+          cuteToast({
+            type: "warning",
+            message: resp,
+            timer: 3000
+          })
+        }
       },
     });
   },
 });
 
-$(document).ready(function () {
-  $("#roleinfo").hide();
-  var Rolevariable = 0;
+$("#dpdownRole").click(function (e) {
+  RoleId = $("#dpdownRole option:selected").val();
+  ProgramHide(RoleId);
+});
 
-  //faculty and admin role condition
-  function ProgramHide(id) {
-    if (id == 2 || id == 1) {
-      $("#lblprogram").attr("disabled", true);
-      $("#dpdownProgram").attr("disabled", true);
-    } else {
-      $("#lblprogram").attr("disabled", false);
-      $("#dpdownProgram").attr("disabled", false);
-    }
+//faculty and admin role condition
+function ProgramHide(id) {
+  if (id == 2 || id == 1) {
+    $("#dpdownProgram").attr("disabled", true);
+  } else {
+    $("#dpdownProgram").attr("disabled", false);
   }
-  //NIC check ajax
-  $("#txtNic").change(function (e) {
-    var ProfileDTO = {
-      Nic: $("#txtNic").val(),
-      User: {
-        IsActive: 1,
-      },
-      Student: {
-        IsActive: 1,
-      },
-    };
-    $.ajax({
-      type: "Post",
-      url: "/UserValidation/NICCheck",
-      data: ProfileDTO,
-      success: function (resp) {
-        if (resp != null) {
-          $("#txtName").val(resp.name);
-          $("#txtFatherName").val(resp.fatherName);
-          $("#txtNumber").val(resp.phoneNumber);
-          $("#txtEmail").val(resp.email);
-          $("input[name=gender][value=" + resp.gender + "]").prop(
-            "checked",
-            true
-          );
-          $("#timeDOB1").val(resp.doB);
-          $("#txtAddress").val(resp.address);
-          $("#txtCity").val(resp.city);
-          $("#txtCountry").val(resp.country);
-          // $("#Image1").val();
-          ProgramHide(resp.user.roleId);
-          Rolevariable = resp.user.roleId;
-          // if (resp.user.roleId == 1) {
-          //   $("#roleinfo").text("User already registered as Admin").show();
-          // } else if (resp.user.roleId == 2) {
-          //   $("#roleinfo").text("User already registered as Faculty").show();
-          // } else if (resp.user.roleId == 3) {
-          //   $("#roleinfo").text("User already registered as Student").show();
-          // }
-        }
-      },
-    });
+}
+
+//Role dp chnge
+$("#dpdownRole").change(function (e) {
+  var ProfileDTO = {
+    Nic: $("#txtNic").val(),
+    User: {
+      RoleId: $("#dpdownRole option:selected").val(),
+    },
+  };
+  RoleCheck(ProfileDTO);
+});
+
+//Role Check
+function RoleCheck(ProfileDTO) {
+  $.ajax({
+    type: "Post",
+    url: "/User/RoleCheck",
+    data: ProfileDTO,
+    success: function (resp) {
+      if (resp != null) {
+        RoleNames(ProfileDTO.User.RoleId);
+      }
+    },
   });
+}
 
-  //user already registerd with same role
-  $("#dpdownRole").change(function (e) {
-    var local = $("#dpdownRole").val();
-    ProgramHide(local);
-    if (local == Rolevariable) {
-      $("#roleinfo").text("This User already registered with this Role").show();
-      $("#btnSubmit").attr("disabled", true);
-    } else {
-      $("#roleinfo").hide();
-      $("#btnSubmit").attr("disabled", false);
-    }
+//show already resgietered role names
+function RoleNames(id) {
+  if (id == 1) {
+    cuteToast({
+      type: "warning",
+      message: "User already registered as Admin",
+      timer: 3000
+    })
+  } else if (id == 2) {
+    cuteToast({
+      type: "warning",
+      message: "User already registered as Faculty",
+      timer: 3000
+    })
+  } else if (id == 3) {
+    cuteToast({
+      type: "warning",
+      message: "User already registered as Student",
+      timer: 3000
+    })
+  }
+}
+
+//NIC check ajax
+$("#txtNic").change(function (e) {
+  var ProfileDTO = {
+    Nic: $("#txtNic").val(),
+    User: {
+      IsActive: 1,
+    },
+    Student: {
+      IsActive: 1,
+    },
+  };
+  $.ajax({
+    type: "Post",
+    url: "/UserValidation/NICCheck",
+    data: ProfileDTO,
+    success: function (resp) {
+      if (resp != null) {
+        cuteToast({
+          type: "info",
+          message: "This NIC is already Registered!",
+          timer: 3000
+        })
+        $("#txtName").val(resp.name);
+        $("#txtFatherName").val(resp.fatherName);
+        $("#txtNumber").val(resp.phoneNumber);
+        $("#txtEmail").val(resp.email);
+        $("input[name=gender][value=" + resp.gender + "]").prop(
+          "checked",
+          true
+        );
+        $("#timeDOB1").val(resp.doB);
+        $("#txtAddress").val(resp.address);
+        $("#txtCity").val(resp.city);
+        $("#txtCountry").val(resp.country);
+        // $("#Image1").val();
+        ProgramHide(resp.user.roleId);
+      }
+    },
   });
-
-
-  CommonFunctions.GetPrograms("#dpdownProgram");
-  CommonFunctions.GetRoles("#dpdownRole");
 });

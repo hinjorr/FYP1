@@ -4,7 +4,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 <div class="row mt">
-    <div class="col-lg-5">
+    <div class="col-lg-4">
         <div class="form-panel">
             <h4 class="mb"><i class="fa fa-angle-right"></i> Add new Course</h4>
             <form id="addnewcourse">
@@ -35,108 +35,33 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             </form>
         </div>
     </div>
-    <div class="col-lg-7">
+    <div class="col-lg-8">
         <div class="form-panel">
-            <h4 class="mb"><i class="fa fa-angle-right"></i> View all Courses</h4>
-            <div class="adv-table">
-                <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0"
-                    width="100%">
-                    <thead>
-                        <tr>
-                            <th class="th-sm">Name
+            <h4 class="mb"><i class="fa fa-angle-right"></i> View Classes</h4>
+            <table id="ViewCourses" class="table table-striped table-bordered table-sm display" cellspacing="0"
+                width="100%">
+                <thead>
+                    <tr>
+                        <th>CID</th>
+                        <th>Course Name</th>
+                        <th>Assigned Classes</th>
+                        <th class="numeric">Active Classes</th>
+                        <th class="numeric">CrHr</th>
+                        <th class="numeric">Actions</th>
+                    </tr>
+                </thead>
+                <tfoot>
+                    <th>CID</th>
+                    <th>Course Name</th>
+                    <th>Assigned Classes</th>
+                    <th class="numeric">Active Classes</th>
+                    <th class="numeric">CrHr</th>
+                    <th class="numeric">Actions</th>
+                </tfoot>
 
-                            </th>
-                            <th class="th-sm">Position
-
-                            </th>
-                            <th class="th-sm">Office
-
-                            </th>
-                            <th class="th-sm">Age
-
-                            </th>
-                            <th class="th-sm">Start date
-
-                            </th>
-                            <th class="th-sm">Salary
-
-                            </th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Tiger Nixon</td>
-                            <td>System Architect</td>
-                            <td>Edinburgh</td>
-                            <td>61</td>
-                            <td>2011/04/25</td>
-                            <td>$320,800</td>
-                        </tr>
-
-
-                        <tr>
-                            <td>Quinn Flynn</td>
-                            <td>Support Lead</td>
-                            <td>Edinburgh</td>
-                            <td>22</td>
-                            <td>2013/03/03</td>
-                            <td>$342,000</td>
-                        </tr>
-                        <tr>
-                            <td>Charde Marshall</td>
-                            <td>Regional Director</td>
-                            <td>San Francisco</td>
-                            <td>36</td>
-                            <td>2008/10/16</td>
-                            <td>$470,600</td>
-                        </tr>
-                        <tr>
-                            <td>Haley Kennedy</td>
-                            <td>Senior Marketing Designer</td>
-                            <td>London</td>
-                            <td>43</td>
-                            <td>2012/12/18</td>
-                            <td>$313,500</td>
-                        </tr>
-                        <tr>
-                            <td>Tatyana Fitzpatrick</td>
-                            <td>Regional Director</td>
-                            <td>London</td>
-                            <td>19</td>
-                            <td>2010/03/17</td>
-                            <td>$385,750</td>
-                        </tr>
-                        <tr>
-                            <td>Michael Silva</td>
-                            <td>Marketing Designer</td>
-                            <td>London</td>
-                            <td>66</td>
-                            <td>2012/11/27</td>
-                            <td>$198,500</td>
-                        </tr>
-
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th>Name
-                            </th>
-                            <th>Position
-                            </th>
-                            <th>Office
-                            </th>
-                            <th>Age
-                            </th>
-                            <th>Start date
-                            </th>
-                            <th>Salary
-                            </th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
+            </table>
         </div>
     </div>
-    <!-- col-lg-12-->
 </div>
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>

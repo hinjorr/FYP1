@@ -19,7 +19,6 @@ namespace FYP1.Controllers
         {
             return View();
         }
-        [HttpPost("AssignClass")]
         public async Task<IActionResult> AssignNewClass(ClassDTO dto)
         {
             if (dto.CourseId != null)
@@ -29,6 +28,12 @@ namespace FYP1.Controllers
             }
             return Ok(false);
         }
+        public async Task<JsonResult> ViewAllClasses()
+        {
+            var classes = await repo.ViewAllClass();
+            return Json(new { data = classes });
+        }
+
 
     }
 }

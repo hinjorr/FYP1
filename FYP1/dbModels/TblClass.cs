@@ -15,17 +15,18 @@ namespace FYP1.dbModels
 
         public int ClassId { get; set; }
         public int? ClassStrength { get; set; }
-        public int? ClassDay { get; set; }
-        public int? ClassTime { get; set; }
         public int? CourseId { get; set; }
         public int? SemesterId { get; set; }
         public int? ProgramId { get; set; }
+        public int? DayId { get; set; }
+        public int? TimeId { get; set; }
+        public ulong? IsActive { get; set; }
 
-        public virtual TblDay ClassDayNavigation { get; set; }
-        public virtual TblTime ClassTimeNavigation { get; set; }
         public virtual TblCourse Course { get; set; }
+        public virtual TblDay Day { get; set; }
         public virtual TblProgram Program { get; set; }
         public virtual TblSemester Semester { get; set; }
+        public virtual TblTime Time { get; set; }
         public virtual ICollection<TblCourseEligiblity> TblCourseEligiblities { get; set; }
         public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
     }

@@ -13,6 +13,10 @@
     <link href="~/LMS/img/favicon.png" rel="icon">
     <link href="~/LMS/img/apple-touch-icon.png" rel="apple-touch-icon">
 
+    <!-- toast -->
+    <link rel="stylesheet" href="~/LMS/Toast/style.css" />
+
+
 
     <link href="~/LMS/css/select2.min.css" rel="stylesheet" />
 
@@ -30,9 +34,10 @@
     <link rel="stylesheet" type="text/css" href="~/LMS/lib/bootstrap-daterangepicker/daterangepicker.css" />
     <link rel="stylesheet" type="text/css" href="~/LMS/lib/bootstrap-timepicker/compiled/timepicker.css" />
     <link rel="stylesheet" type="text/css" href="~/LMS/lib/bootstrap-datetimepicker/css/datetimepicker.css" />
-    <link href="~/LMS/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" />
-    <link rel="stylesheet" href="~/LMS/lib/advanced-datatable/css/DT_bootstrap.css" />
+    <!-- <link href="~/LMS/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" /> -->
+    <!-- <link rel="stylesheet" href="~/LMS/lib/advanced-datatable/css/DT_bootstrap.css" /> -->
     <link href="~/LMS/lib/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
 
 
 </head>
@@ -248,7 +253,7 @@
             </div>
             <div class="top-menu">
                 <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="/Login">Logout</a></li>
+                    <li><a class="logout" href="/Authentication/Login">Logout</a></li>
                 </ul>
             </div>
         </header>
@@ -415,42 +420,21 @@
     <script type="text/javascript" src="~/LMS/lib/bootstrap-daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="~/LMS/lib/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
     <script src="~/LMS/lib/advanced-form-components.js"></script>
-    <script type="text/javascript" language="javascript"
-        src="~/LMS/lib/advanced-datatable/js/jquery.dataTables.js"></script>
+   
+
     <script src="~/LMS/lib/fullcalendar/fullcalendar.min.js"></script>
     <script src="~/LMS/lib/calendar-conf-events.js"></script>
     <script type="text/javascript" src="~/LMS/ViewsJquery/CommonFunctions.js"></script>
     <script src="~/LMS/css/select2.min.js"></script>
+<script type="text/javascript" src="~/LMS/lib/OwnDataTable/datatables.min.js"></script>
 
+
+<!-- toast -->
+<script src="~/LMS/Toast/cute-alert.js"></script>
 
 </body>
 
 </html>
 
-<script type="text/javascript">
 
 
-    $(document).ready(function () {
-
-        /*
-         * Initialse DataTables, with no sorting on the 'details' column
-         */
-        var oTable = $('#hidden-table-info').dataTable({
-            "aoColumnDefs": [{
-                "bSortable": false,
-                "aTargets": [0]
-            }],
-            "aaSorting": [
-                [1, 'asc']
-            ]
-        });
-
-    });
-</script>
-
-<script>
-    $(document).ready(function () {
-        $('#dtBasicExample').DataTable();
-        $('.dataTables_length').addClass('bs-select');
-    });
-</script>

@@ -1,23 +1,28 @@
 $(document).ready(function () {
-  $.ajax({
-    async: true,
-    type: "Get",
-    url: "/User/ViewUser",
-    success: function (resp) {
-      var html = "";
-      html += " ";
-      $(resp).each(function (index, items) {
-        html +='<tr><td>'+items.user.userName+'</td>'
-        +'<td>'+items.name+'</td>'
-        +'<td>'+items.nic+'</td>'
-        +'<td>'+items.email+'</td>'
-        +'<td>'+items.user.role.roleName+'</td>'
-        +'<td>'+items.user.isActive+'</td>'
-        +'<td>'+items.user.userDate+'</td>'
-        +'<td>'+items.user.userDate+'</td></tr>'
-      });
-      // alert($("#tblusers").html());
-      $("#tblusers").html(html);
+  $("#viewuser").DataTable({
+    ajax: {
+      url: "/User/ViewUser",
+      type: "Get",
+      datatype: "json",
     },
+    columns: [
+      { data: "user.userName" },
+      { data: "name" },
+      { data: "nic" },
+      { data: "email" },
+      { data: "user.role.roleName" },
+      { data: "user.isActive" },
+      { data: "user.userDate" },
+      {
+        render: function (data, row) {
+          return '<button class="btn btn-primary btn-xs" onclick="clicked(this)"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>';
+        },
+      },
+    ],
   });
 });
+
+function clicked(obj) {
+  var userid = $(obj).closest("tr").find("td:first").html();
+  console.log(userid);
+}

@@ -77,33 +77,31 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_Classes");
 
-                entity.HasIndex(e => e.ClassDay, "Class_Day");
-
-                entity.HasIndex(e => e.ClassTime, "Class_Time");
-
                 entity.HasIndex(e => e.CourseId, "Course_Id");
+
+                entity.HasIndex(e => e.DayId, "Day_Id");
 
                 entity.HasIndex(e => e.ProgramId, "Program_Id");
 
                 entity.HasIndex(e => e.SemesterId, "Semester_Id");
 
+                entity.HasIndex(e => e.TimeId, "Time_Id");
+
                 entity.Property(e => e.ClassId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Class_Id");
 
-                entity.Property(e => e.ClassDay)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("Class_Day");
-
                 entity.Property(e => e.ClassStrength).HasColumnType("int(11)");
-
-                entity.Property(e => e.ClassTime)
-                    .HasColumnType("int(11)")
-                    .HasColumnName("Class_Time");
 
                 entity.Property(e => e.CourseId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Course_Id");
+
+                entity.Property(e => e.DayId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("Day_Id");
+
+                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
 
                 entity.Property(e => e.ProgramId)
                     .HasColumnType("int(11)")
@@ -113,20 +111,19 @@ namespace FYP1.dbModels
                     .HasColumnType("int(11)")
                     .HasColumnName("Semester_Id");
 
-                entity.HasOne(d => d.ClassDayNavigation)
-                    .WithMany(p => p.TblClasses)
-                    .HasForeignKey(d => d.ClassDay)
-                    .HasConstraintName("Tbl_Classes_ibfk_2");
-
-                entity.HasOne(d => d.ClassTimeNavigation)
-                    .WithMany(p => p.TblClasses)
-                    .HasForeignKey(d => d.ClassTime)
-                    .HasConstraintName("Tbl_Classes_ibfk_3");
+                entity.Property(e => e.TimeId)
+                    .HasColumnType("int(11)")
+                    .HasColumnName("Time_Id");
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.CourseId)
                     .HasConstraintName("Tbl_Classes_ibfk_4");
+
+                entity.HasOne(d => d.Day)
+                    .WithMany(p => p.TblClasses)
+                    .HasForeignKey(d => d.DayId)
+                    .HasConstraintName("Tbl_Classes_ibfk_6");
 
                 entity.HasOne(d => d.Program)
                     .WithMany(p => p.TblClasses)
@@ -137,6 +134,11 @@ namespace FYP1.dbModels
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.SemesterId)
                     .HasConstraintName("Tbl_Classes_ibfk_1");
+
+                entity.HasOne(d => d.Time)
+                    .WithMany(p => p.TblClasses)
+                    .HasForeignKey(d => d.TimeId)
+                    .HasConstraintName("Tbl_Classes_ibfk_7");
             });
 
             modelBuilder.Entity<TblCourse>(entity =>

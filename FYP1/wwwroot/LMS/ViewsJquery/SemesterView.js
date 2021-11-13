@@ -24,7 +24,11 @@ function AddSemester(SemesterDTO) {
       if (resp == true) {
         GetCurrentSemester();
       } else {
-        alert.append("Semester didnt started");
+        cuteToast({
+          type: "error", 
+          message: "Semester didnt started",
+          timer: 3000
+        })
       }
       // $('#newsemster').trigger("reset");
     },
@@ -36,14 +40,22 @@ function YesSemester(semesterName) {
   $("#lblname").hide();
   $("#btnstart").hide();
   $("#btnend").show();
-  alert(semesterName + " is running");
+  cuteToast({
+    type: "error", 
+    message: semesterName+" is running",
+    timer: 10000
+  })
 }
 function NoSemester() {
   $("#txtFullname").show();
   $("#lblname").show();
   $("#btnstart").show();
   $("#btnend").hide();
-  alert("No semester is running");
+  cuteToast({
+    type: "error", 
+    message: "No semester is running",
+    timer: 5000
+  })
 }
 
 //Get Currenlty running semester
@@ -83,6 +95,7 @@ $("#btnend").click(function (e) {
         if (resp == true) {
           NoSemester();
         } else {
+          
           alert("Cant close semester");
         }
       },

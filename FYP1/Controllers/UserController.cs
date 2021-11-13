@@ -14,7 +14,7 @@ namespace FYP1.Controllers
         private readonly IUser repo;
         private readonly IWebHostEnvironment env;
 
-        public UserController(IUser _repo,IWebHostEnvironment env)
+        public UserController(IUser _repo, IWebHostEnvironment env)
         {
             repo = _repo;
             this.env = env;
@@ -27,7 +27,7 @@ namespace FYP1.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewUser(ProfileDTO dto)
         {
-            
+
             var RoleChk = await repo.Role_NIC_Check(dto);
             if (RoleChk == null)
             {
@@ -40,15 +40,23 @@ namespace FYP1.Controllers
             }
         }
 
+    
+        public async Task<IActionResult> RoleCheck(ProfileDTO dto)
+        {
+            var chk = await repo.Role_NIC_Check(dto);
+            return Ok(chk);
+        }
+
         [HttpGet("ViewUsers")]
         public IActionResult ViewUsers()
         {
             return View();
         }
-        public async Task<IActionResult> ViewUser()
+
+        public async Task<JsonResult> ViewUser()
         {
-            var data = await repo.GetUsers();
-            return Ok(data);
+            var users = await repo.GetUsers();
+            return Json(new { data = users });
         }
 
         [HttpGet("UploadUsers")]
@@ -62,7 +70,7 @@ namespace FYP1.Controllers
         {
             return View();
         }
-       
+
 
     }
 }
