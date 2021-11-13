@@ -1,93 +1,108 @@
-﻿$("#newuser").validate({
-  rules: {
-    name: "required",
-    number: {
-      required: true,
-      digits: true,
-      minlength: 10,
-      maxlength: 11,
-    },
-    email: {
-      required: true,
-      email: true,
-    },
-    nic: {
-      required: true,
-      number: true,
-      minlength: 13,
-      maxlength: 13,
+﻿
+    $("#newuser").validate({
+        rules: {
+            name: "required",
+            number: {
+                required: true,
+                digits: true,
+                minlength: 10,
+                maxlength: 11,
+            },
+            email: {
+                required: true,
+                email: true,
+            },
+            nic: {
+                required: true,
+                number: true,
+                minlength: 13,
+                maxlength: 13,
+            },
+            dpRole: {
+                required: true,
+            },
+            program: {
+                required: true,
+            },
+            fathername: {
+                required: true,
+            },
+            country: {
+                required: true,
+            },
+            city: {
+                required: true,
+            },
+            address: {
+                required: true,
+            },
         },
-        dpRole: {
-            required: true,
+        messages: {
+            password: {
+                required: "Please enter password",
+                minlength: "Minimum 5 characters",
+            },
+            number: {
+                required: "Please enter  Phone Number",
+                minlength: "Please enter valid phone number",
+                maxlength: "Please enter valid phone number",
+            },
+            email: {
+                required: "Please enter email",
+                email: "Please enter valid email",
+            },
+            nic: {
+                required: "Please enter NIC number",
+                minlength: "Please enter valid 13 NIC digits",
+                maxlength: "Please enter valid 13 NIC digits",
+            },
+            dpRole: {
+                required: "Please Enter Role",
+            },
+            program: {
+                required: "Please enter Program",
+            },
+
         },
-        program: {
-            required: true,
+        submitHandler: function (form) {
+            var ProfileDTO = {
+                Name: $("#txtName").val(),
+                FatherName: $("#txtFatherName").val(),
+                PhoneNumber: $("#txtNumber").val(),
+                Email: $("#txtEmail").val(),
+                Nic: $("#txtNic").val(),
+                Gender: $("input[name=gender]:checked").val(),
+                DoB: $("#timeDOB1").val(),
+                Address: $("#txtAddress").val(),
+                City: $("#txtCity").val(),
+                Country: $("#txtCountry").val(),
+                Picture: $("#Image1").val(),
+                IsActive: 1,
+                User: {
+                    RoleId: $("#dpdownRole option:selected").val(),
+                    IsActive: 1,
+                },
+                Student: {
+                    ProgramId: $("#dpdownProgram option:selected").val(),
+                    IsActive: 1,
+                },
+            };
+            $.ajax({
+                type: "Post",
+                url: "/User/AddNewUser",
+                data: ProfileDTO,
+                success: function (resp) {
+                    console.log(resp);
+                    // $('#newuser').trigger("reset");
+                },
+            });
         },
-  },
-  messages: {
-    password: {
-      required: "Please enter password",
-      minlength: "Minimum 5 characters",
-    },
-    number: {
-      required: "Please enter  Phone Number",
-      minlength: "Please enter valid phone number",
-      maxlength: "Please enter valid phone number",
-    },
-    email: {
-      required: "Please enter email",
-      email: "Please enter valid email",
-    },
-    nic: {
-      required: "Please enter NIC number",
-      minlength: "Please enter valid 13 NIC digits",
-      maxlength: "Please enter valid 13 NIC digits",
-      },
-      dpRole: {
-          required: "Please Enter Role",
-      },
-      program: {
-          required: "Please enter Program",
-      },
-     
-  },
-  submitHandler: function (form) {
-    var ProfileDTO = {
-      Name: $("#txtName").val(),
-      FatherName: $("#txtFatherName").val(),
-      PhoneNumber: $("#txtNumber").val(),
-      Email: $("#txtEmail").val(),
-      Nic: $("#txtNic").val(),
-      Gender: $("input[name=gender]:checked").val(),
-      DoB: $("#timeDOB1").val(),
-      Address: $("#txtAddress").val(),
-      City: $("#txtCity").val(),
-      Country: $("#txtCountry").val(),
-      Picture: $("#Image1").val(),
-      IsActive: 1,
-      User: {
-        RoleId: $("#dpdownRole option:selected").val(),
-        IsActive: 1,
-      },
-      Student: {
-        ProgramId: $("#dpdownProgram option:selected").val(),
-        IsActive: 1,
-      },
-    };
-    $.ajax({
-      type: "Post",
-      url: "/User/AddNewUser",
-      data: ProfileDTO,
-      success: function (resp) {
-        console.log(resp);
-        // $('#newuser').trigger("reset");
-      },
     });
-  },
-});
+
 
 $(document).ready(function () {
-  $("#roleinfo").hide();
+    $("#newuser").valid();
+    $("#roleinfo").hide();
   var Rolevariable = 0;
 
   //faculty and admin role condition
