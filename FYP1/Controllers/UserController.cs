@@ -1,10 +1,8 @@
-using System.Net;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Authorization;
 
 namespace FYP1.Controllers
 {
@@ -40,7 +38,10 @@ namespace FYP1.Controllers
             }
         }
 
-    
+        public async Task<IActionResult> DeleteUser(string username)
+        {
+            return Ok(await repo.DeleteUser(username));
+        }
         public async Task<IActionResult> RoleCheck(ProfileDTO dto)
         {
             var chk = await repo.Role_NIC_Check(dto);
@@ -53,12 +54,12 @@ namespace FYP1.Controllers
             return View();
         }
 
-        public async Task<JsonResult> ViewUser()
+        public async Task<JsonResult> GetUsers()
         {
             var users = await repo.GetUsers();
             return Json(new { data = users });
         }
-
+               
         [HttpGet("UploadUsers")]
         public IActionResult UploadBulkUsers()
         {

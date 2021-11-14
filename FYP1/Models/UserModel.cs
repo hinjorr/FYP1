@@ -65,7 +65,7 @@ namespace FYP1.Models
                     {
                         mapper.Map(dto, profile);
                         await AddProfile();
-                        dto.ProfileId=profile.ProfileId;
+                        dto.ProfileId = profile.ProfileId;
                         await AddUser(dto);
                         //condition whether the user is Student/ Faculty/Admin
                         if (dto.User.RoleId == 1)
@@ -91,57 +91,102 @@ namespace FYP1.Models
                 }
                 catch (System.Exception)
                 {
-                    return false;
+                    throw new Exception("Task Failed");
                 }
             }
         }
         async Task<TblProfile> AddProfile()
         {
-            //entring data in TblProfile
-            profile.ProfileDate = datenow.ToString("dd/MM/yyyy");
-            await db.TblProfiles.AddAsync(profile);
-            await db.SaveChangesAsync();
-            
-            return profile;
+            try
+            {
+                //entring data in TblProfile
+                profile.ProfileDate = datenow.ToString("dd/MM/yyyy");
+                await db.TblProfiles.AddAsync(profile);
+                await db.SaveChangesAsync();
+
+                return profile;
+            }
+            catch (System.Exception)
+            {
+
+                throw new Exception("Task Failed");
+            }
+
         }
         async Task<TblUser> AddUser(ProfileDTO dto)
         {
-            //entring data in TblUser
-            mapper.Map(dto.User, user);
-            user.RoleId = dto.User.RoleId;
-            user.IsActive=Convert.ToUInt32(true);
-            user.UserDate = datenow.ToString("dd/MM/yyyy");
-            user.Password = RandomNumber(93456, 193123) + profile.ProfileId.ToString();
-            user.ProfileId = dto.ProfileId;
-            user.UserName = RandomNumber(121, 9131) + user.ProfileId.ToString();
-            await db.TblUsers.AddAsync(user);
-            await db.SaveChangesAsync();
-            return user;
+            try
+            {
+                //entring data in TblUser
+                mapper.Map(dto.User, user);
+                user.RoleId = dto.User.RoleId;
+                user.IsActive = Convert.ToUInt32(true);
+                user.UserDate = datenow.ToString("dd/MM/yyyy");
+                user.Password = RandomNumber(93456, 193123) + profile.ProfileId.ToString();
+                user.ProfileId = dto.ProfileId;
+                user.UserName = RandomNumber(121, 9131) + user.ProfileId.ToString();
+                await db.TblUsers.AddAsync(user);
+                await db.SaveChangesAsync();
+                return user;
+            }
+            catch (System.Exception)
+            {
+
+                throw new Exception("Task Failed");
+            }
+
         }
         async Task<TblAdmin> AddAdmin(int id)
         {
-            //entring data in TblAdmin
-            admin.UserId = id;
-            await db.TblAdmins.AddAsync(admin);
-            await db.SaveChangesAsync();
-            return admin;
+            try
+            {
+                //entring data in TblAdmin
+                admin.UserId = id;
+                await db.TblAdmins.AddAsync(admin);
+                await db.SaveChangesAsync();
+                return admin;
+            }
+            catch (System.Exception)
+            {
+
+                throw new Exception("Task Failed");
+            }
+
         }
         async Task<ProfileDTO> AddStudent(ProfileDTO dto)
         {
-            //enting data in TblStudent
-            student.UserId = user.UserId;
-            student.ProgramId = dto.Student.ProgramId;
-            await db.TblStudents.AddAsync(student);
-            await db.SaveChangesAsync();
-            return dto;
+            try
+            {
+                //enting data in TblStudent
+                student.UserId = user.UserId;
+                student.ProgramId = dto.Student.ProgramId;
+                await db.TblStudents.AddAsync(student);
+                await db.SaveChangesAsync();
+                return dto;
+            }
+            catch (System.Exception)
+            {
+
+                throw new Exception("Task Failed");
+            }
+
         }
         async Task<TblFaculty> AddFaculty(int id)
         {
-            //entring data in TblFaculty
-            faculty.UserId = user.UserId;
-            await db.TblFaculties.AddAsync(faculty);
-            await db.SaveChangesAsync();
-            return faculty;
+            try
+            {
+                //entring data in TblFaculty
+                faculty.UserId = user.UserId;
+                await db.TblFaculties.AddAsync(faculty);
+                await db.SaveChangesAsync();
+                return faculty;
+            }
+            catch (System.Exception)
+            {
+
+                throw new Exception("Task Failed");
+            }
+
         }
         public async Task<string> Role_NIC_Check(ProfileDTO dto)
         {
@@ -161,14 +206,31 @@ namespace FYP1.Models
             catch (System.Exception)
             {
 
-                throw;
+                throw new Exception("Task Failed!");
             }
         }
 
+        public async Task<bool> DeleteUser(string username)
+        {
+            try
+            {
+                var data = await db.TblUsers.Where(x => x.UserName == username).FirstOrDefaultAsync();
+                data.IsActive = Convert.ToUInt32(false);
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception)
+            {
+                throw new Exception("Task Failed");
+            }
+
+        }
+
+
         public async Task<List<ProfileDTO>> GetUsers()
         {
-            
-            var data = await db.TblUsers.Include(x => x.Profile).Select(x => new ProfileDTO
+
+            var data = await db.TblUsers.Select(x => new ProfileDTO
             {
                 Nic = x.Profile.Nic,
                 Name = x.Profile.Name + " " + x.Profile.FatherName,

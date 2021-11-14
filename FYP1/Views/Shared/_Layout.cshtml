@@ -37,7 +37,7 @@
     <!-- <link href="~/LMS/lib/advanced-datatable/css/demo_table.css" rel="stylesheet" /> -->
     <!-- <link rel="stylesheet" href="~/LMS/lib/advanced-datatable/css/DT_bootstrap.css" /> -->
     <link href="~/LMS/lib/fullcalendar/bootstrap-fullcalendar.css" rel="stylesheet" />
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.11.3/datatables.min.css"/>
+    <link rel="stylesheet" type="text/css" href="~/LMS/lib/OwnDataTable/datatables.min.css" />
 
 
 </head>
@@ -248,12 +248,14 @@
                         </ul>
                     </li>
                     <!-- notification dropdown end -->
+
                 </ul>
                 <!--  notification end -->
             </div>
             <div class="top-menu">
+                <a class="logo" style="margin-left: 55%;color: white;"> <b id="LogoSemester"></b></a>
                 <ul class="nav pull-right top-menu">
-                    <li><a class="logout" href="/Authentication/Login">Logout</a></li>
+                    <li><a class="logout" href="/Authentication/Login"><b>Logout</b></a></li>
                 </ul>
             </div>
         </header>
@@ -420,21 +422,19 @@
     <script type="text/javascript" src="~/LMS/lib/bootstrap-daterangepicker/moment.min.js"></script>
     <script type="text/javascript" src="~/LMS/lib/bootstrap-timepicker/js/bootstrap-timepicker.js"></script>
     <script src="~/LMS/lib/advanced-form-components.js"></script>
-   
+
 
     <script src="~/LMS/lib/fullcalendar/fullcalendar.min.js"></script>
     <script src="~/LMS/lib/calendar-conf-events.js"></script>
     <script type="text/javascript" src="~/LMS/ViewsJquery/CommonFunctions.js"></script>
+    <script type="text/javascript" src="~/LMS/ViewsJquery/Dashboard.js"></script>
     <script src="~/LMS/css/select2.min.js"></script>
-<script type="text/javascript" src="~/LMS/lib/OwnDataTable/datatables.min.js"></script>
+    <script type="text/javascript" src="~/LMS/lib/OwnDataTable/datatables.min.js"></script>
 
 
-<!-- toast -->
-<script src="~/LMS/Toast/cute-alert.js"></script>
+    <!-- toast -->
+    <script src="~/LMS/Toast/cute-alert.js"></script>
 
 </body>
 
 </html>
-
-
-

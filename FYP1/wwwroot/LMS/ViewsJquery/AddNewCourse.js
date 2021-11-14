@@ -22,16 +22,22 @@ $("#addnewcourse").validate({
     },
   },
   submitHandler: function (form) {
-    var CourseDTO = {
-      FullName: $("#txtfullName").val(),
-      ShortName: $("#txtshortName").val(),
-      CrHr: $("#txtcourseCrHr").val(),
-      CourseId: CID,
-    };
-    AddNewCourse(CourseDTO);
+    (CourseDTO.FullName = $("#txtfullName").val()),
+      (CourseDTO.ShortName = $("#txtshortName").val()),
+      (CourseDTO.CrHr = $("#txtcourseCrHr").val()),
+      AddNewCourse(CourseDTO);
+    console.log(CourseDTO);
+    $("#addnewcourse").trigger("reset");
   },
 });
-var CID = 0;
+
+var CourseDTO = {
+  FullName: "",
+  ShortName: "",
+  CrHr: 0,
+  CourseId: 0,
+};
+
 function AddNewCourse(CourseDTO) {
   $.ajax({
     type: "Post",
@@ -69,7 +75,6 @@ function GetCourses() {
       { data: "courseId" },
       { data: "fullName" },
       { data: "isActive" },
-      { data: "isActive" },
       { data: "crHr" },
       {
         render: function (data, row) {
@@ -88,7 +93,7 @@ function FillForm(obj) {
       $("#txtfullName").val(resp.fullName);
       $("#txtshortName").val(resp.shortName);
       $("#txtcourseCrHr").val(resp.crHr);
-      CID = id;
+      CourseDTO.CourseId = resp.courseId;
     },
   });
 }
