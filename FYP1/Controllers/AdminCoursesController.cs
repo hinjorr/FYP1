@@ -26,12 +26,28 @@ namespace FYP1.Controllers
             if (dto.CourseId != 0)
             {
                 var chk = await repo.UpdateDetails(dto);
-                return Ok(chk);
+                if (chk)
+                {
+                    return Ok(new { type = "success", msg = "Course Updated successfully!" });
+                }
+                else
+                {
+                    return Ok(new { type = "error", msg = chk });
+                }
+
             }
             else
             {
                 var data = await repo.AddNewCourse(dto);
-                return Ok(data);
+                if (data)
+                {
+                    return Ok(new { type = "success", msg = "Course Registered!" });
+                }
+                else
+                {
+                    return Ok(new { type = "error", msg = data });
+                }
+
             }
 
         }

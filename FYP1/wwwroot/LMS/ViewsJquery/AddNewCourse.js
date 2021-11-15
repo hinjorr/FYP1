@@ -39,27 +39,21 @@ var CourseDTO = {
 };
 
 function AddNewCourse(CourseDTO) {
+  
   $.ajax({
     type: "Post",
     url: "/AdminCourses/AddNewCourse",
     data: CourseDTO,
     success: function (resp) {
-      if (resp == true) {
         $("#ViewCourses").DataTable().clear().destroy();
         GetCourses();
         $("#addnewcourse").trigger("reset");
         cuteToast({
-          type: "success",
-          message: "Class Assigned!",
+          type: resp.type,
+          message: resp.msg,
           timer: 3000,
         });
-      } else {
-        cuteToast({
-          type: "error",
-          message: "Failed",
-          timer: 3000,
-        });
-      }
+       
     },
   });
 }
@@ -86,7 +80,7 @@ function GetCourses() {
 }
 
 function FillForm(obj) {
-  var id = $(obj).closest("tr").find("td:first").html();
+  var id = $(obj).closest("tr").find("td:eq(0)").html();
   $.ajax({
     url: "/AdminCourses/GetCoursebyID?id=" + id,
     success: function (resp) {
