@@ -4,10 +4,11 @@
   CommonFunctions.GetDays("#dpDownClassDay");
   CommonFunctions.GetTime("#dpDownClassTime");
   GetAllClasses();
-  CommonFunctions.GetCurrentSemester().success(function (resp) {
-    $("#txtSemesterName").val(resp.semesterName);
-    ClassDTO.SemesterId = resp.semesterId;
-  });
+  GetCurrentSemester();
+  // CommonFunctions.GetCurrentSemester().success(function (resp) {
+  //   $("#txtSemesterName").val(resp.semesterName);
+  //   ClassDTO.SemesterId = resp.semesterId;
+  // });
   $("#DpDownCourse").select2();
   $("#DpDownCourseView").select2();
 });
@@ -55,6 +56,15 @@ function CreateClass(ClassDTO) {
     },
   });
 }
+function GetCurrentSemester() {
+  return $.ajax({
+    url: "/Semester/GetCurrentSemester",
+    success: function (resp) {
+      $("#txtSemesterName").val(resp.semesterName);
+      ClassDTO.SemesterId = resp.semesterId;
+    },
+  });
+}
 
 function GetAllClasses() {
   $("#ViewClasses").DataTable({
@@ -73,7 +83,7 @@ function GetAllClasses() {
       { data: "classStrength" },
       {
         render: function (data, row) {
-          return '<button class="btn btn-primary btn-xs" onclick="clicked(this)"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>';
+          return '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="clicked(this)"><i class="la la-edit"></i></button><button class="btn btn-sm btn-clean btn-icon" title="Delete"><i class="la la-trash"></i></button>';
         },
       },
     ],

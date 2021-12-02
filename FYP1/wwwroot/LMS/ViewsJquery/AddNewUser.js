@@ -4,8 +4,10 @@
 
   CommonFunctions.GetPrograms("#dpdownProgram");
   CommonFunctions.GetRoles("#dpdownRole");
-  
+
+
 });
+
 
 $("#newuser").validate({
   rules: {
@@ -77,23 +79,23 @@ $("#newuser").validate({
       success: function (resp) {
         if (resp == true) {
           cuteToast({
-            type: "success", 
+            type: "success",
             message: "User Registered!",
-            timer: 3000
-          })
+            timer: 3000,
+          });
           $("#newuser").trigger("reset");
         } else if (resp == false) {
           cuteToast({
-            type: "error", 
+            type: "error",
             message: "Registration Failed!",
-            timer: 3000
-          })
+            timer: 3000,
+          });
         } else {
           cuteToast({
             type: "warning",
             message: resp,
-            timer: 3000
-          })
+            timer: 3000,
+          });
         }
       },
     });
@@ -145,20 +147,20 @@ function RoleNames(id) {
     cuteToast({
       type: "warning",
       message: "User already registered as Admin",
-      timer: 3000
-    })
+      timer: 3000,
+    });
   } else if (id == 2) {
     cuteToast({
       type: "warning",
       message: "User already registered as Faculty",
-      timer: 3000
-    })
+      timer: 3000,
+    });
   } else if (id == 3) {
     cuteToast({
       type: "warning",
       message: "User already registered as Student",
-      timer: 3000
-    })
+      timer: 3000,
+    });
   }
 }
 
@@ -182,8 +184,8 @@ $("#txtNic").change(function (e) {
         cuteToast({
           type: "info",
           message: "This NIC is already Registered!",
-          timer: 3000
-        })
+          timer: 3000,
+        });
         $("#txtName").val(resp.name);
         $("#txtFatherName").val(resp.fatherName);
         $("#txtNumber").val(resp.phoneNumber);
@@ -202,3 +204,4 @@ $("#txtNic").change(function (e) {
     },
   });
 });
+

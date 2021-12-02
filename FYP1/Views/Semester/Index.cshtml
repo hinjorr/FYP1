@@ -1,30 +1,32 @@
 @{
-ViewData["Title"] = "Index";
+ViewData["Title"] = "Semester";
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row mt">
-    <div class="col-lg-5">
-        <div class="form-panel">
-            <h4 class="mb"><i class="fa fa-angle-right"></i> Start/End Semester</h4>
-            <form id="newsemster">
-                <div class="form-group row">
-                    <div class="col-sm-12">
-                        <label id="lblname">Semester Name
-                            <span class="error">*</span>
-                        </label>
-                        <input type="text" class="form-control" id="txtFullname" name="Fullname">
-                        <label class="error" id="lblerror"></label>
-                    </div>
-                </div>
+<!--begin::Card-->
+<div class="card card-custom gutter-b example example-compact col-md-6">
+    <div class="card-header">
+        <h3 class="card-title">Start/End Semester</h3>
 
+    </div>
+    <!--begin::Form-->
+    <form id="newsemster">
+        <div class="card-body">
+            <div class="form-group">
+                <label id="lblname">Semester Name
+                    <span class="error">*</span>
+                </label>
+                <input type="text" class="form-control" id="txtFullname" name="Fullname">
+                <label class="error" id="lblerror"></label>
                 <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnstart">Start</button>
                 <button type="button" class="btn btn-danger btn-lg btn-block" id="btnend">End</button>
-            </form>
+            </div>
         </div>
-    </div>
+
+    </form>
+    <!--end::Form-->
 </div>
+<!--end::Card-->
 
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>
-
 <script type="text/javascript" src="~/LMS/ViewsJquery/SemesterView.js"></script>

@@ -28,6 +28,7 @@ namespace FYP1.Controllers
             }
             return Ok(false);
         }
+        
         public async Task<JsonResult> ViewAllClasses()
         {
             var classes = await repo.ViewAllClass();

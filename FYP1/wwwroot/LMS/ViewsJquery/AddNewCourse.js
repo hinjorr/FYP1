@@ -72,7 +72,7 @@ function GetCourses() {
       { data: "crHr" },
       {
         render: function (data, row) {
-          return '<button class="btn btn-primary btn-xs" onclick="FillForm(this)"><i class="fa fa-pencil"></i></button><button class="btn btn-danger btn-xs"><i class="fa fa-trash-o "></i></button>';
+          return '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="FillForm(this)"><i class="la la-edit"></i></button><button class="btn btn-sm btn-clean btn-icon" title="Delete"><i class="la la-trash"></i></button>';
         },
       },
     ],

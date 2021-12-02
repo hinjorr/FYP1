@@ -1,13 +1,8 @@
-using System.Security.Cryptography.X509Certificates;
-using System.ComponentModel.DataAnnotations;
 using System.Security.Claims;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using FYP1.DTOs;
 using FYP1.Repository;
-using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using FYP1.dbModels;
 using AutoMapper;

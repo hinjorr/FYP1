@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 
 namespace FYP1.Controllers
 {
+    // [Authorize]
     public class HomeController : Controller
     {
         // [Authorize(Roles ="Admin,Faculty,Student")]
@@ -18,6 +19,6 @@ namespace FYP1.Controllers
         {
             return View();
         }
-      
+
     }
 }

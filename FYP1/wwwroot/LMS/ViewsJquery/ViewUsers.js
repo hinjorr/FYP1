@@ -20,8 +20,8 @@ function GetUsers() {
       {
         render: function (data, row) {
           return (
-            '<button class="btn btn-primary btn-xs" onclick="Update(this)"><i class="fa fa-pencil"></i>' +
-            '</button><button class="btn btn-danger btn-xs" onclick="Delete(this)"><i class="fa fa-trash-o"></i></button>'
+            '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="Update(this)"><i class="la la-edit"></i></button>' +
+            '<button class="btn btn-sm btn-clean btn-icon" title="Delete" onclick="Delete(this)"><i class="la la-trash"></i></button>'
           );
         },
       },

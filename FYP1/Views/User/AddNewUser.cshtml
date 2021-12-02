@@ -4,150 +4,133 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
 
-
-<div class="form-panel">
-    <div class="row">
-        <h4 class="mb col-md-3"><i class="fa fa-angle-right"></i> Add new User</h4>
-        <label class="alert alert-warning col-md-9" id="roleinfo"></label>
-        <!-- <label id="addinfo" class="col-md-8 error"></label>
-        <label id="roleinfo" class="col-md-8 error"></label> -->
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header">
+        <h3 class="card-title">Start/End Semester</h3>
     </div>
-
-    <form id="newuser">
-        <div class="form-group row">
-            <div class="col-sm-3">
-                <label>
-                    NIC number
-                    <span class="error">*</span>
-                </label>
-                <input type="text" class="form-control" placeholder="" id="txtNic" name="nic">
-            </div>
-            <div class="col-sm-3">
-                <label>
-                    Name
-                    <span class="error">*</span>
-                </label>
-                <input type="text" class="form-control" placeholder="" id="txtName" name="name">
-            </div>
-            <div class="col-sm-3">
-                <label>Father's Name</label>
-                <input type="text" class="form-control" placeholder="" id="txtFatherName">
-            </div>
-
-
-
-        </div>
-        <div class="row">
-            <div class="col-sm-9">
-                <div class="form-group row">
-                    <div class="col-sm-4">
-                        <label>
-                            Email
-                            <span class="error">*</span>
-                        </label>
-                        <input type="text" class="form-control" placeholder="" id="txtEmail" name="email">
-                    </div>
-                    <div class="col-sm-4">
-                        <label>
-                            Phone Number
-                            <span class="error">*</span>
-                        </label>
-                        <input type="text" class="form-control" placeholder="" id="txtNumber" name="number">
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Date of birth</label>
-                        <div data-date-viewmode="years" data-date-format="dd-mm-yyyy" data-date="01-01-2014"
-                            class="input-append date dpYears">
-                            <input type="text" readonly="" value="01-01-2014" size="16" class="form-control"
-                                id="timeDOB1">
-                            <span class="input-group-btn add-on">
-                                <button class="btn btn-theme" type="button" id="timeDOB"><i
-                                        class="fa fa-calendar"></i></button>
-                            </span>
-                        </div>
-                    </div>
-
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-sm-4">
-                        <div class="radio">
-                            <label>Gender</label><br>
-                            <label>
-                                <input type="radio" name="gender" id="rad1" value="male">
-                                Male
-                            </label>
-                            <label>
-                                <input type="radio" name="gender" id="rad2" value="female">
-                                Female
-                            </label>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <label>
-                            Role
-                            <span class="error">*</span>
-                        </label>
-                        <select class="form-control" id="dpdownRole">
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <label id="lblprogram">
-                            Program
-                            <span class="error">*</span>
-                        </label>
-                        <select class="form-control" id="dpdownProgram" name="program">
-                        </select>
-                    </div>
-
-                </div>
-
-                <div class="form-group row">
-                    <div class="col-sm-7">
-                        <label>Residential Address</label>
-                        <input type="text" class="form-control" placeholder="" id="txtAddress">
-                    </div>
-                    <div class="col-sm-2">
-                        <label>City</label>
-                        <input type="text" class="form-control" placeholder="" id="txtCity">
-                    </div>
-                    <div class="col-sm-3">
-                        <label>Country</label>
-                        <input type="text" class="form-control" placeholder="" id="txtCountry">
-                    </div>
-                </div>
-            </div>
-            <div class="col-sm-3">
+    <div class="card-body">
+        <form id="newuser">
+            <div class="form-group row">
                 <div class="col-sm-3">
-                    <div class="form-group">
-                        <div class="form-group last">
-                            <div class="col-md-3">
-                                <div class="fileupload fileupload-new" data-provides="fileupload">
-                                    <div class="fileupload-new thumbnail" style="width: 200px; height: 150px;">
-                                        <img src="http://www.placehold.it/200x150/EFEFEF/AAAAAA&text=no+image" alt="" />
-                                    </div>
-                                    <div class="fileupload-preview fileupload-exists thumbnail"
-                                        style="max-width: 200px; max-height: 150px; line-height: 20px;" id="Image">
-                                    </div>
-                                    <div>
-                                        <span class="btn btn-theme02 btn-file">
-                                            <span class="fileupload-new"><i class="fa fa-paperclip"></i> Select
-                                                image</span>
-                                            <span class="fileupload-exists"><i class="fa fa-undo"></i> Change</span>
-                                            <input type="file" class="default" id="Image1" />
-                                        </span>
-                                    </div>
-                                </div>
+                    <label>
+                        NIC number
+                        <span class="error">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="" id="txtNic" name="nic">
+                </div>
+                <div class="col-sm-3">
+                    <label>
+                        Name
+                        <span class="error">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="" id="txtName" name="name">
+                </div>
+                <div class="col-sm-3">
+                    <label>Father's Name</label>
+                    <input type="text" class="form-control" placeholder="" id="txtFatherName">
+                </div>
+
+
+
+            </div>
+            <div class="row">
+                <div class="col-sm-9">
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label>
+                                Email
+                                <span class="error">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="" id="txtEmail" name="email">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>
+                                Phone Number
+                                <span class="error">*</span>
+                            </label>
+                            <input type="text" class="form-control" placeholder="" id="txtNumber" name="number">
+                        </div>
+                        <div class="col-sm-4">
+                            <label>Date of birth</label>
+                            <input type="text" class="form-control kt_datepicker_1" id="timeDOB1" readonly="readonly"
+                                placeholder="Select date" />
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-4">
+                            <label>Gender</label>
+                            <div class="radio">
+                                <label>
+                                    <input type="radio" name="gender" id="rad1" value="male">
+                                    Male
+                                </label>
+                                <label>
+                                    <input type="radio" name="gender" id="rad2" value="female">
+                                    Female
+                                </label>
                             </div>
                         </div>
+                        <div class="col-sm-4">
+                            <label>
+                                Role
+                                <span class="error">*</span>
+                            </label>
+                            <select class="form-control" id="dpdownRole">
+                            </select>
+                        </div>
+                        <div class="col-sm-4">
+                            <label id="lblprogram">
+                                Program
+                                <span class="error">*</span>
+                            </label>
+                            <select class="form-control" id="dpdownProgram" name="program">
+                            </select>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-sm-7">
+                            <label>Residential Address</label>
+                            <input type="text" class="form-control" placeholder="" id="txtAddress">
+                        </div>
+                        <div class="col-sm-2">
+                            <label>City</label>
+                            <input type="text" class="form-control" placeholder="" id="txtCity">
+                        </div>
+                        <div class="col-sm-3">
+                            <label>Country</label>
+                            <input type="text" class="form-control" placeholder="" id="txtCountry">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="image-input image-input-empty image-input-outline" id="kt_image_5"
+                        style="background-image: url(LMS/assets/media/users/blank.png)">
+                        <div class="image-input-wrapper"></div>
+                        <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
+                            <i class="fa fa-pen icon-sm text-muted"></i>
+                            <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" />
+                            <input type="hidden" name="profile_avatar_remove" />
+                        </label>
+                        
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
+                        <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
+                            data-action="remove" data-toggle="tooltip" title="Remove avatar">
+                            <i class="ki ki-bold-close icon-xs text-muted"></i>
+                        </span>
                     </div>
                 </div>
             </div>
+
             <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit">Submit</button>
-
-
-    </form>
-
+        </form>
+    </div>
 </div>
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>
