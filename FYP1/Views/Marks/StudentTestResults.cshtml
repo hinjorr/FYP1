@@ -1,76 +1,65 @@
 @{
-    ViewData["Title"] = "StudentTestResults";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    
-    }
-    <div class="col-lg-7">
-        <div class="form-panel">
-            <h4 class="mb"><i class="fa fa-angle-right"></i> View Test Results</h4>
-            <form>
-                <div class="form-group row">
-                    <div class="col-sm-12">
-                        <label>Select Class</label>
-                        <select class="form-control">
-                            <option>OOP</option>
-                            <option>DCN</option>
-                            <option>Automata</option>
-                            <option>TE</option>
-                        </select>
-                    </div>
-                </div>
-    
-    
-            </form>
-            <section id="no-more-tables">
-                <table class="table table-bordered table-striped table-condensed cf">
-                    <thead class="cf">
-                        <tr>
-                            <th>Class ID </th>
-                            <th>Assessment Name</th>
-                            <th class="numeric">Total Marks</th>
-                            <th class="numeric">Marks Obtained</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td data-title="Code">AAC</td>
-                            <td data-title="Company">AUSTRALIAN.</td>
-                            <td class="numeric" data-title="Price">$1.38</td>
-                            <td class="numeric" data-title="Change">-0.01</td>
-                        </tr>
-                        <tr>
-                            <td data-title="Code">AAC</td>
-                            <td data-title="Company">AUSTRALIAN.</td>
-                            <td class="numeric" data-title="Price">$1.38</td>
-                            <td class="numeric" data-title="Change">-0.01</td>
-                        </tr>
-                        <tr>
-                            <td data-title="Code">AAC</td>
-                            <td data-title="Company">AUSTRALIAN.</td>
-                            <td class="numeric" data-title="Price">$1.38</td>
-                            <td class="numeric" data-title="Change">-0.01</td>
-                        </tr>
-                        <tr>
-                            <td data-title="Code">123342</td>
-                            <td data-title="Company">ARDENT</td>
-                            <td class="numeric" data-title="Price">$1.15</td>
-                            <td class="numeric" data-title="Change"> +0.02</td>
-                        </tr>
-    
-                        <tr>
-                            <td data-title="Code">ACR</td>
-                            <td data-title="Company">ACRUX</td>
-                            <td class="numeric" data-title="Price">$3.71</td>
-                            <td class="numeric" data-title="Change"> +0.01</td>
-                        </tr>
-                        <tr>
-                            <td data-title="Code">ADU</td>
-                            <td data-title="Company">ADAMUS RESOURCES LIMITED</td>
-                            <td class="numeric" data-title="Price">$0.72</td>
-                            <td class="numeric" data-title="Change">0.00</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </section>
+ViewData["Title"] = "Test Results";
+Layout = "~/Views/Shared/_Layout.cshtml";
+
+}
+
+<!--begin::Card-->
+<div class="card card-custom gutter-b col-lg-7">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3 class="card-label">@ViewData["Title"]
+            </h3>
         </div>
     </div>
+    <div class="card-body">
+        <div class="form-group row">
+            <div class="col-sm-12">
+                <label>Select Class</label>
+                <select class="form-control">
+                    <option>OOP</option>
+                    <option>DCN</option>
+                    <option>Automata</option>
+                    <option>TE</option>
+                </select>
+            </div>
+        </div>
+        <!--begin: Datatable-->
+        <table class="table table-bordered table-checkable" >
+            <thead>
+                <tr>
+                    <th>Class ID </th>
+                    <th>Class Name </th>
+                    <th>Assessment Name</th>
+                    <th>Total Marks</th>
+                    <th>Marks Obtained</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>50</td>
+                    <td>49349-222</td>
+                    <td>49349-222</td>
+                    <td>China</td>
+                    <td>Zhulan</td>
+                </tr>
+                <tr>
+                    <td>50</td>
+                    <td>49349-222</td>
+                    <td>49349-222</td>
+                    <td>China</td>
+                    <td>Zhulan</td>
+                </tr>
+                <tr>
+                    <td>50</td>
+                    <td>49349-222</td>
+                    <td>49349-222</td>
+                    <td>China</td>
+                    <td>Zhulan</td>
+                </tr>
+            </tbody>
+        </table>
+        <!--end: Datatable-->
+    </div>
+</div>
+<!--end::Card-->

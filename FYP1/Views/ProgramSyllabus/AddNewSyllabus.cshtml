@@ -1,65 +1,65 @@
 @{
-ViewData["Title"] = "ProgramSyllabus";
+ViewData["Title"] = "Program Syllabus";
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<div class="form-panel">
-    <div class="form-group row">
-        <div class="col-lg-10">
-            <h1><i class="fa fa-angle-right"></i> Program Syllabus</h1>
-        </div>
-        <div class="col-lg-3">
-            <h3>Select Program</h3>
-            <select class="form-control" id="dpPrograms">
-            </select>
-        </div>
-        <div class="col-lg-3"></div>
-        <div class="col-lg-4"></div>
-        <div class="col-lg-2">
-            <h4>
-                Total Cr.Hr
-            </h4>
-            <input type="text" class="form-control" disabled>
-        </div>
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
     </div>
-</div>
-<div class="form-panel">
-    <div class="form-group row">
-        <div class="col-lg-12">
-            <section>
-                <table class="table table-bordered table-striped table-condensed cf " id="tblsyllabus">
-                    <thead class="cf">
-                        <tr>
-                            <th>Cno</th>
-                            <th>Course</th>
-                            <th class="numeric">Pre Requisete</th>
-                            <th class="numeric" style="width: 10%;">Required Cr Hr</th>
-                            <th class="numeric" style="width: 5%;">Cr .Hr</th>
-                            <th class="numeric" style="width: 5%;"></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr class="trClone">
-                            <td data-title="Company">1</td>
-                            <td data-title="Company"> <select class="form-control dpCourse" style="width: 100%;">
-                                </select> </td>
-                            <td><select class="form-control dpRequisete" style="width: 100%;"></select> </td>
-                            <td><input type="text" class="form-control rqdCrHr"> </td>
-                            <td>
-                                <p id="CrHr"></p>
-                            </td>
-                            <td> <button class="btn btn-success btn-xs btnadd">+</i></button><button
-                                    class="btn btn-danger btn-xs btnremove">-</i></button></td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </section>
-            <div class="col-md-10"></div>
-            <div class="col-md-2">
-                <button type="submit" class="btn btn-primary " id="btnsubmit">Submit</button>
+    <div class="card-body">
+        <div class="form-group row">
+            <div class="col-lg-3">
+                <h3>Select Program</h3>
+                <select class="form-control" id="dpPrograms">
+                </select>
             </div>
+            <div class="col-lg-3"></div>
+            <div class="col-lg-4"></div>
+            <div class="col-lg-2">
+                <h4>
+                    Total Cr.Hr
+                </h4>
+                <input type="text" class="form-control" disabled>
+            </div>
+        </div>
+        <div class="form-group row">
+            <div class="col-lg-12">
+                <section>
+                    <table class="table table-bordered table-hover table-checkable mt-10" id="tblsyllabus">
+                        <thead>
+                            <tr>
+                                <th>Cno</th>
+                                <th>Course</th>
+                                <th>Pre Requisete</th>
+                                <th style="width: 8%;">Required Cr Hr</th>
+                                <th style="width: 6%;">Cr .Hr</th>
+                                <th style="width: 8%;"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="trClone">
+                                <td data-title="Company">1</td>
+                                <td data-title="Company"> <select class="form-control dpCourse" style="width: 100%;">
+                                    </select> </td>
+                                <td><select class="form-control dpRequisete " style="width: 100%;"></select> </td>
+                                <td><input type="text" class="form-control rqdCrHr"> </td>
+                                <td>
+                                    <p id="CrHr"></p>
+                                </td>
+                                <td> <button class="btn btn-success btn-sm btnadd">+</i></button><button
+                                        class="btn btn-danger btn-sm btnremove">-</i></button></td>
+                            </tr>
 
+                        </tbody>
+                    </table>
+                </section>
+                <div class="col-md-10"></div>
+                <div class="col-md-2">
+                    <button type="submit" class="btn btn-primary " id="btnsubmit">Submit</button>
+                </div>
+
+            </div>
         </div>
     </div>
 </div>

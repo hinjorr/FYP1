@@ -1,85 +1,84 @@
 @{
-ViewData["Title"] = "MarkAttedence";
+ViewData["Title"] = "Mark Attedence";
 Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-<div class="row">
-    <div class="col-lg-10">
-        <div class="form-panel">
-            <h4 class="mb"><i class="fa fa-angle-right"></i> Attedence Report</h4>
-            <form>
-                <div class="form-group row">
-                    <div class="col-sm-4">
-                        <label>Select Class</label>
-                        <select class="form-control" id="dpdownSelectClass">
-                            <option>10315 Object Oriented Progarming</option>
-                            <option>Tuesday</option>
-                            <option>Wednesday</option>
-                            <option>Thursday</option>
-                            <option>Friday</option>
-                            <option>Saturday</option>
-                            <option>Sunday</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-4">
-                        <label>Select Week</label>
-                        <select class="form-control" id="dpdownSelectWeek">
-                            <option>9:00-12:00 (morning)</option>
-                            <option>1:00-4:00 (noon)</option>
-                            <option>6:00-9:00 (evening)</option>
-                        </select>
-                    </div>
-                    <div class="col-sm-3">
-                        <br>
-                        <button type="button" class="btn btn-primary" id="btnView">View</button>
-                    </div>
-                </div>
-
-
-            </form>
-            <style>
-                .center {
-                    text-align: center;
-                }
-            </style>
-            <section id="no-more-tables">
-                <table class="table table-bordered table-striped table-condensed cf">
-                    <thead class="cf">
-                        <tr>
-                            <th class="center" rowspan="3">SID</th>
-                            <th class="center" rowspan="3">Name</th>
-                            <th class="center" colspan="4">Sessions</th>
-                            <th class="center" rowspan="3">Total Sessions</th>
-                            <th class="center" rowspan="3">Total Presents</th>
-                            <th class="center" rowspan="3">Total Abesents</th>
-                        </tr>
-                        <tr>
-                            <th colspan="2" class="center">1st</td>
-                            <th colspan="2" class="center">2nd</td>
-                        </tr>
-                        <tr>
-                            <th>P</td>
-                            <th>A</td>
-                            <th>P</td>
-                            <th>A</td>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>9763</td>
-                            <td>Masood Arif</td>
-                            <td><input type="radio" name="1st" id="optionsRadios1" value="option1" checked></td>
-                            <td><input type="radio" name="1st" id="optionsRadios2" value="option2"></td>
-                            <td><input type="radio" name="2nd" id="optionsRadios3" value="option3" checked></td>
-                            <td><input type="radio" name="2nd" id="optionsRadios4" value="option4"></td>
-                            <td>32</td>
-                            <td>23</td>
-                            <td>2</td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </section>
+<style>
+    .center {
+        text-align: center;
+    }
+</style>
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3 class="card-label">@ViewData["Title"]
+            </h3>
         </div>
     </div>
+    <div class="card-body">
+        <div class="form-group row">
+            <div class="col-sm-4">
+                <label>Select Class</label>
+                <select class="form-control" id="dpdownSelectClass">
+                    <option>10315 Object Oriented Progarming</option>
+                    <option>Tuesday</option>
+                    <option>Wednesday</option>
+                    <option>Thursday</option>
+                    <option>Friday</option>
+                    <option>Saturday</option>
+                    <option>Sunday</option>
+                </select>
+            </div>
+            <div class="col-sm-4">
+                <label>Select Week</label>
+                <select class="form-control" id="dpdownSelectWeek">
+                    <option>9:00-12:00 (morning)</option>
+                    <option>1:00-4:00 (noon)</option>
+                    <option>6:00-9:00 (evening)</option>
+                </select>
+            </div>
+            <div class="col-sm-3">
+                <br>
+                <button type="button" class="btn btn-primary" id="btnView">View</button>
+            </div>
+        </div>
+
+        <table class="table table-bordered table-checkable">
+            <thead>
+                <tr>
+                    <th class="center" rowspan="3">SID</th>
+                    <th class="center" rowspan="3">Name</th>
+                    <th class="center" colspan="4">Sessions</th>
+                    <th class="center" rowspan="3">Total Sessions</th>
+                    <th class="center" rowspan="3">Total Presents</th>
+                    <th class="center" rowspan="3">Total Abesents</th>
+                </tr>
+                <tr>
+                    <th colspan="2" class="center">1st</td>
+                    <th colspan="2" class="center">2nd</td>
+                </tr>
+                <tr>
+                    <th>P</td>
+                    <th>A</td>
+                    <th>P</td>
+                    <th>A</td>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>9763</td>
+                    <td>Masood Arif</td>
+                    <td><input type="radio" name="1st" id="optionsRadios1" value="option1" checked></td>
+                    <td><input type="radio" name="1st" id="optionsRadios2" value="option2"></td>
+                    <td><input type="radio" name="2nd" id="optionsRadios3" value="option3" checked></td>
+                    <td><input type="radio" name="2nd" id="optionsRadios4" value="option4"></td>
+                    <td>32</td>
+                    <td>23</td>
+                    <td>2</td>
+                </tr>
+
+            </tbody>
+        </table>
+    </div>
+
 </div>

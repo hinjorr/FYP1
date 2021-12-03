@@ -1,15 +1,18 @@
 @{
-    ViewData["Title"] = "UploadResults";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-    }
-    
-    <form id="Upload">
-        <div class="form-panel">
-    
+ViewData["Title"] = "UploadResults";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<form id="Upload">
+    <div class="card card-custom gutter-b example example-compact">
+        <div class="card-header flex-wrap py-3">
+            <div class="card-title">
+                <h3 class="card-label">@ViewData["Title"]
+                </h3>
+            </div>
+        </div>
+        <div class="card-body">
             <div class="form-group row">
-                <div class="col-lg-10">
-                    <h1><i class="fa fa-angle-right"></i> Upload Results </h1>
-                </div>
                 <div class="col-lg-3">
                     <h3>Select Class</h3>
                     <select class="form-control" id="dpDownClassDay">
@@ -28,46 +31,40 @@
                         <option>User</option>
                     </select>
                 </div>
-    
             </div>
-        </div>
-        <div class="form-panel">
             <div class="form-group row">
                 <div class="col-lg-8">
-                    <section id="no-more-tables">
-                        <table class="table table-bordered table-striped table-condensed cf">
-                            <thead class="cf">
-                                <tr>
-                                    <th style="width: 30%;">Username</th>
-                                    <th style="width: 50%;">Student Name</th>
-                                    <th class="numeric" style="width: 10%;">Total Marks</th>
-                                    <th class="numeric" style="width: 10%;">Obtained Marks</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                <tr>
-                                    <td>9763</td>
-                                    <td>Masood</td>
-                                    <td>
-                                        <input type="text" class="form-control" id="txtTotalMarks" name="totalMarks">
-                                    </td>
-                                    <td>
-                                        <input type="text" class="form-control" id="txtObtainedMarks" name="obtainedmarks">
-                                    </td>
-    
-                                </tr>
-                            </tbody>
-                        </table>
-                    </section>
-    
+                    <table class="table table-bordered table-checkable">
+                        <thead>
+                            <tr>
+                                <th style="width: 30%;">Username</th>
+                                <th style="width: 50%;">Student Name</th>
+                                <th style="width: 10%;">Total Marks</th>
+                                <th style="width: 10%;">Obtained Marks</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>9763</td>
+                                <td>Masood</td>
+                                <td>
+                                    <input type="text" class="form-control" id="txtTotalMarks" name="totalMarks">
+                                </td>
+                                <td>
+                                    <input type="text" class="form-control" id="txtObtainedMarks" name="obtainedmarks">
+                                </td>
+
+                            </tr>
+                        </tbody>
+                    </table>
                 </div>
-    
             </div>
             <div class="col-lg-offset-5">
                 <button type="submit" class="btn btn-primary btn-lg" id="btnSubmit">Submit</button>
             </div>
         </div>
-    </form>
-    <script src="~/LMS/lib/jquery-3.6.0.js"></script>
-    <script src="~/LMS/lib/jquery.validate.min.js"></script>
-    <script type="text/javascript" src="~/LMS/ViewsJquery/UploadResults.js"></script>
+    </div>
+</form>
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<script src="~/LMS/lib/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/LMS/ViewsJquery/UploadResults.js"></script>

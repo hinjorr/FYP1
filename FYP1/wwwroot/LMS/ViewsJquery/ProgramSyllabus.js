@@ -2,8 +2,8 @@ $(document).ready(function () {
   CommonFunctions.GetPrograms("#dpPrograms");
   CommonFunctions.GetCoursesFullName(".dpCourse");
   CommonFunctions.GetCoursesFullName(".dpRequisete");
-  // $(".dpCourse").select2();
-  // $(".dpRequisete").select2();
+  $(".dpCourse").select2();
+  $(".dpRequisete").select2();
 });
 
 $(".dpCourse").change(function (e) {
@@ -12,24 +12,6 @@ $(".dpCourse").change(function (e) {
   };
   GetCrHr(CourseDTO);
 });
-
-// var arr = [];
-// var ProgramSyllabusDTO = {
-//   ProgramId: $("#dpPrograms").val(),
-//   CourseId: "",
-//   RqdCourseId: "",
-//   RequiredCrHr: "",
-// };
-// $(".tblsyllabus").on("click", ".btnadd", function () {
-//   $(".trClone:eq(0)").clone().appendTo(".tblsyllabus");
-//   var currentRow = $(this).closest("tr");
-
-//   ProgramSyllabusDTO.CourseId = currentRow.find(".dpCourse").val();
-//   ProgramSyllabusDTO.RqdCourseId = currentRow.find(".dpRequisete").val();
-//   ProgramSyllabusDTO.RequiredCrHr = currentRow.find(".rqdCrHr").val();
-//   arr.push([ProgramSyllabusDTO]);
-//   console.log(arr);
-// });
 
 $("#tblsyllabus").on("click", ".btnadd", function () {
   $(".trClone:eq(0)").clone().appendTo("#tblsyllabus");

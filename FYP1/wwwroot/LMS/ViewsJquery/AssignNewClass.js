@@ -4,11 +4,10 @@
   CommonFunctions.GetDays("#dpDownClassDay");
   CommonFunctions.GetTime("#dpDownClassTime");
   GetAllClasses();
-  GetCurrentSemester();
-  // CommonFunctions.GetCurrentSemester().success(function (resp) {
-  //   $("#txtSemesterName").val(resp.semesterName);
-  //   ClassDTO.SemesterId = resp.semesterId;
-  // });
+  CommonFunctions.GetCurrentSemester().done(function (resp) {
+    $("#txtSemesterName").val(resp.semesterName);
+    ClassDTO.SemesterId = resp.semesterId;
+  });
   $("#DpDownCourse").select2();
   $("#DpDownCourseView").select2();
 });
@@ -56,15 +55,15 @@ function CreateClass(ClassDTO) {
     },
   });
 }
-function GetCurrentSemester() {
-  return $.ajax({
-    url: "/Semester/GetCurrentSemester",
-    success: function (resp) {
-      $("#txtSemesterName").val(resp.semesterName);
-      ClassDTO.SemesterId = resp.semesterId;
-    },
-  });
-}
+// function GetCurrentSemester() {
+//   return $.ajax({
+//     url: "/Semester/GetCurrentSemester",
+//     success: function (resp) {
+//       $("#txtSemesterName").val(resp.semesterName);
+//       ClassDTO.SemesterId = resp.semesterId;
+//     },
+//   });
+// }
 
 function GetAllClasses() {
   $("#ViewClasses").DataTable({

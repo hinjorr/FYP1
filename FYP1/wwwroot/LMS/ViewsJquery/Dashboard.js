@@ -1,5 +1,6 @@
 $(document).ready(function () {
-  CommonFunctions.GetCurrentSemester().success(function (resp) {
-    $("#LogoSemester").text(resp.semesterName);
+  CommonFunctions.GetCurrentSemester().done(function (resp) {
+    $("#SemesterName").text(resp.semesterName);
   });
 });
+
