@@ -7,6 +7,8 @@ using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Hosting;
+using System.IO;
 
 namespace FYP1.Models
 {
@@ -21,10 +23,14 @@ namespace FYP1.Models
         TblStudent student = new TblStudent();
         TblAdmin admin = new TblAdmin();
         TblUser user = new TblUser();
-        public UserModel(IMapper _mapper, LMS_DBContext _db)
+
+        public IWebHostEnvironment Env { get; }
+
+        public UserModel(IMapper _mapper, LMS_DBContext _db, IWebHostEnvironment env)
         {
             mapper = _mapper;
             db = _db;
+            Env = env;
         }
 
         //generating random number for username/passowrd
@@ -39,11 +45,12 @@ namespace FYP1.Models
                 try
                 {
                     var profilechk = await db.TblProfiles.Where(x => x.Nic == dto.Nic).FirstOrDefaultAsync();
+                    //create another user for the same profile
                     if (profilechk != null)
                     {
                         dto.ProfileId = profilechk.ProfileId;
                         user = await AddUser(dto);
-                        // condition whether the user is Student/ Faculty/Admin
+                        // condition whether the user is Student/Faculty/Admin
                         if (user.RoleId == 1)
                         {
                             await AddAdmin(user.UserId);
@@ -61,11 +68,16 @@ namespace FYP1.Models
                             return false;
                         }
                     }
+                    //create new user for the new profile
                     else
                     {
                         mapper.Map(dto, profile);
+                        string ImagePath = UploadFile(dto);
+
+                        profile.Picture = ImagePath;
                         await AddProfile();
                         dto.ProfileId = profile.ProfileId;
+
                         await AddUser(dto);
                         //condition whether the user is Student/ Faculty/Admin
                         if (dto.User.RoleId == 1)
@@ -85,7 +97,10 @@ namespace FYP1.Models
                         {
                             return false;
                         }
+
                     }
+
+
                     await transaction.CommitAsync();
                     return true;
                 }
@@ -95,12 +110,15 @@ namespace FYP1.Models
                 }
             }
         }
+        //entring data in TblProfile
         async Task<TblProfile> AddProfile()
         {
             try
+
             {
-                //entring data in TblProfile
+
                 profile.ProfileDate = datenow.ToString("dd/MM/yyyy");
+
                 await db.TblProfiles.AddAsync(profile);
                 await db.SaveChangesAsync();
 
@@ -226,7 +244,7 @@ namespace FYP1.Models
 
         }
 
-
+        //will return all active users from db
         public async Task<List<ProfileDTO>> GetUsers()
         {
 
@@ -247,6 +265,22 @@ namespace FYP1.Models
                 },
             }).ToListAsync();
             return data;
+        }
+
+        //SaveImage in Folder
+        private string UploadFile(ProfileDTO dto)
+        {
+            string FilePath = null;
+            if (dto.ProfileImage != null)
+            {
+                string FolderUpload = Path.Combine(Env.WebRootPath, "UserImages");
+                FilePath = Path.Combine(FolderUpload, dto.Nic);
+                using (var filestream = new FileStream(FilePath, FileMode.Create))
+                {
+                    dto.ProfileImage.CopyTo(filestream);
+                }
+            }
+            return FilePath;
         }
 
     }

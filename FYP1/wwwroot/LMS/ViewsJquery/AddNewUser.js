@@ -4,10 +4,7 @@
 
   CommonFunctions.GetPrograms("#dpdownProgram");
   CommonFunctions.GetRoles("#dpdownRole");
-
-
 });
-
 
 $("#newuser").validate({
   rules: {
@@ -50,53 +47,42 @@ $("#newuser").validate({
     },
   },
   submitHandler: function (form) {
-    var ProfileDTO = {
-      Name: $("#txtName").val(),
-      FatherName: $("#txtFatherName").val(),
-      PhoneNumber: $("#txtNumber").val(),
-      Email: $("#txtEmail").val(),
-      Nic: $("#txtNic").val(),
-      Gender: $("input[name=gender]:checked").val(),
-      DoB: $("#timeDOB1").val(),
-      Address: $("#txtAddress").val(),
-      City: $("#txtCity").val(),
-      Country: $("#txtCountry").val(),
-      Picture: $("#Image1").val(),
-      IsActive: 1,
-      User: {
-        RoleId: $("#dpdownRole option:selected").val(),
-        IsActive: 1,
-      },
-      Student: {
-        ProgramId: $("#dpdownProgram option:selected").val(),
-        IsActive: 1,
-      },
-    };
+    var input = document.getElementById("profile_avatar");
+    var file = input.files;
+    var ProfileDTO = new FormData();
+    ProfileDTO.append("ProfileImage", file[0]);
+    ProfileDTO.append("Name", $("#txtName").val());
+    ProfileDTO.append("FatherName", $("#txtFatherName").val());
+    ProfileDTO.append("PhoneNumber", $("#txtNumber").val());
+    ProfileDTO.append("Email", $("#txtEmail").val());
+    ProfileDTO.append("Nic", $("#txtNic").val());
+    ProfileDTO.append("Gender", $("input[name=gender]:checked").val());
+    ProfileDTO.append("DoB", $("#timeDOB1").val());
+    ProfileDTO.append("Address", $("#txtAddress").val());
+    ProfileDTO.append("City", $("#txtCity").val());
+    ProfileDTO.append("Country", $("#txtCountry").val());
+    ProfileDTO.append("IsActive", 1);
+    ProfileDTO.append("User.RoleId", $("#dpdownRole option:selected").val());
+    ProfileDTO.append("User.IsActive", 1);
+    ProfileDTO.append(
+      "Student.ProgramId",
+      $("#dpdownProgram option:selected").val()
+    );
+    ProfileDTO.append("Student.IsActive", 1);
     $.ajax({
       type: "Post",
       url: "/User/AddNewUser",
       data: ProfileDTO,
+      dataType: "json",
+      contentType: false,
+      processData: false,
       success: function (resp) {
-        if (resp == true) {
-          cuteToast({
-            type: "success",
-            message: "User Registered!",
-            timer: 3000,
-          });
-          $("#newuser").trigger("reset");
-        } else if (resp == false) {
-          cuteToast({
-            type: "error",
-            message: "Registration Failed!",
-            timer: 3000,
-          });
-        } else {
-          cuteToast({
-            type: "warning",
-            message: resp,
-            timer: 3000,
-          });
-        }
+        cuteToast({
+          type: resp.type,
+          message: resp.msg,
+          timer: 3000,
+        });
+        $("#newuser").trigger("reset");
       },
     });
   },
@@ -135,34 +121,17 @@ function RoleCheck(ProfileDTO) {
     data: ProfileDTO,
     success: function (resp) {
       if (resp != null) {
-        RoleNames(ProfileDTO.User.RoleId);
+        cuteToast({
+          type: "warning",
+          message: resp,
+          timer: 3000,
+        });
       }
     },
   });
 }
 
-//show already resgietered role names
-function RoleNames(id) {
-  if (id == 1) {
-    cuteToast({
-      type: "warning",
-      message: "User already registered as Admin",
-      timer: 3000,
-    });
-  } else if (id == 2) {
-    cuteToast({
-      type: "warning",
-      message: "User already registered as Faculty",
-      timer: 3000,
-    });
-  } else if (id == 3) {
-    cuteToast({
-      type: "warning",
-      message: "User already registered as Student",
-      timer: 3000,
-    });
-  }
-}
+
 
 //NIC check ajax
 $("#txtNic").change(function (e) {
@@ -204,4 +173,3 @@ $("#txtNic").change(function (e) {
     },
   });
 });
-

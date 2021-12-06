@@ -11,5 +11,7 @@ namespace FYP1.Repository
     {
         Task<bool> AddNewClass(ClassDTO dto);
         Task<List<ClassDTO>> ViewAllClass();
+        Task<List<ClassDTO>> ViewAllClassbyAdmin();
+
     }
 }

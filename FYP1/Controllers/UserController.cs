@@ -1,8 +1,10 @@
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Hosting;
+
 
 namespace FYP1.Controllers
 {
@@ -10,12 +12,10 @@ namespace FYP1.Controllers
     public class UserController : Controller
     {
         private readonly IUser repo;
-        private readonly IWebHostEnvironment env;
 
-        public UserController(IUser _repo, IWebHostEnvironment env)
+        public UserController(IUser _repo)
         {
             repo = _repo;
-            this.env = env;
         }
         [HttpGet("NewUser")]
         public IActionResult AddNewUser()
@@ -23,20 +23,32 @@ namespace FYP1.Controllers
             return View();
         }
         [HttpPost]
-        public async Task<IActionResult> AddNewUser(ProfileDTO dto)
+        public async Task<IActionResult> AddNewUser([FromForm] ProfileDTO dto)
         {
 
             var RoleChk = await repo.Role_NIC_Check(dto);
             if (RoleChk == null)
             {
-                var data = await repo.AddNewUser(dto);
-                return Ok(data);
+                var chk = await repo.AddNewUser(dto);
+                if (chk)
+                {
+                    return Ok(new { type = "success", msg = "User Registered!" });
+
+                }
+                else
+                {
+                    return Ok(new { type = "error", msg = "Registration Failed!" });
+
+                }
+
             }
             else
             {
-                return Ok(RoleChk);
+                return Ok(new { type = "warning", msg = RoleChk });
+
             }
         }
+
 
         public async Task<IActionResult> DeleteUser(string username)
         {
@@ -59,7 +71,7 @@ namespace FYP1.Controllers
             var users = await repo.GetUsers();
             return Json(new { data = users });
         }
-               
+
         [HttpGet("UploadUsers")]
         public IActionResult UploadBulkUsers()
         {

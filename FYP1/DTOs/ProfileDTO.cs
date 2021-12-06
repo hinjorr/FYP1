@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace FYP1.DTOs
 {
@@ -9,6 +6,8 @@ namespace FYP1.DTOs
     {
         public int ProfileId { get; set; }
         public string Name { get; set; }
+        public IFormFile ProfileImage { get; set; }
+
         public string FatherName { get; set; }
         public string Email { get; set; }
         public string Nic { get; set; }

@@ -2,121 +2,20 @@
 ViewData["Title"] = "View All Classes";
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="row">
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-        <!--begin::Card-->
-        <div href="#" class="card card-custom gutter-b card-stretch ">
-            <!--begin::Body-->
-            <div class="card-body text-center pt-4">
-                <!--begin::User-->
-                <div class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h5">BSCS</span>
-                </div>
-                <div class="mt-7">
-                    <div class="symbol symbol-circle symbol-lg-90">
-                        <img src="~/LMS/assets/media/project-logos/1.png" alt="image" />
-                    </div>
-                </div>
-                <!--end::User-->
-                <!--begin::Name-->
-                <div class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h3">DCN 105431</span>
-                </div>
-                <h4 class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h6">Tuesday 12:00-3:00(noon)</span>
-                </h4>
-                <!--end::Name-->
-                <!--begin::Label-->
-                <span class="btn btn-text btn-light-success btn-sm font-weight-bold">Active</span>
-                <!--end::Label-->
-                <!--begin::Buttons-->
-                <div class="mt-9">
-                    <span class="btn btn-light-primary font-weight-bolder btn-sm py-3 px-6 text-uppercase">view
-                        Class</span>
-                </div>
-                <!--end::Buttons-->
-            </div>
-            <!--end::Body-->
-        </div>
-        <!--end::Card-->
-    </div>
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-        <!--begin::Card-->
-        <div href="#" class="card card-custom gutter-b card-stretch ">
-            <!--begin::Body-->
-            <div class="card-body text-center pt-4">
-                <!--begin::User-->
-                <div class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h5">BSCS</span>
-                </div>
-                <div class="mt-7">
-                    <div class="symbol symbol-circle symbol-lg-90">
-                        <img src="~/LMS/assets/media/project-logos/1.png" alt="image" />
-                    </div>
-                </div>
-                <!--end::User-->
-                <!--begin::Name-->
-                <div class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h3">DCN 105431</span>
-                </div>
-                <h4 class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h6">Tuesday 12:00-3:00(noon)</span>
-                </h4>
-                <!--end::Name-->
-                <!--begin::Label-->
-                <span class="btn btn-text btn-light-success btn-sm font-weight-bold">Active</span>
-                <!--end::Label-->
-                <!--begin::Buttons-->
-                <div class="mt-9">
-                    <span class="btn btn-light-primary font-weight-bolder btn-sm py-3 px-6 text-uppercase">view
-                        Class</span>
-                </div>
-                <!--end::Buttons-->
-            </div>
-            <!--end::Body-->
-        </div>
-        <!--end::Card-->
-    </div>
-    <div class="col-xl-4 col-lg-6 col-md-6 col-sm-6">
-        <!--begin::Card-->
-        <div href="#" class="card card-custom gutter-b card-stretch ">
-            <!--begin::Body-->
-            <div class="card-body text-center pt-4">
-                <!--begin::User-->
-                <div class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h5">BSCS</span>
-                </div>
-                <div class="mt-7">
-                    <div class="symbol symbol-circle symbol-lg-90">
-                        <img src="~/LMS/assets/media/project-logos/1.png" alt="image" />
-                    </div>
-                </div>
-                <!--end::User-->
-                <!--begin::Name-->
-                <div class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h3">DCN 105431</span>
-                </div>
-                <h4 class="my-4">
-                    <span class="text-dark font-weight-bold  font-size-h6">Tuesday 12:00-3:00(noon)</span>
-                </h4>
-                <!--end::Name-->
-                <!--begin::Label-->
-                <span class="btn btn-text btn-light-success btn-sm font-weight-bold">Active</span>
-                <!--end::Label-->
-                <!--begin::Buttons-->
-                <div class="mt-9">
-                    <span class="btn btn-light-primary font-weight-bolder btn-sm py-3 px-6 text-uppercase">view
-                        Class</span>
-                </div>
-                <!--end::Buttons-->
-            </div>
-            <!--end::Body-->
-        </div>
-        <!--end::Card-->
-    </div>
+<div class="card-header">
+    <h3 class="card-title">@ViewData["Title"]</h3>
 </div>
 
 
-<!-- <script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<br>
+<!--begin::Card-->
+<div id="ClassesCard">
+
+</div>
+<!--end::Card-->
+
+
+
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>
-<script type="text/javascript" src="~/LMS/ViewsJquery/UserAllClasses.js"></script> -->
+<script type="text/javascript" src="~/LMS/ViewsJquery/UserAllClasses.js"></script>
