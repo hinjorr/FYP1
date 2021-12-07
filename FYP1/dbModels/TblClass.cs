@@ -21,6 +21,7 @@ namespace FYP1.dbModels
         public int? DayId { get; set; }
         public int? TimeId { get; set; }
         public ulong? IsActive { get; set; }
+        public string ClassImage { get; set; }
 
         public virtual TblCourse Course { get; set; }
         public virtual TblDay Day { get; set; }

@@ -80,46 +80,7 @@ namespace FYP1.Models
             }
 
         }
-        public async Task<List<ClassDTO>> ViewAllClassbyAdmin()
-        {
-            try
-            {
-                var classes = await db.TblClasses.Select(x => new ClassDTO
-                {
-                    ClassId = x.ClassId,
-                    IsActive=x.IsActive,
-                    ClassStrength = x.ClassStrength,
-                    Semester = new SemesterDTO
-                    {
-                        SemesterName = x.Semester.SemesterName
-                    },
-                    Program = new ProgramDTO
-                    {
-                        ProgramShortName = x.Program.ProgramShortName
-                    },
-                    Course = new CourseDTO
-                    {
-                        ShortName = x.Course.FullName
-                    },
-                    Time = new TimeDTO
-                    {
-                        TimeName = x.Time.TimeName
-                    },
-                    Day = new DayDTO
-                    {
-                        DayName = x.Day.DayName
-                    }
-
-                }).ToListAsync();
-                return classes;
-            }
-            catch (System.Exception)
-            {
-
-                throw;
-            }
-
-        }
+        
 
         // public async Task<List<ClassDTO>> ViewbyCoursesnPrograms(ClassDTO dto)
         // {

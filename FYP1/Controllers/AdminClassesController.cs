@@ -32,7 +32,7 @@ namespace FYP1.Controllers
         
         public async Task<IActionResult> ViewAllClassesinAdmin()
         {
-            var classes = await repo.ViewAllClassbyAdmin();
+            var classes = await repo.ViewAllClass();
             return Ok(classes);
         }
         public async Task<JsonResult> ViewAllClasses()

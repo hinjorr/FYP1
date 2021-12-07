@@ -275,6 +275,7 @@ namespace FYP1.Models
             {
                 string FolderUpload = Path.Combine(Env.WebRootPath, "UserImages");
                 FilePath = Path.Combine(FolderUpload, dto.Nic);
+                
                 using (var filestream = new FileStream(FilePath, FileMode.Create))
                 {
                     dto.ProfileImage.CopyTo(filestream);
