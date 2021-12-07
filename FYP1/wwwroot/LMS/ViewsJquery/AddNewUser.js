@@ -1,9 +1,7 @@
 ﻿$(document).ready(function () {
-  $("#roleinfo").hide();
-  var Rolevariable = 0;
-
   CommonFunctions.GetPrograms("#dpdownProgram");
   CommonFunctions.GetRoles("#dpdownRole");
+  
 });
 
 $("#newuser").validate({
@@ -82,7 +80,9 @@ $("#newuser").validate({
           message: resp.msg,
           timer: 3000,
         });
-        $("#newuser").trigger("reset");
+        if (resp.msg == "success") {
+          $("#newuser").trigger("reset");
+        }
       },
     });
   },
@@ -131,8 +131,6 @@ function RoleCheck(ProfileDTO) {
   });
 }
 
-
-
 //NIC check ajax
 $("#txtNic").change(function (e) {
   var ProfileDTO = {
@@ -167,7 +165,7 @@ $("#txtNic").change(function (e) {
         $("#txtAddress").val(resp.address);
         $("#txtCity").val(resp.city);
         $("#txtCountry").val(resp.country);
-        // $("#Image1").val();
+        $(".GetImage").css("background-image", "url(" + resp.picture + ")");
         ProgramHide(resp.user.roleId);
       }
     },

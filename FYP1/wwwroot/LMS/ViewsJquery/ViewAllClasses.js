@@ -29,7 +29,7 @@ function GetAllClasses() {
           html+='<span class="btn btn-text btn-light-success btn-sm font-weight-bold">Active</span>'
         }
         html+='<div class="mt-9">'
-        html+='<a href="#" class="btn btn-light-primary font-weight-bolder btn-sm py-3 px-6 text-uppercase">View Class</a>'
+        html+='<a href="/ViewClass" class="btn btn-light-primary font-weight-bolder btn-sm py-3 px-6 text-uppercase">View Class</a>'
         html+='</div>'
         html+='</div>'
         html+='</div>'

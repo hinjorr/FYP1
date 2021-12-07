@@ -31,7 +31,9 @@ namespace FYP1.Models
                 {
                     var user = await db.TblUsers.Where(x => x.ProfileId == data.ProfileId).FirstOrDefaultAsync();
                     var mapped = mapper.Map(data, dto);
+                    mapped.Picture=data.Picture;
                     mapped.User.RoleId = user.RoleId;
+                    
                     return mapped;
                 }
                 else

@@ -33,19 +33,15 @@ namespace FYP1.Controllers
                 if (chk)
                 {
                     return Ok(new { type = "success", msg = "User Registered!" });
-
                 }
                 else
                 {
                     return Ok(new { type = "error", msg = "Registration Failed!" });
-
                 }
-
             }
             else
             {
                 return Ok(new { type = "warning", msg = RoleChk });
-
             }
         }
 

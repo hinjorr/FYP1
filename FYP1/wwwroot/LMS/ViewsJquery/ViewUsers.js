@@ -10,12 +10,44 @@ function GetUsers() {
       datatype: "json",
     },
     columns: [
+      {
+        data: "picture",
+        render: function (picture) {
+          return (
+            '<div class="symbol symbol-50 flex-shrink-0">' +
+            '<img src="' +
+            picture +
+            '">' +
+            "</div>"
+          );
+        },
+      },
       { data: "user.userName" },
       { data: "name" },
       { data: "nic" },
       { data: "email" },
-      { data: "user.role.roleName" },
-      { data: "user.isActive" },
+      {
+        data: "user.role.roleId",
+        render: function (role) {
+          if (role == 1) {
+            return '<a  class="label label-lg font-weight-bold label-light-primary label-inline"><i class="flaticon-user icon-nm"></i>Admin</a>';
+          } else if (role == 2) {
+            return '<a  class="label label-lg font-weight-bold label-light-success label-inline"><i class="flaticon-presentation icon-nm"></i> Faculty</a>';
+          } else {
+            return '<a  class="label label-lg font-weight-bold label-light-warning label-inline"><i class="flaticon2-pen icon-nm"></i> Student</a>';
+          }
+        },
+      },
+      {
+        data: "user.isActive",
+        render: function (isActive) {
+          if (isActive == true) {
+            return '<a  class="label label-lg font-weight-bold label-light-success label-inline">Active</a>';
+          } else {
+            return '<a class="label label-lg font-weight-bold label-light-danger label-inline">Inactive</a>';
+          }
+        },
+      },
       { data: "user.userDate" },
       {
         render: function (data, row) {

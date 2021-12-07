@@ -6,8 +6,6 @@ namespace FYP1.DTOs
     {
         public int ProfileId { get; set; }
         public string Name { get; set; }
-        public IFormFile ProfileImage { get; set; }
-
         public string FatherName { get; set; }
         public string Email { get; set; }
         public string Nic { get; set; }
@@ -21,5 +19,7 @@ namespace FYP1.DTOs
         public ulong? IsActive { get; set; }
         public UserDTO User { get; set; }
         public StudentDTO Student { get; set; }
+        public IFormFile ProfileImage { get; set; }
+
     }
 }

@@ -224,7 +224,7 @@ namespace FYP1.Models
             catch (System.Exception)
             {
 
-                throw new Exception("Task Failed!");
+                throw new Exception("Role_NIC_Check! Task Failed");
             }
         }
 
@@ -253,6 +253,7 @@ namespace FYP1.Models
                 Nic = x.Profile.Nic,
                 Name = x.Profile.Name + " " + x.Profile.FatherName,
                 Email = x.Profile.Email,
+                Picture=x.Profile.Picture,
                 User = new UserDTO()
                 {
                     UserName = x.UserName,
@@ -260,7 +261,7 @@ namespace FYP1.Models
                     IsActive = Convert.ToBoolean(x.IsActive),
                     Role = new RoleDTO()
                     {
-                        RoleName = x.Role.RoleName
+                        RoleId = x.Role.RoleId
                     }
                 },
             }).ToListAsync();
@@ -270,18 +271,34 @@ namespace FYP1.Models
         //SaveImage in Folder
         private string UploadFile(ProfileDTO dto)
         {
-            string FilePath = null;
-            if (dto.ProfileImage != null)
+            try
             {
-                string FolderUpload = Path.Combine(Env.WebRootPath, "UserImages");
-                FilePath = Path.Combine(FolderUpload, dto.Nic);
-                
-                using (var filestream = new FileStream(FilePath, FileMode.Create))
+                string FilePath = null;
+                string Extension = Path.GetExtension(dto.ProfileImage.FileName);
+                if (dto.ProfileImage != null)
                 {
-                    dto.ProfileImage.CopyTo(filestream);
+                    string FolderUpload = Path.Combine(Env.WebRootPath, "Upload");
+                    if (!Directory.Exists(FolderUpload))
+                    {
+                        Directory.CreateDirectory(FolderUpload);
+                    }
+                    FilePath = Path.Combine(FolderUpload, dto.Nic + Extension);
+
+                    using (var filestream = new FileStream(FilePath, FileMode.Create))
+                    {
+                        dto.ProfileImage.CopyTo(filestream);
+                    }
                 }
+                return "/Upload" + "/" + dto.Nic + Extension;
+
             }
-            return FilePath;
+            catch (System.Exception)
+            {
+
+                throw new Exception("UploadFile Task Failed!");
+            }
+
+
         }
 
     }
