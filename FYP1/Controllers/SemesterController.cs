@@ -1,4 +1,4 @@
-using System.Runtime.InteropServices;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using FYP1.DTOs;
 using FYP1.Repository;
@@ -34,10 +34,19 @@ namespace FYP1.Controllers
 
         public async Task<IActionResult> GetCurrentSemester()
         {
-           var data=await repo.GetCurrentSemester();
-           return Ok(data);
+            var data = await repo.GetCurrentSemester();
+            return Ok(data);
         }
-
+        public async Task<IActionResult> AddClassSessions(List<ClassSessionDTO> dto)
+        {
+            var data = await repo.AddClassSession(dto);
+            return Ok(data);
+        }
+        public async Task<IActionResult> GetAlllSessions()
+        {
+            var data = await repo.GetAllSessions();
+            return Ok(data);
+        }
 
     }
 }

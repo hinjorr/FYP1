@@ -49,6 +49,7 @@ namespace FYP1.Models
                     ClassId = x.ClassId,
                     IsActive=x.IsActive,
                     ClassStrength = x.ClassStrength,
+                    ClassImage=x.ClassImage,
                     Semester = new SemesterDTO
                     {
                         SemesterName = x.Semester.SemesterName

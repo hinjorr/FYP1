@@ -30,7 +30,6 @@ namespace FYP1.Models
                     mapper.Map(item, syllabus);
                     var data = await db.TblProgramSyllabi.AddAsync(syllabus);
                     await db.SaveChangesAsync();
-
                 }
                 return true;
             }

@@ -22,6 +22,8 @@ namespace FYP1.Controllers
         {
             return View();
         }
+
+
         [HttpPost]
         public async Task<IActionResult> AddNewUser([FromForm] ProfileDTO dto)
         {
@@ -45,10 +47,23 @@ namespace FYP1.Controllers
             }
         }
 
+        // [HttpPost]
+        // public async Task<IActionResult> UpdateUser([FromForm] ProfileDTO dto)
+        // {
 
+        // }
         public async Task<IActionResult> DeleteUser(string username)
         {
-            return Ok(await repo.DeleteUser(username));
+            var chk = await repo.DeleteUser(username);
+            if (chk == true)
+            {
+                return Ok(new { type = "success", msg = "User Deactivated" });
+            }
+            else
+            {
+                return Ok(new { type = "error", msg = "User already Inactive" });
+
+            }
         }
         public async Task<IActionResult> RoleCheck(ProfileDTO dto)
         {

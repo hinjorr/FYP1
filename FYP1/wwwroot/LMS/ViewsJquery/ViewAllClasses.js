@@ -16,7 +16,12 @@ function GetAllClasses() {
         html+='</div>'
         html+='<div class="mt-7">'
         html+='<div class="symbol symbol-circle symbol-lg-90">'
-        html+='<img src=/LMS/assets/media/project-logos/3.png>'
+        if (item.classImage!=null) {
+          html+='<img src='+item.classImage+'>'
+        }
+        else{
+          html+='<img src=/LMS/assets/media/project-logos/noimage.svg.png>'
+        }
         html+='</div>'
         html+='</div>'
         html+='<div class="my-4">'
@@ -29,13 +34,14 @@ function GetAllClasses() {
           html+='<span class="btn btn-text btn-light-success btn-sm font-weight-bold">Active</span>'
         }
         html+='<div class="mt-9">'
-        html+='<a href="/ViewClass" class="btn btn-light-primary font-weight-bolder btn-sm py-3 px-6 text-uppercase">View Class</a>'
+        html+='<a href="/ViewClass/'+item.classId+'" class="btn btn-light-primary font-weight-bolder btn-sm py-3 px-6 text-uppercase">View Class</a>'
         html+='</div>'
         html+='</div>'
         html+='</div>'
         html+='</div>'
       });
       $("#ClassesCard").append(html);
+
     },
   });
 }

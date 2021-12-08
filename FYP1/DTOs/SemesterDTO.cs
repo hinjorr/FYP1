@@ -12,6 +12,9 @@ namespace FYP1.DTOs
         public string StartDate { get; set; }
         public string EndDate { get; set; }
         public ulong? IsActive { get; set; }
+        public ClassSessionDTO ClassSession { get; set; }
+
+
 
     }
 }

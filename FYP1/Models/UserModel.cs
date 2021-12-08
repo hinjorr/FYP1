@@ -111,6 +111,7 @@ namespace FYP1.Models
             }
         }
         //entring data in TblProfile
+
         async Task<TblProfile> AddProfile()
         {
             try
@@ -233,13 +234,20 @@ namespace FYP1.Models
             try
             {
                 var data = await db.TblUsers.Where(x => x.UserName == username).FirstOrDefaultAsync();
-                data.IsActive = Convert.ToUInt32(false);
-                await db.SaveChangesAsync();
-                return true;
+                if (data.IsActive == 1)
+                {
+                    data.IsActive = Convert.ToUInt32(false);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
             catch (System.Exception)
             {
-                throw new Exception("Task Failed");
+                throw new Exception("Task Failed in DeleteUser");
             }
 
         }
@@ -253,7 +261,7 @@ namespace FYP1.Models
                 Nic = x.Profile.Nic,
                 Name = x.Profile.Name + " " + x.Profile.FatherName,
                 Email = x.Profile.Email,
-                Picture=x.Profile.Picture,
+                Picture = x.Profile.Picture,
                 User = new UserDTO()
                 {
                     UserName = x.UserName,
@@ -268,6 +276,25 @@ namespace FYP1.Models
             return data;
         }
 
+        // public async Task<bool> UpdateUserProfile(ProfileDTO dto)
+        // {
+        //     var chk = await db.TblProfiles.Where(x => x.ProfileId == dto.ProfileId).FirstOrDefaultAsync();
+        //     chk.Name=dto.Name;
+        //     chk.FatherName=dto.FatherName;
+        //     chk.Gender=dto.Gender;
+        //     chk.PhoneNumber=dto.PhoneNumber;
+        //     if (dto.ProfileImage!=null)
+        //     {
+        //         var Image=UploadFile(dto);
+        //         chk.Picture=Image;
+        //     }
+        //     chk.Email=dto.Email;
+        //     chk.Address=dto.Address;
+        //     chk.City=dto.City;
+        //     chk.Country=dto.Country;
+        //     chk.DoB=dto.DoB;
+            
+        // }
         //SaveImage in Folder
         private string UploadFile(ProfileDTO dto)
         {

@@ -19,6 +19,7 @@ namespace FYP1.dbModels
 
         public virtual DbSet<TblAdmin> TblAdmins { get; set; }
         public virtual DbSet<TblClass> TblClasses { get; set; }
+        public virtual DbSet<TblClassSession> TblClassSessions { get; set; }
         public virtual DbSet<TblCourse> TblCourses { get; set; }
         public virtual DbSet<TblCourseEligiblity> TblCourseEligiblities { get; set; }
         public virtual DbSet<TblDay> TblDays { get; set; }
@@ -125,6 +126,27 @@ namespace FYP1.dbModels
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.TimeId)
                     .HasConstraintName("Tbl_Classes_ibfk_7");
+            });
+
+            modelBuilder.Entity<TblClassSession>(entity =>
+            {
+                entity.HasKey(e => e.SessionId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_ClassSessions");
+
+                entity.HasIndex(e => e.SemesterId, "Semester_ID");
+
+                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
+
+                entity.Property(e => e.SemesterId).HasColumnName("Semester_ID");
+
+                entity.Property(e => e.SessionName).HasMaxLength(100);
+
+                entity.HasOne(d => d.Semester)
+                    .WithMany(p => p.TblClassSessions)
+                    .HasForeignKey(d => d.SemesterId)
+                    .HasConstraintName("Tbl_ClassSessions_ibfk_1");
             });
 
             modelBuilder.Entity<TblCourse>(entity =>

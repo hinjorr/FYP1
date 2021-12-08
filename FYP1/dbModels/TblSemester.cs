@@ -9,6 +9,7 @@ namespace FYP1.dbModels
     {
         public TblSemester()
         {
+            TblClassSessions = new HashSet<TblClassSession>();
             TblClasses = new HashSet<TblClass>();
         }
 
@@ -18,6 +19,7 @@ namespace FYP1.dbModels
         public string EndDate { get; set; }
         public ulong? IsActive { get; set; }
 
+        public virtual ICollection<TblClassSession> TblClassSessions { get; set; }
         public virtual ICollection<TblClass> TblClasses { get; set; }
     }
 }

@@ -9,6 +9,10 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         <h3 class="card-title">@ViewData["Title"]</h3>
     </div>
     <div class="card-body">
+        <div class="alert alert-custom alert-default" role="alert">
+            <div class="alert-icon"><i class="flaticon-warning text-primary"></i></div>
+            <div class="alert-text">Will be Created Only New User, No Update</div>
+        </div>
         <form id="newuser">
             <div class="form-group row">
                 <div class="col-sm-3">
@@ -107,7 +111,8 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     </div>
                 </div>
                 <div class="col-sm-3">
-                    <div class="image-input image-input-empty image-input-outline GetImage" id="kt_image_5" style="background-image: url(LMS/assets/media/users/blank.png)">
+                    <div class="image-input image-input-empty image-input-outline GetImage" id="kt_image_5"
+                        style="background-image: url(LMS/assets/media/users/blank.png)">
                         <div class="image-input-wrapper"></div>
                         <label class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                             data-action="change" data-toggle="tooltip" title="" data-original-title="Change avatar">
@@ -115,7 +120,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                             <input type="file" name="profile_avatar" accept=".png, .jpg, .jpeg" id="profile_avatar" />
                             <input type="hidden" name="profile_avatar_remove" />
                         </label>
-                        
+
                         <span class="btn btn-xs btn-icon btn-circle btn-white btn-hover-text-primary btn-shadow"
                             data-action="cancel" data-toggle="tooltip" title="Cancel avatar">
                             <i class="ki ki-bold-close icon-xs text-muted"></i>

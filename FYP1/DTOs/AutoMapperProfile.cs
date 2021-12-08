@@ -7,38 +7,42 @@ using FYP1.dbModels;
 
 namespace FYP1.DTOs
 {
-    public class AutoMapperProfile:Profile
+    public class AutoMapperProfile : Profile
     {
         public AutoMapperProfile()
         {
-            CreateMap<UserDTO,TblUser>();
-            CreateMap<AdminDTO,TblAdmin>();
+            CreateMap<UserDTO, TblUser>();
+            CreateMap<AdminDTO, TblAdmin>();
 
-            CreateMap<StudentDTO,TblStudent>();
-            CreateMap<FacultyDTO,TblFaculty>();
+            CreateMap<StudentDTO, TblStudent>();
+            CreateMap<FacultyDTO, TblFaculty>();
 
-            CreateMap<ProfileDTO,TblProfile>();
-            CreateMap<TblProfile,ProfileDTO>();
-            
-            CreateMap<ClassDTO,TblClass>();
+            CreateMap<ProfileDTO, TblProfile>();
+            CreateMap<TblProfile, ProfileDTO>();
 
-            CreateMap<CourseDTO,TblCourse>();
-            CreateMap<TblCourse,CourseDTO>();
+            CreateMap<ClassDTO, TblClass>();
 
-
-            CreateMap<CourseEligiblityDTO,TblCourseEligiblity>();
-            CreateMap<DayDTO,TblDay>();
-            CreateMap<FacultyCourseRegistrationDTO,TblFacultyCourseRegistration>();
-
-            CreateMap<ProgramSyllabusDTO,TblProgramSyllabus>();
+            CreateMap<CourseDTO, TblCourse>();
+            CreateMap<TblCourse, CourseDTO>();
 
 
-            CreateMap<RoleDTO,TblRole>();
-            CreateMap<SemesterDTO,TblSemester>();
-            CreateMap<StudentCourseRegistrationDTO,TblStudentCourseRegistration>();
-            CreateMap<TimeDTO,TblTime>();
-            CreateMap<ClassDTO,TblClass>();
-            CreateMap<ProgramDTO,TblProgram>();
+            CreateMap<CourseEligiblityDTO, TblCourseEligiblity>();
+            CreateMap<DayDTO, TblDay>();
+            CreateMap<FacultyCourseRegistrationDTO, TblFacultyCourseRegistration>();
+
+            CreateMap<ProgramSyllabusDTO, TblProgramSyllabus>();
+
+
+            CreateMap<RoleDTO, TblRole>();
+
+            CreateMap<SemesterDTO, TblSemester>();
+            CreateMap<ClassSessionDTO, TblClassSession>();
+
+
+            CreateMap<StudentCourseRegistrationDTO, TblStudentCourseRegistration>();
+            CreateMap<TimeDTO, TblTime>();
+            CreateMap<ClassDTO, TblClass>();
+            CreateMap<ProgramDTO, TblProgram>();
 
         }
     }

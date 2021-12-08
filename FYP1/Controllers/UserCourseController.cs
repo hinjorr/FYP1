@@ -5,9 +5,10 @@ namespace FYP1.Controllers
     public class UserCourseController : Controller
     {
 
-        [HttpGet("ViewClass")]
-        public IActionResult ViewCourse()
+        [HttpGet("ViewClass/{id}")]
+        public IActionResult ViewCourse(int id)
         {
+            ViewData["ClassID"]=id;
             return View();
         }
         [HttpGet("ViewAllClasses")]

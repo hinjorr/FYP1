@@ -50,10 +50,15 @@ function GetUsers() {
       },
       { data: "user.userDate" },
       {
-        render: function (data, row) {
+        data: "user.userName",
+        render: function (userName) {
           return (
-            '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="Update(this)"><i class="la la-edit"></i></button>' +
-            '<button class="btn btn-sm btn-clean btn-icon" title="Delete" onclick="Delete(this)"><i class="la la-trash"></i></button>'
+            '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="Update(' +
+            userName +
+            ')"><i class="la la-edit"></i></button>' +
+            '<button class="btn btn-sm btn-clean btn-icon" title="Delete" onclick="Delete(' +
+            userName +
+            ')"><i class="la la-trash"></i></button>'
           );
         },
       },
@@ -61,39 +66,21 @@ function GetUsers() {
   });
 }
 
-function Update(obj) {
-  var userid = $(obj).closest("tr").find("td:first").html();
-  console.log(userid);
+function Update(userName) {
+  console.log(userName);
 }
-function Delete(obj) {
-  var username = $(obj).closest("tr").find("td:eq(0)").html();
-  var status = $(obj).closest("tr").find("td:eq(5)").html();
-  if (status == "true") {
-    $.ajax({
-      url: "/user/DeleteUser?username=" + username,
-      success: function (resp) {
-        if (resp == true) {
-          $("#viewuser").DataTable().clear().destroy();
-          cuteToast({
-            type: "success",
-            message: "User Deactivated!",
-            timer: 3000,
-          });
-          GetUsers();
-        } else {
-          cuteToast({
-            type: "error",
-            message: resp,
-            timer: 3000,
-          });
-        }
-      },
-    });
-  } else {
-    cuteToast({
-      type: "error",
-      message: "User already Deactivated!",
-      timer: 3000,
-    });
-  }
+function Delete(userName) {
+  // var username = $(userName).closest("tr").find("td:eq(1)").html();
+  $.ajax({
+    url: "/user/DeleteUser?username=" + userName,
+    success: function (resp) {
+      $("#viewuser").DataTable().clear().destroy();
+      cuteToast({
+        type: resp.type,
+        message: resp.msg,
+        timer: 3000,
+      });
+      GetUsers();
+    },
+  });
 }
