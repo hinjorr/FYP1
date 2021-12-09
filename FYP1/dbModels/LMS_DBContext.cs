@@ -19,6 +19,7 @@ namespace FYP1.dbModels
 
         public virtual DbSet<TblAdmin> TblAdmins { get; set; }
         public virtual DbSet<TblClass> TblClasses { get; set; }
+        public virtual DbSet<TblClassContent> TblClassContents { get; set; }
         public virtual DbSet<TblClassSession> TblClassSessions { get; set; }
         public virtual DbSet<TblCourse> TblCourses { get; set; }
         public virtual DbSet<TblCourseEligiblity> TblCourseEligiblities { get; set; }
@@ -35,14 +36,14 @@ namespace FYP1.dbModels
         public virtual DbSet<TblTime> TblTimes { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
 
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-        {
-            if (!optionsBuilder.IsConfigured)
-            {
-#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"));
-            }
-        }
+//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+//         {
+//             if (!optionsBuilder.IsConfigured)
+//             {
+// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+//                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"));
+//             }
+//         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -126,6 +127,38 @@ namespace FYP1.dbModels
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.TimeId)
                     .HasConstraintName("Tbl_Classes_ibfk_7");
+            });
+
+            modelBuilder.Entity<TblClassContent>(entity =>
+            {
+                entity.HasKey(e => e.ContentId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_ClassContent");
+
+                entity.HasIndex(e => e.ClassId, "Class_ID");
+
+                entity.HasIndex(e => e.SessionId, "Session_ID");
+
+                entity.Property(e => e.ContentId).HasColumnName("Content_ID");
+
+                entity.Property(e => e.ClassId).HasColumnName("Class_ID");
+
+                entity.Property(e => e.ContentLink).HasMaxLength(200);
+
+                entity.Property(e => e.ContentName).HasMaxLength(100);
+
+                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblClassContents)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("Tbl_ClassContent_ibfk_1");
+
+                entity.HasOne(d => d.Session)
+                    .WithMany(p => p.TblClassContents)
+                    .HasForeignKey(d => d.SessionId)
+                    .HasConstraintName("Tbl_ClassContent_ibfk_2");
             });
 
             modelBuilder.Entity<TblClassSession>(entity =>

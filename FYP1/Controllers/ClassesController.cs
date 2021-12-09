@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using FYP1.DTOs;
 using FYP1.Repository;
@@ -6,14 +8,15 @@ using Microsoft.AspNetCore.Mvc;
 namespace FYP1.Controllers
 {
 
-    public class AdminClassesController : Controller
+    public class ClassesController : Controller
     {
         private readonly IClasses repo;
 
-        public AdminClassesController(IClasses repo)
+        public ClassesController(IClasses repo)
         {
             this.repo = repo;
         }
+
         [HttpGet("AssignClasses")]
         public IActionResult AssignNewClass()
         {
@@ -29,13 +32,33 @@ namespace FYP1.Controllers
             }
             return Ok(false);
         }
-        
-        public async Task<IActionResult> ViewAllClassesinAdmin()
+
+        [HttpGet("ViewClass/{id}")]
+        public IActionResult ViewClass()
+        {
+          
+            return View();
+        }
+
+        [HttpGet("ViewAllClasses")]
+        public IActionResult ViewClasses()
+        {
+            return View();
+        }
+
+        [HttpGet("GetClass/{id}")]
+        public async Task<IActionResult> GetSingleClass(int id)
+        {
+            var data = await repo.GetSingleClass(id);
+            return Ok(data);
+        }
+        public async Task<IActionResult> ViewAllClasses()
         {
             var classes = await repo.ViewAllClass();
             return Ok(classes);
         }
-        public async Task<JsonResult> ViewAllClasses()
+
+        public async Task<IActionResult> ViewAllClassesinJson()
         {
             var classes = await repo.ViewAllClass();
             return Json(new { data = classes });

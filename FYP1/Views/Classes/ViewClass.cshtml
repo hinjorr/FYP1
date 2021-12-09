@@ -2,8 +2,16 @@
 ViewData["Title"] = "View Course";
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<h1>@ViewData["ClassID"]</h1>
-<div id="data"></div>
+<!-- <h1 id="classid" style="display: none;" >@ViewData["ClassID"]</h1> -->
+ 
+
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header">
+        <h3 class="card-title" id="ShowCourse"></h3>
+    </div>
+    <div id="data">
+    </div>
+</div>
 
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>

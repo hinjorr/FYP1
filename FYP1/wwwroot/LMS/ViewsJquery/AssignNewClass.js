@@ -33,7 +33,7 @@ $("#btnSubmit").click(function (e) {
 function CreateClass(ClassDTO) {
   $.ajax({
     type: "Post",
-    url: "/AdminClasses/AssignNewClass",
+    url: "/Classes/AssignNewClass",
     data: ClassDTO,
     success: function (resp) {
       if (resp == true) {
@@ -68,7 +68,7 @@ function CreateClass(ClassDTO) {
 function GetAllClasses() {
   $("#ViewClasses").DataTable({
     ajax: {
-      url: "/AdminClasses/ViewAllClasses",
+      url: "/Classes/ViewAllClassesinJson",
       type: "Get",
       datatype: "json",
     },

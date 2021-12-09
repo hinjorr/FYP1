@@ -21,6 +21,7 @@ namespace FYP1.DTOs
             CreateMap<TblProfile, ProfileDTO>();
 
             CreateMap<ClassDTO, TblClass>();
+            CreateMap<TblClass, ClassDTO>();
 
             CreateMap<CourseDTO, TblCourse>();
             CreateMap<TblCourse, CourseDTO>();

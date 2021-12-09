@@ -9,6 +9,7 @@ namespace FYP1.dbModels
     {
         public TblClass()
         {
+            TblClassContents = new HashSet<TblClassContent>();
             TblCourseEligiblities = new HashSet<TblCourseEligiblity>();
             TblFacultyCourseRegistrations = new HashSet<TblFacultyCourseRegistration>();
         }
@@ -28,6 +29,7 @@ namespace FYP1.dbModels
         public virtual TblProgram Program { get; set; }
         public virtual TblSemester Semester { get; set; }
         public virtual TblTime Time { get; set; }
+        public virtual ICollection<TblClassContent> TblClassContents { get; set; }
         public virtual ICollection<TblCourseEligiblity> TblCourseEligiblities { get; set; }
         public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
     }

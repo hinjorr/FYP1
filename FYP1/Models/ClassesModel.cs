@@ -47,9 +47,9 @@ namespace FYP1.Models
                 var classes = await db.TblClasses.Where(y => y.IsActive == Convert.ToUInt32(true)).Select(x => new ClassDTO
                 {
                     ClassId = x.ClassId,
-                    IsActive=x.IsActive,
+                    IsActive = x.IsActive,
                     ClassStrength = x.ClassStrength,
-                    ClassImage=x.ClassImage,
+                    ClassImage = x.ClassImage,
                     Semester = new SemesterDTO
                     {
                         SemesterName = x.Semester.SemesterName
@@ -81,7 +81,19 @@ namespace FYP1.Models
             }
 
         }
-        
+
+        public async Task<ClassDTO> GetSingleClass(int Cid)
+        {
+            var GetClass = await db.TblClasses.Where(x => x.ClassId == Cid && x.IsActive == Convert.ToUInt32(true)).Select(x => new ClassDTO
+            {
+                ClassId = x.ClassId,
+                Course = new CourseDTO()
+                {
+                    FullName = x.Course.FullName
+                }
+            }).FirstOrDefaultAsync();
+            return GetClass;
+        }
 
         // public async Task<List<ClassDTO>> ViewbyCoursesnPrograms(ClassDTO dto)
         // {
@@ -113,7 +125,7 @@ namespace FYP1.Models
         //     }).ToListAsync();
         //     return data;
         // }
-    
-    
+
+
     }
 }

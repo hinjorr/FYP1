@@ -4,7 +4,7 @@ $(document).ready(function () {
 
 function GetAllClasses() {
   $.ajax({
-    url: "/AdminClasses/ViewAllClassesinAdmin",
+    url: "/Classes/ViewAllClasses",
     success: function (resp) {
       var html = "";
       $(resp).each(function (indexInArray, item) {         
@@ -45,3 +45,5 @@ function GetAllClasses() {
     },
   });
 }
+
+

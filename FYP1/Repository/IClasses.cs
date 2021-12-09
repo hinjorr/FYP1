@@ -11,6 +11,7 @@ namespace FYP1.Repository
     {
         Task<bool> AddNewClass(ClassDTO dto);
         Task<List<ClassDTO>> ViewAllClass();
+        Task<ClassDTO> GetSingleClass(int Cid);
 
     }
 }
