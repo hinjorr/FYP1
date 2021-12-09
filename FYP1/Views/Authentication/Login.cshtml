@@ -3,50 +3,73 @@ ViewData["Title"] = "Login";
 Layout = "~/Views/Shared/LoginShared.cshtml";
 }
 
-<div id="login-page">
-    <div class="container">
-        <div class="form-login">
-            <h2 class="form-login-heading">sign in now</h2>
-            <div class="login-wrap">
-                <input type="text" class="form-control" placeholder="User ID" autofocus id="username" name="username">
-                <br>
-                <input type="password" class="form-control" id="password" name="password">
-                <label class="checkbox">
-                    <span class="pull-right">
-                        <a data-toggle="modal" href="login.html#myModal"> Forgot Password?</a>
-                    </span>
-                    <br>
-                </label>
-                <button class="btn btn-theme btn-block" type="submit" id="btnlogin"><i class="fa fa-lock"></i> SIGN
-                    IN</button>
-            </div>
-            <!-- Modal -->
-            <div aria-hidden="true" aria-labelledby="myModalLabel" role="dialog" tabindex="-1" id="myModal"
-                class="modal fade">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                            <h4 class="modal-title">Forgot Password ?</h4>
-                        </div>
-                        <div class="modal-body">
-                            <p>Enter your Registered e-mail address below to reset your password.</p>
-                            <input type="text" name="email" placeholder="Email" autocomplete="off"
-                                class="form-control placeholder-no-fix">
-                        </div>
-                        <div class="modal-footer">
-                            <button data-dismiss="modal" class="btn btn-default" type="button">Cancel</button>
-                            <button class="btn btn-theme" type="button">Submit</button>
-                        </div>
-                    </div>
+<div class="d-flex flex-column flex-root">
+    <!--begin::Login-->
+    <div class="login login-5 login-signin-on d-flex flex-row-fluid" id="kt_login">
+        <div class="d-flex flex-center bgi-size-cover bgi-no-repeat flex-row-fluid"
+            style="background-image: url(LMS/assets/media/bg/bg-2.jpg);">
+            <div class="login-form text-center text-white p-7 position-relative overflow-hidden">
+                <!--begin::Login Header-->
+                <div class="d-flex flex-center mb-15">
+                    <img src="~/LMS/assets/media/logos/logo-letter-13.png" class="max-h-75px" alt="" />
                 </div>
+                <!--end::Login Header-->
+                <!--begin::Login Sign in form-->
+                <div class="login-signin">
+                    <div class="mb-20">
+                        <h3 class="opacity-40 font-weight-normal">Login To LMS</h3>
+                        <p class="opacity-40">Enter your credentials to login to your account:</p>
+                    </div>
+                    <form class="form" id="kt_login_signin_form">
+                        <div class="form-group">
+                            <input class="form-control h-auto text-white bg-white-o-5 rounded-pill border-0 py-4 px-8"
+                                type="text" placeholder="username" name="username" autocomplete="off" />
+                        </div>
+                        <div class="form-group">
+                            <input class="form-control h-auto text-white bg-white-o-5 rounded-pill border-0 py-4 px-8"
+                                type="password" placeholder="Password" name="password" />
+                        </div>
+                        <div
+                            class="form-group d-flex flex-wrap justify-content-between align-items-center px-8 opacity-60">
+
+                            <a href="javascript:;" id="kt_login_forgot" class="text-white font-weight-bold">Forget
+                                Password ?</a>
+                        </div>
+                        <div class="form-group text-center mt-10">
+                            <button id="kt_login_signin_submit"
+                                class="btn btn-pill btn-primary opacity-90 px-15 py-3">Sign
+                                In</button>
+                        </div>
+                    </form>
+
+                </div>
+                <!--end::Login Sign in form-->
+
+                <!--begin::Login forgot password form-->
+                <div class="login-forgot">
+                    <div class="mb-20">
+                        <h3 class="opacity-40 font-weight-normal">Forgotten Password ?</h3>
+                        <p class="opacity-40">Enter your email to reset your password</p>
+                    </div>
+                    <form class="form" id="kt_login_forgot_form">
+                        <div class="form-group mb-10">
+                            <input class="form-control h-auto text-white bg-white-o-5 rounded-pill border-0 py-4 px-8"
+                                type="text" placeholder="Email" name="email" autocomplete="off" />
+                        </div>
+                        <div class="form-group">
+                            <button id="kt_login_forgot_submit"
+                                class="btn btn-pill btn-primary opacity-90 px-15 py-3 m-2">Request</button>
+                            <button id="kt_login_forgot_cancel"
+                                class="btn btn-pill btn-outline-white opacity-70 px-15 py-3 m-2">Cancel</button>
+                        </div>
+                    </form>
+                </div>
+                <!--end::Login forgot password form-->
             </div>
-            <!-- modal -->
         </div>
     </div>
+    <!--end::Login-->
 </div>
-
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>
-
 <script type="text/javascript" src="~/LMS/ViewsJquery/Login.js"></script>
