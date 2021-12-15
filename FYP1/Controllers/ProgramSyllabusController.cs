@@ -26,7 +26,7 @@ namespace FYP1.Controllers
             return View();
         }
 
-        [HttpPost("AddNewSyllabus")]
+        [HttpPost]
         public async Task<IActionResult> AddNewSyllabus(List<ProgramSyllabusDTO> dto)
         {
             var chk = await repo.AddSyllabus(dto);

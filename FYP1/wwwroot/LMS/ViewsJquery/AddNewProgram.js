@@ -22,7 +22,7 @@ $("#btnCreate").click(function () {
 function ProgamDetails() {
   $("#ProgramTable").DataTable({
     ajax: {
-      url: "/AdminClasses/ViewAllClasses",
+      url: "/Classes/ViewAllClassesinJson",
       type: "Get",
       datatype: "json",
     },

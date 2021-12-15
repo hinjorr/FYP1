@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Hosting;
-
+using System;
 
 namespace FYP1.Controllers
 {
@@ -13,9 +13,12 @@ namespace FYP1.Controllers
     {
         private readonly IUser repo;
 
-        public UserController(IUser _repo)
+        public IWebHostEnvironment Env { get; }
+
+        public UserController(IUser _repo, IWebHostEnvironment Env)
         {
             repo = _repo;
+            this.Env = Env;
         }
         [HttpGet("NewUser")]
         public IActionResult AddNewUser()
@@ -95,6 +98,9 @@ namespace FYP1.Controllers
             return View();
         }
 
-
+        public string UploadFile([FromForm] ProfileDTO dto)
+        {
+            return "File Receied";
+        }
     }
 }

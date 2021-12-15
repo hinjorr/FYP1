@@ -61,6 +61,9 @@ var KTBootstrapDatetimepicker = function () {
         $('#kt_datetimepicker_10').datetimepicker({
             locale: 'de'
         });
+        $('#kt_datetimepicker_20').datetimepicker({
+            locale: 'de'
+        });
 
         // Demo 11
         $('#kt_datetimepicker_11').datetimepicker({
