@@ -20,6 +20,7 @@ namespace FYP1.DTOs
         public UserDTO User { get; set; }
         public StudentDTO Student { get; set; }
         public IFormFile ProfileImage { get; set; }
-
+        public RoleDTO Role { get; set; }
+        public ProgramDTO Program { get; set; }
     }
 }

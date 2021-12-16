@@ -26,11 +26,33 @@ namespace FYP1.Controllers
             return View();
         }
 
+        [HttpGet("GetProgramSyllabus/{id}")]
+        public async Task<IActionResult> GetProgramSyllabus(int id)
+        {
+            var data = await repo.GetProgramSyllabus(id);
+            return Ok(data);
+        }
+
         [HttpPost]
         public async Task<IActionResult> AddNewSyllabus(List<ProgramSyllabusDTO> dto)
         {
-            var chk = await repo.AddSyllabus(dto);
-            return Ok(chk);
+            if (dto != null)
+            {
+                var chk = await repo.AddSyllabus(dto);
+                if (chk)
+                {
+                    return Ok(new { type = "success", msg = "New Syllabus Added!" });
+                }
+                else
+                {
+                    return Ok(new { type = "error", msg = "Registration Failed!" });
+                }
+            }
+            else
+            {
+                return Ok(new { type = "warning", msg = "Please Fill the Form!" });
+            }
+
         }
         [HttpPost]
         public async Task<IActionResult> GetCrHr(CourseDTO dto)

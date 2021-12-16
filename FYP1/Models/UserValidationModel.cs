@@ -27,13 +27,17 @@ namespace FYP1.Models
             try
             {
                 var data = await db.TblProfiles.Where(x => x.Nic == dto.Nic).FirstOrDefaultAsync();
+                var mapped = mapper.Map(data, dto);
                 if (data != null)
                 {
-                    var user = await db.TblUsers.Where(x => x.ProfileId == data.ProfileId).FirstOrDefaultAsync();
-                    var mapped = mapper.Map(data, dto);
-                    mapped.Picture=data.Picture;
-                    mapped.User.RoleId = user.RoleId;
-                    
+                    mapped.Picture = data.Picture;
+                    var user = await db.TblUsers.Where(x => x.ProfileId == data.ProfileId).Include(z => z.Role).FirstOrDefaultAsync();
+                    mapped.Role = new RoleDTO
+                    {
+                        RoleId = user.Role.RoleId,
+                        RoleName = user.Role.RoleName
+                    };
+
                     return mapped;
                 }
                 else

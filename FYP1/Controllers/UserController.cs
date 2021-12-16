@@ -98,9 +98,6 @@ namespace FYP1.Controllers
             return View();
         }
 
-        public string UploadFile([FromForm] ProfileDTO dto)
-        {
-            return "File Receied";
-        }
+        
     }
 }

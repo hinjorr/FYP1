@@ -46,5 +46,17 @@ namespace FYP1.Models
             int? CrHr = data.CrHr;
             return CrHr;
         }
+        public async Task<List<ProgramSyllabusDTO>> GetProgramSyllabus(int id)
+        {
+            var Syllabus = await db.TblProgramSyllabi.Where(x => x.ProgramId == id).Select(x => new ProgramSyllabusDTO
+            {
+                SyllabusId = x.SyllabusId,
+                ProgramId = x.ProgramId,
+                CourseId = x.CourseId,
+                RqdCourseId = x.RqdCourseId,
+                RequiredCrHr = x.RequiredCrHr,
+            }).ToListAsync();
+            return Syllabus;
+        }
     }
 }

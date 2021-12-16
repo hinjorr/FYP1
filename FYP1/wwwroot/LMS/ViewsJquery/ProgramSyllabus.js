@@ -2,20 +2,17 @@ $(document).ready(function () {
   CommonFunctions.GetPrograms("#dpPrograms");
   CommonFunctions.GetCoursesFullName(".dpCourse");
   CommonFunctions.GetCoursesFullName(".dpRequisete");
-  $(".RowNumber").text(index); // $(".dpCourse").select2();
-  // $(".dpRequisete").select2();
+  $(".RowNumber").text(index);
+  // Select();
 });
 var index = 1;
-
+var totalCrHr = 0;
 var ProgramSyllabusDTO = [];
-$("#tblsyllabus").on("click", ".btnadd", function () {
-  console.log("before ", index);
-  index++;
-  console.log("after ", index);
-  $(this).closest(".RowNumber").text(index);
-  $(".trClone").clone().appendTo("#tblsyllabus");
-});
 
+$(document).on("click", ".btnadd", function () {
+  $(this).closest(".trClone").clone().appendTo("#tblsyllabus");
+  // Select();
+});
 $(document).on("click", ".btnremove", function () {
   $(this).closest(".trClone").remove();
 });
@@ -32,6 +29,7 @@ $("#btnsubmit").click(function (e) {
         ProgramSyllabusDTO.push(dto);
       }
     });
+
     SendData();
   } else {
     cuteToast({
@@ -43,31 +41,66 @@ $("#btnsubmit").click(function (e) {
 });
 
 function SendData() {
-  console.log(ProgramSyllabusDTO);
-  // $.ajax({
-  //   type: "Post",
-  //   url: "/ProgramSyllabus/AddNewSyllabus",
-  //   data: { dto: ProgramSyllabusDTO },
-  //   success: function (response) {
-  //     console.log("Response ", response);
-  //   },
-  // });
+  $.ajax({
+    type: "Post",
+    url: "/ProgramSyllabus/AddNewSyllabus",
+    data: { dto: ProgramSyllabusDTO },
+    success: function (resp) {
+      cuteToast({
+        type: resp.type,
+        message: resp.msg,
+        timer: 3000,
+      });
+    },
+  });
 }
 
-// $(".dpCourse").change(function (e) {
-//   var CourseDTO = {
-//     CourseId: $(".dpCourse").val(),
-//   };
-//   GetCrHr(CourseDTO);
-// });
+function GetCrHr(obj) {
+  var data = $(obj).closest(".dpCourse").val();
+  var CourseDTO = {
+    CourseId: data,
+  };
+  $.ajax({
+    type: "Post",
+    url: "/ProgramSyllabus/GetCrHr",
+    data: CourseDTO,
+    success: function (resp) {
+      $(obj).closest("tr").find("td:eq(4)").html(resp);
+      totalCrHr += resp;
+      $(".ToTalCrHr").val(totalCrHr);
+    },
+  });
+}
 
-// function GetCrHr(CourseDTO) {
-//   $.ajax({
-//     type: "Post",
-//     url: "/ProgramSyllabus/GetCrHr",
-//     data: CourseDTO,
-//     success: function (resp) {
-//       $("#CrHr").text(resp);
-//     },
-//   });
+function GetIndex(obj) {
+  $(obj)
+    .closest("tr")
+    .find("td:eq(0)")
+    .text(++index);
+}
+
+// function Select() {
+//   $(".dpCourse").select2();
+//   $(".dpRequisete").select2();
 // }
+
+$(".Programs").change(function (e) {
+  var id = $(".Programs").val();
+  $.ajax({
+    url: "GetProgramSyllabus/" + id,
+    success: function (resp) {
+      if (resp != null) {
+        var table = $("#tblsyllabus");
+        $(resp).each(function (indexInArray, item) {
+          console.log(item.syllabusId);
+
+          table.find("tr").each(function (indexInArray, valueOfElement) {
+            // $(this).find("td:eq(1)").val(item.courseId);
+            // $(this).find("td:eq(2)").val(item.rqdCourseId);
+            // $(this).find("td:eq(3) input[type='text']").val(item.requiredCrHr);
+          });
+        });
+      }
+    },
+  });
+});

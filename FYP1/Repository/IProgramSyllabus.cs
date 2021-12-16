@@ -10,5 +10,6 @@ namespace FYP1.Repository
     {
         Task<bool> AddSyllabus(List<ProgramSyllabusDTO> dto);
         Task<int?> GetCrHr(CourseDTO dto);
+        Task<List<ProgramSyllabusDTO>> GetProgramSyllabus(int id);
     }
 }

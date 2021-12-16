@@ -269,7 +269,8 @@ namespace FYP1.Models
                     IsActive = Convert.ToBoolean(x.IsActive),
                     Role = new RoleDTO()
                     {
-                        RoleId = x.Role.RoleId
+                        RoleId = x.Role.RoleId,
+                        RoleName = x.Role.RoleName
                     }
                 },
             }).ToListAsync();
@@ -293,7 +294,7 @@ namespace FYP1.Models
         //     chk.City=dto.City;
         //     chk.Country=dto.Country;
         //     chk.DoB=dto.DoB;
-            
+
         // }
         //SaveImage in Folder
         private string UploadFile(ProfileDTO dto)

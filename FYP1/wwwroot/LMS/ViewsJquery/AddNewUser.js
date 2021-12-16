@@ -1,7 +1,6 @@
 ﻿$(document).ready(function () {
   CommonFunctions.GetPrograms("#dpdownProgram");
   CommonFunctions.GetRoles("#dpdownRole");
-  
 });
 
 $("#newuser").validate({
@@ -161,6 +160,7 @@ $("#txtNic").change(function (e) {
           "checked",
           true
         );
+        // $("#dpdownRole").val(resp.role.roleId);
         $("#timeDOB1").val(resp.doB);
         $("#txtAddress").val(resp.address);
         $("#txtCity").val(resp.city);
