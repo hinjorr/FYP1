@@ -240,6 +240,12 @@ namespace FYP1.Models
                     await db.SaveChangesAsync();
                     return true;
                 }
+                else if (data.IsActive == 0)
+                {
+                    data.IsActive = Convert.ToUInt32(true);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
                 else
                 {
                     return false;

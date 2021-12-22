@@ -67,7 +67,7 @@ var CommonFunctions = {
       url: "/DropDown/GetCourses",
       success: function (resp) {
         var html = "";
-        html += "<option value='0'>Select Course</option>";
+
         $(resp).each(function (index, item) {
           html +=
             "<option value=" +
@@ -85,7 +85,7 @@ var CommonFunctions = {
       url: "/DropDown/GetCoursesFullName",
       success: function (resp) {
         var html = "";
-        html += "<option value='0'>Select Course</option>";
+
         $(resp).each(function (index, item) {
           html +=
             "<option value=" +
@@ -117,7 +117,7 @@ var CommonFunctions = {
     });
   },
   GetCurrentSemester: function () {
-   return $.ajax({
+    return $.ajax({
       url: "/Semester/GetCurrentSemester",
     });
   },

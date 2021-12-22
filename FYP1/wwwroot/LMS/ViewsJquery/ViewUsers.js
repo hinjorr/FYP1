@@ -56,7 +56,7 @@ function GetUsers() {
             '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="Update(' +
             userName +
             ')"><i class="la la-edit"></i></button>' +
-            '<button class="btn btn-sm btn-clean btn-icon" title="Delete" onclick="Delete(' +
+            '<button class="btn btn-sm btn-clean btn-icon" title="Change Status" onclick="Delete(' +
             userName +
             ')"><i class="la la-trash"></i></button>'
           );

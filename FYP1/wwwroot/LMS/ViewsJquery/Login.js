@@ -1,21 +1,30 @@
-$("#btnlogin").click(function (e) {
-    var UserDTO = {
-      UserName: $("#username").val(),
-      Password: $("#password").val(),
-    };
+$("#kt_login_signin_submit").click(function (e) {
+  var UserDTO = {
+    UserName: $("#username").val(),
+    Password: $("#password").val(),
+  };
+  if (UserDTO.UserName != "" && UserDTO.Password != "") {
     $.ajax({
       type: "Post",
       url: "/LoginPost",
       data: UserDTO,
       success: function (resp) {
-        if (resp == true) {
-          // window.location.replace("/Home");
-          alert(resp)
-        } else {
-          // alert("Username/Password invalid");
-          alert(resp)
-        }
+        var data = $("#GetData").val();
+        console.log(data);
+        swal
+          .fire({
+            text: resp.text,
+            icon: resp.icon,
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+              confirmButton: "btn font-weight-bold btn-light-primary",
+            },
+          })
+          .then(function () {
+            KTUtil.scrollTop();
+          });
       },
     });
-  });
-  
+  }
+});

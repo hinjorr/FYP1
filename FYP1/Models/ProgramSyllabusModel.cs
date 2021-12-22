@@ -55,6 +55,7 @@ namespace FYP1.Models
                 CourseId = x.CourseId,
                 RqdCourseId = x.RqdCourseId,
                 RequiredCrHr = x.RequiredCrHr,
+                
             }).ToListAsync();
             return Syllabus;
         }

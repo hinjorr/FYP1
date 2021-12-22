@@ -1,15 +1,15 @@
-using System.IO;
+using System;
 using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Models;
 using FYP1.Repository;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 
 namespace FYP1
@@ -39,19 +39,14 @@ namespace FYP1
             services.AddDbContext<LMS_DBContext>(x => x.UseMySql(Configuration.GetConnectionString("Default"), ServerVersion.Parse("5.7.36-mysql")));
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddControllersWithViews();
+            services.AddSession(x => x.IdleTimeout = TimeSpan.FromMinutes(10));
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // services.AddControllers(config =>
             // {
             //     config.Filters.Add(new ExceptionFilter());
             // });
             services.AddSwaggerGen();
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
-            services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme).AddCookie(
-                x => x.LoginPath = "/Authentication/Login"
-            );
+
 
         }
 
@@ -76,6 +71,7 @@ namespace FYP1
 
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            app.UseSession();
 
             app.UseCookiePolicy();
             app.UseAuthentication();
@@ -88,7 +84,7 @@ namespace FYP1
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Authentication}/{action=Login}/{id?}");
+                    pattern: "{controller=Authentication}/{action=Login}");
             });
         }
     }

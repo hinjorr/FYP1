@@ -8,10 +8,12 @@ namespace FYP1.DTOs
 {
     public class GeneralDTO
     {
-        public bool boolchk { get; set; }
-        public ClaimsPrincipal principle { get; set; }
-        public UserDTO User { get; set; }
+        public bool ResponseBool { get; set; }
+        public string ResponceMsg { get; set; }
+
         public ProfileDTO Profile { get; set; }
-        
+        public UserDTO User { get; set; }
+        public RoleDTO Role { get; set; }
+
     }
 }

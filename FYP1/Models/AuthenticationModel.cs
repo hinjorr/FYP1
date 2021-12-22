@@ -1,3 +1,4 @@
+using System;
 using System.Security.Claims;
 using System.Linq;
 using System.Threading.Tasks;
@@ -7,6 +8,8 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using FYP1.dbModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
+using FYP1.Helpers__Filters;
 
 namespace FYP1.Models
 {
@@ -15,67 +18,38 @@ namespace FYP1.Models
     {
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
+        IHttpContextAccessor _httpContext;
 
-        public AuthenticationModel(LMS_DBContext db, IMapper mapper)
+        public AuthenticationModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext)
         {
             this.db = db;
             this.mapper = mapper;
+            _httpContext = httpContext;
         }
-        public async Task<GeneralDTO> Login(UserDTO dto)
+        public async Task<bool> Login(UserDTO dto)
         {
-            GeneralDTO model = new GeneralDTO();
-
             try
             {
-                ClaimsIdentity identity = null;
-                bool isAuthenticate = false;
-                var data = await db.TblUsers.Where(x => x.UserName == dto.UserName && x.Password == dto.Password).FirstOrDefaultAsync();
+                var data = await db.TblUsers.Where(x => x.UserName == dto.UserName && x.Password == dto.Password && x.IsActive == Convert.ToUInt16(true)).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
                 if (data != null)
                 {
-                    //Admin=1
-                    if (data.RoleId == 1)
-                    {
-                        identity = new ClaimsIdentity(new[]{
-                    new Claim(ClaimTypes.Name,dto.UserName),
-                    new Claim(ClaimTypes.Role,"Admin")
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
-                        isAuthenticate = true;
-                    }
-                    //Faculty=2
-                    else if (data.RoleId == 2)
-                    {
-                        identity = new ClaimsIdentity(new[]{
-                    new Claim(ClaimTypes.Name,dto.UserName),
-                    new Claim(ClaimTypes.Role,"Faculty")
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
-                        isAuthenticate = true;
-                    }
-                    //Student=3
-                    else if (data.RoleId == 3)
-                    {
-                        identity = new ClaimsIdentity(new[]{
-                    new Claim(ClaimTypes.Name,dto.UserName),
-                    new Claim(ClaimTypes.Role,"Student")
-                    }, CookieAuthenticationDefaults.AuthenticationScheme);
-                        isAuthenticate = true;
-                    }
-                    
-                }
+                    GeneralDTO general = new GeneralDTO();
+                    general.User = new UserDTO();
+                    general.Profile = new ProfileDTO();
+                    general.Role = new RoleDTO();
+                    general.ResponseBool = true;
+                    general.User.UserName = data.UserName;
+                    mapper.Map(data.Role, general.Role);
+                    mapper.Map(data.Profile, general.Profile);
 
-                if (isAuthenticate)
-                {
-                    model.principle = new ClaimsPrincipal(identity);
-                    model.boolchk = true;
+                    _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
+                    return true;
                 }
-                else
-                {
-                    model.boolchk = false;
-                }
-                return model;
+                return false;
             }
             catch (System.Exception)
             {
-                model.boolchk = false;
+
                 throw;
             }
         }

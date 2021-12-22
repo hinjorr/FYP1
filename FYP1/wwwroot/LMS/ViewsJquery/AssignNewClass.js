@@ -1,6 +1,6 @@
 ﻿$(document).ready(function () {
   CommonFunctions.GetPrograms("#dpPrograms");
-  CommonFunctions.GetPrograms("#dpProgramsView");
+  // CommonFunctions.GetPrograms("#dpProgramsView");
   CommonFunctions.GetDays("#dpDownClassDay");
   CommonFunctions.GetTime("#dpDownClassTime");
   GetAllClasses();
@@ -99,7 +99,7 @@ $("#dpPrograms").change(function (e) {
   CommonFunctions.GetCoursesbyPrograms("#DpDownCourse", id);
 });
 
-$("#dpProgramsView").change(function (e) {
-  var id = $("#dpProgramsView").val();
-  CommonFunctions.GetCoursesbyPrograms("#DpDownCourseView", id);
-});
+// $("#dpProgramsView").change(function (e) {
+//   var id = $("#dpProgramsView").val();
+//   CommonFunctions.GetCoursesbyPrograms("#DpDownCourseView", id);
+// });

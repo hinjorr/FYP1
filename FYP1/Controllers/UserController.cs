@@ -60,11 +60,11 @@ namespace FYP1.Controllers
             var chk = await repo.DeleteUser(username);
             if (chk == true)
             {
-                return Ok(new { type = "success", msg = "User Deactivated" });
+                return Ok(new { type = "success", msg = "Status Cahnged!" });
             }
             else
             {
-                return Ok(new { type = "error", msg = "User already Inactive" });
+                return Ok(new { type = "error", msg = "Task Failed!" });
 
             }
         }
@@ -98,6 +98,6 @@ namespace FYP1.Controllers
             return View();
         }
 
-        
+
     }
 }

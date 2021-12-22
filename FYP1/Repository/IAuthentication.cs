@@ -8,6 +8,6 @@ namespace FYP1.Repository
 {
     public interface IAuthentication
     {
-        Task<GeneralDTO> Login(UserDTO dto);
+        Task<bool> Login(UserDTO dto);
     }
 }
