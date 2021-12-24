@@ -6,7 +6,7 @@ using FYP1.DTOs;
 
 namespace FYP1.Repository
 {
-    public interface IDropDown
+    public interface IGeneral
     {
         Task<List<RoleDTO>> GetRole();
         Task<List<ProgramDTO>> GetPrograms();
@@ -15,5 +15,12 @@ namespace FYP1.Repository
         Task<List<CourseDTO>> GetCourses();
         Task<List<CourseDTO>> GetCoursesFullName();
         Task<List<ProgramSyllabusDTO>> GetCoursesbyPrograms(int id);
+        Task<int> ToTalUsers();
+        Task<int> ToTalStudents();
+        Task<int> ToTalFaculty();
+        Task<int> ToTalAdmins();
+        Task<int> ToTalPrograms();
+        Task<int> ToTalCourses();
+        Task<int> ToTalActiveClasses();
     }
 }

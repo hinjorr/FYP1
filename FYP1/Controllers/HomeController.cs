@@ -1,12 +1,13 @@
-﻿using Microsoft.AspNetCore.Authorization;
+﻿using FYP1.Helpers__Filters;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    // [Authorize]
+    [AuthorizedUserFilter]
+
     public class HomeController : Controller
     {
-        // [Authorize(Roles = "Admin,Faculty,Student")]
 
         [HttpGet("Home")]
         public IActionResult Index()

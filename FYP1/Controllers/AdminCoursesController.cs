@@ -1,11 +1,14 @@
 using System.Net;
 using System.Threading.Tasks;
 using FYP1.DTOs;
+using FYP1.Helpers__Filters;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
+    [AuthorizedUserFilter]
+
     public class AdminCoursesController : Controller
     {
         private readonly ICourse repo;

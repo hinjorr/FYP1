@@ -1,16 +1,15 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using FYP1.DTOs;
+using FYP1.Helpers__Filters;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    // [ApiController]
-    // [Route("api/[controller]")]
+        [AuthorizedUserFilter]
 
-    // [Authorize(Roles ="Admin")]
     public class ProgramSyllabusController : Controller
     {
         private readonly IProgramSyllabus repo;

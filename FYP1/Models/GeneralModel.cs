@@ -9,11 +9,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FYP1.Models
 {
-    public class DropDownModel : IDropDown
+    public class GeneralModel : IGeneral
     {
         private readonly LMS_DBContext db;
 
-        public DropDownModel(LMS_DBContext _db)
+        public GeneralModel(LMS_DBContext _db)
         {
             db = _db;
         }
@@ -98,6 +98,41 @@ namespace FYP1.Models
             return courses;
         }
 
-     
+        public async Task<int> ToTalUsers()
+        {
+            var data = await db.TblUsers.Where(x => x.IsActive == Convert.ToUInt16(true)).CountAsync();
+            return data;
+        }
+        public async Task<int> ToTalStudents()
+        {
+            var data = await db.TblUsers.Where(x => x.IsActive == Convert.ToUInt16(true) && x.RoleId == 3).CountAsync();
+            return data;
+        }
+        public async Task<int> ToTalFaculty()
+        {
+            var data = await db.TblUsers.Where(x => x.IsActive == Convert.ToUInt16(true) && x.RoleId == 2).CountAsync();
+            return data;
+        }
+        public async Task<int> ToTalAdmins()
+        {
+            var data = await db.TblUsers.Where(x => x.IsActive == Convert.ToUInt16(true) && x.RoleId == 1).CountAsync();
+            return data;
+        }
+        public async Task<int> ToTalPrograms()
+        {
+            var data = await db.TblPrograms.Where(x => x.IsActive == Convert.ToUInt16(true)).CountAsync();
+            return data;
+        }
+        public async Task<int> ToTalCourses()
+        {
+            var data = await db.TblCourses.Where(x => x.IsActive == Convert.ToUInt16(true)).CountAsync();
+            return data;
+        }
+        public async Task<int> ToTalActiveClasses()
+        {
+            var data = await db.TblClasses.Where(x => x.IsActive == Convert.ToUInt16(true)).CountAsync();
+            return data;
+        }
+
     }
 }

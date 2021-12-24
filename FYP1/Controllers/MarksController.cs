@@ -1,8 +1,11 @@
 using System.Net;
+using FYP1.Helpers__Filters;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
+        [AuthorizedUserFilter]
+
     public class MarksController : Controller
     {
 

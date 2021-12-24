@@ -5,10 +5,11 @@ using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Hosting;
 using System;
+using FYP1.Helpers__Filters;
 
 namespace FYP1.Controllers
 {
-    // [Authorize(Roles ="Admin")]
+    [AuthorizedUserFilter]
     public class UserController : Controller
     {
         private readonly IUser repo;

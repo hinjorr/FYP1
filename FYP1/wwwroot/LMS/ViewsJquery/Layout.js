@@ -3,4 +3,3 @@ $(document).ready(function () {
     $("#SemesterName").text(resp.semesterName);
   });
 });
-

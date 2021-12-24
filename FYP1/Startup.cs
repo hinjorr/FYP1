@@ -35,11 +35,12 @@ namespace FYP1
             services.AddScoped<IUser, UserModel>();
             services.AddScoped<IUserValidation, UserValidationModel>();
             services.AddScoped<IPrograms, ProgramsModel>();
-            services.AddScoped<IDropDown, DropDownModel>();
+            services.AddScoped<IGeneral, GeneralModel>();
             services.AddDbContext<LMS_DBContext>(x => x.UseMySql(Configuration.GetConnectionString("Default"), ServerVersion.Parse("5.7.36-mysql")));
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddControllersWithViews();
             services.AddSession(x => x.IdleTimeout = TimeSpan.FromMinutes(10));
+
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             // services.AddControllers(config =>
             // {
@@ -79,7 +80,6 @@ namespace FYP1
             app.UseRouting();
 
             app.UseAuthorization();
-            // app.UseStatusCodePagesWithRedirects("~/404Error.html");
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -3,7 +3,7 @@ var CommonFunctions = {
     //display Programs List
     $.ajax({
       type: "Get",
-      url: "/DropDown/GetPrograms",
+      url: "/General/GetPrograms",
       success: function (resp) {
         var html = "";
         html += "<option value='0'>Select Program</option>";
@@ -22,7 +22,7 @@ var CommonFunctions = {
   GetRoles: function (id) {
     $.ajax({
       type: "Get",
-      url: "/DropDown/GetRoles",
+      url: "/General/GetRoles",
       success: function (resp) {
         var html = "";
         html += "<option value='0'>Select Role</option>";
@@ -36,7 +36,7 @@ var CommonFunctions = {
   },
   GetDays: function (id) {
     $.ajax({
-      url: "/DropDown/GetDays",
+      url: "/General/GetDays",
       success: function (resp) {
         var html = "";
         html += "<option value='0'>Select Day</option>";
@@ -50,7 +50,7 @@ var CommonFunctions = {
   },
   GetTime: function (id) {
     $.ajax({
-      url: "/DropDown/GetTime",
+      url: "/General/GetTime",
       success: function (resp) {
         var html = "";
         html += "<option value='0'>Select Time</option>";
@@ -64,7 +64,7 @@ var CommonFunctions = {
   },
   GetCourse: function (id) {
     $.ajax({
-      url: "/DropDown/GetCourses",
+      url: "/General/GetCourses",
       success: function (resp) {
         var html = "";
 
@@ -82,7 +82,7 @@ var CommonFunctions = {
   },
   GetCoursesFullName: function (id) {
     $.ajax({
-      url: "/DropDown/GetCoursesFullName",
+      url: "/General/GetCoursesFullName",
       success: function (resp) {
         var html = "";
 

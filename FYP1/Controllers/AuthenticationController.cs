@@ -30,23 +30,23 @@ namespace FYP1.Controllers
 
 
         [HttpPost("LoginPost")]
-        public async Task<IActionResult> Login(UserDTO dto)
+        public async Task<IActionResult> LoginPost(UserDTO dto)
         {
 
             var chk = await repo.Login(dto);
             if (chk == true)
             {
-                // var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
-                System.Console.WriteLine("masood");
+                //  var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
+                //  data.Profile.Picture
                 return Ok(new { icon = "success", text = "Login Succesfull!" });
             }
             else
             {
-                return Ok(new { icon = "error", text = "Username/Password Invalid!" });
+                return Ok(new { icon = "error", text = "Username/Password Invalid!", userData = false });
             }
 
         }
-                    // HttpContext.Session.Remove("userObject");
+        // HttpContext.Session.Remove("userObject");
 
 
     }

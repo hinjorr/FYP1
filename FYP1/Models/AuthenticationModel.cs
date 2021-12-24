@@ -42,6 +42,7 @@ namespace FYP1.Models
                     mapper.Map(data.Role, general.Role);
                     mapper.Map(data.Profile, general.Profile);
 
+                    _httpContext.HttpContext.Session.SetString("IsLogedIn", (general.ResponseBool == true).ToString());
                     _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
                     return true;
                 }

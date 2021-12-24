@@ -1,7 +1,7 @@
 ﻿$(document).ready(function () {
     $("#btnSubmit").click(function () {
         var RoleManagement = {
-            DropDownRoles: $("#dpdownRoles").val(),
+            GeneralRoles: $("#dpdownRoles").val(),
             NewUser: $("#cbNewUser").val(),
             ViewAllUsers: $("#cbViewAllUsers").val(),
             BulkUsers: $("#cbBulkUsers").val(),

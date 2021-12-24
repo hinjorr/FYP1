@@ -4,11 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    public class DropDownController : Controller
-    {
-        private readonly IDropDown repo;
 
-        public DropDownController(IDropDown _repo)
+    public class GeneralController : Controller
+    {
+        private readonly IGeneral repo;
+
+        public GeneralController(IGeneral _repo)
         {
             repo = _repo;
         }
@@ -46,6 +47,41 @@ namespace FYP1.Controllers
         public async Task<IActionResult> GetCoursesbyPrograms(int id)
         {
             var data = await repo.GetCoursesbyPrograms(id);
+            return Ok(data);
+        }
+        public async Task<IActionResult> TotalUsers()
+        {
+            var data = await repo.ToTalUsers();
+            return Ok(data);
+        }
+        public async Task<IActionResult> ToTalStudents()
+        {
+            var data = await repo.ToTalStudents();
+            return Ok(data);
+        }
+        public async Task<IActionResult> ToTalFaculty()
+        {
+            var data = await repo.ToTalFaculty();
+            return Ok(data);
+        }
+        public async Task<IActionResult> ToTalAdmins()
+        {
+            var data = await repo.ToTalAdmins();
+            return Ok(data);
+        }
+        public async Task<IActionResult> ToTalPrograms()
+        {
+            var data = await repo.ToTalPrograms();
+            return Ok(data);
+        }
+        public async Task<IActionResult> ToTalCourses()
+        {
+            var data = await repo.ToTalCourses();
+            return Ok(data);
+        }
+        public async Task<IActionResult> ToTalActiveClasses()
+        {
+            var data = await repo.ToTalActiveClasses();
             return Ok(data);
         }
 
