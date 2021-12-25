@@ -10,9 +10,10 @@ var totalCrHr = 0;
 var ProgramSyllabusDTO = [];
 
 $(document).on("click", ".btnadd", function () {
-  $(this).closest(".trClone").clone().appendTo("#tblsyllabus");
+  $(".trClone:first").clone().appendTo("#tblsyllabus");
   // Select();
 });
+
 $(document).on("click", ".btnremove", function () {
   $(this).closest(".trClone").remove();
 });
@@ -29,7 +30,6 @@ $("#btnsubmit").click(function (e) {
         ProgramSyllabusDTO.push(dto);
       }
     });
-
     SendData();
   } else {
     cuteToast({
@@ -84,25 +84,48 @@ function GetIndex(obj) {
 //   $(".dpRequisete").select2();
 // }
 
-// $(".Programs").change(function (e) {
-//   var id = $(".Programs").val();
-//   $.ajax({
-//     url: "GetProgramSyllabus/" + id,
-//     success: function (resp) {
-//       if (resp != null) {
-//         var table = $("#tblsyllabus");
-//         var html = "";
-//         html += "<option value='0'>Select Course</option>";
-//         $(resp).each(function (index, item) {
-//           table.find("tr").each(function (indexInArray, valueOfElement) {
-//             html += "<option value=1>Masod</option>";
-//             $(this).find(".dpCourse").html(html);
-//             //$(this).find("td:eq(1)").val(item.courseId);
-//             // $(this).find("td:eq(2)").val(item.rqdCourseId);
-//             // $(this).find("td:eq(3) input[type='text']").val(item.requiredCrHr);
-//           });
-//         });
-//       }
-//     },
-//   });
-// });
+$(document).on("change", ".Programs", function () {
+  var id = $(".Programs").val();
+  var html = "";
+  html += ` 
+        <thead>
+        <tr>
+        <th>Cno</th>
+        <th>Course</th>
+        <th>Pre Requisete</th>
+        <th style="width: 8%;">Required Cr Hr</th>
+        <th style="width: 6%;">Cr .Hr</th>
+        <th style="width: 8%;"></th>
+         </tr>
+        </thead>`;
+  $.ajax({
+    url: "GetProgramSyllabus/" + id,
+    success: function (resp) {
+      if (resp != null) {
+        $(resp).each(function (indexInArray, item) {
+          html +=
+            `<tr class="trClone">
+            <td class="RowNumber"></td>
+            <td> <select class="form-control dpCourse" style="width: 100%;"
+                    onchange="GetCrHr(this)">
+                    <option value="` +
+            item.courseId +
+            `"></option>
+                </select> </td>
+            <td><select class="form-control dpRequisete " style="width: 100%;">
+            <option value="` +
+            item.rqdCourseId +
+            `"></option>
+            </select> </td>
+            <td><input type="text" class="form-control"> </td>
+            <td>
+                <p class="CrHr"></p>
+            </td>
+            <td> <button class="btn btn-danger btn-sm btnremove">-</i></button></td>
+        </tr>`;
+        });
+        $("#tblsyllabus").html(html);
+      }
+    },
+  });
+});

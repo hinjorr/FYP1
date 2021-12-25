@@ -119,6 +119,10 @@ var CommonFunctions = {
   GetCurrentSemester: function () {
     return $.ajax({
       url: "/Semester/GetCurrentSemester",
+      success: function (resp) {
+        var data = JSON.stringify(resp);
+        localStorage.setItem("SemesterDetails", data);
+      },
     });
   },
 };

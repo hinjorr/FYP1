@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-        [AuthorizedUserFilter]
+    [AuthorizedUserFilter]
 
     public class SemesterController : Controller
     {
@@ -43,7 +43,14 @@ namespace FYP1.Controllers
         public async Task<IActionResult> AddClassSessions(List<ClassSessionDTO> dto)
         {
             var data = await repo.AddClassSession(dto);
-            return Ok(data);
+            if (data == true)
+            {
+                return Ok(new { type = "success", msg = "Sessions Added!" });
+            }
+            else
+            {
+                return Ok(new { type = "error", msg = "Server Error!" });
+            }
         }
         public async Task<IActionResult> GetAlllSessions()
         {

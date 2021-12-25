@@ -28,16 +28,15 @@ namespace FYP1.Models
         {
             try
             {
-                using (var transaction = await db.Database.BeginTransactionAsync())
+                TblSemester sem = new TblSemester()
                 {
-                    mapper.Map(dto, semester);
-                    semester.StartDate = nowdt.ToString("dd/MM/yyyy");
-                    semester.IsActive = Convert.ToUInt32(true);
-                    await db.TblSemesters.AddAsync(semester);
-                    dto.SemesterId = semester.SemesterId;
-                    await db.SaveChangesAsync();
-                    return true;
-                }
+                    SemesterName = dto.SemesterName,
+                    StartDate = nowdt.ToString("dd/MM/yyyy"),
+                    IsActive = Convert.ToUInt32(true)
+                };
+                await db.TblSemesters.AddAsync(sem);
+                await db.SaveChangesAsync();
+                return true;
 
             }
             catch (System.Exception e)
@@ -78,6 +77,16 @@ namespace FYP1.Models
         {
             try
             {
+                foreach (var items in dto)
+                {
+                    var chkId = await db.TblClassSessions.Where(x => x.SemesterId == items.SemesterId).FirstOrDefaultAsync();
+                    if (chkId != null)
+                    {
+                        db.TblClassSessions.Remove(chkId);
+                        await db.SaveChangesAsync();
+                    }
+                }
+
                 foreach (var item in dto)
                 {
                     mapper.Map(item, sessions);
@@ -88,7 +97,7 @@ namespace FYP1.Models
             }
             catch (System.Exception)
             {
-
+                return false;
                 throw new Exception("Task Failed in AddClassSession");
             }
         }
@@ -96,13 +105,20 @@ namespace FYP1.Models
         public async Task<List<ClassSessionDTO>> GetAllSessions()
         {
             var semester = await db.TblSemesters.Where(x => x.IsActive == Convert.ToUInt32(true)).FirstOrDefaultAsync();
-            var sessions = await db.TblClassSessions.Where(x => x.SemesterId == semester.SemesterId).Select(x => new ClassSessionDTO
+            if (semester != null)
             {
-                SessionId = x.SessionId,
-                SessionName = x.SessionName,
-                SemesterId=x.SemesterId
-            }).ToListAsync();
-            return sessions;
+                var sessions = await db.TblClassSessions.Where(x => x.SemesterId == semester.SemesterId).Include(x => x.Semester).Select(x => new ClassSessionDTO
+                {
+                    SessionId = x.SessionId,
+                    SessionName = x.SessionName,
+                    SemesterId = x.SemesterId,
+                    SemesterName = x.Semester.SemesterName,
+                }).ToListAsync();
+                return sessions;
+
+            }
+            return null;
+
         }
     }
 }

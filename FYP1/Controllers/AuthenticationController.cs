@@ -19,7 +19,15 @@ namespace FYP1.Controllers
         }
         public IActionResult Login()
         {
-            return View();
+            var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
+            if (data != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
         }
 
         [HttpGet("404Error")]
@@ -46,7 +54,12 @@ namespace FYP1.Controllers
             }
 
         }
-        // HttpContext.Session.Remove("userObject");
+        [HttpGet("Logout")]
+        public IActionResult Logout()
+        {
+            _httpContext.HttpContext.Session.Remove("UserDetails");
+            return View("Login");
+        }
 
 
     }

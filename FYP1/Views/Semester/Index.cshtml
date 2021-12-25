@@ -3,29 +3,72 @@ ViewData["Title"] = "Semester";
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 <!--begin::Card-->
-<div class="card card-custom gutter-b example example-compact col-md-6">
-    <div class="card-header">
-        <h3 class="card-title">Start/End Semester</h3>
-
+<div class="row">
+    <div class="col-lg-5">
+        <div class="card card-custom gutter-b example example-compact">
+            <div class="card-header">
+                <h3 class="card-title">Start/End Semester</h3>
+            </div>
+            <!--begin::Form-->
+            <form id="newsemster">
+                <div class="card-body">
+                    <div class="form-group">
+                        <label id="lblname">Semester Name
+                            <span class="error">*</span>
+                        </label>
+                        <input type="text" class="form-control" id="txtFullname" name="Fullname">
+                        <label class="error" id="lblerror"></label>
+                        <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnstart">Start</button>
+                        <button type="button" class="btn btn-danger btn-lg btn-block" id="btnend">End</button>
+                    </div>
+                </div>
+            </form>
+            <!--end::Form-->
+        </div>
     </div>
-    <!--begin::Form-->
-    <form id="newsemster">
-        <div class="card-body">
-            <div class="form-group">
-                <label id="lblname">Semester Name
-                    <span class="error">*</span>
-                </label>
-                <input type="text" class="form-control" id="txtFullname" name="Fullname">
-                <label class="error" id="lblerror"></label>
-                <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnstart">Start</button>
-                <button type="button" class="btn btn-danger btn-lg btn-block" id="btnend">End</button>
+    <div class="col-lg-7">
+        <div class="card card-custom gutter-b example example-compact">
+            <div class="card-header">
+                <h3 class="card-title">Current Sessions</h3>
+            </div>
+            <div class="card-body">
+                <div class="form-group row" style="margin-top: -45px;">
+                    <div class="col-lg-12">
+                        <section>
+                            <table class="table table-bordered table-hover table-checkable mt-10" id="tblSessions">
+                                <thead>
+                                    <tr>
+                                        <th>Session name</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr class="trClone">
+                                        <td><input type="text" class="form-control SessionName"> </td>
+                                        <td><button class="btn btn-danger btn-sm btnremove">-</i></button></td>
+                                    </tr>
+
+                                </tbody>
+                            </table>
+                        </section>
+                        <div class="col-md-10">
+                            <button type="submit" class="btn btn-success btn-sm btnadd">Add New
+                                Row</button>
+                            <br>
+                            <br>
+                        </div>
+                        <div class="col-md-2">
+                            <button type="submit" class="btn btn-primary " id="btnsubmit">Submit</button>
+                        </div>
+
+                    </div>
+                </div>
             </div>
         </div>
-
-    </form>
-    <!--end::Form-->
+    </div>
 </div>
+
 <!--end::Card-->
+
 
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>

@@ -1,10 +1,8 @@
 using System;
-using System.Security.Claims;
 using System.Linq;
 using System.Threading.Tasks;
 using FYP1.DTOs;
 using FYP1.Repository;
-using Microsoft.AspNetCore.Authentication.Cookies;
 using FYP1.dbModels;
 using AutoMapper;
 using Microsoft.EntityFrameworkCore;
@@ -42,7 +40,6 @@ namespace FYP1.Models
                     mapper.Map(data.Role, general.Role);
                     mapper.Map(data.Profile, general.Profile);
 
-                    _httpContext.HttpContext.Session.SetString("IsLogedIn", (general.ResponseBool == true).ToString());
                     _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
                     return true;
                 }
@@ -54,5 +51,7 @@ namespace FYP1.Models
                 throw;
             }
         }
+
+
     }
 }
