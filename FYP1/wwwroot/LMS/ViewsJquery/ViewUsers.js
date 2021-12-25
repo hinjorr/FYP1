@@ -67,7 +67,8 @@ function GetUsers() {
 }
 
 function Update(userName) {
-  console.log(userName);
+  // window.location.replace("/profile/" + userName);
+  window.open("profile/" + userName, "_blank");
 }
 function Delete(userName) {
   // var username = $(userName).closest("tr").find("td:eq(1)").html();

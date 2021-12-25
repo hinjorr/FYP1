@@ -101,8 +101,16 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         color: #999;
     }
 </style>
-<div class="form-panel">
-    <div class="row">
+
+
+<!-- #337ab7; -->
+
+<div class="card card-custom gutter-b example example-compact">
+    <div class="card-header">
+        <h3 class="card-title">@ViewData["Title"]</h3>
+    </div>
+    <div class="card-body">
+        <div class="row">
         <div class="col-lg-6">
             <h4 class="mb"><i class="fa fa-angle-right "></i> Student Course Registration for Fall2018</h4>
             <form>
@@ -121,7 +129,6 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 </div>
             </form>
         </div>
-
         
         <div class="col-lg-2"></div>
         <div class="col-lg-4">
@@ -148,7 +155,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             <h4 class="mb"> Offered Classes</h4>
             <form>
                 <div class="row">
-                    <di class="col-sm-10">
+                    <div class="col-sm-10">
                         <div class="frb-group">
                             <div class="frb frb-primary">
                                 <input type="radio" id="radio-button-0" name="radio-button" value="0">
@@ -179,7 +186,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
                         </div>
 
-                    </di>
+                    </div>
 
                 </div>
             </form>
@@ -227,6 +234,5 @@ Layout = "~/Views/Shared/_Layout.cshtml";
             </form>
         </div>
     </div>
+    </div>
 </div>
-
-<!-- #337ab7; -->

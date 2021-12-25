@@ -152,19 +152,18 @@ $("#txtNic").change(function (e) {
           message: "This NIC is already Registered!",
           timer: 3000,
         });
-        $("#txtName").val(resp.name);
-        $("#txtFatherName").val(resp.fatherName);
-        $("#txtNumber").val(resp.phoneNumber);
-        $("#txtEmail").val(resp.email);
-        $("input[name=gender][value=" + resp.gender + "]").prop(
-          "checked",
-          true
-        );
+        $("#txtName").val(resp.name).prop("disabled", true);
+        $("#txtFatherName").val(resp.fatherName).prop("disabled", true);
+        $("#txtNumber").val(resp.phoneNumber).prop("disabled", true);
+        $("#txtEmail").val(resp.email).prop("disabled", true);
+        $("input[name=gender][value=" + resp.gender + "]")
+          .prop("disabled", true)
+          .prop("checked", true);
         // $("#dpdownRole").val(resp.role.roleId);
-        $("#timeDOB1").val(resp.doB);
-        $("#txtAddress").val(resp.address);
-        $("#txtCity").val(resp.city);
-        $("#txtCountry").val(resp.country);
+        $("#timeDOB1").val(resp.doB).prop("disabled", true);
+        $("#txtAddress").val(resp.address).prop("disabled", true);
+        $("#txtCity").val(resp.city).prop("disabled", true);
+        $("#txtCountry").val(resp.country).prop("disabled", true);
         $(".GetImage").css("background-image", "url(" + resp.picture + ")");
         ProgramHide(resp.user.roleId);
       }

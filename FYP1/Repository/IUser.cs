@@ -13,5 +13,7 @@ namespace FYP1.Repository
         Task<string> Role_NIC_Check(ProfileDTO dto);
         Task<List<ProfileDTO>> GetUsers();
         Task<bool> DeleteUser(string username);
+
+        Task<GeneralDTO> GetProfile(string username);
     }
 }

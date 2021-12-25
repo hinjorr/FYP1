@@ -9,7 +9,7 @@ using FYP1.Helpers__Filters;
 
 namespace FYP1.Controllers
 {
-    [AuthorizedUserFilter]
+    // [AuthorizedUserFilter]
     public class UserController : Controller
     {
         private readonly IUser repo;
@@ -81,6 +81,18 @@ namespace FYP1.Controllers
             return View();
         }
 
+        [HttpGet("Profile/{id}")]
+        public IActionResult ViewProfile()
+        {
+            return View();
+        }
+
+        [HttpGet("GetProfile")]
+        public async Task<IActionResult> GetProfile(string username)
+        {
+            var data = await repo.GetProfile(username);
+            return Ok(data);
+        }
         public async Task<JsonResult> GetUsers()
         {
             var users = await repo.GetUsers();

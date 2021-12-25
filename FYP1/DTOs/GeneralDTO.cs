@@ -1,9 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
-using System.Threading.Tasks;
-
 namespace FYP1.DTOs
 {
     public class GeneralDTO
@@ -14,6 +8,12 @@ namespace FYP1.DTOs
         public ProfileDTO Profile { get; set; }
         public UserDTO User { get; set; }
         public RoleDTO Role { get; set; }
+        public StudentDTO Student { get; set; }
+        public ProgramDTO Program { get; set; }
+        public SemesterDTO Semester { get; set; }
+        public ClassSessionDTO ClassSession { get; set; }
+
+
 
     }
 }

@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace FYP1.DTOs
 {
-    public class UserDTO
+    public class UserDTO : GeneralDTO
     {
         public int UserId { get; set; }
         public string UserName { get; set; }
@@ -17,8 +17,6 @@ namespace FYP1.DTOs
         public bool IsActive { get; set; }
         public string UserDate { get; set; }
 
-        public ProfileDTO Profile { get; set; }
-        public RoleDTO Role { get; set; }
 
     }
 }
