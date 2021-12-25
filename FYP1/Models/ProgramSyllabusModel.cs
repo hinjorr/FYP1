@@ -59,8 +59,16 @@ namespace FYP1.Models
                     RequiredCrHr = x.RequiredCrHr,
 
                 }).ToListAsync();
+                if (Syllabus.Count() != 0)
+                {
+                    return Syllabus;
 
-                return Syllabus;
+                }
+                else
+                {
+                    return null;
+
+                }
             }
             catch (System.Exception ex)
             {
