@@ -87,13 +87,18 @@ namespace FYP1.Controllers
             return View();
         }
 
-        // [HttpGet("GetProfile")]
-        // public async Task<IActionResult> GetProfile(string username)
-        // {
-        //     // var data = await repo.GetProfile(username);
-        //     // return Ok(data);
-        //     return Ok();
-        // }
+        [HttpGet("GetProfile")]
+        public async Task<IActionResult> GetProfile(string username)
+        {
+            var data = await repo.GetProfile(username);
+            return Ok(data);
+        }
+
+        [HttpPost("UpdateProfile")]
+        public async Task<IActionResult> UpdateProfile([FromForm] ProfileDTO dto)
+        {
+            return Ok(dto);
+        }
         public async Task<JsonResult> GetUsers()
         {
             var users = await repo.GetUsers();

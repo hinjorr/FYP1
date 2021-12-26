@@ -14,6 +14,6 @@ namespace FYP1.Repository
         Task<List<ProfileDTO>> GetUsers();
         Task<bool> DeleteUser(string username);
 
-       // Task<GeneralDTO> GetProfile(string username);
+        Task<GeneralDTO> GetProfile(string username);
     }
 }
