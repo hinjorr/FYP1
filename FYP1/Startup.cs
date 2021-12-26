@@ -27,6 +27,16 @@ namespace FYP1
         public void ConfigureServices(IServiceCollection services)
         {
 
+            services.AddDbContext<LMS_DBContext>(x => x.UseMySql(Configuration.GetConnectionString("Default"), ServerVersion.Parse("5.7.36-mysql")));
+            services.AddAutoMapper(typeof(AutoMapperProfile));
+            services.AddControllersWithViews();
+           // services.AddDistributedMemoryCache();
+            services.AddSession(options =>
+            {
+                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+            });
+            services.AddMvc();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddScoped<IAuthentication, AuthenticationModel>();
             services.AddScoped<IClasses, ClassesModel>();
             services.AddScoped<IProgramSyllabus, ProgramSyllabusModel>();
@@ -36,17 +46,6 @@ namespace FYP1
             services.AddScoped<IUserValidation, UserValidationModel>();
             services.AddScoped<IPrograms, ProgramsModel>();
             services.AddScoped<IGeneral, GeneralModel>();
-            services.AddDbContext<LMS_DBContext>(x => x.UseMySql(Configuration.GetConnectionString("Default"), ServerVersion.Parse("5.7.36-mysql")));
-            services.AddAutoMapper(typeof(AutoMapperProfile));
-            services.AddControllersWithViews();
-            services.AddSession(x => x.IdleTimeout = TimeSpan.FromMinutes(10));
-
-            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
-            // services.AddControllers(config =>
-            // {
-            //     config.Filters.Add(new ExceptionFilter());
-            // });
-            services.AddSwaggerGen();
 
 
         }
@@ -54,32 +53,14 @@ namespace FYP1
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSwagger();
-            app.UseSwaggerUI(c =>
-            {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "My Test1 Api v1");
-            });
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
-            }
-
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
-
-            app.UseCookiePolicy();
-            app.UseAuthentication();
-
             app.UseRouting();
-
-            app.UseAuthorization();
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(

@@ -1,3 +1,4 @@
+using System.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -106,6 +107,7 @@ namespace FYP1.Models
                 }
                 catch (System.Exception)
                 {
+                    await transaction.RollbackAsync();
                     throw new Exception("Task Failed");
                 }
             }
@@ -335,26 +337,26 @@ namespace FYP1.Models
 
         }
 
-        public async Task<GeneralDTO> GetProfile(string username)
-        {
-            try
-            {
-                GeneralDTO dto = new GeneralDTO();
-                var GetProfile = await db.TblUsers.Where(x => x.UserName == username).Include(x => x.Profile).Include(x => x.Role).FirstOrDefaultAsync();
-                if (GetProfile != null)
-                {
-                    dto = mapper.Map(GetProfile.Profile, new ProfileDTO());
-                    dto = mapper.Map(GetProfile, new UserDTO());
-                    dto = mapper.Map(GetProfile.Role, new RoleDTO());
-                    return dto;
-                }
-                return null;
-            }
-            catch (System.Exception ex)
-            {
-                return null;
-            }
+        // public async Task<GeneralDTO> GetProfile(string username)
+        // {
+        //     try
+        //     {
+        //         GeneralDTO dto = new GeneralDTO();
+        //         var GetProfile = await db.TblUsers.Where(x => x.UserName == username).Include(x => x.Profile).Include(x => x.Role).FirstOrDefaultAsync();
+        //         if (GetProfile != null)
+        //         {
+        //             dto = mapper.Map(GetProfile.Profile, new ProfileDTO());
+        //             dto = mapper.Map(GetProfile, new UserDTO());
+        //             // dto = mapper.Map(GetProfile.Role, new RoleDTO());
+        //             return dto;
+        //         }
+        //         return null;
+        //     }
+        //     catch (System.Exception ex)
+        //     {
+        //         return null;
+        //     }
 
-        }
+        // }
     }
 }
