@@ -39,7 +39,7 @@ namespace FYP1.Controllers
         [HttpGet("ViewClass/{id}")]
         public IActionResult ViewClass()
         {
-          
+
             return View();
         }
 
@@ -60,12 +60,24 @@ namespace FYP1.Controllers
             var classes = await repo.ViewAllClass();
             return Ok(classes);
         }
+        public async Task<IActionResult> ViewAllActiveCourses()
+        {
+            var courses = await repo.ViewAllActiveCourses();
+            return Ok(courses);
+        }
+
+        public async Task<IActionResult> GetClassesByCourse(int id)
+        {
+            var classes = await repo.GetClassesByCourse(id);
+            return Ok(classes);
+        }
 
         public async Task<IActionResult> ViewAllClassesinJson()
         {
             var classes = await repo.ViewAllClass();
             return Json(new { data = classes });
         }
+
 
 
     }

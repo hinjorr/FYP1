@@ -60,6 +60,7 @@ namespace FYP1.Models
                     },
                     Course = new CourseDTO
                     {
+                        CourseId = Convert.ToInt32(x.CourseId),
                         ShortName = x.Course.FullName
                     },
                     Time = new TimeDTO
@@ -81,7 +82,43 @@ namespace FYP1.Models
             }
 
         }
+        public async Task<List<CourseDTO>> ViewAllActiveCourses()
+        {
+            try
+            {
+                var courses = await (from x in db.TblClasses
+                                     where x.IsActive == Convert.ToUInt16(true)
+                                     select new CourseDTO
+                                     {
+                                         CourseId = Convert.ToInt32(x.CourseId),
+                                         FullName = x.Course.FullName
+                                     }).Distinct().ToListAsync();
+                return courses;
+            }
+            catch (System.Exception)
+            {
 
+                throw;
+            }
+
+        }
+
+        public async Task<List<GeneralDTO>> GetClassesByCourse(int id)
+        {
+            var ClassesList = new List<GeneralDTO>();
+            var classes = await db.TblClasses.Where(x => x.CourseId == id && x.IsActive == Convert.ToUInt16(true)).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).ToListAsync();
+
+            foreach (var item in classes)
+            {
+                var dto = new GeneralDTO();
+                dto.Classes = mapper.Map(item, dto.Classes);
+                dto.Course = mapper.Map(item.Course, dto.Course);
+                dto.Time = mapper.Map(item.Time, dto.Time);
+                dto.Day = mapper.Map(item.Day, dto.Day);
+                ClassesList.Add(dto);
+            }
+            return ClassesList;
+        }
         public async Task<ClassDTO> GetSingleClass(int Cid)
         {
             var GetClass = await db.TblClasses.Where(x => x.ClassId == Cid && x.IsActive == Convert.ToUInt32(true)).Select(x => new ClassDTO

@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using FYP1.dbModels;
 using FYP1.DTOs;
 
 namespace FYP1.Repository
@@ -22,5 +23,8 @@ namespace FYP1.Repository
         Task<int> ToTalPrograms();
         Task<int> ToTalCourses();
         Task<int> ToTalActiveClasses();
+        Task<List<GeneralDTO>> GetStudents();
+        Task<List<GeneralDTO>> GetFaculty();
+
     }
 }

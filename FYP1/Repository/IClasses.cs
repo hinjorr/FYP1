@@ -12,6 +12,7 @@ namespace FYP1.Repository
         Task<bool> AddNewClass(ClassDTO dto);
         Task<List<ClassDTO>> ViewAllClass();
         Task<ClassDTO> GetSingleClass(int Cid);
-
+        Task<List<CourseDTO>> ViewAllActiveCourses();
+        Task<List<GeneralDTO>> GetClassesByCourse(int id);
     }
 }

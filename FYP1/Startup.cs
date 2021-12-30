@@ -30,10 +30,10 @@ namespace FYP1
             services.AddDbContext<LMS_DBContext>(x => x.UseMySql(Configuration.GetConnectionString("Default"), ServerVersion.Parse("5.7.36-mysql")));
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddControllersWithViews();
-           // services.AddDistributedMemoryCache();
+            // services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(1);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(20);//You can set Time   
             });
             services.AddMvc();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

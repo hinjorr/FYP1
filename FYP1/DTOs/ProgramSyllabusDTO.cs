@@ -1,6 +1,6 @@
 namespace FYP1.DTOs
 {
-    public class ProgramSyllabusDTO
+    public class ProgramSyllabusDTO:GeneralDTO
     {
         public int SyllabusId { get; set; }
         public int? ProgramId { get; set; }

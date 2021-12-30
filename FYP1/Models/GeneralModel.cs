@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Repository;
@@ -12,10 +13,12 @@ namespace FYP1.Models
     public class GeneralModel : IGeneral
     {
         private readonly LMS_DBContext db;
+        private readonly IMapper mapper;
 
-        public GeneralModel(LMS_DBContext _db)
+        public GeneralModel(LMS_DBContext _db, IMapper _mapper)
         {
             db = _db;
+            mapper = _mapper;
         }
 
         public async Task<List<ProgramDTO>> GetPrograms()
@@ -132,6 +135,51 @@ namespace FYP1.Models
         {
             var data = await db.TblClasses.Where(x => x.IsActive == Convert.ToUInt16(true)).CountAsync();
             return data;
+        }
+        public async Task<List<GeneralDTO>> GetFaculty()
+        {
+            try
+            {
+                List<GeneralDTO> dto = new List<GeneralDTO>();
+                var data = await db.TblFaculties.Include(x => x.User).ToListAsync();
+                foreach (var item in data)
+                {
+                    var profile = await db.TblProfiles.Where(x => x.ProfileId == item.User.ProfileId).FirstOrDefaultAsync();
+                    var a = new GeneralDTO();
+                    a.Faculty = mapper.Map(item, new FacultyDTO());
+                    a.User = mapper.Map(item.User, new UserDTO());
+                    a.Profile = mapper.Map(profile, new ProfileDTO());
+                    dto.Add(a);
+                }
+                return dto;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+
+        }
+        public async Task<List<GeneralDTO>> GetStudents()
+        {
+            try
+            {
+                List<GeneralDTO> dto = new List<GeneralDTO>();
+                var data = await db.TblStudents.Include(x => x.User).ToListAsync();
+                foreach (var item in data)
+                {
+                    var profile = await db.TblProfiles.Where(x => x.ProfileId == item.User.ProfileId).FirstOrDefaultAsync();
+                    var a = new GeneralDTO();
+                    a.Student = mapper.Map(item, new StudentDTO());
+                    a.User = mapper.Map(item.User, new UserDTO());
+                    a.Profile = mapper.Map(profile, new ProfileDTO());
+                    dto.Add(a);
+                }
+                return dto;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
         }
 
     }

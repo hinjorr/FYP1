@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace FYP1.DTOs
 {
-    public class ClassDTO
+    public class ClassDTO:GeneralDTO
     {
 
         public int ClassId { get; set; }
@@ -19,11 +19,7 @@ namespace FYP1.DTOs
         public int? DayId { get; set; }
         public int? TimeId { get; set; }
         public ulong? IsActive { get; set; }
-        public DayDTO Day { get; set; }
-        public TimeDTO Time { get; set; }
-        public CourseDTO Course { get; set; }
-        public ProgramDTO Program { get; set; }
-        public SemesterDTO Semester { get; set; }
+       
 
     }
 }

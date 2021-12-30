@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FYP1.DTOs
 {
-    public class StudentDTO
+    public class StudentDTO:GeneralDTO
     {
         public int StudentId { get; set; }
         public int? ProgramId { get; set; }

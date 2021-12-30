@@ -84,6 +84,16 @@ namespace FYP1.Controllers
             var data = await repo.ToTalActiveClasses();
             return Ok(data);
         }
+        public async Task<IActionResult> GetFaculty()
+        {
+            var data = await repo.GetFaculty();
+            return Ok(data);
+        }
+        public async Task<IActionResult> GetStudents()
+        {
+            var data = await repo.GetStudents();
+            return Ok(data);
+        }
 
     }
 }

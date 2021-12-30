@@ -9,7 +9,7 @@ using FYP1.Helpers__Filters;
 
 namespace FYP1.Controllers
 {
-    // [AuthorizedUserFilter]
+    [AuthorizedUserFilter]
     public class UserController : Controller
     {
         private readonly IUser repo;
@@ -21,6 +21,7 @@ namespace FYP1.Controllers
             repo = _repo;
             this.Env = Env;
         }
+
         [HttpGet("NewUser")]
         public IActionResult AddNewUser()
         {

@@ -125,4 +125,21 @@ var CommonFunctions = {
       },
     });
   },
+  GetAllActiveCourses: function (id) {
+    $.ajax({
+      url: "/Classes/ViewAllActiveCourses",
+      success: function (resp) {
+        var html = "<option value=0>Select Course</option>";
+        $(resp).each(function (indexInArray, item) {
+          html +=
+            "<option value=" +
+            item.courseId +
+            ">" +
+            item.fullName +
+            "</option>";
+        });
+        $(id).append(html);
+      },
+    });
+  },
 };

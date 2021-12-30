@@ -16,7 +16,10 @@ namespace FYP1.DTOs
             CreateMap<AdminDTO, TblAdmin>();
 
             CreateMap<StudentDTO, TblStudent>();
+            CreateMap<TblStudent, StudentDTO>();
+
             CreateMap<FacultyDTO, TblFaculty>();
+            CreateMap<TblFaculty, FacultyDTO>();
 
             CreateMap<ProfileDTO, TblProfile>();
             CreateMap<TblProfile, ProfileDTO>();
@@ -29,7 +32,11 @@ namespace FYP1.DTOs
 
 
             CreateMap<CourseEligiblityDTO, TblCourseEligiblity>();
+
             CreateMap<DayDTO, TblDay>();
+            CreateMap<TblDay, DayDTO>();
+
+
             CreateMap<FacultyCourseRegistrationDTO, TblFacultyCourseRegistration>();
 
             CreateMap<ProgramSyllabusDTO, TblProgramSyllabus>();
@@ -43,7 +50,10 @@ namespace FYP1.DTOs
 
 
             CreateMap<StudentCourseRegistrationDTO, TblStudentCourseRegistration>();
+
             CreateMap<TimeDTO, TblTime>();
+            CreateMap<TblTime, TimeDTO>();
+
             CreateMap<ClassDTO, TblClass>();
             CreateMap<ProgramDTO, TblProgram>();
 

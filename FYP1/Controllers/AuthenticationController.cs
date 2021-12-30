@@ -1,3 +1,4 @@
+using System.Net.Http;
 using System.Threading.Tasks;
 using FYP1.DTOs;
 using FYP1.Helpers__Filters;
@@ -44,8 +45,10 @@ namespace FYP1.Controllers
             var chk = await repo.Login(dto);
             if (chk == true)
             {
-                //  var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
-                //  data.Profile.Picture
+                //   var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
+               
+                //   data.Role.RoleId
+                  
                 return Ok(new { icon = "success", text = "Login Succesfull!" });
             }
             else
