@@ -65,17 +65,18 @@ CREATE TABLE `Tbl_ClassSessions` (
   PRIMARY KEY (`Session_ID`),
   KEY `Semester_ID` (`Semester_ID`),
   CONSTRAINT `Tbl_ClassSessions_ibfk_1` FOREIGN KEY (`Semester_ID`) REFERENCES `Tbl_Semester` (`Semester_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=109 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_ClassSessions` */
 
 insert  into `Tbl_ClassSessions`(`Session_ID`,`Semester_ID`,`SessionName`) values 
-(103,52,'11 October - 17 October'),
-(104,52,'18 October - 24 October'),
-(105,52,'25 October - 31 October'),
-(106,52,'1 November - 7 November'),
-(107,52,'8 November - 14 November'),
-(108,52,'15 November - 21 November');
+(121,52,'15 November - 21 November'),
+(122,52,'11 October - 17 October'),
+(123,52,'18 October - 24 October'),
+(124,52,'25 October - 31 October'),
+(125,52,'1 November - 7 November'),
+(126,52,'8 November - 14 November'),
+(127,52,'15 November - 21 November');
 
 /*Table structure for table `Tbl_Classes` */
 
@@ -102,7 +103,7 @@ CREATE TABLE `Tbl_Classes` (
   CONSTRAINT `Tbl_Classes_ibfk_5` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `Tbl_Classes_ibfk_6` FOREIGN KEY (`Day_Id`) REFERENCES `Tbl_Days` (`Day_Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `Tbl_Classes_ibfk_7` FOREIGN KEY (`Time_Id`) REFERENCES `Tbl_Time` (`Time_Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Classes` */
 
@@ -151,7 +152,11 @@ insert  into `Tbl_Classes`(`Class_Id`,`ClassStrength`,`Course_Id`,`Semester_Id`,
 (52,34,30,52,1,6,3,'',NULL),
 (53,34,32,52,1,4,2,'',NULL),
 (54,23,82,52,6,7,2,'',NULL),
-(55,234,58,52,1,6,2,'',NULL);
+(55,234,58,52,1,6,2,'',NULL),
+(56,12,30,52,6,2,1,'',NULL),
+(57,23,31,52,1,6,1,'',NULL),
+(58,12,31,52,1,3,3,'',NULL),
+(59,12,39,52,1,2,1,'',NULL);
 
 /*Table structure for table `Tbl_CourseEligiblity` */
 
@@ -295,16 +300,46 @@ DROP TABLE IF EXISTS `Tbl_FacultyCourseRegistration`;
 
 CREATE TABLE `Tbl_FacultyCourseRegistration` (
   `FCR_ID` int NOT NULL AUTO_INCREMENT,
-  `Faculty_ID` int DEFAULT NULL,
+  `UserId` int DEFAULT NULL,
+  `Username` varchar(50) DEFAULT NULL,
   `Class_ID` int DEFAULT NULL,
+  `IsActive` bit(1) DEFAULT NULL,
   PRIMARY KEY (`FCR_ID`),
-  KEY `Faculty_ID` (`Faculty_ID`),
+  KEY `UserId` (`UserId`),
   KEY `Class_ID` (`Class_ID`),
-  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_1` FOREIGN KEY (`Faculty_ID`) REFERENCES `Tbl_Faculty` (`FacultyId`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_2` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Tbl_User` (`UserID`),
+  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_2` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_FacultyCourseRegistration` */
+
+insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class_ID`,`IsActive`) values 
+(5,74,'720660',51,''),
+(7,101,'863281',54,''),
+(8,101,'863281',59,''),
+(9,77,'662661',48,''),
+(10,77,'662661',53,''),
+(11,74,'720660',55,''),
+(12,74,'720660',56,''),
+(16,69,'faculty',50,''),
+(17,69,'faculty',46,''),
+(18,69,'faculty',52,'');
+
+/*Table structure for table `Tbl_Menu` */
+
+DROP TABLE IF EXISTS `Tbl_Menu`;
+
+CREATE TABLE `Tbl_Menu` (
+  `Menu_ID` int NOT NULL AUTO_INCREMENT,
+  `Controller/Action` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`Menu_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Menu` */
+
+insert  into `Tbl_Menu`(`Menu_ID`,`Controller/Action`) values 
+(1,'NewUser'),
+(2,'ViewUsers');
 
 /*Table structure for table `Tbl_Profile` */
 
@@ -326,34 +361,37 @@ CREATE TABLE `Tbl_Profile` (
   `IsActive` tinyint(1) NOT NULL,
   `Profile_Date` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`ProfileID`)
-) ENGINE=InnoDB AUTO_INCREMENT=91 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Profile` */
 
 insert  into `Tbl_Profile`(`ProfileID`,`Name`,`FatherName`,`Email`,`NIC`,`Address`,`City`,`Country`,`Picture`,`DoB`,`Gender`,`PhoneNumber`,`IsActive`,`Profile_Date`) values 
-(55,'Masood Arif',NULL,'masoodarif1313@gmail.com','1111111111111','6','Karachi','Pakistan','/Upload/1111111111111.jpg','01-01-2014','male','03172945903',1,'10/11/2021'),
-(56,'Masood Arif',NULL,'masoodarif1313@gmail.com','6666663232222','6','Karachi','Pakistan','/Upload/3245323432321.jpg','01-01-2014','male','03172945903',1,'12/11/2021'),
-(59,'Masood Arif',NULL,'masoodarif1313@gmail.com','3245323432321','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','female','03172945903',1,'12/11/2021'),
-(60,'Masood Arif',NULL,'masoodarif1313@gmail.com','3454325243643','6','Karachi','Pakistan','/Upload/3454325243643.jpg','01-01-2014','female','03172945903',1,'12/11/2021'),
-(61,'Masood Arif',NULL,'masoodarif1313@gmail.com','6266663232212','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'12/11/2021'),
-(62,'Masood Arif','Muhammad Arif','masoodarif1313@gmail.com','3245321433221','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
-(63,'Masood Arif','Muhammad Arif','masoodarif1313@gmail.com','3243221433221','6','Karachi','Pakistan','/Upload/6266663232212.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
-(64,'arif','Muhammad Arif','masoodarif1313@gmail.com','3243221213221','6','Karachi','Pakistan','/Upload/6666663232222.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
-(65,'arif','Muhammad Arif','masoodarif1313@gmail.com','3243221113221','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
-(67,'Masood Arif',NULL,'masoodarif1313@gmail.com','1112345111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
-(68,'Masood Arif',NULL,'masoodarif1313@gmail.com','3242353422122','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'05/12/2021'),
-(70,'Masood Arif',NULL,'masoodarif1313@gmail.com','1111111111323','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'05/12/2021'),
-(80,'Masood Arif','Muhammad Arif','masoodarif1313@gmail.com','2221111111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'06/12/2021'),
-(81,'maooooooodi','arif','masoodarif1313@gmail.com','1234567800000',NULL,NULL,NULL,'/Upload/1134531111111.jpg','12/15/2021','male','03172945903',1,'06/12/2021'),
-(82,'Masood Arif',NULL,'masoodarif1313@gmail.com','4441111111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
-(83,'Masood Arif',NULL,'masoodarif1313@gmail.com','1111333111111','6','Karachi','Pakistan','','01-01-2014','male','03172945903',1,'07/12/2021'),
-(84,'Masood Arif',NULL,'masoodarif1313@gmail.com','1123111111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
-(85,'Masood Arif',NULL,'masoodarif1313@gmail.com','1134511111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
-(86,'Masood Arif',NULL,'masoodarif1313@gmail.com','1123465111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
-(87,'Masood Arif',NULL,'masoodarif1313@gmail.com','1111124411111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
-(88,'Masood Arif',NULL,'masoodarif1313@gmail.com','1134511134111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
-(89,'Masood Arif',NULL,'masoodarif1313@gmail.com','1134531111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
-(90,'Masood ','Muhammad Arif','masoodarif1313@gmail.com','4130783592999','Shahlatif town','Karachi','Pakistan','/Upload/4130783592999.jpg','12/07/2021','male','03172945903',1,'26/12/2021');
+(55,'Mohsin',NULL,'masoodarif1313@gmail.com','1111111111111','6','Karachi','Pakistan','/Upload/1111111111111.jpg','01-01-2014','male','03172945903',1,'10/11/2021'),
+(56,'Ahsan',NULL,'masoodarif1313@gmail.com','6666663232222','6','Karachi','Pakistan','/Upload/3245323432321.jpg','01-01-2014','male','03172945903',1,'12/11/2021'),
+(59,'Mubashir',NULL,'masoodarif1313@gmail.com','3245323432321','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','female','03172945903',1,'12/11/2021'),
+(60,'Altaf',NULL,'masoodarif1313@gmail.com','3454325243643','6','Karachi','Pakistan','/Upload/3454325243643.jpg','01-01-2014','female','03172945903',1,'12/11/2021'),
+(61,'Hussain',NULL,'masoodarif1313@gmail.com','6266663232212','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'12/11/2021'),
+(62,'Arif','Muhammad Arif','masoodarif1313@gmail.com','3245321433221','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
+(63,'Taimoor','Muhammad Arif','masoodarif1313@gmail.com','3243221433221','6','Karachi','Pakistan','/Upload/6266663232212.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
+(64,'Mansoor','Muhammad Arif','masoodarif1313@gmail.com','3243221213221','6','Karachi','Pakistan','/Upload/6666663232222.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
+(65,'Ali Hassan','Muhammad Arif','masoodarif1313@gmail.com','3243221113221','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
+(67,'Sumair',NULL,'masoodarif1313@gmail.com','1112345111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
+(68,'Munawar',NULL,'masoodarif1313@gmail.com','3242353422122','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'05/12/2021'),
+(70,'Pervez',NULL,'masoodarif1313@gmail.com','1111111111323','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'05/12/2021'),
+(80,'Asim','Muhammad Arif','masoodarif1313@gmail.com','2221111111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'06/12/2021'),
+(81,'Iqbal','arif','masoodarif1313@gmail.com','1234567800000',NULL,NULL,NULL,'/Upload/1134531111111.jpg','12/15/2021','male','03172945903',1,'06/12/2021'),
+(82,'Shakeel',NULL,'masoodarif1313@gmail.com','4441111111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
+(83,'Sherry',NULL,'masoodarif1313@gmail.com','1111333111111','6','Karachi','Pakistan','','01-01-2014','male','03172945903',1,'07/12/2021'),
+(84,'Asif',NULL,'masoodarif1313@gmail.com','1123111111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
+(85,'Haris ',NULL,'masoodarif1313@gmail.com','1134511111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
+(86,'Ahmed',NULL,'masoodarif1313@gmail.com','1123465111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
+(87,'Osama',NULL,'masoodarif1313@gmail.com','1111124411111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
+(88,'Rafay',NULL,'masoodarif1313@gmail.com','1134511134111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
+(89,'Sufiyan',NULL,'masoodarif1313@gmail.com','1134531111111','6','Karachi','Pakistan','/Upload/1134531111111.jpg','01-01-2014','male','03172945903',1,'07/12/2021'),
+(90,'Habib','Muhammad Arif','masoodarif1313@gmail.com','4130783592999','Shahlatif town','Karachi','Pakistan','/Upload/4130783592999.jpg','12/07/2021','male','03172945903',1,'26/12/2021'),
+(91,'James','Butt','jbutt@gmail.com','1234567890111','6649 N Blue Gum St','New Orleans','Orleans','/Upload/1234567890111.jpg','01/11/2022','male','50426218927',1,'02/01/2022'),
+(92,'Paprocki','Lenna','art@venere.org','7011645148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7011645148116.jpg','01/11/2022','male','50426218927',1,'02/01/2022'),
+(93,'Paprocki','Lenna','art@venere.org','7012345148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7012345148116.jpg','01/11/2022','female','50426218927',1,'02/01/2022');
 
 /*Table structure for table `Tbl_ProgramSyllabus` */
 
@@ -372,7 +410,7 @@ CREATE TABLE `Tbl_ProgramSyllabus` (
   CONSTRAINT `Tbl_ProgramSyllabus_ibfk_1` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `Tbl_ProgramSyllabus_ibfk_2` FOREIGN KEY (`Course_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `Tbl_ProgramSyllabus_ibfk_3` FOREIGN KEY (`RqdCourse_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_ProgramSyllabus` */
 
@@ -386,7 +424,7 @@ insert  into `Tbl_ProgramSyllabus`(`Syllabus_Id`,`Program_Id`,`Course_Id`,`RqdCo
 (26,1,36,0,0),
 (27,1,37,0,0),
 (28,1,38,0,0),
-(29,1,39,0,0),
+(29,1,39,30,0),
 (30,1,40,0,0),
 (31,1,41,32,0),
 (32,1,42,33,0),
@@ -441,7 +479,9 @@ insert  into `Tbl_ProgramSyllabus`(`Syllabus_Id`,`Program_Id`,`Course_Id`,`RqdCo
 (81,1,83,70,0),
 (82,1,83,73,0),
 (83,1,83,74,0),
-(84,1,84,83,0);
+(84,1,84,83,0),
+(103,6,30,44,23),
+(104,6,47,40,12);
 
 /*Table structure for table `Tbl_Programs` */
 
@@ -460,6 +500,23 @@ CREATE TABLE `Tbl_Programs` (
 insert  into `Tbl_Programs`(`ProgramID`,`ProgramFullName`,`ProgramShortName`,`IsActive`) values 
 (1,'bachelor\'s in computer science','BSCS',''),
 (6,'Master\'s in Computer science','MCS','');
+
+/*Table structure for table `Tbl_RoleMenu` */
+
+DROP TABLE IF EXISTS `Tbl_RoleMenu`;
+
+CREATE TABLE `Tbl_RoleMenu` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Menu_ID` int DEFAULT NULL,
+  `Role_ID` int DEFAULT NULL,
+  PRIMARY KEY (`Id`),
+  KEY `Menu_ID` (`Menu_ID`),
+  KEY `Role_ID` (`Role_ID`),
+  CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`),
+  CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_RoleMenu` */
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -530,7 +587,7 @@ CREATE TABLE `Tbl_Student` (
   KEY `UserID` (`UserID`),
   CONSTRAINT `Tbl_Student_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `Tbl_Student_ibfk_2` FOREIGN KEY (`ProgramID`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Student` */
 
@@ -539,7 +596,10 @@ insert  into `Tbl_Student`(`Student_Id`,`ProgramID`,`UserID`,`IsActive`) values
 (16,1,70,NULL),
 (17,1,75,NULL),
 (18,1,78,NULL),
-(19,1,119,NULL);
+(19,1,119,NULL),
+(20,1,120,NULL),
+(21,1,121,NULL),
+(22,1,122,NULL);
 
 /*Table structure for table `Tbl_StudentCourseRegistration` */
 
@@ -547,16 +607,33 @@ DROP TABLE IF EXISTS `Tbl_StudentCourseRegistration`;
 
 CREATE TABLE `Tbl_StudentCourseRegistration` (
   `SCR_Id` int NOT NULL AUTO_INCREMENT,
-  `Student_ID` int DEFAULT NULL,
-  `Elgibilty_ID` int DEFAULT NULL,
+  `Username` varchar(50) DEFAULT NULL,
+  `User_ID` int NOT NULL,
+  `Class_ID` int NOT NULL,
+  `IsActive` bit(1) NOT NULL,
   PRIMARY KEY (`SCR_Id`),
-  KEY `Student_ID` (`Student_ID`),
-  KEY `Elgibilty_ID` (`Elgibilty_ID`),
-  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_1` FOREIGN KEY (`Student_ID`) REFERENCES `Tbl_Student` (`Student_Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_2` FOREIGN KEY (`Elgibilty_ID`) REFERENCES `Tbl_CourseEligiblity` (`Elgibilty_ID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  KEY `User_ID` (`User_ID`),
+  KEY `Class_ID` (`Class_ID`),
+  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`),
+  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_StudentCourseRegistration` */
+
+insert  into `Tbl_StudentCourseRegistration`(`SCR_Id`,`Username`,`User_ID`,`Class_ID`,`IsActive`) values 
+(15,'student',64,52,''),
+(16,'317056',70,57,''),
+(18,'317056',70,52,''),
+(23,'518290',119,50,''),
+(24,'518290',119,59,''),
+(26,'44560',75,50,''),
+(29,'student',64,46,''),
+(30,'student',64,50,''),
+(31,'317056',70,50,''),
+(32,'125961',78,50,''),
+(33,'24691',120,50,''),
+(34,'183492',121,50,''),
+(35,'793093',122,50,'');
 
 /*Table structure for table `Tbl_Time` */
 
@@ -592,26 +669,29 @@ CREATE TABLE `Tbl_User` (
   KEY `RoleID` (`RoleID`),
   CONSTRAINT `Tbl_User_ibfk_1` FOREIGN KEY (`ProfileID`) REFERENCES `Tbl_Profile` (`ProfileID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `Tbl_User_ibfk_2` FOREIGN KEY (`RoleID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=120 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_User` */
 
 insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsActive`,`User_Date`) values 
-(64,'119555','13334055',3,55,'\0','10/11/2021'),
-(65,'1050','1050',1,56,'','12/11/2021'),
-(69,'745252','149856',2,56,'\0','12/11/2021'),
+(64,'student','1050',3,55,'','10/11/2021'),
+(65,'admin','1050',1,56,'','12/11/2021'),
+(69,'faculty','1050',2,56,'','12/11/2021'),
 (70,'317056','1048470',3,56,'','12/11/2021'),
 (72,'495159','10140159',2,59,'','12/11/2021'),
-(73,'16060','11457560',1,60,'','12/11/2021'),
+(73,'16060','11457560',1,60,'\0','12/11/2021'),
 (74,'720660','1638620',2,60,'','12/11/2021'),
 (75,'44560','1275480',3,60,'','12/11/2021'),
-(76,'826361','15878961',1,61,'\0','12/11/2021'),
+(76,'826361','15878961',1,61,'','12/11/2021'),
 (77,'662661','971650',2,61,'','12/11/2021'),
 (78,'125961','1410480',3,61,'','12/11/2021'),
 (85,'214955','1592540',2,55,'','13/11/2021'),
 (91,'668667','15877567',2,67,'','13/11/2021'),
 (101,'863281','9826181',2,81,'','06/12/2021'),
-(119,'518290','11087590',3,90,'','26/12/2021');
+(119,'518290','11087590',3,90,'','26/12/2021'),
+(120,'24691','9478291',3,91,'','02/01/2022'),
+(121,'183492','17111492',3,92,'','02/01/2022'),
+(122,'793093','12878193',3,93,'','02/01/2022');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
