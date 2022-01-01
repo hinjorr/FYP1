@@ -96,7 +96,7 @@ namespace FYP1.Controllers
         }
 
         [HttpPost("UpdateProfile")]
-        public async Task<IActionResult> UpdateProfile([FromForm] ProfileDTO dto)
+        public ActionResult UpdateProfile([FromForm] ProfileDTO dto)
         {
             return Ok(dto);
         }

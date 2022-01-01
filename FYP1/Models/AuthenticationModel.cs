@@ -32,13 +32,10 @@ namespace FYP1.Models
                 if (data != null)
                 {
                     GeneralDTO general = new GeneralDTO();
-                    general.User = new UserDTO();
-                    general.Profile = new ProfileDTO();
-                    general.Role = new RoleDTO();
                     general.ResponseBool = true;
-                    general.User.UserName = data.UserName;
-                    mapper.Map(data.Role, general.Role);
-                    mapper.Map(data.Profile, general.Profile);
+                    mapper.Map(data, general.User = new UserDTO());
+                    mapper.Map(data.Role, general.Role = new RoleDTO());
+                    mapper.Map(data.Profile, general.Profile = new ProfileDTO());
 
                     _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
                     return true;

@@ -46,6 +46,7 @@ namespace FYP1
             services.AddScoped<IUserValidation, UserValidationModel>();
             services.AddScoped<IPrograms, ProgramsModel>();
             services.AddScoped<IGeneral, GeneralModel>();
+            services.AddScoped<IRegisterCourses, RegisterCoursesModel>();
 
 
         }

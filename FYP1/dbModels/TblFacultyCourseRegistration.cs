@@ -8,10 +8,12 @@ namespace FYP1.dbModels
     public partial class TblFacultyCourseRegistration
     {
         public int FcrId { get; set; }
-        public int? FacultyId { get; set; }
+        public int? UserId { get; set; }
+        public string Username { get; set; }
         public int? ClassId { get; set; }
+        public ulong? IsActive { get; set; }
 
         public virtual TblClass Class { get; set; }
-        public virtual TblFaculty Faculty { get; set; }
+        public virtual TblUser User { get; set; }
     }
 }

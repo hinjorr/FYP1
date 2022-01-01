@@ -118,6 +118,7 @@ var CommonFunctions = {
   },
   GetCurrentSemester: function () {
     return $.ajax({
+      async:false,
       url: "/Semester/GetCurrentSemester",
       success: function (resp) {
         var data = JSON.stringify(resp);

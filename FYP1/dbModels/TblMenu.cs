@@ -5,18 +5,16 @@ using System.Collections.Generic;
 
 namespace FYP1.dbModels
 {
-    public partial class TblRole
+    public partial class TblMenu
     {
-        public TblRole()
+        public TblMenu()
         {
             TblRoleMenus = new HashSet<TblRoleMenu>();
-            TblUsers = new HashSet<TblUser>();
         }
 
-        public int RoleId { get; set; }
-        public string RoleName { get; set; }
+        public int MenuId { get; set; }
+        public string ControllerAction { get; set; }
 
         public virtual ICollection<TblRoleMenu> TblRoleMenus { get; set; }
-        public virtual ICollection<TblUser> TblUsers { get; set; }
     }
 }

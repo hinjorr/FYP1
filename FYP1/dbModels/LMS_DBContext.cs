@@ -26,24 +26,26 @@ namespace FYP1.dbModels
         public virtual DbSet<TblDay> TblDays { get; set; }
         public virtual DbSet<TblFaculty> TblFaculties { get; set; }
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
+        public virtual DbSet<TblMenu> TblMenus { get; set; }
         public virtual DbSet<TblProfile> TblProfiles { get; set; }
         public virtual DbSet<TblProgram> TblPrograms { get; set; }
         public virtual DbSet<TblProgramSyllabus> TblProgramSyllabi { get; set; }
         public virtual DbSet<TblRole> TblRoles { get; set; }
+        public virtual DbSet<TblRoleMenu> TblRoleMenus { get; set; }
         public virtual DbSet<TblSemester> TblSemesters { get; set; }
         public virtual DbSet<TblStudent> TblStudents { get; set; }
         public virtual DbSet<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }
         public virtual DbSet<TblTime> TblTimes { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
 
-//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//         {
-//             if (!optionsBuilder.IsConfigured)
-//             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"));
-//             }
-//         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"));
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -275,23 +277,39 @@ namespace FYP1.dbModels
 
                 entity.HasIndex(e => e.ClassId, "Class_ID");
 
-                entity.HasIndex(e => e.FacultyId, "Faculty_ID");
+                entity.HasIndex(e => e.UserId, "UserId");
 
                 entity.Property(e => e.FcrId).HasColumnName("FCR_ID");
 
                 entity.Property(e => e.ClassId).HasColumnName("Class_ID");
 
-                entity.Property(e => e.FacultyId).HasColumnName("Faculty_ID");
+                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
+
+                entity.Property(e => e.Username).HasMaxLength(50);
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblFacultyCourseRegistrations)
                     .HasForeignKey(d => d.ClassId)
                     .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_2");
 
-                entity.HasOne(d => d.Faculty)
+                entity.HasOne(d => d.User)
                     .WithMany(p => p.TblFacultyCourseRegistrations)
-                    .HasForeignKey(d => d.FacultyId)
+                    .HasForeignKey(d => d.UserId)
                     .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_1");
+            });
+
+            modelBuilder.Entity<TblMenu>(entity =>
+            {
+                entity.HasKey(e => e.MenuId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Menu");
+
+                entity.Property(e => e.MenuId).HasColumnName("Menu_ID");
+
+                entity.Property(e => e.ControllerAction)
+                    .HasMaxLength(50)
+                    .HasColumnName("Controller/Action");
             });
 
             modelBuilder.Entity<TblProfile>(entity =>
@@ -373,7 +391,9 @@ namespace FYP1.dbModels
                     .HasColumnName("Required_CrHr")
                     .HasDefaultValueSql("'0'");
 
-                entity.Property(e => e.RqdCourseId).HasColumnName("RqdCourse_Id");
+                entity.Property(e => e.RqdCourseId)
+                    .HasColumnName("RqdCourse_Id")
+                    .HasDefaultValueSql("'0'");
 
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.TblProgramSyllabusCourses)
@@ -403,6 +423,29 @@ namespace FYP1.dbModels
                 entity.Property(e => e.RoleName)
                     .IsRequired()
                     .HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TblRoleMenu>(entity =>
+            {
+                entity.ToTable("Tbl_RoleMenu");
+
+                entity.HasIndex(e => e.MenuId, "Menu_ID");
+
+                entity.HasIndex(e => e.RoleId, "Role_ID");
+
+                entity.Property(e => e.MenuId).HasColumnName("Menu_ID");
+
+                entity.Property(e => e.RoleId).HasColumnName("Role_ID");
+
+                entity.HasOne(d => d.Menu)
+                    .WithMany(p => p.TblRoleMenus)
+                    .HasForeignKey(d => d.MenuId)
+                    .HasConstraintName("Tbl_RoleMenu_ibfk_1");
+
+                entity.HasOne(d => d.Role)
+                    .WithMany(p => p.TblRoleMenus)
+                    .HasForeignKey(d => d.RoleId)
+                    .HasConstraintName("Tbl_RoleMenu_ibfk_2");
             });
 
             modelBuilder.Entity<TblSemester>(entity =>
@@ -460,25 +503,31 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_StudentCourseRegistration");
 
-                entity.HasIndex(e => e.ElgibiltyId, "Elgibilty_ID");
+                entity.HasIndex(e => e.ClassId, "Class_ID");
 
-                entity.HasIndex(e => e.StudentId, "Student_ID");
+                entity.HasIndex(e => e.UserId, "User_ID");
 
                 entity.Property(e => e.ScrId).HasColumnName("SCR_Id");
 
-                entity.Property(e => e.ElgibiltyId).HasColumnName("Elgibilty_ID");
+                entity.Property(e => e.ClassId).HasColumnName("Class_ID");
 
-                entity.Property(e => e.StudentId).HasColumnName("Student_ID");
+                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
 
-                entity.HasOne(d => d.Elgibilty)
+                entity.Property(e => e.UserId).HasColumnName("User_ID");
+
+                entity.Property(e => e.Username).HasMaxLength(50);
+
+                entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblStudentCourseRegistrations)
-                    .HasForeignKey(d => d.ElgibiltyId)
+                    .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("Tbl_StudentCourseRegistration_ibfk_3");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblStudentCourseRegistrations)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Tbl_StudentCourseRegistration_ibfk_2");
-
-                entity.HasOne(d => d.Student)
-                    .WithMany(p => p.TblStudentCourseRegistrations)
-                    .HasForeignKey(d => d.StudentId)
-                    .HasConstraintName("Tbl_StudentCourseRegistration_ibfk_1");
             });
 
             modelBuilder.Entity<TblTime>(entity =>

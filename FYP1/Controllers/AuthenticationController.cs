@@ -45,9 +45,9 @@ namespace FYP1.Controllers
             var chk = await repo.Login(dto);
             if (chk == true)
             {
-                //   var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
+                //    var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
                
-                //   data.Role.RoleId
+                //     data.User.UserName
                   
                 return Ok(new { icon = "success", text = "Login Succesfull!" });
             }

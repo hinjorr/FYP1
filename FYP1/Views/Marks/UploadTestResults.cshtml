@@ -1,5 +1,5 @@
 @{
-ViewData["Title"] = "UploadResults";
+ViewData["Title"] = "Upload Results";
 Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -13,49 +13,31 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         </div>
         <div class="card-body">
             <div class="form-group row">
-                <div class="col-lg-3">
+                <div class="col-lg-5">
                     <h3>Select Class</h3>
-                    <select class="form-control" id="dpDownClassDay">
-                        <option>Select Class</option>
-                        <option>Admin</option>
-                        <option>Faculty</option>
-                        <option>User</option>
+                    <select class="form-control" id="dpDownClasses">
+                        <option value="0">Select Class</option>
                     </select>
                 </div>
                 <div class="col-lg-3">
                     <h3>Assesment Type</h3>
-                    <select class="form-control" id="dpDownClassDay">
-                        <option>Assesment Type</option>
-                        <option>Admin</option>
-                        <option>Faculty</option>
-                        <option>User</option>
+                    <select class="form-control" id="dpDownAssements">
+                        <option value="0">Select Assesment Type</option>
                     </select>
                 </div>
             </div>
             <div class="form-group row">
                 <div class="col-lg-8">
-                    <table class="table table-bordered table-checkable">
+                    <table class="table table-bordered table-checkable" id="GetStudents">
                         <thead>
                             <tr>
+                                <th >Picture</th>
                                 <th style="width: 30%;">Username</th>
                                 <th style="width: 50%;">Student Name</th>
-                                <th style="width: 10%;">Total Marks</th>
-                                <th style="width: 10%;">Obtained Marks</th>
+                                <th style="width: 20px;">Total Marks</th>
+                                <th style="width: 20px">Obtained Marks</th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>9763</td>
-                                <td>Masood</td>
-                                <td>
-                                    <input type="text" class="form-control" id="txtTotalMarks" name="totalMarks">
-                                </td>
-                                <td>
-                                    <input type="text" class="form-control" id="txtObtainedMarks" name="obtainedmarks">
-                                </td>
-
-                            </tr>
-                        </tbody>
                     </table>
                 </div>
             </div>

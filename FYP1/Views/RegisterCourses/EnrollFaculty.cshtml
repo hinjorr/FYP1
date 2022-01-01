@@ -110,18 +110,9 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         <h3 class="card-title">@ViewData["Title"]</h3>
     </div>
     <div class="card-body">
-        <div class="col-lg-6">
-            <label>Select Faculty
-            </label>
-            <div class="form-group">
-                <div class="col-sm-10">
-                    <select class="form-control" id="txtFaculty">
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="col-lg-6">
-                <label>Select Program
+        <div class="row">
+            <div class="col-lg-6">
+                <label>Search Faculty
                 </label>
                 <div class="form-group">
                     <div class="col-sm-10">
@@ -130,108 +121,50 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         </select>
                     </div>
                 </div>
+            </div>
+            <div class="col-lg-6" id="StudentInfo">
+
+            </div>
         </div>
         <div class="row">
             <div class="col-lg-6">
-                <form>
-                    <label>Select Course
-                    </label>
-                    <div class="form-group">
-                        <div class="col-sm-10">
-                            <select class="form-control">
-                            </select>
-                        </div>
+                <label>Select Course
+                </label>
+                <div class="form-group">
+                    <div class="col-sm-10">
+                        <select class="form-control" id="GetActiveCourse">
+                        </select>
                     </div>
-                </form>
+                </div>
             </div>
+            
         </div>
         <br>
         <br>
         <div class="row">
             <div class="col-lg-5">
                 <h4 class="mb"> Offered Classes</h4>
-                <form>
-                    <div class="row">
-                        <div class="col-sm-10">
-                            <div class="frb-group">
-                                <div class="frb frb-primary">
-                                    <input type="radio" id="radio-button-0" name="radio-button" value="0">
-                                    <label for="radio-button-0">
-                                        <span class="frb-title">Object Oriented Programming</span>
-                                        <span class="frb-description">ClassID:2313--CrHr:3</span>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Show
-                                            Schedule</button>
-                                    </label>
-                                </div>
-                                <div class="frb frb-primary">
-                                    <input type="radio" id="radio-button-1" name="radio-button" value="1">
-                                    <label for="radio-button-1">
-                                        <span class="frb-title">Object Oriented Programming</span>
-                                        <span class="frb-description">ClassID:2313--CrHr:3</span>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Show
-                                            Schedule</button>
-
-                                    </label>
-                                </div>
-                                <div class="frb frb-primary">
-                                    <input type="radio" id="radio-button-2" name="radio-button" value="2">
-                                    <label for="radio-button-2">
-                                        <span class="frb-title">Object Oriented Programming</span>
-                                        <span class="frb-description">ClassID:2313--CrHr:3</span>
-                                        <button type="button" class="btn btn-outline-primary btn-sm">Show
-                                            Schedule</button>
-
-                                    </label>
-                                </div>
-
-                            </div>
+                <div class="row">
+                    <div class="col-sm-10">
+                        <div class="frb-group" id="ShowClasses">
 
                         </div>
-
                     </div>
-                </form>
+                </div>
             </div>
             <div class="col-lg-2">
                 <br> <br> <br><br> <br> <br> <br>
-                <button type="button" class="btn btn-success">Add</button>
+                <button type="button" class="btn btn-success" id="btnAdd">Add</button>
                 <br> <br>
-                <button type="button" class="btn btn-danger">Drop</button>
+                <button type="button" class="btn btn-danger" id="btnDrop">Drop</button>
             </div>
             <div class="col-lg-5">
                 <h4 class="mb"> Registered Course(s)</h4>
-                <form>
-                    <div class="col-sm-10">
-                        <div class="frb-group">
-                            <div class="frb frb-primary">
-                                <input type="checkbox" id="checkbox-1" name="checkbox" value="1">
-                                <label for="checkbox-1">
-                                    <span class="frb-title">Object Oriented Programming</span>
-                                    <span class="frb-description">ClassID:2313--CrHr:3</span>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Show Schedule</button>
+                <div class="col-sm-10">
+                    <div class="frb-group" id="ShowRegisteredCourses">
 
-                                </label>
-                            </div>
-                            <div class="frb frb-primary">
-                                <input type="checkbox" id="checkbox-2" name="checkbox" value="2">
-                                <label for="checkbox-2">
-                                    <span class="frb-title">Object Oriented Programming</span>
-                                    <span class="frb-description">ClassID:2313--CrHr:3</span>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Show Schedule</button>
-
-                                </label>
-                            </div>
-                            <div class="frb frb-primary">
-                                <input type="checkbox" id="checkbox-3" name="checkbox" value="3">
-                                <label for="checkbox-3">
-                                    <span class="frb-title">Object Oriented Programming</span>
-                                    <span class="frb-description">ClassID:2313--CrHr:3</span>
-                                    <button type="button" class="btn btn-outline-primary btn-sm">Show Schedule</button>
-
-                                </label>
-                            </div>
-                        </div>
                     </div>
-                </form>
+                </div>
             </div>
         </div>
     </div>
@@ -239,4 +172,4 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>
-<script type="text/javascript" src="~/LMS/ViewsJquery/RegisterCourse.js"></script>
+<script type="text/javascript" src="~/LMS/ViewsJquery/EnrollFaculty.js"></script>

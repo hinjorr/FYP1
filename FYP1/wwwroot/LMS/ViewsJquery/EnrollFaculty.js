@@ -1,13 +1,13 @@
 $(document).ready(function () {
   CommonFunctions.GetAllActiveCourses("#GetActiveCourse");
-  GetAllStudents();
-  GetStudentInfo();
+  GetAllFaculty();
+  GetFacultyInfo();
 });
 
-function GetAllStudents() {
-  var html = "<option value=0>Search Student</option>";
+function GetAllFaculty() {
+  var html = "<option value=0>Search Faculty</option>";
   $.ajax({
-    url: "/General/GetStudents",
+    url: "/General/GetFaculty",
     success: function (resp) {
       $(resp).each(function (indexInArray, item) {
         html +=
@@ -29,25 +29,25 @@ function ShowStudent(id, name, img) {
     `<a href=profile/` +
     id +
     ` target="_blank" > <div class="btn btn-light-success d-inline-flex align-items-center btn-lg mr-5">
-  <div class="d-flex flex-column text-right pr-3">
-      <span class="text-dark-75 font-weight-bold font-size-sm">` +
+    <div class="d-flex flex-column text-right pr-3">
+        <span class="text-dark-75 font-weight-bold font-size-sm">` +
     id +
     `</span>
-      <span class="font-weight-bolder font-size-sm">` +
+        <span class="font-weight-bolder font-size-sm">` +
     name +
     `</span>
-  </div>
-  <span class="symbol symbol-40">
-      <img alt="Pic" src="` +
+    </div>
+    <span class="symbol symbol-40">
+        <img alt="Pic" src="` +
     img +
     `" />
-  </span>
-</div>
-</a>`;
+    </span>
+  </div>
+  </a>`;
   $("#StudentInfo").html(html);
 }
 
-function GetStudentInfo() {
+function GetFacultyInfo() {
   $("#txtStudent")
     .select2()
     .on("change", function (e) {
@@ -71,7 +71,6 @@ function GetStudentInfo() {
 $("#GetActiveCourse").on("change", function (e) {
   var id = $("#GetActiveCourse").val();
   if (id != 0) {
-    $("#ShowRegisteredCourses").show();
     $("#ShowClasses").show();
     $.ajax({
       url: "/RegisterCourses/GetClassesByCourse?id=" + id,
@@ -80,29 +79,29 @@ $("#GetActiveCourse").on("change", function (e) {
         $(resp).each(function (indexInArray, item) {
           html +=
             `<div class="frb frb-primary">
-          <input type="radio" id="` +
+            <input type="radio" id="` +
             item.classes.classId +
             `" name="radio-button" value="` +
             item.classes.classId +
             `">
-          <label for="` +
+            <label for="` +
             item.classes.classId +
             `">
-              <span class="frb-title">` +
+                <span class="frb-title">` +
             item.day.dayName +
             ` ` +
             item.time.timeName +
             `</span>
-              <span class="frb-description">` +
+                <span class="frb-description">` +
             item.course.fullName +
             `</span>
-              <span class="frb-description">ClassID: ` +
+                <span class="frb-description">ClassID: ` +
             item.classes.classId +
             ` -- CrHr: ` +
             item.course.crHr +
             `</span>
-          </label>
-      </div>`;
+            </label>
+        </div>`;
         });
         $("#ShowClasses").html(html);
       },
@@ -110,7 +109,6 @@ $("#GetActiveCourse").on("change", function (e) {
   } else {
     DTO.ClassId = undefined;
     $("#ShowClasses").hide();
-    $("#ShowRegisteredCourses").hide();
   }
 });
 
@@ -119,9 +117,10 @@ var DTO = {};
 $("#btnAdd").click(function (e) {
   DTO.ClassId = $("input[name=radio-button]:checked").val();
   if (DTO.Username != 0 && DTO.ClassId != undefined) {
+    console.log(DTO);
     $.ajax({
       type: "Post",
-      url: "/RegisterCourses/ResgisterStudent",
+      url: "/RegisterCourses/ResgisterFaculty",
       data: DTO,
       success: function (resp) {
         swal
@@ -136,8 +135,8 @@ $("#btnAdd").click(function (e) {
           })
           .then(function () {
             KTUtil.scrollTop();
+            RegisteredCourses(DTO.Username);
           });
-        RegisteredCourses(DTO.Username);
       },
     });
   }
@@ -145,20 +144,20 @@ $("#btnAdd").click(function (e) {
 
 function RegisteredCourses(username) {
   $.ajax({
-    url: "/RegisterCourses/GetRegisteredCourses?username=" + username,
+    url: "/RegisterCourses/GetFacultyRegisteredCourses?username=" + username,
     type: "GET",
     success: function (resp) {
       var html = "";
       $(resp).each(function (indexInArray, item) {
         html +=
           `<div class="frb frb-primary">
-        <input type="radio" id="12` +
-          item.studentCourseRegistration.classId +
+        <input type="radio" id="` +
+          item.facultyCourseRegistration.classId +
           `" name="radio-button12" value="` +
-          item.studentCourseRegistration.classId +
+          item.facultyCourseRegistration.classId +
           `">
-        <label for="12` +
-          item.studentCourseRegistration.classId +
+        <label for="` +
+          item.facultyCourseRegistration.classId +
           `">
             <span class="frb-title">` +
           item.day.dayName +
@@ -169,7 +168,7 @@ function RegisteredCourses(username) {
           item.course.fullName +
           `</span>
             <span class="frb-description">ClassID: ` +
-          item.studentCourseRegistration.classId +
+          item.facultyCourseRegistration.classId +
           ` -- CrHr: ` +
           item.course.crHr +
           `</span>
@@ -188,7 +187,7 @@ $("#btnDrop").click(function (e) {
   console.log(model);
   if (model.ClassId != undefined && model.Username != 0) {
     $.ajax({
-      url: "/RegisterCourses/DropCourse",
+      url: "/RegisterCourses/DropFacultyCourse",
       data: model,
       success: function (resp) {
         swal
@@ -204,7 +203,6 @@ $("#btnDrop").click(function (e) {
           .then(function () {
             KTUtil.scrollTop();
           });
-        $("#ShowRegisteredCourses").show();
         RegisteredCourses(model.Username);
       },
     });

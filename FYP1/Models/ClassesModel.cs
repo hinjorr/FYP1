@@ -14,7 +14,7 @@ namespace FYP1.Models
     {
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
-
+        GeneralDTO general = new GeneralDTO();
         TblClass Class = new TblClass();
         public ClassesModel(LMS_DBContext db, IMapper mapper)
         {
@@ -40,6 +40,93 @@ namespace FYP1.Models
 
         }
 
+        public async Task<List<GeneralDTO>> ViewClassesbyId(string username)
+        {
+
+            try
+            {
+                List<GeneralDTO> classlist = new List<GeneralDTO>();
+                var chkRole = await db.TblUsers.Where(x => x.UserName == username).FirstOrDefaultAsync();
+                if (chkRole.RoleId == 2)
+                {
+                    var facultyclasses = await db.TblFacultyCourseRegistrations.Where(x => x.Username == username).Include(x => x.Class).ToListAsync();
+                    foreach (var item in facultyclasses)
+                    {
+                        GeneralDTO classdto = new GeneralDTO();
+                        var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
+                        classdto.Classes = new ClassDTO();
+                        classdto.Classes.ClassId = Convert.ToInt16(item.ClassId);
+                        mapper.Map(course.Course, classdto.Course = new CourseDTO());
+                        mapper.Map(course.Day, classdto.Day = new DayDTO());
+                        mapper.Map(course.Time, classdto.Time = new TimeDTO());
+                        classlist.Add(classdto);
+                    }
+
+                }
+                else if (chkRole.RoleId == 3)
+                {
+                    var studentclasses = await db.TblStudentCourseRegistrations.Where(x => x.Username == username).ToListAsync();
+                    foreach (var item in studentclasses)
+                    {
+                        GeneralDTO classdto = new GeneralDTO();
+                        var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
+                        classdto.Classes = new ClassDTO();
+                        classdto.Classes.ClassId = Convert.ToInt16(item.ClassId);
+                        mapper.Map(course.Course, classdto.Course = new CourseDTO());
+                        mapper.Map(course.Day, classdto.Day = new DayDTO());
+                        mapper.Map(course.Time, classdto.Time = new TimeDTO());
+                        classlist.Add(classdto);
+                    }
+                }
+
+                return classlist;
+
+            }
+            catch (System.Exception)
+            {
+                general.Text = "Server Error";
+                general.Icon = "error";
+                throw;
+            }
+
+        }
+
+        public async Task<List<GeneralDTO>> ViewStudentbyClass(int cid)
+        {
+            List<GeneralDTO> studentlist = new List<GeneralDTO>();
+            try
+            {
+                var students = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == cid).Include(x => x.User).ToListAsync();
+                if (students.Count != 0)
+                {
+                    foreach (var item in students)
+                    {
+                        GeneralDTO dto = new GeneralDTO();
+                        var getprofile = await db.TblProfiles.Where(x => x.ProfileId == item.User.ProfileId).FirstOrDefaultAsync();
+                        mapper.Map(item.User, dto.User = new UserDTO());
+                        mapper.Map(getprofile, dto.Profile = new ProfileDTO());
+                        studentlist.Add(dto);
+                    }
+                }
+                else
+                {
+                    general.Text = "No Student is Registered!";
+                    general.Icon = "error";
+                    studentlist.Add(general);
+
+                }
+                return studentlist;
+
+            }
+            catch (System.Exception)
+            {
+                general.Text = "Server Error";
+                general.Icon = "error";
+                studentlist.Add(general);
+                throw;
+            }
+
+        }
         public async Task<List<ClassDTO>> ViewAllClass()
         {
             try
