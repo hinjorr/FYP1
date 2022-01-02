@@ -10,6 +10,8 @@ using FYP1.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
 using System.IO;
+using Microsoft.AspNetCore.Mvc;
+
 
 namespace FYP1.Models
 {
@@ -45,6 +47,8 @@ namespace FYP1.Models
             {
                 try
                 {
+
+
                     var profilechk = await db.TblProfiles.Where(x => x.Nic == dto.Nic).FirstOrDefaultAsync();
                     //create another user for the same profile
                     if (profilechk != null)
@@ -108,6 +112,7 @@ namespace FYP1.Models
                 catch (System.Exception)
                 {
                     throw new Exception("Task Failed");
+
                 }
             }
         }
@@ -340,6 +345,7 @@ namespace FYP1.Models
         {
             try
             {
+
                 GeneralDTO dto = new GeneralDTO();
                 var GetProfile = await db.TblUsers.Where(x => x.UserName == username).Include(x => x.Profile).Include(x => x.Role).FirstOrDefaultAsync();
                 if (GetProfile != null)

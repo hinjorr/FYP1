@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using FYP1.DTOs;
 using FYP1.Helpers__Filters;
 using FYP1.Repository;
+using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -36,19 +37,25 @@ namespace FYP1.Controllers
         {
             return View();
         }
+        [HttpGet("ExceptionPage")]
+        public IActionResult ExceptionPage()
+        {
+            var exceptionDetail = _httpContext.HttpContext.Features.Get<IExceptionHandlerPathFeature>();
+            // ViewBag.
+            return View();
+        }
 
 
         [HttpPost("LoginPost")]
         public async Task<IActionResult> LoginPost(UserDTO dto)
         {
-
             var chk = await repo.Login(dto);
             if (chk == true)
             {
                 //    var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
-               
+
                 //     data.User.UserName
-                  
+
                 return Ok(new { icon = "success", text = "Login Succesfull!" });
             }
             else

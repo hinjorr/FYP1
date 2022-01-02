@@ -1,6 +1,7 @@
 ﻿$(document).ready(function () {
   var user_id = $("#GetUserName").html();
   GetAllClasses(user_id);
+  $("#marksDiv").hide();
 });
 
 function GetAllClasses(id) {
@@ -59,16 +60,10 @@ function GetUsers(classid) {
       {
         data: "user.userName",
         render: function (id) {
-          return '<input type="text" class="form-control" id="totalmarks" name="totalMarks">';
-        },
-      },
-      {
-        data: "user.userName",
-        render: function (id) {
           return (
             '<input type="text" class="form-control" id="' +
             id +
-            '" name="obtainedmarks">'
+            '" name="obtainedmarks" style="width: 50px;">'
           );
         },
       },
@@ -76,6 +71,14 @@ function GetUsers(classid) {
   });
 }
 
+$("#dpDownAssements").change(function (e) {
+  var id = $("#dpDownAssements").val();
+  if (id != 0) {
+    $("#marksDiv").show();
+  } else {
+    $("#marksDiv").hide();
+  }
+});
 // $.validator.addMethod("greaterThan",
 //     function (value, element, param) {
 //         var $otherElement = $(param);

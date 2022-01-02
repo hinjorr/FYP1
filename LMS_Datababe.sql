@@ -325,6 +325,27 @@ insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class
 (17,69,'faculty',46,''),
 (18,69,'faculty',52,'');
 
+/*Table structure for table `Tbl_Marks` */
+
+DROP TABLE IF EXISTS `Tbl_Marks`;
+
+CREATE TABLE `Tbl_Marks` (
+  `Marks_Id` int NOT NULL AUTO_INCREMENT,
+  `Class_Id` int DEFAULT NULL,
+  `Assesment_Id` int DEFAULT NULL,
+  `User_Id` int DEFAULT NULL,
+  `UserName` varchar(50) DEFAULT NULL,
+  `Total_Marks` int DEFAULT NULL,
+  `Obtained_Makrs` int DEFAULT NULL,
+  PRIMARY KEY (`Marks_Id`),
+  KEY `Class_Id` (`Class_Id`),
+  KEY `User_Id` (`User_Id`),
+  CONSTRAINT `Tbl_Marks_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`),
+  CONSTRAINT `Tbl_Marks_ibfk_2` FOREIGN KEY (`User_Id`) REFERENCES `Tbl_User` (`UserID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Marks` */
+
 /*Table structure for table `Tbl_Menu` */
 
 DROP TABLE IF EXISTS `Tbl_Menu`;

@@ -25,6 +25,7 @@ namespace FYP1.Controllers
         [HttpGet("NewUser")]
         public IActionResult AddNewUser()
         {
+
             return View();
         }
 

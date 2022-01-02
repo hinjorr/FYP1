@@ -23,19 +23,26 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     <h3>Assesment Type</h3>
                     <select class="form-control" id="dpDownAssements">
                         <option value="0">Select Assesment Type</option>
+                        <option value="1">Quiz</option>
+                        <option value="2">Assignment</option>
+                        <option value="3">Presentation</option>
+                        <option value="4">Project</option>
                     </select>
+                </div>
+                <div class="col-lg-3" id="marksDiv">
+                    <h3>Total Marks</h3>
+                    <input type="text" class="form-control" id="totalMarks">
                 </div>
             </div>
             <div class="form-group row">
-                <div class="col-lg-8">
+                <div class="col-lg-10">
                     <table class="table table-bordered table-checkable" id="GetStudents">
                         <thead>
                             <tr>
-                                <th >Picture</th>
-                                <th style="width: 30%;">Username</th>
-                                <th style="width: 50%;">Student Name</th>
-                                <th style="width: 20px;">Total Marks</th>
-                                <th style="width: 20px">Obtained Marks</th>
+                                <th>Picture</th>
+                                <th>Username</th>
+                                <th>Student Name</th>
+                                <th style="width: 30px;">Obtained Marks</th>
                             </tr>
                         </thead>
                     </table>

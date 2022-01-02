@@ -58,6 +58,11 @@ namespace FYP1
             {
                 app.UseDeveloperExceptionPage();
             }
+            else
+            {
+                app.UseExceptionHandler("/ExceptionPage");
+                app.UseStatusCodePagesWithRedirects("/404Error");
+            }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
             app.UseSession();
