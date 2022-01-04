@@ -1,5 +1,5 @@
 @{
-ViewData["Title"] = "Mark Attedence";
+ViewData["Title"] = "Attendence Report";
 Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
@@ -17,18 +17,17 @@ Layout = "~/Views/Shared/_Layout.cshtml";
     </div>
     <div class="card-body">
         <div class="form-group row">
-            <div class="col-sm-4">
+            <div class="col-sm-7">
                 <label>Select Class</label>
                 <select class="form-control" id="dpDownClasses">
                 </select>
             </div>
-            <div class="col-sm-4">
+            <div class="col-sm-3">
                 <label>Select Week</label>
                 <select class="form-control" id="dpdownSelectWeek">
-                    
                 </select>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-2">
                 <br>
                 <button type="button" class="btn btn-primary" id="btnView">View</button>
             </div>
@@ -37,12 +36,13 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         <table class="table table-bordered table-checkable">
             <thead>
                 <tr>
-                    <th class="center" rowspan="3">SID</th>
+                    <th class="center" rowspan="3">Username</th>
                     <th class="center" rowspan="3">Name</th>
                     <th class="center" colspan="4">Sessions</th>
                     <th class="center" rowspan="3">Total Sessions</th>
+                    <th class="center" rowspan="3">Total Sessions Marked</th>
                     <th class="center" rowspan="3">Total Presents</th>
-                    <th class="center" rowspan="3">Total Abesents</th>
+                    <th class="center" rowspan="3">Total Absents</th>
                 </tr>
                 <tr>
                     <th colspan="2" class="center">1st</td>
@@ -55,8 +55,8 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     <th>A</td>
                 </tr>
             </thead>
-            <tbody>
-                <tr>
+            <tbody id="tblAttedence">
+                <!-- <tr>
                     <td>9763</td>
                     <td>Masood Arif</td>
                     <td><input type="radio" name="1st" id="optionsRadios1" value="option1" checked></td>
@@ -66,10 +66,13 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     <td>32</td>
                     <td>23</td>
                     <td>2</td>
-                </tr>
+                </tr> -->
 
             </tbody>
         </table>
+        <div class="col-lg-offset-5" id="SubmitButton">
+            <button type="submit" class="btn btn-primary btn-lg" id="btnSubmit">Submit</button>
+        </div>
     </div>
 
 </div>

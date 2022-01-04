@@ -9,6 +9,7 @@ namespace FYP1.DTOs
         public string Text { get; set; }
         public string Icon { get; set; }
         public string ResponceMsg { get; set; }
+        public int TotalSessions { get; set; }
 
         public ProfileDTO Profile { get; set; }
         public UserDTO User { get; set; }
@@ -22,6 +23,9 @@ namespace FYP1.DTOs
         public DayDTO Day { get; set; }
         public TimeDTO Time { get; set; }
         public CourseDTO Course { get; set; }
+        public MarksDTO Marks { get; set; }
+        public AttendenceDTO Attendence { get; set; }
+
         public StudentCourseRegistrationDTO StudentCourseRegistration { get; set; }
         public FacultyCourseRegistrationDTO FacultyCourseRegistration { get; set; }
 

@@ -59,6 +59,16 @@ namespace FYP1.DTOs
             CreateMap<ClassDTO, TblClass>();
             CreateMap<ProgramDTO, TblProgram>();
 
+
+            CreateMap<MarksDTO, TblMark>();
+            CreateMap<TblMark, MarksDTO>();
+
+
+            CreateMap<TblAttendence, AttendenceDTO>();
+            CreateMap<AttendenceDTO, TblAttendence>();
+
+
+
         }
     }
 }

@@ -9,6 +9,7 @@ namespace FYP1.dbModels
     {
         public TblClassSession()
         {
+            TblAttendences = new HashSet<TblAttendence>();
             TblClassContents = new HashSet<TblClassContent>();
         }
 
@@ -17,6 +18,7 @@ namespace FYP1.dbModels
         public string SessionName { get; set; }
 
         public virtual TblSemester Semester { get; set; }
+        public virtual ICollection<TblAttendence> TblAttendences { get; set; }
         public virtual ICollection<TblClassContent> TblClassContents { get; set; }
     }
 }

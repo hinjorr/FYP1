@@ -1,33 +1,13 @@
 ﻿$(document).ready(function () {
   var user_id = $("#GetUserName").html();
-  GetAllClasses(user_id);
-  $("#marksDiv").hide();
+  CommonFunctions.GetAllClasses(user_id, "#dpDownClasses");
 });
 
-function GetAllClasses(id) {
-  $.ajax({
-    url: "/Classes/ViewClassesbyId?username=" + id,
-    success: function (resp) {
-      var html = "";
-      $(resp).each(function (indexInArray, item) {
-        html +=
-          `<option value="` +
-          item.classes.classId +
-          `">` +
-          item.classes.classId +
-          ` ` +
-          item.course.fullName +
-          `</option>`;
-      });
-      $("#dpDownClasses").append(html);
-    },
-  });
-}
+var MarksDTO = [];
 
 $("#dpDownClasses").change(function (e) {
   var classid = $("#dpDownClasses").val();
   if (classid != 0 && classid != undefined) {
-    console.log(classid);
     $("#GetStudents").DataTable().clear().destroy();
     GetUsers(classid);
   } else {
@@ -63,7 +43,7 @@ function GetUsers(classid) {
           return (
             '<input type="text" class="form-control" id="' +
             id +
-            '" name="obtainedmarks" style="width: 50px;">'
+            '" name="obtainedmarks" style="width: 50px;" > '
           );
         },
       },
@@ -71,14 +51,51 @@ function GetUsers(classid) {
   });
 }
 
-$("#dpDownAssements").change(function (e) {
-  var id = $("#dpDownAssements").val();
-  if (id != 0) {
-    $("#marksDiv").show();
-  } else {
-    $("#marksDiv").hide();
+$("#btnSubmit").click(function (e) {
+  var ClassId = $("#dpDownClasses").val();
+  var AssementName = $("#dpDownAssements").val();
+  var TotalMarks = $("#totalMarks").val();
+  if (ClassId != 0 && AssementName != "") {
+    if (TotalMarks != "") {
+      $("#GetStudents tr").each(function (indexInArray, tr) {
+        var dto = {};
+        if (indexInArray != 0) {
+          dto.ClassId = ClassId;
+          dto.AssementName = AssementName;
+          dto.TotalMarks = TotalMarks;
+          dto.UserName = $(this).find("td:eq(1) ").text();
+          dto.ObtainedMakrs = $(this).find("td:eq(3) input[type='text']").val();
+          MarksDTO.push(dto);
+        }
+      });
+      SendData(MarksDTO);
+    }
   }
 });
+
+function SendData(MarksDTO) {
+  $.ajax({
+    type: "Post",
+    url: "/Marks/UploadMarks",
+    data: { dto: MarksDTO },
+    success: function (resp) {
+      swal
+        .fire({
+          text: resp.text,
+          icon: resp.icon,
+          buttonsStyling: false,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn font-weight-bold btn-light-primary",
+          },
+        })
+        .then(function () {
+          KTUtil.scrollTop();
+          window.location.replace("/UploadResults");
+        });
+    },
+  });
+}
 // $.validator.addMethod("greaterThan",
 //     function (value, element, param) {
 //         var $otherElement = $(param);

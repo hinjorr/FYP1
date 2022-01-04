@@ -1,11 +1,10 @@
 @{
-ViewData["Title"] = "Test Results";
-Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Attendence Report";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 
 }
-
 <!--begin::Card-->
-<div class="card card-custom gutter-b col-lg-7">
+<div class="card card-custom gutter-b col-lg-10">
     <div class="card-header flex-wrap py-3">
         <div class="card-title">
             <h3 class="card-label">@ViewData["Title"]
@@ -13,24 +12,21 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         </div>
     </div>
     <div class="card-body">
-        <div class="form-group row">
-            <div class="col-sm-12">
-                <label>Select Class</label>
-                <select class="form-control" id="dpDownClasses">
-                </select>
-            </div>
-        </div>
         <!--begin: Datatable-->
         <table class="table table-bordered table-checkable">
             <thead>
                 <tr>
                     <th>Class ID </th>
-                    <th>Assessment Name</th>
-                    <th>Total Marks</th>
-                    <th>Marks Obtained</th>
+                    <th>Course Name</th>
+                    <th>Faculty Name</th>
+                    <th>Total Sessions Marked</th>
+                    <th>Total Presents</th>
+                    <th>Total Abesences</th>
                 </tr>
             </thead>
-            <tbody id="tblResults">
+            <tbody id="tblAttendence">
+            
+                                    
 
             </tbody>
         </table>
@@ -41,4 +37,4 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>
-<script type="text/javascript" src="~/LMS/ViewsJquery/ShowTestResult.js"></script>
+<script type="text/javascript" src="~/LMS/ViewsJquery/StudentAttendenceReport.js"></script>

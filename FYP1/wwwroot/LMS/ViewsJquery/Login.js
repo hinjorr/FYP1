@@ -25,7 +25,19 @@ $("#kt_login_signin_submit").click(function (e) {
               KTUtil.scrollTop();
             });
         } else {
-          location.replace("/Home");
+          swal
+            .fire({
+              text: resp.text,
+              icon: resp.icon,
+              buttonsStyling: false,
+              confirmButtonText: "Ok, got it!",
+              customClass: {
+                confirmButton: "btn font-weight-bold btn-light-primary",
+              },
+            })
+            .then(function () {
+              location.replace("/Home");
+            });
         }
       },
     });

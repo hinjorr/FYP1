@@ -77,23 +77,24 @@ namespace FYP1.Models
         {
             try
             {
-                foreach (var items in dto)
+                var semester_id = dto.ElementAt(0);
+                var chkId = await db.TblClassSessions.Where(x => x.SemesterId == semester_id.SemesterId).ToListAsync();
+                if (chkId != null)
                 {
-                    var chkId = await db.TblClassSessions.Where(x => x.SemesterId == items.SemesterId).FirstOrDefaultAsync();
-                    if (chkId != null)
+                    db.TblClassSessions.RemoveRange(chkId);
+                    await db.SaveChangesAsync();
+                    foreach (var item in dto)
                     {
-                        db.TblClassSessions.Remove(chkId);
+                        mapper.Map(item, sessions);
+                        var data = await db.TblClassSessions.AddAsync(sessions);
                         await db.SaveChangesAsync();
                     }
+                    return true;
                 }
-
-                foreach (var item in dto)
+                else
                 {
-                    mapper.Map(item, sessions);
-                    var data = await db.TblClassSessions.AddAsync(sessions);
-                    await db.SaveChangesAsync();
+                    return false;
                 }
-                return true;
             }
             catch (System.Exception)
             {

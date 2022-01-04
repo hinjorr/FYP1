@@ -47,6 +47,8 @@ namespace FYP1
             services.AddScoped<IPrograms, ProgramsModel>();
             services.AddScoped<IGeneral, GeneralModel>();
             services.AddScoped<IRegisterCourses, RegisterCoursesModel>();
+            services.AddScoped<IMarks, MarksModel>();
+            services.AddScoped<IAttendence, AttendenceModel>();
 
 
         }
@@ -56,7 +58,9 @@ namespace FYP1
         {
             if (env.IsDevelopment())
             {
-                app.UseDeveloperExceptionPage();
+                // app.UseDeveloperExceptionPage();
+                app.UseExceptionHandler("/ExceptionPage");
+
             }
             else
             {

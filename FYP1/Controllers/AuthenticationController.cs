@@ -50,18 +50,7 @@ namespace FYP1.Controllers
         public async Task<IActionResult> LoginPost(UserDTO dto)
         {
             var chk = await repo.Login(dto);
-            if (chk == true)
-            {
-                //    var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
-
-                //     data.User.UserName
-
-                return Ok(new { icon = "success", text = "Login Succesfull!" });
-            }
-            else
-            {
-                return Ok(new { icon = "error", text = "Username/Password Invalid!", userData = false });
-            }
+            return Ok(chk);
 
         }
         [HttpGet("Logout")]

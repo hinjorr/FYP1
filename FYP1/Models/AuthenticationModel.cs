@@ -18,13 +18,14 @@ namespace FYP1.Models
         private readonly IMapper mapper;
         IHttpContextAccessor _httpContext;
 
+        GeneralDTO general = new GeneralDTO();
         public AuthenticationModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext)
         {
             this.db = db;
             this.mapper = mapper;
             _httpContext = httpContext;
         }
-        public async Task<bool> Login(UserDTO dto)
+        public async Task<GeneralDTO> Login(UserDTO dto)
         {
             try
             {
@@ -38,13 +39,20 @@ namespace FYP1.Models
                     mapper.Map(data.Profile, general.Profile = new ProfileDTO());
 
                     _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
-                    return true;
+                    general.Icon = "success";
+                    general.Text = "Login Succesfull!";
+                    return general;
                 }
-                return false;
+
+                general.Icon = "error";
+                general.Text = "Username/Password Invalid!";
+                return general;
             }
             catch (System.Exception)
             {
-
+                general.Icon = "error";
+                general.Text = "Server Error!";
+                return general;
                 throw;
             }
         }

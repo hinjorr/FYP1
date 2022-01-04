@@ -118,7 +118,7 @@ var CommonFunctions = {
   },
   GetCurrentSemester: function () {
     return $.ajax({
-      async:false,
+      async: false,
       url: "/Semester/GetCurrentSemester",
       success: function (resp) {
         var data = JSON.stringify(resp);
@@ -138,6 +138,25 @@ var CommonFunctions = {
             ">" +
             item.fullName +
             "</option>";
+        });
+        $(id).append(html);
+      },
+    });
+  },
+  GetAllClasses: function (username, id) {
+    $.ajax({
+      url: "/Classes/ViewClassesbyId?username=" + username,
+      success: function (resp) {
+        var html = `<option value="0">Select Class</option>`;
+        $(resp).each(function (indexInArray, item) {
+          html +=
+            `<option value="` +
+            item.classes.classId +
+            `">` +
+            item.classes.classId +
+            ` ` +
+            item.course.fullName +
+            `</option>`;
         });
         $(id).append(html);
       },

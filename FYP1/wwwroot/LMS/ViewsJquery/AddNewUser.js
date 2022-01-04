@@ -156,9 +156,7 @@ $("#txtNic").change(function (e) {
         $("#txtFatherName").val(resp.fatherName).prop("disabled", true);
         $("#txtNumber").val(resp.phoneNumber).prop("disabled", true);
         $("#txtEmail").val(resp.email).prop("disabled", true);
-        $("input[name=gender][value=" + resp.gender + "]")
-          .prop("disabled", true)
-          .prop("checked", true);
+        $("input[name=gender][value=" + resp.gender + "]").prop("checked", true);
         // $("#dpdownRole").val(resp.role.roleId);
         $("#timeDOB1").val(resp.doB).prop("disabled", true);
         $("#txtAddress").val(resp.address).prop("disabled", true);

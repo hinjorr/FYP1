@@ -26,7 +26,7 @@ CREATE TABLE `Tbl_Admin` (
   PRIMARY KEY (`AdminID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `Tbl_Admin_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Admin` */
 
@@ -34,6 +34,66 @@ insert  into `Tbl_Admin`(`AdminID`,`UserID`) values
 (1,65),
 (2,73),
 (3,76);
+
+/*Table structure for table `Tbl_Attendence` */
+
+DROP TABLE IF EXISTS `Tbl_Attendence`;
+
+CREATE TABLE `Tbl_Attendence` (
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Class_ID` int DEFAULT NULL,
+  `Session_ID` int DEFAULT NULL,
+  `User_ID` int DEFAULT NULL,
+  `User_Name` varchar(50) DEFAULT NULL,
+  `1st` bit(1) DEFAULT b'0',
+  `2nd` bit(1) DEFAULT b'0',
+  PRIMARY KEY (`Id`),
+  KEY `User_ID` (`User_ID`),
+  KEY `Session_ID` (`Session_ID`),
+  KEY `Class_ID` (`Class_ID`),
+  CONSTRAINT `Tbl_Attendence_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`),
+  CONSTRAINT `Tbl_Attendence_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`),
+  CONSTRAINT `Tbl_Attendence_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Attendence` */
+
+insert  into `Tbl_Attendence`(`Id`,`Class_ID`,`Session_ID`,`User_ID`,`User_Name`,`1st`,`2nd`) values 
+(141,50,176,119,'518290','',''),
+(142,50,176,75,'44560','',''),
+(143,50,176,64,'student','',''),
+(144,50,176,70,'317056','\0','\0'),
+(145,50,176,78,'125961','\0','\0'),
+(146,50,176,120,'24691','\0','\0'),
+(147,50,176,121,'183492','\0','\0'),
+(148,50,176,122,'793093','\0','\0'),
+(157,50,180,119,'518290','\0','\0'),
+(158,50,180,75,'44560','\0','\0'),
+(159,50,180,64,'student','','\0'),
+(160,50,180,70,'317056','\0','\0'),
+(161,50,180,78,'125961','\0','\0'),
+(162,50,180,120,'24691','\0',''),
+(163,50,180,121,'183492','\0','\0'),
+(164,50,180,122,'793093','\0','\0'),
+(165,50,178,119,'518290','\0',''),
+(166,50,178,75,'44560','\0','\0'),
+(167,50,178,64,'student','\0',''),
+(168,50,178,70,'317056','\0','\0'),
+(169,50,178,78,'125961','',''),
+(170,50,178,120,'24691','\0',''),
+(171,50,178,121,'183492','\0',''),
+(172,50,178,122,'793093','\0',''),
+(173,50,175,119,'518290','',''),
+(174,50,175,75,'44560','',''),
+(175,50,175,64,'student','',''),
+(176,50,175,70,'317056','',''),
+(177,50,175,78,'125961','\0','\0'),
+(178,50,175,120,'24691','\0','\0'),
+(179,50,175,121,'183492','\0','\0'),
+(180,50,175,122,'793093','\0','\0'),
+(181,46,175,64,'student','',''),
+(182,48,175,64,'student','',''),
+(183,48,176,64,'student','','\0');
 
 /*Table structure for table `Tbl_ClassContent` */
 
@@ -65,18 +125,17 @@ CREATE TABLE `Tbl_ClassSessions` (
   PRIMARY KEY (`Session_ID`),
   KEY `Semester_ID` (`Semester_ID`),
   CONSTRAINT `Tbl_ClassSessions_ibfk_1` FOREIGN KEY (`Semester_ID`) REFERENCES `Tbl_Semester` (`Semester_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=128 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_ClassSessions` */
 
 insert  into `Tbl_ClassSessions`(`Session_ID`,`Semester_ID`,`SessionName`) values 
-(121,52,'15 November - 21 November'),
-(122,52,'11 October - 17 October'),
-(123,52,'18 October - 24 October'),
-(124,52,'25 October - 31 October'),
-(125,52,'1 November - 7 November'),
-(126,52,'8 November - 14 November'),
-(127,52,'15 November - 21 November');
+(175,52,'11 October - 17 October'),
+(176,52,'18 October - 24 October'),
+(177,52,'25 October - 31 October'),
+(178,52,'1 November - 7 November'),
+(179,52,'8 November - 14 November'),
+(180,52,'15 November - 21 November');
 
 /*Table structure for table `Tbl_Classes` */
 
@@ -281,7 +340,7 @@ CREATE TABLE `Tbl_Faculty` (
   PRIMARY KEY (`FacultyId`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `Tbl_Faculty_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Faculty` */
 
@@ -292,7 +351,8 @@ insert  into `Tbl_Faculty`(`FacultyId`,`UserID`) values
 (4,77),
 (5,85),
 (6,91),
-(7,101);
+(7,101),
+(8,124);
 
 /*Table structure for table `Tbl_FacultyCourseRegistration` */
 
@@ -332,19 +392,43 @@ DROP TABLE IF EXISTS `Tbl_Marks`;
 CREATE TABLE `Tbl_Marks` (
   `Marks_Id` int NOT NULL AUTO_INCREMENT,
   `Class_Id` int DEFAULT NULL,
-  `Assesment_Id` int DEFAULT NULL,
+  `Assement_Name` varchar(50) DEFAULT NULL,
   `User_Id` int DEFAULT NULL,
   `UserName` varchar(50) DEFAULT NULL,
   `Total_Marks` int DEFAULT NULL,
-  `Obtained_Makrs` int DEFAULT NULL,
+  `Obtained_Makrs` int DEFAULT '0',
   PRIMARY KEY (`Marks_Id`),
   KEY `Class_Id` (`Class_Id`),
   KEY `User_Id` (`User_Id`),
   CONSTRAINT `Tbl_Marks_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Marks_ibfk_2` FOREIGN KEY (`User_Id`) REFERENCES `Tbl_User` (`UserID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Marks` */
+
+insert  into `Tbl_Marks`(`Marks_Id`,`Class_Id`,`Assement_Name`,`User_Id`,`UserName`,`Total_Marks`,`Obtained_Makrs`) values 
+(22,52,'Project 1',64,'student',20,15),
+(23,52,'Project 1',70,'317056',20,18),
+(25,46,'Assignment 1',64,'student',10,8),
+(26,46,'Quiz 1',64,'student',30,25),
+(27,46,'Assignment 2',64,'student',10,2),
+(28,50,'Quiz 1',119,'518290',5,3),
+(29,50,'Quiz 1',75,'44560',5,3),
+(30,50,'Quiz 1',64,'student',5,2),
+(31,50,'Quiz 1',70,'317056',5,2),
+(32,50,'Quiz 1',78,'125961',5,1),
+(33,50,'Quiz 1',120,'24691',5,3),
+(34,50,'Quiz 1',121,'183492',5,3),
+(35,50,'Quiz 1',122,'793093',5,3),
+(36,50,'Assignment 2',119,'518290',30,12),
+(37,50,'Assignment 2',75,'44560',30,12),
+(38,50,'Assignment 2',64,'student',30,12),
+(39,50,'Assignment 2',70,'317056',30,12),
+(40,50,'Assignment 2',78,'125961',30,0),
+(41,50,'Assignment 2',120,'24691',30,0),
+(42,50,'Assignment 2',121,'183492',30,0),
+(43,50,'Assignment 2',122,'793093',30,0),
+(44,48,'Assignment 1',64,'student',10,7);
 
 /*Table structure for table `Tbl_Menu` */
 
@@ -637,7 +721,7 @@ CREATE TABLE `Tbl_StudentCourseRegistration` (
   KEY `Class_ID` (`Class_ID`),
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`),
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=36 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_StudentCourseRegistration` */
 
@@ -654,7 +738,9 @@ insert  into `Tbl_StudentCourseRegistration`(`SCR_Id`,`Username`,`User_ID`,`Clas
 (32,'125961',78,50,''),
 (33,'24691',120,50,''),
 (34,'183492',121,50,''),
-(35,'793093',122,50,'');
+(35,'793093',122,50,''),
+(37,'125961',78,51,''),
+(38,'student',64,48,'');
 
 /*Table structure for table `Tbl_Time` */
 
@@ -690,7 +776,7 @@ CREATE TABLE `Tbl_User` (
   KEY `RoleID` (`RoleID`),
   CONSTRAINT `Tbl_User_ibfk_1` FOREIGN KEY (`ProfileID`) REFERENCES `Tbl_Profile` (`ProfileID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
   CONSTRAINT `Tbl_User_ibfk_2` FOREIGN KEY (`RoleID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=123 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_User` */
 
@@ -712,7 +798,8 @@ insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsA
 (119,'518290','11087590',3,90,'','26/12/2021'),
 (120,'24691','9478291',3,91,'','02/01/2022'),
 (121,'183492','17111492',3,92,'','02/01/2022'),
-(122,'793093','12878193',3,93,'','02/01/2022');
+(122,'793093','12878193',3,93,'','02/01/2022'),
+(124,'238790','1210020',2,90,'','04/01/2022');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

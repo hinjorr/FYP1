@@ -18,6 +18,7 @@ namespace FYP1.dbModels
         }
 
         public virtual DbSet<TblAdmin> TblAdmins { get; set; }
+        public virtual DbSet<TblAttendence> TblAttendences { get; set; }
         public virtual DbSet<TblClass> TblClasses { get; set; }
         public virtual DbSet<TblClassContent> TblClassContents { get; set; }
         public virtual DbSet<TblClassSession> TblClassSessions { get; set; }
@@ -26,6 +27,7 @@ namespace FYP1.dbModels
         public virtual DbSet<TblDay> TblDays { get; set; }
         public virtual DbSet<TblFaculty> TblFaculties { get; set; }
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
+        public virtual DbSet<TblMark> TblMarks { get; set; }
         public virtual DbSet<TblMenu> TblMenus { get; set; }
         public virtual DbSet<TblProfile> TblProfiles { get; set; }
         public virtual DbSet<TblProgram> TblPrograms { get; set; }
@@ -68,6 +70,52 @@ namespace FYP1.dbModels
                     .WithMany(p => p.TblAdmins)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("Tbl_Admin_ibfk_1");
+            });
+
+            modelBuilder.Entity<TblAttendence>(entity =>
+            {
+                entity.ToTable("Tbl_Attendence");
+
+                entity.HasIndex(e => e.ClassId, "Class_ID");
+
+                entity.HasIndex(e => e.SessionId, "Session_ID");
+
+                entity.HasIndex(e => e.UserId, "User_ID");
+
+                entity.Property(e => e.ClassId).HasColumnName("Class_ID");
+
+                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
+
+                entity.Property(e => e.UserId).HasColumnName("User_ID");
+
+                entity.Property(e => e.UserName)
+                    .HasMaxLength(50)
+                    .HasColumnName("User_Name");
+
+                entity.Property(e => e._1st)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("1st")
+                    .HasDefaultValueSql("b'0'");
+
+                entity.Property(e => e._2nd)
+                    .HasColumnType("bit(1)")
+                    .HasColumnName("2nd")
+                    .HasDefaultValueSql("b'0'");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblAttendences)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("Tbl_Attendence_ibfk_3");
+
+                entity.HasOne(d => d.Session)
+                    .WithMany(p => p.TblAttendences)
+                    .HasForeignKey(d => d.SessionId)
+                    .HasConstraintName("Tbl_Attendence_ibfk_2");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblAttendences)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Tbl_Attendence_ibfk_1");
             });
 
             modelBuilder.Entity<TblClass>(entity =>
@@ -296,6 +344,46 @@ namespace FYP1.dbModels
                     .WithMany(p => p.TblFacultyCourseRegistrations)
                     .HasForeignKey(d => d.UserId)
                     .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_1");
+            });
+
+            modelBuilder.Entity<TblMark>(entity =>
+            {
+                entity.HasKey(e => e.MarksId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Marks");
+
+                entity.HasIndex(e => e.ClassId, "Class_Id");
+
+                entity.HasIndex(e => e.UserId, "User_Id");
+
+                entity.Property(e => e.MarksId).HasColumnName("Marks_Id");
+
+                entity.Property(e => e.AssementName)
+                    .HasMaxLength(50)
+                    .HasColumnName("Assement_Name");
+
+                entity.Property(e => e.ClassId).HasColumnName("Class_Id");
+
+                entity.Property(e => e.ObtainedMakrs)
+                    .HasColumnName("Obtained_Makrs")
+                    .HasDefaultValueSql("'0'");
+
+                entity.Property(e => e.TotalMarks).HasColumnName("Total_Marks");
+
+                entity.Property(e => e.UserId).HasColumnName("User_Id");
+
+                entity.Property(e => e.UserName).HasMaxLength(50);
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblMarks)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("Tbl_Marks_ibfk_1");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblMarks)
+                    .HasForeignKey(d => d.UserId)
+                    .HasConstraintName("Tbl_Marks_ibfk_2");
             });
 
             modelBuilder.Entity<TblMenu>(entity =>

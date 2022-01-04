@@ -53,6 +53,9 @@ function SendData() {
       });
     },
   });
+  while (ProgramSyllabusDTO.length > 0) {
+    ProgramSyllabusDTO.pop();
+  }
 }
 
 function GetCrHr(obj) {

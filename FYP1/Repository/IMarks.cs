@@ -6,8 +6,9 @@ using FYP1.DTOs;
 
 namespace FYP1.Repository
 {
-    public interface IAuthentication
+    public interface IMarks
     {
-        Task<GeneralDTO> Login(UserDTO dto);
+        Task<GeneralDTO> UploadMarks(List<MarksDTO> dto);
+        Task<List<MarksDTO>> GetResults(MarksDTO dto);
     }
 }
