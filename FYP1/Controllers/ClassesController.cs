@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Threading.Tasks;
@@ -90,6 +91,19 @@ namespace FYP1.Controllers
             return Json(new { data = classes });
         }
 
+        [Route("/DeleteClass/{id}")]
+        public async Task<IActionResult> DeleteClass(int id)
+        {
+            var chk = await repo.DeleteClass(id);
+            if (chk)
+            {
+                return Ok(new { type = "success", msg = "Class Deleted!" });
+            }
+            else
+            {
+                return Ok(new { type = "error", msg = "Class deletion failed!" });
+            }
+        }
 
 
     }

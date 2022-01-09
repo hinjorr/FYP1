@@ -1,15 +1,16 @@
 ﻿$(document).ready(function () {
   CommonFunctions.GetPrograms("#dpPrograms");
-  // CommonFunctions.GetPrograms("#dpProgramsView");
   CommonFunctions.GetDays("#dpDownClassDay");
   CommonFunctions.GetTime("#dpDownClassTime");
+  // $("#DpDownCourse").select2();
   GetAllClasses();
-  CommonFunctions.GetCurrentSemester().done(function (resp) {
-    $("#txtSemesterName").val(resp.semesterName);
-    ClassDTO.SemesterId = resp.semesterId;
-  });
-  $("#DpDownCourse").select2();
-  $("#DpDownCourseView").select2();
+  var semester = JSON.parse(localStorage.getItem("SemesterDetails"));
+  ClassDTO.SemesterId = semester.semesterName;
+});
+
+$("#dpPrograms").change(function (e) {
+  var id = $("#dpPrograms").val();
+  CommonFunctions.GetCoursesbyPrograms("#DpDownCourse", id);
 });
 
 var ClassDTO = {
@@ -19,15 +20,21 @@ var ClassDTO = {
   ProgramId: 0,
   DayId: 0,
   TimeId: 0,
+  ClassId: 0,
 };
 
 $("#btnSubmit").click(function (e) {
-  ClassDTO.ProgramId = $("#dpPrograms").val();
-  ClassDTO.CourseId = $("#DpDownCourse").val();
-  ClassDTO.ClassStrength = $("#txtClasStrength").val();
-  ClassDTO.DayId = $("#dpDownClassDay").val();
-  ClassDTO.TimeId = $("#dpDownClassTime").val();
-  CreateClass(ClassDTO);
+  if (ClassDTO.ClassId != 0) {
+    ClassDTO.ClassStrength = $("#txtClasStrength").val();
+    CreateClass(ClassDTO);
+  } else {
+    ClassDTO.ProgramId = $("#dpPrograms").val();
+    ClassDTO.CourseId = $("#DpDownCourse").val();
+    ClassDTO.ClassStrength = $("#txtClasStrength").val();
+    ClassDTO.DayId = $("#dpDownClassDay").val();
+    ClassDTO.TimeId = $("#dpDownClassTime").val();
+    CreateClass(ClassDTO);
+  }
 });
 
 function CreateClass(ClassDTO) {
@@ -36,34 +43,27 @@ function CreateClass(ClassDTO) {
     url: "/Classes/AssignNewClass",
     data: ClassDTO,
     success: function (resp) {
-      if (resp == true) {
-        $("#ViewClasses").DataTable().clear().destroy();
-        GetAllClasses();
-        $("#classes").trigger("reset");
-        cuteToast({
-          type: "success",
-          message: "Class Assigned!",
-          timer: 3000,
+      swal
+        .fire({
+          text: resp.text,
+          icon: resp.icon,
+          buttonsStyling: false,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn font-weight-bold btn-light-primary",
+          },
+        })
+        .then(function () {
+          KTUtil.scrollTop();
+          if (resp.icon != "error") {
+            $("#classes").trigger("reset");
+            $("#ViewClasses").DataTable().clear().destroy();
+            GetAllClasses();
+          }
         });
-      } else {
-        cuteToast({
-          type: "error",
-          message: "Class not Assigned!",
-          timer: 3000,
-        });
-      }
     },
   });
 }
-// function GetCurrentSemester() {
-//   return $.ajax({
-//     url: "/Semester/GetCurrentSemester",
-//     success: function (resp) {
-//       $("#txtSemesterName").val(resp.semesterName);
-//       ClassDTO.SemesterId = resp.semesterId;
-//     },
-//   });
-// }
 
 function GetAllClasses() {
   $("#ViewClasses").DataTable({
@@ -73,33 +73,64 @@ function GetAllClasses() {
       datatype: "json",
     },
     columns: [
-      { data: "classId" },
-      { data: "course.shortName" },
+      { data: "classes.classId" },
+      { data: "course.fullName" },
       { data: "program.programShortName" },
       { data: "day.dayName" },
       { data: "time.timeName" },
-      { data: "classStrength" },
-      { data: "classStrength" },
+      { data: "classes.classStrength" },
+      { data: "classes.enrolledStudents" },
       {
-        render: function (data, row) {
-          return '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="clicked(this)"><i class="la la-edit"></i></button><button class="btn btn-sm btn-clean btn-icon" title="Delete"><i class="la la-trash"></i></button>';
+        data: "classes.classId",
+        render: function (id) {
+          return (
+            '<button class="btn btn-sm btn-clean btn-icon"  title="Edit details" onclick="btnupdate(this)"><i class="la la-edit"></i><button class="btn btn-sm btn-clean btn-icon" title="Delete" onclick="btndelete(' +
+            id +
+            ')"><i class="la la-trash"></i></button>'
+          );
         },
       },
     ],
   });
 }
 
-function clicked(obj) {
-  var userid = $(obj).closest("tr").find("td:first").html();
-  console.log(userid);
+function btnupdate(obj) {
+  $("#dpPrograms")
+    .html(
+      "<option >" + $(obj).closest("tr").find("td:eq(2)").html() + "</option>"
+    )
+    .attr("disabled", true);
+  $("#DpDownCourse")
+    .html(
+      "<option >" + $(obj).closest("tr").find("td:eq(1)").html() + "</option>"
+    )
+    .attr("disabled", true);
+  $("#dpDownClassDay")
+    .html(
+      "<option >" + $(obj).closest("tr").find("td:eq(3)").html() + "</option>"
+    )
+    .attr("disabled", true);
+  $("#dpDownClassTime")
+    .html(
+      "<option >" + $(obj).closest("tr").find("td:eq(4)").html() + "</option>"
+    )
+    .attr("disabled", true);
+  $("#txtClasStrength").val($(obj).closest("tr").find("td:eq(5)").html());
+  ClassDTO.ClassId = $(obj).closest("tr").find("td:eq(0)").html();
+  KTUtil.scrollTop();
 }
 
-$("#dpPrograms").change(function (e) {
-  var id = $("#dpPrograms").val();
-  CommonFunctions.GetCoursesbyPrograms("#DpDownCourse", id);
-});
-
-// $("#dpProgramsView").change(function (e) {
-//   var id = $("#dpProgramsView").val();
-//   CommonFunctions.GetCoursesbyPrograms("#DpDownCourseView", id);
-// });
+function btndelete(id) {
+  $.ajax({
+    url: "/DeleteClass/" + id,
+    success: function (resp) {
+      cuteToast({
+        type: resp.type,
+        message: resp.msg,
+        timer: 3000,
+      });
+      $("#ViewClasses").DataTable().clear().destroy();
+      GetAllClasses();
+    },
+  });
+}

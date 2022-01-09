@@ -312,7 +312,7 @@ var data = Context.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
 						<a href="#"
 							class="font-weight-bold font-size-h5 text-dark-75 text-hover-primary">@data.Profile.Name</a>
 						<div class="text-muted mt-1" id="GetUserName">@data.User.UserName</div>
-						<div class="text-muted mt-1">@data.Role.RoleName</div>
+						<div class="text-muted mt-1" id="GetUsers">@data.Role.RoleName</div>
 						<div class="navi mt-2">
 							<a href="#" class="navi-item">
 								<span class="navi-link p-0 pb-2">

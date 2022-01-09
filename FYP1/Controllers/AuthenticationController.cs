@@ -21,6 +21,8 @@ namespace FYP1.Controllers
         }
         public IActionResult Login()
         {
+
+            //ye chk krne k liye h k agr user already login hua wa h tw usse /Home pr redirect kr den agr nh login tw phr yhi /Login pr hi rhe
             var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
             if (data != null)
             {
@@ -30,6 +32,21 @@ namespace FYP1.Controllers
             {
                 return View();
             }
+        }
+
+        [HttpPost("LoginPost")]
+        public async Task<IActionResult> LoginPost(UserDTO dto)
+        {
+            var chk = await repo.Login(dto);
+            return Ok(chk);
+        }
+
+
+        [HttpGet("Logout")]
+        public IActionResult Logout()
+        {
+            _httpContext.HttpContext.Session.Remove("UserDetails");
+            return View("Login");
         }
 
         [HttpGet("404Error")]
@@ -44,22 +61,5 @@ namespace FYP1.Controllers
             // ViewBag.
             return View();
         }
-
-
-        [HttpPost("LoginPost")]
-        public async Task<IActionResult> LoginPost(UserDTO dto)
-        {
-            var chk = await repo.Login(dto);
-            return Ok(chk);
-
-        }
-        [HttpGet("Logout")]
-        public IActionResult Logout()
-        {
-            _httpContext.HttpContext.Session.Remove("UserDetails");
-            return View("Login");
-        }
-
-
     }
 }

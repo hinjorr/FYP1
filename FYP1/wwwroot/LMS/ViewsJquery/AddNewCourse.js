@@ -39,21 +39,19 @@ var CourseDTO = {
 };
 
 function AddNewCourse(CourseDTO) {
-  
   $.ajax({
     type: "Post",
     url: "/AdminCourses/AddNewCourse",
     data: CourseDTO,
     success: function (resp) {
-        $("#ViewCourses").DataTable().clear().destroy();
-        GetCourses();
-        $("#addnewcourse").trigger("reset");
-        cuteToast({
-          type: resp.type,
-          message: resp.msg,
-          timer: 3000,
-        });
-       
+      $("#ViewCourses").DataTable().clear().destroy();
+      GetCourses();
+      $("#addnewcourse").trigger("reset");
+      cuteToast({
+        type: resp.type,
+        message: resp.msg,
+        timer: 3000,
+      });
     },
   });
 }
@@ -68,11 +66,16 @@ function GetCourses() {
     columns: [
       { data: "courseId" },
       { data: "fullName" },
-      { data: "isActive" },
+      { data: "total_Classes" },
       { data: "crHr" },
       {
-        render: function (data, row) {
-          return '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="FillForm(this)"><i class="la la-edit"></i></button><button class="btn btn-sm btn-clean btn-icon" title="Delete"><i class="la la-trash"></i></button>';
+        data: "courseId",
+        render: function (data) {
+          return (
+            '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="FillForm(this)"><i class="la la-edit"></i></button><button class="btn btn-sm btn-clean btn-icon" title="Delete" onClick="btnDelete(' +
+            data +
+            ')"><i class="la la-trash"></i></button>'
+          );
         },
       },
     ],
@@ -88,6 +91,22 @@ function FillForm(obj) {
       $("#txtshortName").val(resp.shortName);
       $("#txtcourseCrHr").val(resp.crHr);
       CourseDTO.CourseId = resp.courseId;
+      KTUtil.scrollTop();
+    },
+  });
+}
+
+function btnDelete(data) {
+  $.ajax({
+    url: "/AdminCourses/DeleteCourse?id=" + data,
+    success: function (resp) {
+      cuteToast({
+        type: resp.type,
+        message: resp.msg,
+        timer: 3000,
+      });
+      $("#ViewCourses").DataTable().clear().destroy();
+      GetCourses();
     },
   });
 }

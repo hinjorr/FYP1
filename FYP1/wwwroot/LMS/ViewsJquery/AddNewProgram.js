@@ -12,30 +12,29 @@ $("#btnCreate").click(function () {
     url: "/Programs/AddNewProgram",
     data: ProgramDTO,
     success: function (resp) {
-      console.log(resp);
-    },
-    error: function (resp) {
-      console.log(resp);
+      cuteToast({
+        type: resp.type,
+        message: resp.msg,
+        timer: 3000,
+      });
+      $("#ProgramTable").DataTable().clear().destroy();
+      ProgamDetails();
     },
   });
 });
 function ProgamDetails() {
   $("#ProgramTable").DataTable({
     ajax: {
-      url: "/Classes/ViewAllClassesinJson",
+      url: "/Programs/GetPrograms",
       type: "Get",
       datatype: "json",
     },
     columns: [
-      { data: "classId" },
-      { data: "course.shortName" },
-      { data: "course.shortName" },
-      { data: "program.programShortName" },
-      {
-        render: function (data, row) {
-          return '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="clicked(this)"><i class="la la-edit"></i></button>';
-        },
-      },
+      { data: "programId" },
+      { data: "programShortName" },
+      { data: "enrolled_Courses" },
+      { data: "enrolled_Classes" },
+      { data: "enrolled_Students" },
     ],
   });
 }

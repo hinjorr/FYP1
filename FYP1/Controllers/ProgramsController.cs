@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-        [AuthorizedUserFilter]
+    [AuthorizedUserFilter]
 
     public class ProgramsController : Controller
     {
@@ -25,10 +25,23 @@ namespace FYP1.Controllers
         [HttpPost]
         public async Task<IActionResult> AddNewProgram(ProgramDTO dto)
         {
-           var data= await repo.AddProgram(dto);
-            return Ok(data);
+
+            var data = await repo.AddProgram(dto);
+            if (data)
+            {
+                return Ok(new { type = "success", msg = "Program Registered!" });
+            }
+            else
+            {
+                return Ok(new { type = "error", msg = "Registration Failed!" });
+            }
         }
-       
+
+        public async Task<IActionResult> GetPrograms()
+        {
+            var programs = await repo.GetPrograms();
+            return Json(new { data = programs });
+        }
 
     }
 }

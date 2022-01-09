@@ -25,7 +25,7 @@ CREATE TABLE `Tbl_Admin` (
   `UserID` int DEFAULT NULL,
   PRIMARY KEY (`AdminID`),
   KEY `UserID` (`UserID`),
-  CONSTRAINT `Tbl_Admin_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `Tbl_Admin_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Admin` */
@@ -48,13 +48,13 @@ CREATE TABLE `Tbl_Attendence` (
   `1st` bit(1) DEFAULT b'0',
   `2nd` bit(1) DEFAULT b'0',
   PRIMARY KEY (`Id`),
-  KEY `User_ID` (`User_ID`),
-  KEY `Session_ID` (`Session_ID`),
-  KEY `Class_ID` (`Class_ID`),
-  CONSTRAINT `Tbl_Attendence_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`),
-  CONSTRAINT `Tbl_Attendence_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`),
-  CONSTRAINT `Tbl_Attendence_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=184 DEFAULT CHARSET=latin1;
+  KEY `Tbl_Attendence_ibfk_1` (`User_ID`),
+  KEY `Tbl_Attendence_ibfk_2` (`Session_ID`),
+  KEY `Tbl_Attendence_ibfk_3` (`Class_ID`),
+  CONSTRAINT `Tbl_Attendence_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Attendence_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Attendence_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=192 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Attendence` */
 
@@ -93,7 +93,15 @@ insert  into `Tbl_Attendence`(`Id`,`Class_ID`,`Session_ID`,`User_ID`,`User_Name`
 (180,50,175,122,'793093','\0','\0'),
 (181,46,175,64,'student','',''),
 (182,48,175,64,'student','',''),
-(183,48,176,64,'student','','\0');
+(183,48,176,64,'student','','\0'),
+(184,50,177,119,'518290','','\0'),
+(185,50,177,75,'44560','',''),
+(186,50,177,64,'student','\0','\0'),
+(187,50,177,70,'317056','','\0'),
+(188,50,177,78,'125961','\0','\0'),
+(189,50,177,120,'24691','',''),
+(190,50,177,121,'183492','','\0'),
+(191,50,177,122,'793093','','\0');
 
 /*Table structure for table `Tbl_ClassContent` */
 
@@ -106,10 +114,10 @@ CREATE TABLE `Tbl_ClassContent` (
   `ContentName` varchar(100) DEFAULT NULL,
   `ContentLink` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`Content_ID`),
-  KEY `Class_ID` (`Class_ID`),
-  KEY `Session_ID` (`Session_ID`),
-  CONSTRAINT `Tbl_ClassContent_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
-  CONSTRAINT `Tbl_ClassContent_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
+  KEY `Tbl_ClassContent_ibfk_1` (`Class_ID`),
+  KEY `Tbl_ClassContent_ibfk_2` (`Session_ID`),
+  CONSTRAINT `Tbl_ClassContent_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_ClassContent_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_ClassContent` */
@@ -123,8 +131,8 @@ CREATE TABLE `Tbl_ClassSessions` (
   `Semester_ID` int DEFAULT NULL,
   `SessionName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`Session_ID`),
-  KEY `Semester_ID` (`Semester_ID`),
-  CONSTRAINT `Tbl_ClassSessions_ibfk_1` FOREIGN KEY (`Semester_ID`) REFERENCES `Tbl_Semester` (`Semester_Id`)
+  KEY `Tbl_ClassSessions_ibfk_1` (`Semester_ID`),
+  CONSTRAINT `Tbl_ClassSessions_ibfk_1` FOREIGN KEY (`Semester_ID`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_ClassSessions` */
@@ -152,17 +160,17 @@ CREATE TABLE `Tbl_Classes` (
   `IsActive` bit(1) DEFAULT NULL,
   `Class_Image` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`Class_Id`),
-  KEY `Semester_Id` (`Semester_Id`),
-  KEY `Course_Id` (`Course_Id`),
-  KEY `Program_Id` (`Program_Id`),
-  KEY `Day_Id` (`Day_Id`),
-  KEY `Time_Id` (`Time_Id`),
-  CONSTRAINT `Tbl_Classes_ibfk_1` FOREIGN KEY (`Semester_Id`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_Classes_ibfk_4` FOREIGN KEY (`Course_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_Classes_ibfk_5` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_Classes_ibfk_6` FOREIGN KEY (`Day_Id`) REFERENCES `Tbl_Days` (`Day_Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_Classes_ibfk_7` FOREIGN KEY (`Time_Id`) REFERENCES `Tbl_Time` (`Time_Id`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
+  KEY `Tbl_Classes_ibfk_1` (`Semester_Id`),
+  KEY `Tbl_Classes_ibfk_4` (`Course_Id`),
+  KEY `Tbl_Classes_ibfk_5` (`Program_Id`),
+  KEY `Tbl_Classes_ibfk_6` (`Day_Id`),
+  KEY `Tbl_Classes_ibfk_7` (`Time_Id`),
+  CONSTRAINT `Tbl_Classes_ibfk_1` FOREIGN KEY (`Semester_Id`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Classes_ibfk_4` FOREIGN KEY (`Course_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Classes_ibfk_5` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Classes_ibfk_6` FOREIGN KEY (`Day_Id`) REFERENCES `Tbl_Days` (`Day_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Classes_ibfk_7` FOREIGN KEY (`Time_Id`) REFERENCES `Tbl_Time` (`Time_Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Classes` */
 
@@ -204,17 +212,12 @@ insert  into `Tbl_Classes`(`Class_Id`,`ClassStrength`,`Course_Id`,`Semester_Id`,
 (42,23,45,50,1,4,2,'\0',NULL),
 (43,13,77,50,1,7,1,'\0',NULL),
 (44,112,74,50,1,5,3,'\0',NULL),
-(46,123,31,52,1,2,1,'',NULL),
+(46,12,31,52,1,2,1,'',NULL),
 (48,12,32,52,1,3,2,'',NULL),
-(50,34,37,52,1,6,2,'','/Upload/1134531111111.jpg'),
+(50,12,37,52,1,6,2,'','/Upload/1134531111111.jpg'),
 (51,34,49,52,1,6,1,'',NULL),
 (52,34,30,52,1,6,3,'',NULL),
-(53,34,32,52,1,4,2,'',NULL),
-(54,23,82,52,6,7,2,'',NULL),
-(55,234,58,52,1,6,2,'',NULL),
-(56,12,30,52,6,2,1,'',NULL),
 (57,23,31,52,1,6,1,'',NULL),
-(58,12,31,52,1,3,3,'',NULL),
 (59,12,39,52,1,2,1,'',NULL);
 
 /*Table structure for table `Tbl_CourseEligiblity` */
@@ -230,9 +233,9 @@ CREATE TABLE `Tbl_CourseEligiblity` (
   KEY `Class_Id` (`Class_Id`),
   KEY `Program_Id` (`Program_Id`),
   KEY `RqdCourse_Id` (`RqdCourse_Id`),
-  CONSTRAINT `Tbl_CourseEligiblity_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_CourseEligiblity_ibfk_2` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_CourseEligiblity_ibfk_3` FOREIGN KEY (`RqdCourse_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `Tbl_CourseEligiblity_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_CourseEligiblity_ibfk_2` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_CourseEligiblity_ibfk_3` FOREIGN KEY (`RqdCourse_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_CourseEligiblity` */
@@ -248,12 +251,11 @@ CREATE TABLE `Tbl_Courses` (
   `CrHr` int DEFAULT NULL,
   `IsActive` bit(1) DEFAULT b'1',
   PRIMARY KEY (`CourseID`)
-) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=89 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Courses` */
 
 insert  into `Tbl_Courses`(`CourseID`,`FullName`,`ShortName`,`CrHr`,`IsActive`) values 
-(0,'Select Course','Select Course',0,''),
 (30,'Programming Fundamentals	','PF',3,''),
 (31,'Programming Fundamentals Lab','PF Lab',1,''),
 (32,'Introduction to Info. & Communication Technologies ','IICT',3,''),
@@ -338,8 +340,8 @@ CREATE TABLE `Tbl_Faculty` (
   `FacultyId` int NOT NULL AUTO_INCREMENT,
   `UserID` int DEFAULT NULL,
   PRIMARY KEY (`FacultyId`),
-  KEY `UserID` (`UserID`),
-  CONSTRAINT `Tbl_Faculty_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  KEY `Tbl_Faculty_ibfk_1` (`UserID`),
+  CONSTRAINT `Tbl_Faculty_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Faculty` */
@@ -365,22 +367,18 @@ CREATE TABLE `Tbl_FacultyCourseRegistration` (
   `Class_ID` int DEFAULT NULL,
   `IsActive` bit(1) DEFAULT NULL,
   PRIMARY KEY (`FCR_ID`),
-  KEY `UserId` (`UserId`),
-  KEY `Class_ID` (`Class_ID`),
-  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Tbl_User` (`UserID`),
-  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_2` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+  KEY `Tbl_FacultyCourseRegistration_ibfk_1` (`UserId`),
+  KEY `Tbl_FacultyCourseRegistration_ibfk_2` (`Class_ID`),
+  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_2` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_FacultyCourseRegistration` */
 
 insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class_ID`,`IsActive`) values 
 (5,74,'720660',51,''),
-(7,101,'863281',54,''),
 (8,101,'863281',59,''),
 (9,77,'662661',48,''),
-(10,77,'662661',53,''),
-(11,74,'720660',55,''),
-(12,74,'720660',56,''),
 (16,69,'faculty',50,''),
 (17,69,'faculty',46,''),
 (18,69,'faculty',52,'');
@@ -398,10 +396,10 @@ CREATE TABLE `Tbl_Marks` (
   `Total_Marks` int DEFAULT NULL,
   `Obtained_Makrs` int DEFAULT '0',
   PRIMARY KEY (`Marks_Id`),
-  KEY `Class_Id` (`Class_Id`),
-  KEY `User_Id` (`User_Id`),
-  CONSTRAINT `Tbl_Marks_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`),
-  CONSTRAINT `Tbl_Marks_ibfk_2` FOREIGN KEY (`User_Id`) REFERENCES `Tbl_User` (`UserID`)
+  KEY `Tbl_Marks_ibfk_1` (`Class_Id`),
+  KEY `Tbl_Marks_ibfk_2` (`User_Id`),
+  CONSTRAINT `Tbl_Marks_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Marks_ibfk_2` FOREIGN KEY (`User_Id`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Marks` */
@@ -466,7 +464,7 @@ CREATE TABLE `Tbl_Profile` (
   `IsActive` tinyint(1) NOT NULL,
   `Profile_Date` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`ProfileID`)
-) ENGINE=InnoDB AUTO_INCREMENT=94 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=97 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Profile` */
 
@@ -496,7 +494,10 @@ insert  into `Tbl_Profile`(`ProfileID`,`Name`,`FatherName`,`Email`,`NIC`,`Addres
 (90,'Habib','Muhammad Arif','masoodarif1313@gmail.com','4130783592999','Shahlatif town','Karachi','Pakistan','/Upload/4130783592999.jpg','12/07/2021','male','03172945903',1,'26/12/2021'),
 (91,'James','Butt','jbutt@gmail.com','1234567890111','6649 N Blue Gum St','New Orleans','Orleans','/Upload/1234567890111.jpg','01/11/2022','male','50426218927',1,'02/01/2022'),
 (92,'Paprocki','Lenna','art@venere.org','7011645148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7011645148116.jpg','01/11/2022','male','50426218927',1,'02/01/2022'),
-(93,'Paprocki','Lenna','art@venere.org','7012345148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7012345148116.jpg','01/11/2022','female','50426218927',1,'02/01/2022');
+(93,'Paprocki','Lenna','art@venere.org','7012345148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7012345148116.jpg','01/11/2022','female','50426218927',1,'02/01/2022'),
+(94,'Shabir ','Hussain','masoodarif1313@gmail.com','1234567891111','6','Karachi','Pakistan','/Upload/1234567891111.jpg','01/20/2022','male','03172945903',1,'10/01/2022'),
+(95,'Niaz ','Hussain','masoodarif1313@gmail.com','1234567895321','6','Karachi','Pakistan','/Upload/1234567895321.jpg','01/20/2022','male','03172945903',1,'10/01/2022'),
+(96,'Liaqat  Khan','Ali hsaan','masoodarif1313@gmail.com','6784567895321','6','Karachi','Pakistan','/Upload/6784567895321.jpg','01/20/2022','male','03172945903',1,'10/01/2022');
 
 /*Table structure for table `Tbl_ProgramSyllabus` */
 
@@ -512,28 +513,17 @@ CREATE TABLE `Tbl_ProgramSyllabus` (
   KEY `Tbl_ProgramSyllabus_ibfk_1` (`Program_Id`),
   KEY `Tbl_ProgramSyllabus_ibfk_2` (`Course_Id`),
   KEY `Tbl_ProgramSyllabus_ibfk_3` (`RqdCourse_Id`),
-  CONSTRAINT `Tbl_ProgramSyllabus_ibfk_1` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_ProgramSyllabus_ibfk_2` FOREIGN KEY (`Course_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_ProgramSyllabus_ibfk_3` FOREIGN KEY (`RqdCourse_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE RESTRICT ON UPDATE RESTRICT
+  CONSTRAINT `Tbl_ProgramSyllabus_ibfk_1` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_ProgramSyllabus_ibfk_2` FOREIGN KEY (`Course_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_ProgramSyllabus_ibfk_3` FOREIGN KEY (`RqdCourse_Id`) REFERENCES `Tbl_Courses` (`CourseID`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=105 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_ProgramSyllabus` */
 
 insert  into `Tbl_ProgramSyllabus`(`Syllabus_Id`,`Program_Id`,`Course_Id`,`RqdCourse_Id`,`Required_CrHr`) values 
-(20,1,30,0,0),
-(21,1,31,0,0),
-(22,1,32,0,0),
-(23,1,33,0,8),
-(24,1,34,0,0),
-(25,1,35,0,0),
-(26,1,36,0,0),
-(27,1,37,0,0),
-(28,1,38,0,0),
 (29,1,39,30,0),
-(30,1,40,0,0),
 (31,1,41,32,0),
 (32,1,42,33,0),
-(33,1,43,0,0),
 (34,1,44,36,0),
 (35,1,45,37,0),
 (36,1,46,41,0),
@@ -579,8 +569,6 @@ insert  into `Tbl_ProgramSyllabus`(`Syllabus_Id`,`Program_Id`,`Course_Id`,`RqdCo
 (76,1,78,48,0),
 (77,1,79,61,0),
 (78,1,79,66,0),
-(79,1,81,0,0),
-(80,1,82,0,0),
 (81,1,83,70,0),
 (82,1,83,73,0),
 (83,1,83,74,0),
@@ -598,7 +586,7 @@ CREATE TABLE `Tbl_Programs` (
   `ProgramShortName` varchar(50) DEFAULT NULL,
   `IsActive` bit(1) DEFAULT NULL,
   PRIMARY KEY (`ProgramID`)
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Programs` */
 
@@ -690,9 +678,9 @@ CREATE TABLE `Tbl_Student` (
   PRIMARY KEY (`Student_Id`),
   KEY `ProgramID` (`ProgramID`),
   KEY `UserID` (`UserID`),
-  CONSTRAINT `Tbl_Student_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_Student_ibfk_2` FOREIGN KEY (`ProgramID`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+  CONSTRAINT `Tbl_Student_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Student_ibfk_2` FOREIGN KEY (`ProgramID`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Student` */
 
@@ -704,7 +692,10 @@ insert  into `Tbl_Student`(`Student_Id`,`ProgramID`,`UserID`,`IsActive`) values
 (19,1,119,NULL),
 (20,1,120,NULL),
 (21,1,121,NULL),
-(22,1,122,NULL);
+(22,1,122,NULL),
+(23,6,129,NULL),
+(24,6,130,NULL),
+(25,6,131,NULL);
 
 /*Table structure for table `Tbl_StudentCourseRegistration` */
 
@@ -717,10 +708,10 @@ CREATE TABLE `Tbl_StudentCourseRegistration` (
   `Class_ID` int NOT NULL,
   `IsActive` bit(1) NOT NULL,
   PRIMARY KEY (`SCR_Id`),
-  KEY `User_ID` (`User_ID`),
-  KEY `Class_ID` (`Class_ID`),
-  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`),
-  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`)
+  KEY `Tbl_StudentCourseRegistration_ibfk_2` (`User_ID`),
+  KEY `Tbl_StudentCourseRegistration_ibfk_3` (`Class_ID`),
+  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_StudentCourseRegistration` */
@@ -774,9 +765,9 @@ CREATE TABLE `Tbl_User` (
   PRIMARY KEY (`UserID`),
   KEY `ProfileID` (`ProfileID`),
   KEY `RoleID` (`RoleID`),
-  CONSTRAINT `Tbl_User_ibfk_1` FOREIGN KEY (`ProfileID`) REFERENCES `Tbl_Profile` (`ProfileID`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  CONSTRAINT `Tbl_User_ibfk_2` FOREIGN KEY (`RoleID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE RESTRICT ON UPDATE RESTRICT
-) ENGINE=InnoDB AUTO_INCREMENT=129 DEFAULT CHARSET=latin1;
+  CONSTRAINT `Tbl_User_ibfk_1` FOREIGN KEY (`ProfileID`) REFERENCES `Tbl_Profile` (`ProfileID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_User_ibfk_2` FOREIGN KEY (`RoleID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=132 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_User` */
 
@@ -786,7 +777,7 @@ insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsA
 (69,'faculty','1050',2,56,'','12/11/2021'),
 (70,'317056','1048470',3,56,'','12/11/2021'),
 (72,'495159','10140159',2,59,'','12/11/2021'),
-(73,'16060','11457560',1,60,'\0','12/11/2021'),
+(73,'16060','11457560',1,60,'','12/11/2021'),
 (74,'720660','1638620',2,60,'','12/11/2021'),
 (75,'44560','1275480',3,60,'','12/11/2021'),
 (76,'826361','15878961',1,61,'','12/11/2021'),
@@ -799,7 +790,10 @@ insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsA
 (120,'24691','9478291',3,91,'','02/01/2022'),
 (121,'183492','17111492',3,92,'','02/01/2022'),
 (122,'793093','12878193',3,93,'','02/01/2022'),
-(124,'238790','1210020',2,90,'','04/01/2022');
+(124,'238790','1210020',2,90,'','04/01/2022'),
+(129,'408494','11422694',3,94,'','10/01/2022'),
+(130,'525395','12485795',3,95,'','10/01/2022'),
+(131,'341996','17323196',3,96,'','10/01/2022');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

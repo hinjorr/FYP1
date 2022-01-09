@@ -38,6 +38,29 @@ namespace FYP1.Models
             }
 
         }
+
+        public async Task<bool> DeleteCourse(int id)
+        {
+            try
+            {
+                var data = await db.TblCourses.FindAsync(id);
+                if (data != null)
+                {
+                    db.TblCourses.Remove(data);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (System.Exception)
+            {
+                return false;
+                throw;
+            }
+        }
         public async Task<bool> UpdateDetails(CourseDTO dto)
         {
             try
@@ -58,15 +81,18 @@ namespace FYP1.Models
         }
         public async Task<List<CourseDTO>> GetCourses()
         {
-            var courses = await db.TblCourses.Select(x => new CourseDTO
+            List<CourseDTO> course_list = new List<CourseDTO>();
+            var _list = await db.TblCourses.ToListAsync();
+
+            foreach (var item in _list)
             {
-                CourseId = x.CourseId,
-                FullName = x.FullName,
-                ShortName = x.ShortName,
-                CrHr = x.CrHr,
-                IsActive = Convert.ToBoolean(x.IsActive),
-            }).ToListAsync();
-            return courses;
+                CourseDTO dto = new CourseDTO();
+                int Total = await db.TblClasses.Where(x => x.CourseId == item.CourseId && x.IsActive == Convert.ToUInt16(true)).CountAsync();
+                mapper.Map(item, dto);
+                dto.Total_Classes = Total;
+                course_list.Add(dto);
+            }
+            return course_list;
         }
 
         public async Task<CourseDTO> GetCoursebyID(int id)

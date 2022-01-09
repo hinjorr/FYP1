@@ -69,6 +69,7 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblAdmins)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Admin_ibfk_1");
             });
 
@@ -76,11 +77,11 @@ namespace FYP1.dbModels
             {
                 entity.ToTable("Tbl_Attendence");
 
-                entity.HasIndex(e => e.ClassId, "Class_ID");
+                entity.HasIndex(e => e.UserId, "Tbl_Attendence_ibfk_1");
 
-                entity.HasIndex(e => e.SessionId, "Session_ID");
+                entity.HasIndex(e => e.SessionId, "Tbl_Attendence_ibfk_2");
 
-                entity.HasIndex(e => e.UserId, "User_ID");
+                entity.HasIndex(e => e.ClassId, "Tbl_Attendence_ibfk_3");
 
                 entity.Property(e => e.ClassId).HasColumnName("Class_ID");
 
@@ -105,16 +106,19 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblAttendences)
                     .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Attendence_ibfk_3");
 
                 entity.HasOne(d => d.Session)
                     .WithMany(p => p.TblAttendences)
                     .HasForeignKey(d => d.SessionId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Attendence_ibfk_2");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblAttendences)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Attendence_ibfk_1");
             });
 
@@ -125,15 +129,15 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_Classes");
 
-                entity.HasIndex(e => e.CourseId, "Course_Id");
+                entity.HasIndex(e => e.SemesterId, "Tbl_Classes_ibfk_1");
 
-                entity.HasIndex(e => e.DayId, "Day_Id");
+                entity.HasIndex(e => e.CourseId, "Tbl_Classes_ibfk_4");
 
-                entity.HasIndex(e => e.ProgramId, "Program_Id");
+                entity.HasIndex(e => e.ProgramId, "Tbl_Classes_ibfk_5");
 
-                entity.HasIndex(e => e.SemesterId, "Semester_Id");
+                entity.HasIndex(e => e.DayId, "Tbl_Classes_ibfk_6");
 
-                entity.HasIndex(e => e.TimeId, "Time_Id");
+                entity.HasIndex(e => e.TimeId, "Tbl_Classes_ibfk_7");
 
                 entity.Property(e => e.ClassId).HasColumnName("Class_Id");
 
@@ -156,26 +160,31 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.CourseId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Classes_ibfk_4");
 
                 entity.HasOne(d => d.Day)
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.DayId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Classes_ibfk_6");
 
                 entity.HasOne(d => d.Program)
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.ProgramId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Classes_ibfk_5");
 
                 entity.HasOne(d => d.Semester)
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.SemesterId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Classes_ibfk_1");
 
                 entity.HasOne(d => d.Time)
                     .WithMany(p => p.TblClasses)
                     .HasForeignKey(d => d.TimeId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Classes_ibfk_7");
             });
 
@@ -186,9 +195,9 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_ClassContent");
 
-                entity.HasIndex(e => e.ClassId, "Class_ID");
+                entity.HasIndex(e => e.ClassId, "Tbl_ClassContent_ibfk_1");
 
-                entity.HasIndex(e => e.SessionId, "Session_ID");
+                entity.HasIndex(e => e.SessionId, "Tbl_ClassContent_ibfk_2");
 
                 entity.Property(e => e.ContentId).HasColumnName("Content_ID");
 
@@ -203,11 +212,13 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblClassContents)
                     .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_ClassContent_ibfk_1");
 
                 entity.HasOne(d => d.Session)
                     .WithMany(p => p.TblClassContents)
                     .HasForeignKey(d => d.SessionId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_ClassContent_ibfk_2");
             });
 
@@ -218,7 +229,7 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_ClassSessions");
 
-                entity.HasIndex(e => e.SemesterId, "Semester_ID");
+                entity.HasIndex(e => e.SemesterId, "Tbl_ClassSessions_ibfk_1");
 
                 entity.Property(e => e.SessionId).HasColumnName("Session_ID");
 
@@ -229,6 +240,7 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Semester)
                     .WithMany(p => p.TblClassSessions)
                     .HasForeignKey(d => d.SemesterId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_ClassSessions_ibfk_1");
             });
 
@@ -274,16 +286,19 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblCourseEligiblities)
                     .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_CourseEligiblity_ibfk_1");
 
                 entity.HasOne(d => d.Program)
                     .WithMany(p => p.TblCourseEligiblities)
                     .HasForeignKey(d => d.ProgramId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_CourseEligiblity_ibfk_2");
 
                 entity.HasOne(d => d.RqdCourse)
                     .WithMany(p => p.TblCourseEligiblities)
                     .HasForeignKey(d => d.RqdCourseId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_CourseEligiblity_ibfk_3");
             });
 
@@ -306,13 +321,14 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_Faculty");
 
-                entity.HasIndex(e => e.UserId, "UserID");
+                entity.HasIndex(e => e.UserId, "Tbl_Faculty_ibfk_1");
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblFaculties)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Faculty_ibfk_1");
             });
 
@@ -323,9 +339,9 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_FacultyCourseRegistration");
 
-                entity.HasIndex(e => e.ClassId, "Class_ID");
+                entity.HasIndex(e => e.UserId, "Tbl_FacultyCourseRegistration_ibfk_1");
 
-                entity.HasIndex(e => e.UserId, "UserId");
+                entity.HasIndex(e => e.ClassId, "Tbl_FacultyCourseRegistration_ibfk_2");
 
                 entity.Property(e => e.FcrId).HasColumnName("FCR_ID");
 
@@ -338,11 +354,13 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblFacultyCourseRegistrations)
                     .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_2");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblFacultyCourseRegistrations)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_1");
             });
 
@@ -353,9 +371,9 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_Marks");
 
-                entity.HasIndex(e => e.ClassId, "Class_Id");
+                entity.HasIndex(e => e.ClassId, "Tbl_Marks_ibfk_1");
 
-                entity.HasIndex(e => e.UserId, "User_Id");
+                entity.HasIndex(e => e.UserId, "Tbl_Marks_ibfk_2");
 
                 entity.Property(e => e.MarksId).HasColumnName("Marks_Id");
 
@@ -378,11 +396,13 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblMarks)
                     .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Marks_ibfk_1");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblMarks)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Marks_ibfk_2");
             });
 
@@ -486,16 +506,19 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Course)
                     .WithMany(p => p.TblProgramSyllabusCourses)
                     .HasForeignKey(d => d.CourseId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_ProgramSyllabus_ibfk_2");
 
                 entity.HasOne(d => d.Program)
                     .WithMany(p => p.TblProgramSyllabi)
                     .HasForeignKey(d => d.ProgramId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_ProgramSyllabus_ibfk_1");
 
                 entity.HasOne(d => d.RqdCourse)
                     .WithMany(p => p.TblProgramSyllabusRqdCourses)
                     .HasForeignKey(d => d.RqdCourseId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_ProgramSyllabus_ibfk_3");
             });
 
@@ -576,11 +599,13 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Program)
                     .WithMany(p => p.TblStudents)
                     .HasForeignKey(d => d.ProgramId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Student_ibfk_2");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblStudents)
                     .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Student_ibfk_1");
             });
 
@@ -591,9 +616,9 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_StudentCourseRegistration");
 
-                entity.HasIndex(e => e.ClassId, "Class_ID");
+                entity.HasIndex(e => e.UserId, "Tbl_StudentCourseRegistration_ibfk_2");
 
-                entity.HasIndex(e => e.UserId, "User_ID");
+                entity.HasIndex(e => e.ClassId, "Tbl_StudentCourseRegistration_ibfk_3");
 
                 entity.Property(e => e.ScrId).HasColumnName("SCR_Id");
 
@@ -608,13 +633,11 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblStudentCourseRegistrations)
                     .HasForeignKey(d => d.ClassId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Tbl_StudentCourseRegistration_ibfk_3");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.TblStudentCourseRegistrations)
                     .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Tbl_StudentCourseRegistration_ibfk_2");
             });
 
@@ -664,13 +687,11 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Profile)
                     .WithMany(p => p.TblUsers)
                     .HasForeignKey(d => d.ProfileId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Tbl_User_ibfk_1");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.TblUsers)
                     .HasForeignKey(d => d.RoleId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("Tbl_User_ibfk_2");
             });
 

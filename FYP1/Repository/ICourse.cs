@@ -10,5 +10,6 @@ namespace FYP1.Repository
         Task<List<CourseDTO>> GetCourses();
         Task<CourseDTO> GetCoursebyID(int id);
         Task<bool> UpdateDetails(CourseDTO dto);
+        Task<bool> DeleteCourse(int id);
     }
 }

@@ -14,6 +14,7 @@ namespace FYP1.Models
     {
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
+
         GeneralDTO general = new GeneralDTO();
         TblClass Class = new TblClass();
         public ClassesModel(LMS_DBContext db, IMapper mapper)
@@ -22,24 +23,72 @@ namespace FYP1.Models
             this.mapper = mapper;
         }
 
-        public async Task<bool> AddNewClass(ClassDTO dto)
+        public async Task<GeneralDTO> AddNewClass(ClassDTO dto)
         {
             try
             {
-                mapper.Map(dto, Class);
-                Class.IsActive = Convert.ToUInt32(true);
-                var data = await db.TblClasses.AddAsync(Class);
-                await db.SaveChangesAsync();
-                return true;
+                //update class
+                if (dto.ClassId != 0)
+                {
+                    var data = await db.TblClasses.FindAsync(dto.ClassId);
+                    data.ClassStrength = dto.ClassStrength;
+                    await db.SaveChangesAsync();
+                    general.Text = "Class Updated!";
+                    general.Icon = "success";
+                    return general;
+                }
+                //add new class
+                else
+                {
+                    var chk_class = await db.TblClasses.Where(x => x.CourseId == dto.CourseId && x.DayId == dto.DayId && x.TimeId == dto.TimeId).FirstOrDefaultAsync();
+                    if (chk_class == null)
+                    {
+                        mapper.Map(dto, Class);
+                        Class.IsActive = Convert.ToUInt32(true);
+                        await db.TblClasses.AddAsync(Class);
+                        await db.SaveChangesAsync();
+                        general.Text = "Class Assigned!";
+                        general.Icon = "success";
+                        return general;
+                    }
+                    else
+                    {
+                        general.Text = "Clash occured with another class";
+                        general.Icon = "error";
+                        return general;
+                    }
+                }
             }
             catch (System.Exception)
             {
-
-                return false;
+                general.Text = "Server Error";
+                general.Icon = "error";
+                return general;
             }
 
         }
 
+        public async Task<bool> DeleteClass(int id)
+        {
+            try
+            {
+                var data = await db.TblClasses.FindAsync(id);
+                if (data != null)
+                {
+                    db.TblClasses.Remove(data);
+                    await db.SaveChangesAsync();
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (System.Exception ex)
+            {
+                return false;
+            }
+        }
         public async Task<List<GeneralDTO>> ViewClassesbyId(string username)
         {
 
@@ -125,46 +174,36 @@ namespace FYP1.Models
                 studentlist.Add(general);
                 throw;
             }
-
         }
-        public async Task<List<ClassDTO>> ViewAllClass()
+        public async Task<List<GeneralDTO>> ViewAllClass()
         {
+            List<GeneralDTO> class_list = new List<GeneralDTO>();
             try
             {
-                var classes = await db.TblClasses.Where(y => y.IsActive == Convert.ToUInt32(true)).Select(x => new ClassDTO
+                var clas = await db.TblClasses.Where(y => y.IsActive == Convert.ToUInt32(true)).
+                Include(x => x.Program).
+                Include(x => x.Course).
+                Include(x => x.Day).
+                Include(x => x.Time).ToListAsync();
+                foreach (var item in clas)
                 {
-                    ClassId = x.ClassId,
-                    IsActive = x.IsActive,
-                    ClassStrength = x.ClassStrength,
-                    ClassImage = x.ClassImage,
-                    Semester = new SemesterDTO
-                    {
-                        SemesterName = x.Semester.SemesterName
-                    },
-                    Program = new ProgramDTO
-                    {
-                        ProgramShortName = x.Program.ProgramShortName
-                    },
-                    Course = new CourseDTO
-                    {
-                        CourseId = Convert.ToInt32(x.CourseId),
-                        ShortName = x.Course.FullName
-                    },
-                    Time = new TimeDTO
-                    {
-                        TimeName = x.Time.TimeName
-                    },
-                    Day = new DayDTO
-                    {
-                        DayName = x.Day.DayName
-                    }
-
-                }).ToListAsync();
-                return classes;
+                    GeneralDTO dto = new GeneralDTO();
+                    mapper.Map(item, dto.Classes = new ClassDTO());
+                    mapper.Map(item.Time, dto.Time = new TimeDTO());
+                    mapper.Map(item.Day, dto.Day = new DayDTO());
+                    mapper.Map(item.Course, dto.Course = new CourseDTO());
+                    mapper.Map(item.Program, dto.Program = new ProgramDTO());
+                    int enroled_std = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == item.ClassId).CountAsync();
+                    dto.Classes.EnrolledStudents = enroled_std;
+                    class_list.Add(dto);
+                }
+                return class_list;
             }
             catch (System.Exception)
             {
-
+                general.Text = "Server Error";
+                general.Icon = "error";
+                class_list.Add(general);
                 throw;
             }
 

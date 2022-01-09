@@ -1,3 +1,4 @@
+using System.Runtime.Serialization;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -6,6 +7,7 @@ using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Repository;
+using Microsoft.EntityFrameworkCore;
 
 namespace FYP1.Models
 {
@@ -33,6 +35,33 @@ namespace FYP1.Models
             {
 
                 return false;
+            }
+        }
+
+        public async Task<List<ProgramDTO>> GetPrograms()
+        {
+            List<ProgramDTO> _list = new List<ProgramDTO>();
+            try
+            {
+                var data = await db.TblPrograms.ToListAsync();
+                foreach (var item in data)
+                {
+                    ProgramDTO dto = new ProgramDTO();
+                    int total_courses = await db.TblProgramSyllabi.Where(x => x.ProgramId == item.ProgramId).CountAsync();
+                    int total_classes = await db.TblClasses.Where(x => x.ProgramId == item.ProgramId).CountAsync();
+                    int total_students = await db.TblStudents.Where(x => x.ProgramId == item.ProgramId).CountAsync();
+                    mapper.Map(item, dto);
+                    dto.Enrolled_Classes = total_classes;
+                    dto.Enrolled_Courses = total_courses;
+                    dto.Enrolled_Students = total_students;
+                    _list.Add(dto);
+                }
+                return _list;
+            }
+            catch (System.Exception)
+            {
+
+                throw;
             }
         }
 

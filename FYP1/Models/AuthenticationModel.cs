@@ -37,7 +37,6 @@ namespace FYP1.Models
                     mapper.Map(data, general.User = new UserDTO());
                     mapper.Map(data.Role, general.Role = new RoleDTO());
                     mapper.Map(data.Profile, general.Profile = new ProfileDTO());
-
                     _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
                     general.Icon = "success";
                     general.Text = "Login Succesfull!";

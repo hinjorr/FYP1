@@ -8,6 +8,7 @@ namespace FYP1.Repository
 {
     public interface IPrograms
     {
-      Task<bool> AddProgram(ProgramDTO dto);
+        Task<bool> AddProgram(ProgramDTO dto);
+        Task<List<ProgramDTO>> GetPrograms();
     }
 }

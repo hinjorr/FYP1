@@ -66,5 +66,18 @@ namespace FYP1.Controllers
             var course = await repo.GetCoursebyID(id);
             return Ok(course);
         }
+
+        public async Task<IActionResult> DeleteCourse(int id)
+        {
+            var chk = await repo.DeleteCourse(id);
+            if (chk)
+            {
+                return Ok(new { type = "success", msg = "Course Deleted!" });
+            }
+            else
+            {
+                return Ok(new { type = "error", msg = "Course Deletion failed!" });
+            }
+        }
     }
 }
