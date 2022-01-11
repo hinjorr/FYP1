@@ -32,11 +32,18 @@ namespace FYP1.Models
         {
             try
             {
+                var class_data = await db.TblClasses.Where(x => x.ClassId == dto.ClassId).FirstOrDefaultAsync();
                 var alreadyRegisteredClass = await CheckRegisteredClass(dto.ClassId, dto.Username);
                 var chkclash = await CheckClash(dto.ClassId, dto.Username);
                 if (alreadyRegisteredClass == true)
                 {
                     general.Text = "Course Already Registered!";
+                    general.Icon = "error";
+                    return general;
+                }
+                else if (class_data.ClassStrength == class_data.EnrolledStd)
+                {
+                    general.Text = "Class Id full!";
                     general.Icon = "error";
                     return general;
                 }
@@ -53,11 +60,13 @@ namespace FYP1.Models
                     mapper.Map(dto, tbl);
                     tbl.IsActive = Convert.ToUInt16(true);
                     await db.TblStudentCourseRegistrations.AddAsync(tbl);
+                    class_data.EnrolledStd = class_data.EnrolledStd + 1;
                     await db.SaveChangesAsync();
                     general.Text = "Course Registered!";
                     general.Icon = "success";
                     return general;
                 }
+
 
             }
             catch (Exception)
@@ -123,10 +132,12 @@ namespace FYP1.Models
         {
             try
             {
+                var class_data = await db.TblClasses.Where(x => x.ClassId == dto.ClassId).FirstOrDefaultAsync();
                 var data = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == dto.ClassId && x.Username == dto.Username).FirstOrDefaultAsync();
                 if (data != null)
                 {
                     db.TblStudentCourseRegistrations.Remove(data);
+                    class_data.EnrolledStd = class_data.EnrolledStd - 1;
                     await db.SaveChangesAsync();
                     general.Text = "Course Dropped!";
                     general.Icon = "success";

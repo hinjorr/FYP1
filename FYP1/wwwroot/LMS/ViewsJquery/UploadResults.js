@@ -1,6 +1,8 @@
 ﻿$(document).ready(function () {
   var user_id = $("#GetUserName").html();
   CommonFunctions.GetAllClasses(user_id, "#dpDownClasses");
+  $("#btnSubmit").hide();
+
 });
 
 var MarksDTO = [];
@@ -16,38 +18,61 @@ $("#dpDownClasses").change(function (e) {
 });
 
 function GetUsers(classid) {
-  $("#GetStudents").DataTable({
-    ajax: {
-      url: "/Classes/ViewStudentbyClass?cid=" + classid,
-      type: "Get",
-      datatype: "json",
+  $.ajax({
+    url: "/Classes/ViewStudentbyClass?cid=" + classid,
+    success: function (resp) {
+      var data = resp.data[0];
+      if (data.icon != null) {
+        swal
+          .fire({
+            text: data.text,
+            icon: data.icon,
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+              confirmButton: "btn font-weight-bold btn-light-primary",
+            },
+          })
+          .then(function () {
+            KTUtil.scrollTop();
+          });
+      } else {
+        $("#GetStudents").DataTable({
+          ajax: {
+            url: "/Classes/ViewStudentbyClass?cid=" + classid,
+            type: "Get",
+            datatype: "json",
+          },
+          columns: [
+            {
+              data: "profile.picture",
+              render: function (picture) {
+                return (
+                  '<div class="symbol symbol-50 flex-shrink-0">' +
+                  '<img src="' +
+                  picture +
+                  '">' +
+                  "</div>"
+                );
+              },
+            },
+            { data: "user.userName" },
+            { data: "profile.name" },
+            {
+              data: "user.userName",
+              render: function (id) {
+                return (
+                  '<input type="text" class="form-control" id="' +
+                  id +
+                  '" name="obtainedmarks" style="width: 50px;" > '
+                );
+              },
+            },
+          ],
+        });
+        $("#btnSubmit").show();
+      }
     },
-    columns: [
-      {
-        data: "profile.picture",
-        render: function (picture) {
-          return (
-            '<div class="symbol symbol-50 flex-shrink-0">' +
-            '<img src="' +
-            picture +
-            '">' +
-            "</div>"
-          );
-        },
-      },
-      { data: "user.userName" },
-      { data: "profile.name" },
-      {
-        data: "user.userName",
-        render: function (id) {
-          return (
-            '<input type="text" class="form-control" id="' +
-            id +
-            '" name="obtainedmarks" style="width: 50px;" > '
-          );
-        },
-      },
-    ],
   });
 }
 

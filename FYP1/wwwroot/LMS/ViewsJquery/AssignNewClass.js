@@ -79,7 +79,17 @@ function GetAllClasses() {
       { data: "day.dayName" },
       { data: "time.timeName" },
       { data: "classes.classStrength" },
-      { data: "classes.enrolledStudents" },
+      { data: "classes.enrolledStd" },
+      {
+        data: "classes.faculty_Assigned",
+        render: function (data) {
+          if (data != 0) {
+            return '<a  class="label label-lg font-weight-bold label-light-success label-inline">Yes</a>';
+          } else {
+            return '<a class="label label-lg font-weight-bold label-light-danger label-inline">No</a>';
+          }
+        },
+      },
       {
         data: "classes.classId",
         render: function (id) {

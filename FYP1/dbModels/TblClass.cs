@@ -19,6 +19,7 @@ namespace FYP1.dbModels
 
         public int ClassId { get; set; }
         public int? ClassStrength { get; set; }
+        public int? EnrolledStd { get; set; }
         public int? CourseId { get; set; }
         public int? SemesterId { get; set; }
         public int? ProgramId { get; set; }

@@ -29,23 +29,35 @@ namespace FYP1.Models
         {
             try
             {
-                var data = await db.TblUsers.Where(x => x.UserName == dto.UserName && x.Password == dto.Password && x.IsActive == Convert.ToUInt16(true)).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
+                GeneralDTO general = new GeneralDTO();
+                var data = await db.TblUsers.Where(x => x.UserName == dto.UserName && x.Password == dto.Password).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
                 if (data != null)
                 {
-                    GeneralDTO general = new GeneralDTO();
-                    general.ResponseBool = true;
-                    mapper.Map(data, general.User = new UserDTO());
-                    mapper.Map(data.Role, general.Role = new RoleDTO());
-                    mapper.Map(data.Profile, general.Profile = new ProfileDTO());
-                    _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
-                    general.Icon = "success";
-                    general.Text = "Login Succesfull!";
+                    if (data.IsActive == Convert.ToUInt16(false))
+                    {
+                        general.Icon = "error";
+                        general.Text = "Your account is temporarily blocked my Administrator!";
+                        return general;
+                    }
+                    else
+                    {
+                        general.ResponseBool = true;
+                        mapper.Map(data, general.User = new UserDTO());
+                        mapper.Map(data.Role, general.Role = new RoleDTO());
+                        mapper.Map(data.Profile, general.Profile = new ProfileDTO());
+                        _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
+                        general.Icon = "success";
+                        general.Text = "Login Succesfull!";
+                        return general;
+                    }
+                }
+                else
+                {
+                    general.Icon = "error";
+                    general.Text = "Username/Password Invalid!";
                     return general;
                 }
 
-                general.Icon = "error";
-                general.Text = "Username/Password Invalid!";
-                return general;
             }
             catch (System.Exception)
             {

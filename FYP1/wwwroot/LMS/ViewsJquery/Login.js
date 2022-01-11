@@ -1,4 +1,5 @@
 $("#kt_login_signin_submit").click(function (e) {
+  $("#kt_login_signin_submit").addClass("spinner spinner-white spinner-right");
   var UserDTO = {
     UserName: $("#username").val(),
     Password: $("#password").val(),
@@ -22,7 +23,8 @@ $("#kt_login_signin_submit").click(function (e) {
               },
             })
             .then(function () {
-              KTUtil.scrollTop();
+              $("#kt_login_signin_submit").removeClass("spinner spinner-white spinner-right");
+
             });
         } else {
           if (resp.role.roleName == "Admin") {

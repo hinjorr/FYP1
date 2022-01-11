@@ -49,7 +49,8 @@ $("#btnView").click(function (e) {
               KTUtil.scrollTop();
             });
         }
-        $(resp).each(function (indexInArray, item) {
+        else{
+          $(resp).each(function (indexInArray, item) {
             html += `<tr>
           <td>`+item.user.userName+`</td>
           <td>`+item.profile.name+`</td>`
@@ -78,6 +79,8 @@ $("#btnView").click(function (e) {
               });
         $("#tblAttedence").html(html);
         $("#SubmitButton").show();
+        }
+       
       },
     });
   }

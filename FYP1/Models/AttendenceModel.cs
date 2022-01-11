@@ -31,52 +31,62 @@ namespace FYP1.Models
             {
                 //class ka data ayega student_course_resgistration se 
                 var class_data = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == dto.ClassId).ToListAsync();
-                //semester id uthani h current
-                var semester = await db.TblSemesters.Where(x => x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
-                //total sessions uthane h phr unko 2 se multiply krna h taake ik din me 2 session bn ske
-                var sessions = await db.TblClassSessions.Where(x => x.SemesterId == semester.SemesterId).CountAsync();
-                sessions = sessions * 2;
-
-                //loop
-                foreach (var item in class_data)
+                if (class_data.Count != 0)
                 {
+                    //semester id uthani h current
+                    var semester = await db.TblSemesters.Where(x => x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
+                    //total sessions uthane h phr unko 2 se multiply krna h taake ik din me 2 session bn ske
+                    var sessions = await db.TblClassSessions.Where(x => x.SemesterId == semester.SemesterId).CountAsync();
+                    sessions = sessions * 2;
 
-                    GeneralDTO model = new GeneralDTO();
-                    var get_users = await db.TblUsers.Where(x => x.UserId == item.UserId).Include(x => x.Profile).FirstOrDefaultAsync();
-                    var get_attendence = await db.TblAttendences.Where(x => x.ClassId == dto.ClassId && x.UserId == get_users.UserId && x.SessionId == dto.SessionId).FirstOrDefaultAsync();
-                    var present_1 = await db.TblAttendences.Where(x => x.ClassId == dto.ClassId && x.UserId == get_users.UserId && x._1st == Convert.ToUInt16(true)).Select(x => x._1st).CountAsync();
-                    var present_2 = await db.TblAttendences.Where(x => x.ClassId == dto.ClassId && x.UserId == get_users.UserId && x._2nd == Convert.ToUInt16(true)).Select(x => x._2nd).CountAsync();
-                    var current_marked_attedence = await db.TblAttendences.Where(x => x.ClassId == dto.ClassId && x.UserId == get_users.UserId).CountAsync();
-                    current_marked_attedence = current_marked_attedence * 2;
-                    model.TotalSessions = sessions;
-                    mapper.Map(get_users, model.User = new UserDTO());
-                    mapper.Map(get_users.Profile, model.Profile = new ProfileDTO());
-                    if (get_attendence != null)
-                    {
-                        model.Attendence = new AttendenceDTO()
-                        {
-                            _1st = get_attendence._1st,
-                            _2nd = get_attendence._2nd,
-                            TotalPresent = present_1 + present_2,
-                            TotalAbsent = (current_marked_attedence - (present_1 + present_2)),
-                            TotalMarkedSesion = current_marked_attedence
-                        };
-                    }
-                    else
+                    //loop
+                    foreach (var item in class_data)
                     {
 
-                        model.Attendence = new AttendenceDTO()
+                        GeneralDTO model = new GeneralDTO();
+                        var get_users = await db.TblUsers.Where(x => x.UserId == item.UserId).Include(x => x.Profile).FirstOrDefaultAsync();
+                        var get_attendence = await db.TblAttendences.Where(x => x.ClassId == dto.ClassId && x.UserId == get_users.UserId && x.SessionId == dto.SessionId).FirstOrDefaultAsync();
+                        var present_1 = await db.TblAttendences.Where(x => x.ClassId == dto.ClassId && x.UserId == get_users.UserId && x._1st == Convert.ToUInt16(true)).Select(x => x._1st).CountAsync();
+                        var present_2 = await db.TblAttendences.Where(x => x.ClassId == dto.ClassId && x.UserId == get_users.UserId && x._2nd == Convert.ToUInt16(true)).Select(x => x._2nd).CountAsync();
+                        var current_marked_attedence = await db.TblAttendences.Where(x => x.ClassId == dto.ClassId && x.UserId == get_users.UserId).CountAsync();
+                        current_marked_attedence = current_marked_attedence * 2;
+                        model.TotalSessions = sessions;
+                        mapper.Map(get_users, model.User = new UserDTO());
+                        mapper.Map(get_users.Profile, model.Profile = new ProfileDTO());
+                        if (get_attendence != null)
                         {
-                            TotalPresent = present_1 + present_2,
-                            TotalAbsent = (current_marked_attedence - (present_1 + present_2)),
-                            TotalMarkedSesion = current_marked_attedence
-                        };
+                            model.Attendence = new AttendenceDTO()
+                            {
+                                _1st = get_attendence._1st,
+                                _2nd = get_attendence._2nd,
+                                TotalPresent = present_1 + present_2,
+                                TotalAbsent = (current_marked_attedence - (present_1 + present_2)),
+                                TotalMarkedSesion = current_marked_attedence
+                            };
+                        }
+                        else
+                        {
+
+                            model.Attendence = new AttendenceDTO()
+                            {
+                                TotalPresent = present_1 + present_2,
+                                TotalAbsent = (current_marked_attedence - (present_1 + present_2)),
+                                TotalMarkedSesion = current_marked_attedence
+                            };
 
 
+                        }
+                        studentlist.Add(model);
                     }
-                    studentlist.Add(model);
+                    return studentlist;
                 }
-                return studentlist;
+                else
+                {
+                    general.Text = "Class is Empty!";
+                    general.Icon = "error";
+                    studentlist.Add(general);
+                    return studentlist;
+                }
             }
             catch (System.Exception)
             {

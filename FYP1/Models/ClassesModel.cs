@@ -159,7 +159,7 @@ namespace FYP1.Models
                 }
                 else
                 {
-                    general.Text = "No Student is Registered!";
+                    general.Text = "Class is Empty!";
                     general.Icon = "error";
                     studentlist.Add(general);
 
@@ -187,14 +187,14 @@ namespace FYP1.Models
                 Include(x => x.Time).ToListAsync();
                 foreach (var item in clas)
                 {
+                    var faculty_check = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == item.ClassId).CountAsync();
                     GeneralDTO dto = new GeneralDTO();
                     mapper.Map(item, dto.Classes = new ClassDTO());
+                    dto.Classes.Faculty_Assigned = faculty_check;
                     mapper.Map(item.Time, dto.Time = new TimeDTO());
                     mapper.Map(item.Day, dto.Day = new DayDTO());
                     mapper.Map(item.Course, dto.Course = new CourseDTO());
                     mapper.Map(item.Program, dto.Program = new ProgramDTO());
-                    int enroled_std = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == item.ClassId).CountAsync();
-                    dto.Classes.EnrolledStudents = enroled_std;
                     class_list.Add(dto);
                 }
                 return class_list;

@@ -11,6 +11,8 @@ namespace FYP1.DTOs
 
         public int ClassId { get; set; }
         public int? ClassStrength { get; set; }
+        public int? EnrolledStd { get; set; }
+
         public int? CourseId { get; set; }
         public string ClassImage { get; set; }
         public IFormFile GetImage { get; set; }
@@ -18,8 +20,9 @@ namespace FYP1.DTOs
         public int? ProgramId { get; set; }
         public int? DayId { get; set; }
         public int? TimeId { get; set; }
-        public int EnrolledStudents { get; set; }
         public ulong? IsActive { get; set; }
+        public int Faculty_Assigned { get; set; }
+
 
 
     }

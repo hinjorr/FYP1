@@ -89,13 +89,19 @@ function GetIndex(obj) {
 
 $(document).on("change", ".Programs", function () {
   var id = $(".Programs").val();
-  var html = "";
-
+  $("#tblsyllabus tr:gt(1)").remove();
   $.ajax({
     url: "GetProgramSyllabus/" + id,
     success: function (resp) {
-      if (resp != null) {
-      }
+      $.each(resp, function (index, item) {
+        $(".btnadd").click();
+        // $("#tblsyllabus tr").find("#dpCourse").val(31);
+        // $("#tblsyllabus tr").find("#dpRequisete").val(32);
+        $("#tblsyllabus tr:eq("+index+")").find("td:eq(3) input[type='text']").val(item.requiredCrHr);
+        console.log(item.requiredCrHr)
+      });
+      // $("#tblsyllabus tr:eq(1)").remove();
+
     },
   });
 });

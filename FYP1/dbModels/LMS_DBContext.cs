@@ -149,6 +149,10 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.DayId).HasColumnName("Day_Id");
 
+                entity.Property(e => e.EnrolledStd)
+                    .HasColumnName("Enrolled_Std")
+                    .HasDefaultValueSql("'0'");
+
                 entity.Property(e => e.IsActive).HasColumnType("bit(1)");
 
                 entity.Property(e => e.ProgramId).HasColumnName("Program_Id");
