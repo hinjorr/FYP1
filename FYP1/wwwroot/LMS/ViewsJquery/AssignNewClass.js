@@ -2,10 +2,11 @@
   CommonFunctions.GetPrograms("#dpPrograms");
   CommonFunctions.GetDays("#dpDownClassDay");
   CommonFunctions.GetTime("#dpDownClassTime");
+
   // $("#DpDownCourse").select2();
   GetAllClasses();
   var semester = JSON.parse(localStorage.getItem("SemesterDetails"));
-  ClassDTO.SemesterId = semester.semesterName;
+  ClassDTO.SemesterId = semester.semesterId;
 });
 
 $("#dpPrograms").change(function (e) {
@@ -74,7 +75,13 @@ function GetAllClasses() {
     },
     columns: [
       { data: "classes.classId" },
-      { data: "course.fullName" },
+      {
+        data: "course.fullName",
+        render: function (data, type, row) {
+          var id = row.classes.classId;
+          return '<a href="/Class/' + id + '" target="_blank">' + data + " </a>";
+        },
+      },
       { data: "program.programShortName" },
       { data: "day.dayName" },
       { data: "time.timeName" },

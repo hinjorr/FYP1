@@ -1,0 +1,84 @@
+@{
+ViewData["Title"] = "Class Information";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<style>
+    .dataTables_filter {
+        display: none;
+    }
+</style>
+<div class="row">
+
+    <div class="col-lg-7">
+        <div class="card card-custom">
+            <div class="card-header">
+                <h3 class="card-title">@ViewData["Title"]</h3>
+            </div>
+            <div class="card-body">
+                <!--begin: Datatable-->
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 text-right col-form-label">Program</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <label class="form-control  form-control-solid" type="text" id="program"></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 text-right col-form-label">Name</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <label class="form-control  form-control-solid" type="text" id="class_name"></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 text-right col-form-label">Strength</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <label class="form-control  form-control-solid" type="text" id="strength"></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 text-right col-form-label">Enrolled</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <label class="form-control  form-control-solid" type="text" id="enrooled_std"></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 text-right col-form-label">Day and Time</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <label class="form-control  form-control-solid" type="text" id="day_time"></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-xl-3 col-lg-3 text-right col-form-label">Faculty</label>
+                    <div class="col-lg-9 col-xl-6">
+                        <div id="faculty"></div>
+                    </div>
+                </div>
+                <!--end: Datatable-->
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-5">
+        <div class="card card-custom">
+            <div class="card-header">
+                <h3 class="card-title">Enrolled Students</h3>
+            </div>
+            <div class="card-body">
+                <!--begin: Datatable-->
+                <table class="table table-bordered table-hover table-checkable mt-10" id="ViewStudents">
+                    <thead>
+                        <tr>
+                            <th>Picture</th>
+                            <th>Username</th>
+                            <th>Student Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <!--end: Datatable-->
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<script src="~/LMS/lib/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/LMS/ViewsJquery/AdminClassInfo.js"></script>

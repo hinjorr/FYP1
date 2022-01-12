@@ -58,9 +58,7 @@ namespace FYP1
         {
             if (env.IsDevelopment())
             {
-                // app.UseDeveloperExceptionPage();
-                app.UseExceptionHandler("/ExceptionPage");
-
+                app.UseDeveloperExceptionPage();
             }
             else
             {

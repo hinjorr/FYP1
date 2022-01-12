@@ -10,8 +10,20 @@ function GetCourseName(id) {
   $.ajax({
     url: "/GetClass/" + id,
     success: function (resp) {
-      $("#ShowCourse").text(resp.course.fullName + " " + id);
-      GetSessions();
+      if (resp.icon == null) {
+        $("#ShowCourse").text(id + " " + resp.course.fullName);
+        GetSessions();
+      } else {
+        swal.fire({
+          text: resp.text,
+          icon: resp.icon,
+          buttonsStyling: false,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn font-weight-bold btn-light-primary",
+          },
+        });
+      }
     },
   });
 }

@@ -101,7 +101,6 @@ $(document).on("change", ".Programs", function () {
         console.log(item.requiredCrHr)
       });
       // $("#tblsyllabus tr:eq(1)").remove();
-
     },
   });
 });

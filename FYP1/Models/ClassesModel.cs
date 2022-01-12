@@ -245,18 +245,47 @@ namespace FYP1.Models
             }
             return ClassesList;
         }
-        public async Task<ClassDTO> GetSingleClass(int Cid)
+
+
+        public async Task<GeneralDTO> ClassInformation(int Cid)
         {
-            var GetClass = await db.TblClasses.Where(x => x.ClassId == Cid && x.IsActive == Convert.ToUInt32(true)).Select(x => new ClassDTO
+            try
             {
-                ClassId = x.ClassId,
-                Course = new CourseDTO()
+
+                GeneralDTO dto = new GeneralDTO();
+                var class_info = await db.TblClasses.Where(x => x.ClassId == Cid && x.IsActive == Convert.ToUInt16(true)).
+                Include(x => x.Course).
+                Include(x => x.Day).
+                Include(x => x.Time).
+                Include(x => x.Program).
+                FirstOrDefaultAsync();
+                mapper.Map(class_info, dto.Classes = new ClassDTO());
+                mapper.Map(class_info.Program, dto.Program = new ProgramDTO());
+                mapper.Map(class_info.Course, dto.Course = new CourseDTO());
+                mapper.Map(class_info.Day, dto.Day = new DayDTO());
+                mapper.Map(class_info.Time, dto.Time = new TimeDTO());
+                var faculty = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == Cid).FirstOrDefaultAsync();
+                if (faculty != null)
                 {
-                    FullName = x.Course.FullName
+                    var faculty_profile = await db.TblUsers.Where(x => x.UserId == faculty.UserId).Include(x => x.Profile).FirstOrDefaultAsync();
+                    mapper.Map(faculty_profile, dto.User = new UserDTO());
+                    dto.User.Password = "";
+
+                    mapper.Map(faculty_profile.Profile, dto.Profile = new ProfileDTO());
                 }
-            }).FirstOrDefaultAsync();
-            return GetClass;
+                return dto;
+            }
+            catch (System.Exception)
+            {
+                general.Text = "Server Error";
+                general.Icon = "error";
+                return general;
+                throw;
+            }
         }
+
+
+
 
         // public async Task<List<ClassDTO>> ViewbyCoursesnPrograms(ClassDTO dto)
         // {

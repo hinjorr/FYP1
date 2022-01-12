@@ -84,7 +84,7 @@ var CommonFunctions = {
     $.ajax({
       url: "/General/GetCoursesFullName",
       success: function (resp) {
-        var html = "<option value='0'>Select Course</option>";
+        var html = "<option value='null'>Select Course</option>";
 
         $(resp).each(function (index, item) {
           html +=

@@ -53,7 +53,7 @@ namespace FYP1.Controllers
         [HttpGet("GetClass/{id}")]
         public async Task<IActionResult> GetSingleClass(int id)
         {
-            var data = await repo.GetSingleClass(id);
+            var data = await repo.ClassInformation(id);
             return Ok(data);
         }
         public async Task<IActionResult> ViewAllClasses()
@@ -91,7 +91,7 @@ namespace FYP1.Controllers
             return Json(new { data = classes });
         }
 
-        [Route("/DeleteClass/{id}")]
+        [Route("DeleteClass/{id}")]
         public async Task<IActionResult> DeleteClass(int id)
         {
             var chk = await repo.DeleteClass(id);
@@ -105,6 +105,11 @@ namespace FYP1.Controllers
             }
         }
 
-
+        [HttpGet("Class/{id}")]
+        public IActionResult ClassInformation()
+        {
+            return View();
+        }
+       
     }
 }
