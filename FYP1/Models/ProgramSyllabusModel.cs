@@ -15,35 +15,45 @@ namespace FYP1.Models
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
         TblProgramSyllabus syllabus = new TblProgramSyllabus();
-
+        GeneralDTO general = new GeneralDTO();
         public ProgramSyllabusModel(LMS_DBContext db, IMapper mapper)
         {
             this.db = db;
             this.mapper = mapper;
         }
-        public async Task<bool> AddSyllabus(List<ProgramSyllabusDTO> dto)
+        public async Task<GeneralDTO> AddSyllabus(List<ProgramSyllabusDTO> dto)
         {
+
             try
             {
+
+                var Program_Id = dto.ElementAt(0);
+                var chk = await db.TblProgramSyllabi.Where(x => x.ProgramId == Program_Id.ProgramId).ToListAsync();
+                db.TblProgramSyllabi.RemoveRange(chk);
                 foreach (var item in dto)
                 {
                     mapper.Map(item, syllabus);
                     var data = await db.TblProgramSyllabi.AddAsync(syllabus);
                     await db.SaveChangesAsync();
+
                 }
-                return true;
+                general.Text = "Syllbus Created!";
+                general.Icon = "success";
+                return general;
             }
             catch (System.Exception)
             {
-                return false;
+                general.Text = "Server Error!";
+                general.Icon = "error";
+                return general;
                 throw;
             }
         }
 
-        public async Task<int?> GetCrHr(CourseDTO dto)
+        public async Task<int> GetCrHr(CourseDTO dto)
         {
             var data = await db.TblCourses.Where(x => x.CourseId == dto.CourseId).FirstOrDefaultAsync();
-            int? CrHr = data.CrHr;
+            int CrHr = Convert.ToInt32(data.CrHr);
             return CrHr;
         }
         public async Task<List<ProgramSyllabusDTO>> GetProgramSyllabus(int id)

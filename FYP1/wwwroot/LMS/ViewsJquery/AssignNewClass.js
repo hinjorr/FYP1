@@ -79,19 +79,30 @@ function GetAllClasses() {
         data: "course.fullName",
         render: function (data, type, row) {
           var id = row.classes.classId;
-          return '<a href="/Class/' + id + '" target="_blank">' + data + " </a>";
+          return (
+            '<a href="/Class/' + id + '" target="_blank">' + data + " </a>"
+          );
         },
       },
       { data: "program.programShortName" },
       { data: "day.dayName" },
       { data: "time.timeName" },
       { data: "classes.classStrength" },
-      { data: "classes.enrolledStd" },
+      {
+        data: "classes.enrolledStd",
+        render: function (data) {
+          if (data != 0) {
+            return "<span>" + data + "</span>";
+          } else {
+            return '<a class="label label-lg font-weight-bold label-light-danger label-inline">'+data+'</a>';
+          }
+        },
+      },
       {
         data: "classes.faculty_Assigned",
         render: function (data) {
           if (data != 0) {
-            return '<a  class="label label-lg font-weight-bold label-light-success label-inline">Yes</a>';
+            return "<span>Yes</span>";
           } else {
             return '<a class="label label-lg font-weight-bold label-light-danger label-inline">No</a>';
           }
