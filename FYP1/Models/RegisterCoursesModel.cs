@@ -151,7 +151,7 @@ namespace FYP1.Models
                 }
             }
             catch (System.Exception)
-            {
+            {   
                 general.Text = "Server Error!";
                 general.Icon = "error";
                 return general;

@@ -153,7 +153,7 @@ namespace FYP1.Models
                 }
                 return dto;
             }
-            catch (System.Exception ex)
+            catch (System.Exception )
             {
                 return null;
             }
@@ -176,7 +176,7 @@ namespace FYP1.Models
                 }
                 return dto;
             }
-            catch (System.Exception ex)
+            catch (System.Exception )
             {
                 return null;
             }

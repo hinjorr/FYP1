@@ -7,9 +7,10 @@ sudo netstat -tulpn  | grep LISTEN
 
 ef core tools 
 pomelo mysql
-ef core tool
+dotnet-ef
 
 dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=masood1050;database=LMS" Pomelo.EntityFrameworkCore.MySql -c LMS_DBContext -o dbModels -f 
 
 dpkg --list
 sudo apt-get remove
+winecfg

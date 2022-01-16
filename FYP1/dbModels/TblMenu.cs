@@ -13,7 +13,8 @@ namespace FYP1.dbModels
         }
 
         public int MenuId { get; set; }
-        public string ControllerAction { get; set; }
+        public string Controller { get; set; }
+        public string Action { get; set; }
 
         public virtual ICollection<TblRoleMenu> TblRoleMenus { get; set; }
     }

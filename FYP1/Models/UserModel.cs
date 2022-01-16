@@ -357,7 +357,7 @@ namespace FYP1.Models
                 }
                 return null;
             }
-            catch (System.Exception ex)
+            catch (System.Exception )
             {
                 return null;
             }

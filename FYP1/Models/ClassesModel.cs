@@ -84,7 +84,7 @@ namespace FYP1.Models
                     return false;
                 }
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 return false;
             }
