@@ -12,10 +12,6 @@ namespace FYP1.Models
 {
     public class RoleManagementModel : IRoleManagement
     {
-        public RoleManagementModel()
-        {
-
-        }
         private LMS_DBContext db;
         private readonly IMapper mapper;
         TblRoleMenu TblRoleMenu = new TblRoleMenu();
@@ -63,7 +59,7 @@ namespace FYP1.Models
         {
             try
             {
-                var role = await db.TblRoles.Where(x => x.RoleId == id).FirstAsync();
+                var role = await db.TblRoles.Where(x => x.RoleId == id).FirstOrDefaultAsync();
                 if (role != null)
                 {
                     mapper.Map(role, general.Role = new RoleDTO());
@@ -87,11 +83,12 @@ namespace FYP1.Models
                 if (chk_users != 0)
                 {
                     general.Icon = "error";
-                    general.Text = "Role can't be deleted " + chk_users + "users already registered with this role";
+                    general.Text = "Role can't be deleted " + chk_users + " user(s) already registered with this role";
                 }
+
                 else
                 {
-                    var get_role = await db.TblRoles.Where(x => x.RoleId == id).FirstAsync();
+                    var get_role = await db.TblRoles.Where(x => x.RoleId == id).FirstOrDefaultAsync();
                     if (get_role != null)
                     {
                         db.TblRoles.Remove(get_role);
@@ -195,10 +192,10 @@ namespace FYP1.Models
                 {
                     db = new LMS_DBContext();
                 }
-                var menu = await db.TblMenus.Where(x => x.Controller == _controller && x.Action == _action).FirstAsync();
+                var menu = await db.TblMenus.Where(x => x.Controller == _controller && x.Action == _action).FirstOrDefaultAsync();
                 if (menu != null)
                 {
-                    var chk_permission = await db.TblRoleMenus.Where(x => x.MenuId == menu.MenuId && x.RoleId == Role_ID && x.Check == Convert.ToUInt16(true)).FirstAsync();
+                    var chk_permission = await db.TblRoleMenus.Where(x => x.MenuId == menu.MenuId && x.RoleId == Role_ID && x.Check == Convert.ToUInt16(true)).FirstOrDefaultAsync();
                     if (chk_permission != null)
                     {
                         return true;

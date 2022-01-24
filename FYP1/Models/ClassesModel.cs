@@ -5,7 +5,10 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
+using FYP1.Helpers__Filters;
 using FYP1.Repository;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace FYP1.Models
@@ -14,17 +17,23 @@ namespace FYP1.Models
     {
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
-
+        private IHttpContextAccessor _httpContext;
         GeneralDTO general = new GeneralDTO();
         TblClass Class = new TblClass();
-        public ClassesModel(LMS_DBContext db, IMapper mapper)
+        GeneralDTO user_data;
+
+        public ClassesModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext)
         {
             this.db = db;
             this.mapper = mapper;
+            _httpContext = httpContext;
+            user_data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
         }
+
 
         public async Task<GeneralDTO> AddNewClass(ClassDTO dto)
         {
+
             try
             {
                 //update class
@@ -35,29 +44,19 @@ namespace FYP1.Models
                     await db.SaveChangesAsync();
                     general.Text = "Class Updated!";
                     general.Icon = "success";
-                    return general;
                 }
                 //add new class
                 else
                 {
-                    var chk_class = await db.TblClasses.Where(x => x.CourseId == dto.CourseId && x.DayId == dto.DayId && x.TimeId == dto.TimeId).FirstOrDefaultAsync();
-                    if (chk_class == null)
-                    {
-                        mapper.Map(dto, Class);
-                        Class.IsActive = Convert.ToUInt32(true);
-                        await db.TblClasses.AddAsync(Class);
-                        await db.SaveChangesAsync();
-                        general.Text = "Class Assigned!";
-                        general.Icon = "success";
-                        return general;
-                    }
-                    else
-                    {
-                        general.Text = "Clash occured with another class";
-                        general.Icon = "error";
-                        return general;
-                    }
+                    mapper.Map(dto, Class);
+                    Class.IsActive = Convert.ToUInt32(true);
+                    await db.TblClasses.AddAsync(Class);
+                    await db.SaveChangesAsync();
+                    general.Text = "Class Assigned!";
+                    general.Icon = "success";
                 }
+                return general;
+
             }
             catch (System.Exception)
             {
@@ -95,39 +94,41 @@ namespace FYP1.Models
             try
             {
                 List<GeneralDTO> classlist = new List<GeneralDTO>();
-                var chkRole = await db.TblUsers.Where(x => x.UserName == username).FirstOrDefaultAsync();
-                if (chkRole.RoleId == 2)
+                if (user_data.User.UserName == username)
                 {
-                    var facultyclasses = await db.TblFacultyCourseRegistrations.Where(x => x.Username == username).Include(x => x.Class).ToListAsync();
-                    foreach (var item in facultyclasses)
+                    var chkRole = await db.TblUsers.Where(x => x.UserName == username).FirstOrDefaultAsync();
+                    if (chkRole.RoleId == 2)
                     {
-                        GeneralDTO classdto = new GeneralDTO();
-                        var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
-                        classdto.Classes = new ClassDTO();
-                        classdto.Classes.ClassId = Convert.ToInt16(item.ClassId);
-                        mapper.Map(course.Course, classdto.Course = new CourseDTO());
-                        mapper.Map(course.Day, classdto.Day = new DayDTO());
-                        mapper.Map(course.Time, classdto.Time = new TimeDTO());
-                        classlist.Add(classdto);
-                    }
+                        var facultyclasses = await db.TblFacultyCourseRegistrations.Where(x => x.Username == username).Include(x => x.Class).ToListAsync();
+                        foreach (var item in facultyclasses)
+                        {
+                            GeneralDTO classdto = new GeneralDTO();
+                            var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
+                            classdto.Classes = new ClassDTO();
+                            classdto.Classes.ClassId = Convert.ToInt16(item.ClassId);
+                            mapper.Map(course.Course, classdto.Course = new CourseDTO());
+                            mapper.Map(course.Day, classdto.Day = new DayDTO());
+                            mapper.Map(course.Time, classdto.Time = new TimeDTO());
+                            classlist.Add(classdto);
+                        }
 
-                }
-                else if (chkRole.RoleId == 3)
-                {
-                    var studentclasses = await db.TblStudentCourseRegistrations.Where(x => x.Username == username).ToListAsync();
-                    foreach (var item in studentclasses)
+                    }
+                    else if (chkRole.RoleId == 3)
                     {
-                        GeneralDTO classdto = new GeneralDTO();
-                        var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
-                        classdto.Classes = new ClassDTO();
-                        classdto.Classes.ClassId = Convert.ToInt16(item.ClassId);
-                        mapper.Map(course.Course, classdto.Course = new CourseDTO());
-                        mapper.Map(course.Day, classdto.Day = new DayDTO());
-                        mapper.Map(course.Time, classdto.Time = new TimeDTO());
-                        classlist.Add(classdto);
+                        var studentclasses = await db.TblStudentCourseRegistrations.Where(x => x.Username == username).ToListAsync();
+                        foreach (var item in studentclasses)
+                        {
+                            GeneralDTO classdto = new GeneralDTO();
+                            var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
+                            classdto.Classes = new ClassDTO();
+                            classdto.Classes.ClassId = Convert.ToInt16(item.ClassId);
+                            mapper.Map(course.Course, classdto.Course = new CourseDTO());
+                            mapper.Map(course.Day, classdto.Day = new DayDTO());
+                            mapper.Map(course.Time, classdto.Time = new TimeDTO());
+                            classlist.Add(classdto);
+                        }
                     }
                 }
-
                 return classlist;
 
             }
@@ -145,6 +146,7 @@ namespace FYP1.Models
             List<GeneralDTO> studentlist = new List<GeneralDTO>();
             try
             {
+
                 var students = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == cid).Include(x => x.User).ToListAsync();
                 if (students.Count != 0)
                 {
@@ -162,10 +164,8 @@ namespace FYP1.Models
                     general.Text = "Class is Empty!";
                     general.Icon = "error";
                     studentlist.Add(general);
-
                 }
                 return studentlist;
-
             }
             catch (System.Exception)
             {
@@ -251,28 +251,33 @@ namespace FYP1.Models
         {
             try
             {
+                var chk_FacultyClass = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == Cid && x.Username == user_data.User.UserName).FirstOrDefaultAsync();
+                var chk_StudentClass = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == Cid && x.Username == user_data.User.UserName).FirstOrDefaultAsync();
 
                 GeneralDTO dto = new GeneralDTO();
-                var class_info = await db.TblClasses.Where(x => x.ClassId == Cid && x.IsActive == Convert.ToUInt16(true)).
-                Include(x => x.Course).
-                Include(x => x.Day).
-                Include(x => x.Time).
-                Include(x => x.Program).
-                FirstOrDefaultAsync();
-                mapper.Map(class_info, dto.Classes = new ClassDTO());
-                mapper.Map(class_info.Program, dto.Program = new ProgramDTO());
-                mapper.Map(class_info.Course, dto.Course = new CourseDTO());
-                mapper.Map(class_info.Day, dto.Day = new DayDTO());
-                mapper.Map(class_info.Time, dto.Time = new TimeDTO());
-                var faculty = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == Cid).FirstOrDefaultAsync();
-                if (faculty != null)
+                if (chk_FacultyClass != null || chk_StudentClass != null || user_data.Role.RoleId == 1)
                 {
-                    var faculty_profile = await db.TblUsers.Where(x => x.UserId == faculty.UserId).Include(x => x.Profile).FirstOrDefaultAsync();
-                    mapper.Map(faculty_profile, dto.User = new UserDTO());
-                    dto.User.Password = "";
-
-                    mapper.Map(faculty_profile.Profile, dto.Profile = new ProfileDTO());
+                    var class_info = await db.TblClasses.Where(x => x.ClassId == Cid && x.IsActive == Convert.ToUInt16(true)).
+                    Include(x => x.Course).
+                    Include(x => x.Day).
+                    Include(x => x.Time).
+                    Include(x => x.Program).
+                    FirstOrDefaultAsync();
+                    mapper.Map(class_info, dto.Classes = new ClassDTO());
+                    mapper.Map(class_info.Program, dto.Program = new ProgramDTO());
+                    mapper.Map(class_info.Course, dto.Course = new CourseDTO());
+                    mapper.Map(class_info.Day, dto.Day = new DayDTO());
+                    mapper.Map(class_info.Time, dto.Time = new TimeDTO());
+                    var faculty = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == Cid).FirstOrDefaultAsync();
+                    if (faculty != null)
+                    {
+                        var faculty_profile = await db.TblUsers.Where(x => x.UserId == faculty.UserId).Include(x => x.Profile).FirstOrDefaultAsync();
+                        mapper.Map(faculty_profile, dto.User = new UserDTO());
+                        dto.User.Password = "";
+                        mapper.Map(faculty_profile.Profile, dto.Profile = new ProfileDTO());
+                    }
                 }
+
                 return dto;
             }
             catch (System.Exception)

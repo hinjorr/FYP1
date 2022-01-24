@@ -42,7 +42,7 @@ namespace FYP1.Models
                     }
                     else
                     {
-                        general.ResponseBool = true;
+                        general.ReturnUrl = _httpContext.HttpContext.Session.GetString("ReturnUrl");
                         mapper.Map(data, general.User = new UserDTO());
                         mapper.Map(data.Role, general.Role = new RoleDTO());
                         mapper.Map(data.Profile, general.Profile = new ProfileDTO());

@@ -27,15 +27,10 @@ function GetUsers() {
       { data: "profile.nic" },
       { data: "profile.email" },
       {
-        data: "user.role.roleId",
+        data: "role.roleName",
         render: function (role) {
-          if (role == 1) {
-            return '<a  class="label label-lg font-weight-bold label-light-primary label-inline"><i class="flaticon-user icon-nm"></i>Admin</a>';
-          } else if (role == 2) {
-            return '<a  class="label label-lg font-weight-bold label-light-success label-inline"><i class="flaticon-presentation icon-nm"></i> Faculty</a>';
-          } else {
-            return '<a  class="label label-lg font-weight-bold label-light-warning label-inline"><i class="flaticon2-pen icon-nm"></i> Student</a>';
-          }
+            return '<a  class="label label-lg font-weight-bold label-light-warning label-inline"><i class="flaticon-user icon-nm"></i>'+role+'</a>';
+          
         },
       },
       {

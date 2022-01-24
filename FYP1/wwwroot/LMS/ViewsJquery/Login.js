@@ -24,10 +24,14 @@ $("#kt_login_signin_submit").click(function (e) {
             })
             .then(function () {
               $("#kt_login_signin_submit").removeClass("spinner spinner-white spinner-right");
-
             });
         } else {
-          location.replace("/Home");
+          if (resp.returnUrl != null) {
+            location.replace(resp.returnUrl);
+          }
+          else {
+            location.replace("/Home");
+          }
         }
       },
     });

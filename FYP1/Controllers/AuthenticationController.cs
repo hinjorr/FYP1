@@ -21,7 +21,6 @@ namespace FYP1.Controllers
         }
         public IActionResult Login()
         {
-
             //ye chk krne k liye h k agr user already login hua wa h tw usse /Home pr redirect kr den agr nh login tw phr yhi /Login pr hi rhe
             var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
             if (data != null)
@@ -55,7 +54,7 @@ namespace FYP1.Controllers
         {
             return View();
         }
-        
+
         [HttpGet("ExceptionPage")]
         public IActionResult ExceptionPage()
         {
@@ -64,6 +63,6 @@ namespace FYP1.Controllers
             return View();
         }
 
-        
+
     }
 }

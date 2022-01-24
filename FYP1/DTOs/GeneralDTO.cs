@@ -5,10 +5,9 @@ namespace FYP1.DTOs
     public class GeneralDTO
     {
 
-        public bool ResponseBool { get; set; }
         public string Text { get; set; }
         public string Icon { get; set; }
-        public string ResponceMsg { get; set; }
+        public string ReturnUrl { get; set; }
         public int TotalSessions { get; set; }
 
         public ProfileDTO Profile { get; set; }

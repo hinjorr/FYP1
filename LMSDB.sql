@@ -359,7 +359,7 @@ CREATE TABLE `Tbl_Marks` (
   KEY `Tbl_Marks_ibfk_2` (`User_Id`),
   CONSTRAINT `Tbl_Marks_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Marks_ibfk_2` FOREIGN KEY (`User_Id`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=51 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Marks` */
 
@@ -380,7 +380,13 @@ insert  into `Tbl_Marks`(`Marks_Id`,`Class_Id`,`Assement_Name`,`User_Id`,`UserNa
 (41,50,'Assignment 2',120,'24691',30,0),
 (42,50,'Assignment 2',121,'183492',30,0),
 (43,50,'Assignment 2',122,'793093',30,0),
-(44,48,'Assignment 1',64,'student',10,7);
+(44,48,'Assignment 1',64,'student',10,7),
+(45,50,'Project',119,'518290',200,1),
+(46,50,'Project',75,'44560',200,1),
+(47,50,'Project',64,'student',200,23),
+(48,50,'Project',120,'24691',200,23),
+(49,50,'Project',121,'183492',200,32),
+(50,50,'Project',122,'793093',200,45);
 
 /*Table structure for table `Tbl_Menu` */
 
@@ -436,7 +442,7 @@ CREATE TABLE `Tbl_Profile` (
   `PhoneNumber` varchar(50) DEFAULT NULL,
   `Profile_Date` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`ProfileID`)
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Profile` */
 
@@ -456,7 +462,7 @@ insert  into `Tbl_Profile`(`ProfileID`,`Name`,`FatherName`,`Email`,`NIC`,`Addres
 (95,'Niaz ','Hussain','masoodarif1313@gmail.com','1234567895321','6','Karachi','Pakistan','/Upload/1234567895321.jpg','01/20/2022','male','03172945903','10/01/2022'),
 (96,'Liaqat  Khan','Ali hsaan','masoodarif1313@gmail.com','6784567895321','6','Karachi','Pakistan','/Upload/6784567895321.jpg','01/20/2022','male','03172945903','10/01/2022'),
 (97,'Masood ','Muhammad Arif','masoodarif1313@gmail.com','4130783292999','R:36 sector 17/c','Karachi','Pakistan','/Upload/4130783292999.jpg','01/12/2022','male','03172945903','16/01/2022'),
-(98,'Mohsin',NULL,'masoodarif1313@gmail.com','1123511111111','6','Karachi','Pakistan',NULL,'01-01-2014','male','03172945903','24/01/2022');
+(99,'Ali','Saqib','masoodarif1313@gmail.com','4130782563299','6','Karachi','Pakistan','/Upload/4130782563299.jpg','01/13/2022','male','03172945903','24/01/2022');
 
 /*Table structure for table `Tbl_ProgramSyllabus` */
 
@@ -568,71 +574,91 @@ CREATE TABLE `Tbl_RoleMenu` (
   KEY `Role_ID` (`Role_ID`),
   CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=327 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_RoleMenu` */
 
 insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values 
-(101,20,1,''),
-(102,18,1,''),
-(103,2,1,''),
-(104,3,1,''),
-(105,4,1,''),
-(106,5,1,''),
-(107,6,1,''),
-(108,7,1,''),
-(109,8,1,''),
-(110,19,1,''),
-(111,9,1,''),
-(112,11,1,''),
-(113,12,1,''),
-(114,13,1,''),
-(115,14,1,''),
-(116,15,1,''),
-(117,16,1,''),
-(118,17,1,''),
-(119,10,1,''),
-(120,1,1,''),
-(141,20,3,'\0'),
-(142,18,3,''),
-(143,2,3,'\0'),
-(144,3,3,''),
-(145,4,3,'\0'),
-(146,5,3,''),
-(147,6,3,''),
-(148,7,3,'\0'),
-(149,8,3,'\0'),
-(150,19,3,''),
-(151,9,3,''),
-(152,11,3,'\0'),
-(153,12,3,'\0'),
-(154,13,3,'\0'),
-(155,14,3,'\0'),
-(156,15,3,'\0'),
-(157,16,3,'\0'),
-(158,17,3,'\0'),
-(159,10,3,'\0'),
-(160,1,3,'\0'),
-(181,20,2,'\0'),
-(182,18,2,''),
-(183,2,2,''),
-(184,3,2,'\0'),
-(185,4,2,'\0'),
-(186,5,2,''),
-(187,6,2,''),
-(188,7,2,'\0'),
-(189,8,2,'\0'),
-(190,19,2,''),
-(191,9,2,'\0'),
-(192,11,2,'\0'),
-(193,12,2,'\0'),
-(194,13,2,'\0'),
-(195,14,2,'\0'),
-(196,15,2,'\0'),
-(197,16,2,'\0'),
-(198,17,2,'\0'),
-(199,10,2,''),
-(200,1,2,'\0');
+(207,1,1,''),
+(208,18,1,''),
+(209,17,1,''),
+(210,16,1,''),
+(211,15,1,''),
+(212,14,1,''),
+(213,13,1,''),
+(214,12,1,''),
+(215,11,1,''),
+(216,10,1,''),
+(217,9,1,''),
+(218,8,1,''),
+(219,7,1,''),
+(220,6,1,''),
+(221,5,1,''),
+(222,4,1,''),
+(223,3,1,''),
+(224,2,1,''),
+(225,19,1,''),
+(226,20,1,''),
+(247,1,3,'\0'),
+(248,18,3,'\0'),
+(249,17,3,'\0'),
+(250,16,3,'\0'),
+(251,15,3,'\0'),
+(252,14,3,'\0'),
+(253,13,3,'\0'),
+(254,12,3,'\0'),
+(255,11,3,'\0'),
+(256,10,3,'\0'),
+(257,9,3,''),
+(258,8,3,'\0'),
+(259,7,3,'\0'),
+(260,6,3,''),
+(261,5,3,''),
+(262,4,3,'\0'),
+(263,3,3,''),
+(264,2,3,'\0'),
+(265,19,3,''),
+(266,20,3,'\0'),
+(267,1,4,'\0'),
+(268,18,4,'\0'),
+(269,17,4,'\0'),
+(270,16,4,'\0'),
+(271,15,4,'\0'),
+(272,14,4,'\0'),
+(273,13,4,'\0'),
+(274,12,4,''),
+(275,11,4,''),
+(276,10,4,'\0'),
+(277,9,4,'\0'),
+(278,8,4,'\0'),
+(279,7,4,'\0'),
+(280,6,4,'\0'),
+(281,5,4,'\0'),
+(282,4,4,'\0'),
+(283,3,4,'\0'),
+(284,2,4,'\0'),
+(285,19,4,'\0'),
+(286,20,4,'\0'),
+(307,20,2,'\0'),
+(308,18,2,'\0'),
+(309,2,2,''),
+(310,3,2,'\0'),
+(311,4,2,'\0'),
+(312,5,2,''),
+(313,6,2,''),
+(314,7,2,'\0'),
+(315,8,2,'\0'),
+(316,19,2,''),
+(317,9,2,'\0'),
+(318,11,2,'\0'),
+(319,12,2,'\0'),
+(320,13,2,'\0'),
+(321,14,2,'\0'),
+(322,15,2,'\0'),
+(323,16,2,'\0'),
+(324,17,2,'\0'),
+(325,10,2,''),
+(326,1,2,'\0');
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -642,14 +668,16 @@ CREATE TABLE `Tbl_Roles` (
   `RoleID` int(11) NOT NULL AUTO_INCREMENT,
   `RoleName` varchar(50) NOT NULL,
   PRIMARY KEY (`RoleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Roles` */
 
 insert  into `Tbl_Roles`(`RoleID`,`RoleName`) values 
 (1,'Admin'),
 (2,'Faculty'),
-(3,'Student');
+(3,'Student'),
+(4,'Program Manager'),
+(6,'Academics');
 
 /*Table structure for table `Tbl_Semester` */
 
@@ -702,7 +730,7 @@ CREATE TABLE `Tbl_Student` (
   KEY `UserID` (`UserID`),
   CONSTRAINT `Tbl_Student_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Student_ibfk_2` FOREIGN KEY (`ProgramID`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Student` */
 
@@ -715,8 +743,7 @@ insert  into `Tbl_Student`(`Student_Id`,`ProgramID`,`UserID`) values
 (22,1,122),
 (23,6,129),
 (24,6,130),
-(25,6,131),
-(26,1,137);
+(25,6,131);
 
 /*Table structure for table `Tbl_StudentCourseRegistration` */
 
@@ -785,7 +812,7 @@ CREATE TABLE `Tbl_User` (
   KEY `RoleID` (`RoleID`),
   CONSTRAINT `Tbl_User_ibfk_1` FOREIGN KEY (`ProfileID`) REFERENCES `Tbl_Profile` (`ProfileID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_User_ibfk_2` FOREIGN KEY (`RoleID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_User` */
 
@@ -806,7 +833,7 @@ insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsA
 (131,'341996','17323196',3,96,'','10/01/2022'),
 (132,'admin','1050',1,97,'','16/01/2022'),
 (135,'700490','1922190',1,90,'','19/01/2022'),
-(137,'15298','16850598',3,98,'','24/01/2022');
+(138,'382499','9560699',4,99,'','24/01/2022');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

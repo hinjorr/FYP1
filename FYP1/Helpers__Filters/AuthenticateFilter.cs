@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using FYP1.DTOs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Controllers;
 using Microsoft.AspNetCore.Mvc.Filters;
@@ -16,6 +17,10 @@ namespace FYP1.Helpers__Filters
             var _action = descriptor.ActionName;
             var data = filterContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
             var permissions = filterContext.HttpContext.Session.GetObjectFromJson<List<GeneralDTO>>("Permissions");
+
+
+            filterContext.HttpContext.Session.SetString("ReturnUrl", filterContext.HttpContext.Request.Path.Value);
+
             if (data == null)
             {
                 var controller = (ControllerBase)filterContext.Controller;

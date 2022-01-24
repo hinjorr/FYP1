@@ -23,14 +23,19 @@ function RolesInTable() {
             {
                 data: "roleId",
                 render: function (id) {
-                    return (
-                        '<button class="btn btn-sm btn-clean btn-icon" title="Edit Role" onclick="Update(' +
-                        id +
-                        ')"><i class="la la-edit"></i></button>' +
-                        '<button class="btn btn-sm btn-clean btn-icon" title="Delete Role" onclick="Delete(' +
-                        id +
-                        ')"><i class="la la-trash"></i></button>'
-                    );
+                    if (id == 1 || id == 2 || id == 3) {
+                        return ""
+                    }
+                    else {
+                        return (
+                            '<button class="btn btn-sm btn-clean btn-icon" title="Edit Role" onclick="Update(' +
+                            id +
+                            ')"><i class="la la-edit"></i></button>' +
+                            '<button class="btn btn-sm btn-clean btn-icon" title="Delete Role" onclick="Delete(' +
+                            id +
+                            ')"><i class="la la-trash"></i></button>'
+                        );
+                    }
                 },
             },
         ],
@@ -78,9 +83,11 @@ function Delete(id) {
                     },
                 })
                 .then(function () {
-                    $("#tblRoles").DataTable().clear().destroy();
-                    RolesInTable()
-                    CommonFunctions.GetRoles("#dpDownRoles")
+                    if (resp.icon != "error") {
+                        $("#tblRoles").DataTable().clear().destroy();
+                        RolesInTable()
+                        CommonFunctions.GetRoles("#dpDownRoles")
+                    }
                 });
         }
     });

@@ -14,3 +14,8 @@ dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=maso
 dpkg --list
 sudo apt-get remove
 winecfg
+
+
+workbench/ apparmor policy
+sudo snap connect mysql-workbench-community:password-manager-service :password-manager-service
+
