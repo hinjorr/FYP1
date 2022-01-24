@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    [AuthorizedUserFilter]
+    [AuthenticateFilter]
 
     public class AdminCoursesController : Controller
     {
@@ -18,6 +18,7 @@ namespace FYP1.Controllers
             this.repo = repo;
         }
 
+         
         [HttpGet("AddNewCourse")]
         public IActionResult AddNewCourse()
         {

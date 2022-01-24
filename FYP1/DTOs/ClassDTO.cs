@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace FYP1.DTOs
 {
-    public class ClassDTO : GeneralDTO
+    public class ClassDTO 
     {
 
         public int ClassId { get; set; }

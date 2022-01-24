@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace FYP1.DTOs
 {
-    public class SemesterDTO : GeneralDTO
+    public class SemesterDTO 
     {
         public int SemesterId { get; set; }
         public string SemesterName { get; set; }

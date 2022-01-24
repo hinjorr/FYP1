@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
@@ -46,6 +47,7 @@ namespace FYP1.Models
                         mapper.Map(data.Role, general.Role = new RoleDTO());
                         mapper.Map(data.Profile, general.Profile = new ProfileDTO());
                         _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
+                        GetPermissions(general.Role.RoleId);
                         general.Icon = "success";
                         general.Text = "Login Succesfull!";
                         return general;
@@ -67,7 +69,26 @@ namespace FYP1.Models
                 throw;
             }
         }
+        public void GetPermissions(int Role_Id)
+        {
+            try
+            {
+                List<GeneralDTO> general_list = new List<GeneralDTO>();
+                var _list = db.TblRoleMenus.Where(x => x.RoleId == Role_Id).Include(x => x.Menu).ToList();
+                foreach (var item in _list)
+                {
+                    GeneralDTO dto = new GeneralDTO();
+                    mapper.Map(item, dto.RoleMenu = new RoleMenuDTO());
+                    mapper.Map(item.Menu, dto.Menu = new MenuDTO());
+                    general_list.Add(dto);
+                }
+                _httpContext.HttpContext.Session.SetObjectAsJson("Permissions", general_list);
+            }
+            catch (System.Exception)
+            {
 
+            }
+        }
 
     }
 }

@@ -46,14 +46,16 @@ namespace FYP1.Controllers
         public IActionResult Logout()
         {
             _httpContext.HttpContext.Session.Remove("UserDetails");
+            _httpContext.HttpContext.Response.Cookies.Delete(".AspNetCore.Session");
             return View("Login");
         }
 
-        [HttpGet("404Error")]
+        // [HttpGet("404Error")]
         public IActionResult Error404Page()
         {
             return View();
         }
+        
         [HttpGet("ExceptionPage")]
         public IActionResult ExceptionPage()
         {
@@ -61,5 +63,7 @@ namespace FYP1.Controllers
             // ViewBag.
             return View();
         }
+
+        
     }
 }

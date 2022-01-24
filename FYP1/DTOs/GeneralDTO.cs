@@ -25,6 +25,8 @@ namespace FYP1.DTOs
         public CourseDTO Course { get; set; }
         public MarksDTO Marks { get; set; }
         public AttendenceDTO Attendence { get; set; }
+        public MenuDTO Menu { get; set; }
+        public RoleMenuDTO RoleMenu { get; set; }
 
         public StudentCourseRegistrationDTO StudentCourseRegistration { get; set; }
         public FacultyCourseRegistrationDTO FacultyCourseRegistration { get; set; }

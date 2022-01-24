@@ -8,6 +8,6 @@ namespace FYP1.Models
 {
     public interface IUserValidation
     {
-     Task<ProfileDTO> CheckNIC(ProfileDTO dto);
+     Task<GeneralDTO> CheckNIC(GeneralDTO dto);
     }
 }

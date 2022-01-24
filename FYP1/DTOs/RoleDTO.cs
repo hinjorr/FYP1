@@ -1,6 +1,6 @@
 namespace FYP1.DTOs
 {
-    public class RoleDTO:GeneralDTO
+    public class RoleDTO
     {
           public int RoleId { get; set; }
         public string RoleName { get; set; }

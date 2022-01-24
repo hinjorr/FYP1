@@ -46,42 +46,42 @@ $("#newuser").validate({
   submitHandler: function (form) {
     var input = document.getElementById("profile_avatar");
     var file = input.files;
-    var ProfileDTO = new FormData();
-    ProfileDTO.append("ProfileImage", file[0]);
-    ProfileDTO.append("Name", $("#txtName").val());
-    ProfileDTO.append("FatherName", $("#txtFatherName").val());
-    ProfileDTO.append("PhoneNumber", $("#txtNumber").val());
-    ProfileDTO.append("Email", $("#txtEmail").val());
-    ProfileDTO.append("Nic", $("#txtNic").val());
-    ProfileDTO.append("Gender", $("input[name=gender]:checked").val());
-    ProfileDTO.append("DoB", $("#timeDOB1").val());
-    ProfileDTO.append("Address", $("#txtAddress").val());
-    ProfileDTO.append("City", $("#txtCity").val());
-    ProfileDTO.append("Country", $("#txtCountry").val());
-    ProfileDTO.append("IsActive", 1);
-    ProfileDTO.append("User.RoleId", $("#dpdownRole option:selected").val());
-    ProfileDTO.append("User.IsActive", 1);
-    ProfileDTO.append(
-      "Student.ProgramId",
-      $("#dpdownProgram option:selected").val()
-    );
-    ProfileDTO.append("Student.IsActive", 1);
+    var GeneralDTO = new FormData();
+    GeneralDTO.append("Profile.ProfileImage", file[0]);
+    GeneralDTO.append("Profile.Name", $("#txtName").val());
+    GeneralDTO.append("Profile.FatherName", $("#txtFatherName").val());
+    GeneralDTO.append("Profile.PhoneNumber", $("#txtNumber").val());
+    GeneralDTO.append("Profile.Email", $("#txtEmail").val());
+    GeneralDTO.append("Profile.Nic", $("#txtNic").val());
+    GeneralDTO.append("Profile.Gender", $("input[name=gender]:checked").val());
+    GeneralDTO.append("Profile.DoB", $("#timeDOB1").val());
+    GeneralDTO.append("Profile.Address", $("#txtAddress").val());
+    GeneralDTO.append("Profile.City", $("#txtCity").val());
+    GeneralDTO.append("Profile.Country", $("#txtCountry").val());
+    GeneralDTO.append("Role.RoleId", $("#dpdownRole option:selected").val());
+    GeneralDTO.append("User.IsActive", 1);
+    GeneralDTO.append("Student.ProgramId", $("#dpdownProgram option:selected").val());
     $.ajax({
       type: "Post",
       url: "/User/AddNewUser",
-      data: ProfileDTO,
+      data: GeneralDTO,
       dataType: "json",
       contentType: false,
       processData: false,
       success: function (resp) {
-        cuteToast({
-          type: resp.type,
-          message: resp.msg,
-          timer: 3000,
-        });
-        if (resp.msg == "success") {
-          $("#newuser").trigger("reset");
-        }
+        swal
+          .fire({
+            text: resp.text,
+            icon: resp.icon,
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+              confirmButton: "btn font-weight-bold btn-light-primary",
+            },
+          })
+          .then(function () {
+            KTUtil.scrollTop();
+          });
       },
     });
   },
@@ -94,57 +94,62 @@ $("#dpdownRole").click(function (e) {
 
 //faculty and admin role condition
 function ProgramHide(id) {
-  if (id == 2 || id == 1) {
-    $("#dpdownProgram").attr("disabled", true);
-  } else {
+  if (id == 3) {
     $("#dpdownProgram").attr("disabled", false);
+  } else {
+    $("#dpdownProgram").attr("disabled", true);
   }
 }
 
 //Role dp chnge
 $("#dpdownRole").change(function (e) {
-  var ProfileDTO = {
-    Nic: $("#txtNic").val(),
-    User: {
-      RoleId: $("#dpdownRole option:selected").val(),
+  var GeneralDTO = {
+    "Profile.Nic": $("#txtNic").val(),
+    "Role": {
+      "RoleId": $("#dpdownRole option:selected").val(),
     },
   };
-  RoleCheck(ProfileDTO);
+  RoleCheck(GeneralDTO);
 });
 
 //Role Check
-function RoleCheck(ProfileDTO) {
+function RoleCheck(GeneralDTO) {
   $.ajax({
     type: "Post",
     url: "/User/RoleCheck",
-    data: ProfileDTO,
+    data: GeneralDTO,
     success: function (resp) {
-      if (resp != null) {
-        cuteToast({
-          type: "warning",
-          message: resp,
-          timer: 3000,
-        });
+      if (resp.text != null) {
+        swal
+          .fire({
+            text: resp.text,
+            icon: resp.icon,
+            buttonsStyling: false,
+            confirmButtonText: "Ok, got it!",
+            customClass: {
+              confirmButton: "btn font-weight-bold btn-light-primary",
+            },
+          })
+          .then(function () {
+            KTUtil.scrollTop();
+          });
       }
+
     },
   });
 }
 
 //NIC check ajax
 $("#txtNic").change(function (e) {
-  var ProfileDTO = {
-    Nic: $("#txtNic").val(),
-    User: {
-      IsActive: 1,
-    },
-    Student: {
-      IsActive: 1,
-    },
+  var GeneralDTO = {
+    Profile: {
+      Nic: $("#txtNic").val(),
+    }
   };
   $.ajax({
     type: "Post",
     url: "/UserValidation/NICCheck",
-    data: ProfileDTO,
+    data: GeneralDTO,
     success: function (resp) {
       if (resp != null) {
         cuteToast({
@@ -152,18 +157,18 @@ $("#txtNic").change(function (e) {
           message: "This NIC is already Registered!",
           timer: 3000,
         });
-        $("#txtName").val(resp.name).prop("disabled", true);
-        $("#txtFatherName").val(resp.fatherName).prop("disabled", true);
-        $("#txtNumber").val(resp.phoneNumber).prop("disabled", true);
-        $("#txtEmail").val(resp.email).prop("disabled", true);
-        $("input[name=gender][value=" + resp.gender + "]").prop("checked", true);
+        $("#txtName").val(resp.profile.name).prop("disabled", true);
+        $("#txtFatherName").val(resp.profile.fatherName).prop("disabled", true);
+        $("#txtNumber").val(resp.profile.phoneNumber).prop("disabled", true);
+        $("#txtEmail").val(resp.profile.email).prop("disabled", true);
+        $("input[name=gender][value=" + resp.profile.gender + "]").prop("checked", true);
         // $("#dpdownRole").val(resp.role.roleId);
-        $("#timeDOB1").val(resp.doB).prop("disabled", true);
-        $("#txtAddress").val(resp.address).prop("disabled", true);
-        $("#txtCity").val(resp.city).prop("disabled", true);
-        $("#txtCountry").val(resp.country).prop("disabled", true);
-        $(".GetImage").css("background-image", "url(" + resp.picture + ")");
-        ProgramHide(resp.user.roleId);
+        $("#timeDOB1").val(resp.profile.doB).prop("disabled", true);
+        $("#txtAddress").val(resp.profile.address).prop("disabled", true);
+        $("#txtCity").val(resp.profile.city).prop("disabled", true);
+        $("#txtCountry").val(resp.profile.country).prop("disabled", true);
+        $(".GetImage").css("background-image", "url(" + resp.profile.picture + ")");
+        ProgramHide(resp.role.roleId);
       }
     },
   });

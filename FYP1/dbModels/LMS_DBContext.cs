@@ -40,14 +40,14 @@ namespace FYP1.dbModels
         public virtual DbSet<TblTime> TblTimes { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
 
-//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//         {
-//             if (!optionsBuilder.IsConfigured)
-//             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
-//             }
-//         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("5.7.36-mysql"));
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -636,6 +636,10 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.Id).HasColumnType("int(11)");
 
+                entity.Property(e => e.Check)
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("b'0'");
+
                 entity.Property(e => e.MenuId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Menu_ID");
@@ -647,11 +651,13 @@ namespace FYP1.dbModels
                 entity.HasOne(d => d.Menu)
                     .WithMany(p => p.TblRoleMenus)
                     .HasForeignKey(d => d.MenuId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_RoleMenu_ibfk_1");
 
                 entity.HasOne(d => d.Role)
                     .WithMany(p => p.TblRoleMenus)
                     .HasForeignKey(d => d.RoleId)
+                    .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_RoleMenu_ibfk_2");
             });
 
@@ -689,8 +695,6 @@ namespace FYP1.dbModels
                 entity.Property(e => e.StudentId)
                     .HasColumnType("int(11)")
                     .HasColumnName("Student_Id");
-
-                entity.Property(e => e.IsActive).HasColumnType("bit(1)");
 
                 entity.Property(e => e.ProgramId)
                     .HasColumnType("int(11)")

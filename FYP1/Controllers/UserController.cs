@@ -9,7 +9,7 @@ using FYP1.Helpers__Filters;
 
 namespace FYP1.Controllers
 {
-    [AuthorizedUserFilter]
+
     public class UserController : Controller
     {
         private readonly IUser repo;
@@ -22,6 +22,7 @@ namespace FYP1.Controllers
             this.Env = Env;
         }
 
+        [AuthenticateFilter]
         [HttpGet("NewUser")]
         public IActionResult AddNewUser()
         {
@@ -31,25 +32,18 @@ namespace FYP1.Controllers
 
 
         [HttpPost]
-        public async Task<IActionResult> AddNewUser([FromForm] ProfileDTO dto)
+        public async Task<IActionResult> AddNewUser([FromForm] GeneralDTO dto)
         {
 
             var RoleChk = await repo.Role_NIC_Check(dto);
-            if (RoleChk == null)
+            if (RoleChk.Text == null)
             {
-                var chk = await repo.AddNewUser(dto);
-                if (chk)
-                {
-                    return Ok(new { type = "success", msg = "User Registered!" });
-                }
-                else
-                {
-                    return Ok(new { type = "error", msg = "Registration Failed!" });
-                }
+                var data = await repo.RegisterUser(dto);
+                return Ok(data);
             }
             else
             {
-                return Ok(new { type = "warning", msg = RoleChk });
+                return Ok(RoleChk);
             }
         }
 
@@ -61,27 +55,21 @@ namespace FYP1.Controllers
         public async Task<IActionResult> DeleteUser(string username)
         {
             var chk = await repo.DeleteUser(username);
-            if (chk == true)
-            {
-                return Ok(new { type = "success", msg = "Status Cahnged!" });
-            }
-            else
-            {
-                return Ok(new { type = "error", msg = "Task Failed!" });
-
-            }
+            return Ok(chk);
         }
-        public async Task<IActionResult> RoleCheck(ProfileDTO dto)
+        public async Task<IActionResult> RoleCheck(GeneralDTO dto)
         {
             var chk = await repo.Role_NIC_Check(dto);
             return Ok(chk);
         }
 
+        [AuthenticateFilter]
         [HttpGet("ViewUsers")]
         public IActionResult ViewUsers()
         {
             return View();
         }
+
 
         [HttpGet("Profile/{id}")]
         public IActionResult ViewProfile()
@@ -89,12 +77,14 @@ namespace FYP1.Controllers
             return View();
         }
 
+
         [HttpGet("GetProfile")]
         public async Task<IActionResult> GetProfile(string username)
         {
             var data = await repo.GetProfile(username);
             return Ok(data);
         }
+
 
         [HttpPost("UpdateProfile")]
         public ActionResult UpdateProfile([FromForm] ProfileDTO dto)
@@ -107,11 +97,12 @@ namespace FYP1.Controllers
             return Json(new { data = users });
         }
 
-        [HttpGet("UploadUsers")]
-        public IActionResult UploadBulkUsers()
-        {
-            return View();
-        }
+        // [HttpGet("UploadUsers")]
+        // public IActionResult UploadBulkUsers()
+        // {
+        //     return View();
+        // }
+
 
         [HttpGet("Calender")]
         public IActionResult Calender()

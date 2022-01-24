@@ -22,23 +22,23 @@ namespace FYP1.Models
             db = _db;
 
         }
-        public async Task<ProfileDTO> CheckNIC(ProfileDTO dto)
+        public async Task<GeneralDTO> CheckNIC(GeneralDTO dto)
         {
             try
             {
-                var data = await db.TblProfiles.Where(x => x.Nic == dto.Nic).FirstOrDefaultAsync();
-                var mapped = mapper.Map(data, dto);
+                var data = await db.TblProfiles.Where(x => x.Nic == dto.Profile.Nic).FirstOrDefaultAsync();
+
                 if (data != null)
                 {
-                    mapped.Picture = data.Picture;
+                    mapper.Map(data, dto.Profile = new ProfileDTO());
                     var user = await db.TblUsers.Where(x => x.ProfileId == data.ProfileId).Include(z => z.Role).FirstOrDefaultAsync();
-                    mapped.Role = new RoleDTO
-                    {
-                        RoleId = user.Role.RoleId,
-                        RoleName = user.Role.RoleName
-                    };
-
-                    return mapped;
+                    mapper.Map(user.Role, dto.Role = new RoleDTO());
+                    // mapped.Role = new RoleDTO
+                    // {
+                    //     RoleId = user.Role.RoleId,
+                    //     RoleName = user.Role.RoleName
+                    // };
+                     return dto;
                 }
                 else
                 {

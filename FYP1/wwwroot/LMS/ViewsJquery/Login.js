@@ -27,11 +27,7 @@ $("#kt_login_signin_submit").click(function (e) {
 
             });
         } else {
-          if (resp.role.roleName == "Admin") {
-            location.replace("/Home");
-          } else {
-            location.replace("/ViewAllClasses");
-          }
+          location.replace("/Home");
         }
       },
     });

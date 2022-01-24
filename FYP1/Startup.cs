@@ -34,6 +34,10 @@ namespace FYP1
             services.AddSession(options =>
             {
                 options.IdleTimeout = TimeSpan.FromMinutes(20);//You can set Time   
+                // options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
+                // options.Cookie.SameSite = SameSiteMode.Strict;
+                // options.Cookie.HttpOnly = true;
+                // options.Cookie.IsEssential = true;
             });
             services.AddMvc();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
@@ -49,7 +53,8 @@ namespace FYP1
             services.AddScoped<IRegisterCourses, RegisterCoursesModel>();
             services.AddScoped<IMarks, MarksModel>();
             services.AddScoped<IAttendence, AttendenceModel>();
-
+            services.AddScoped<IRoleManagement, RoleManagementModel>();
+            // services.AddDataProtection();
 
         }
 
@@ -67,6 +72,7 @@ namespace FYP1
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
+            // app.UseCookiePolicy();
             app.UseSession();
             app.UseRouting();
             app.UseEndpoints(endpoints =>

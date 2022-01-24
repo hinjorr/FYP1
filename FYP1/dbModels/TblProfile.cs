@@ -24,7 +24,6 @@ namespace FYP1.dbModels
         public string DoB { get; set; }
         public string Gender { get; set; }
         public string PhoneNumber { get; set; }
-        public bool IsActive { get; set; }
         public string ProfileDate { get; set; }
 
         public virtual ICollection<TblUser> TblUsers { get; set; }

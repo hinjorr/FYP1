@@ -30,7 +30,7 @@ var CommonFunctions = {
           html +=
             "<option value=" + item.roleId + ">" + item.roleName + "</option>";
         });
-        $(id).append(html);
+        $(id).html(html);
       },
     });
   },

@@ -1,6 +1,6 @@
 namespace FYP1.DTOs
 {
-    public class ClassSessionDTO : GeneralDTO
+    public class ClassSessionDTO 
     {
         public int SessionId { get; set; }
         public int? SemesterId { get; set; }

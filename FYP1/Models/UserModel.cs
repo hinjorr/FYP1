@@ -21,12 +21,7 @@ namespace FYP1.Models
         private readonly LMS_DBContext db;
         private static readonly Random _random = new Random();
         DateTime datenow = DateTime.Now;
-        TblProfile profile = new TblProfile();
-        TblFaculty faculty = new TblFaculty();
-        TblStudent student = new TblStudent();
-        TblAdmin admin = new TblAdmin();
-        TblUser user = new TblUser();
-
+        GeneralDTO general = new GeneralDTO();
         public IWebHostEnvironment Env { get; }
 
         public UserModel(IMapper _mapper, LMS_DBContext _db, IWebHostEnvironment env)
@@ -41,118 +36,107 @@ namespace FYP1.Models
         {
             return _random.Next(min, max);
         }
-        public async Task<bool> AddNewUser(ProfileDTO dto)
+        public async Task<GeneralDTO> RegisterUser(GeneralDTO dto)
         {
             using (var transaction = await db.Database.BeginTransactionAsync())
             {
                 try
                 {
-
-
-                    var profilechk = await db.TblProfiles.Where(x => x.Nic == dto.Nic).FirstOrDefaultAsync();
+                    var profilechk = await db.TblProfiles.Where(x => x.Nic == dto.Profile.Nic).FirstOrDefaultAsync();
                     //create another user for the same profile
                     if (profilechk != null)
                     {
-                        dto.ProfileId = profilechk.ProfileId;
-                        user = await AddUser(dto);
+                        dto.Profile.ProfileId = profilechk.ProfileId;
+                        int user_id = await AddUser(dto.Role.RoleId, dto.Profile.ProfileId);
                         // condition whether the user is Student/Faculty/Admin
-                        if (user.RoleId == 1)
+                        if (dto.Role.RoleId == 1)
                         {
-                            await AddAdmin(user.UserId);
+                            await AddAdmin(user_id);
                         }
-                        else if (user.RoleId == 2)
+                        else if (dto.Role.RoleId == 2)
                         {
-                            await AddFaculty(user.UserId);
+                            await AddFaculty(user_id);
                         }
-                        else if (dto.Student.ProgramId != 0 && user.RoleId == 3)
+                        else if (dto.Student.ProgramId != 0 && dto.Role.RoleId == 3)
                         {
-                            await AddStudent(dto);
+                            await AddStudent(user_id, dto.Student.ProgramId);
                         }
-                        else
-                        {
-                            return false;
-                        }
+
                     }
                     //create new user for the new profile
                     else
                     {
-                        mapper.Map(dto, profile);
-                        string ImagePath = UploadFile(dto);
+                        TblProfile tblProfile = new TblProfile();
+                        mapper.Map(dto.Profile, tblProfile);
+                        string ImagePath = UploadFile(dto.Profile);
 
-                        profile.Picture = ImagePath;
-                        await AddProfile();
-                        dto.ProfileId = profile.ProfileId;
+                        dto.Profile.Picture = ImagePath;
+                        int profile_id = await AddProfile(dto.Profile);
+                        dto.Profile.ProfileId = profile_id;
 
-                        await AddUser(dto);
-                        //condition whether the user is Student/ Faculty/Admin
-                        if (dto.User.RoleId == 1)
+                        int user_id = await AddUser(dto.Role.RoleId, profile_id);
+                        // condition whether the user is Student/Faculty/Admin
+                        if (dto.Role.RoleId == 1)
                         {
-                            await AddAdmin(user.UserId);
+                            await AddAdmin(user_id);
                         }
-                        else if (dto.User.RoleId == 2)
+                        else if (dto.Role.RoleId == 2)
                         {
-                            await AddFaculty(user.UserId);
+                            await AddFaculty(user_id);
                         }
-
-                        else if (dto.Student.ProgramId != null && dto.User.RoleId == 3)
+                        else if (dto.Student.ProgramId != 0 && dto.Role.RoleId == 3)
                         {
-                            await AddStudent(dto);
-                        }
-                        else
-                        {
-                            return false;
+                            await AddStudent(user_id, dto.Student.ProgramId);
                         }
 
                     }
-
-
                     await transaction.CommitAsync();
-                    return true;
+                    general.Text = "User Registered";
+                    general.Icon = "success";
+                    return general;
                 }
                 catch (System.Exception)
                 {
-                    throw new Exception("Task Failed");
+                    general.Text = "Server Error";
+                    general.Icon = "error";
+                    return general;
 
                 }
             }
         }
-        //entring data in TblProfile
-
-        async Task<TblProfile> AddProfile()
+        async Task<int> AddProfile(ProfileDTO dto)
         {
             try
-
             {
-
-                profile.ProfileDate = datenow.ToString("dd/MM/yyyy");
-
-                await db.TblProfiles.AddAsync(profile);
+                //entring data in TblProfile
+                TblProfile tblProfile = new TblProfile();
+                mapper.Map(dto, tblProfile);
+                tblProfile.ProfileDate = datenow.ToString("dd/MM/yyyy");
+                await db.TblProfiles.AddAsync(tblProfile);
                 await db.SaveChangesAsync();
-
-                return profile;
+                return tblProfile.ProfileId;
             }
             catch (System.Exception)
             {
-
                 throw new Exception("Task Failed");
             }
 
         }
-        async Task<TblUser> AddUser(ProfileDTO dto)
+        async Task<int> AddUser(int RoleID, int ProfileID)
         {
             try
             {
                 //entring data in TblUser
-                mapper.Map(dto.User, user);
-                user.RoleId = dto.User.RoleId;
-                user.IsActive = Convert.ToUInt32(true);
-                user.UserDate = datenow.ToString("dd/MM/yyyy");
-                user.Password = RandomNumber(93456, 193123) + profile.ProfileId.ToString();
-                user.ProfileId = dto.ProfileId;
-                user.UserName = RandomNumber(121, 9131) + user.ProfileId.ToString();
-                await db.TblUsers.AddAsync(user);
+                TblUser tblUser = new TblUser();
+                tblUser.RoleId = RoleID;
+                tblUser.IsActive = Convert.ToUInt32(true);
+                tblUser.UserDate = datenow.ToString("dd/MM/yyyy");
+                tblUser.Password = RandomNumber(93456, 193123) + ProfileID.ToString();
+                tblUser.ProfileId = ProfileID;
+                tblUser.UserName = RandomNumber(121, 9131) + ProfileID.ToString();
+                await db.TblUsers.AddAsync(tblUser);
                 await db.SaveChangesAsync();
-                return user;
+                return tblUser.UserId;
             }
             catch (System.Exception)
             {
@@ -161,50 +145,49 @@ namespace FYP1.Models
             }
 
         }
-        async Task<TblAdmin> AddAdmin(int id)
+        async Task<bool> AddAdmin(int UserID)
         {
             try
             {
                 //entring data in TblAdmin
-                admin.UserId = id;
-                await db.TblAdmins.AddAsync(admin);
+                TblAdmin tblAdmin = new TblAdmin();
+                tblAdmin.UserId = UserID;
+                await db.TblAdmins.AddAsync(tblAdmin);
                 await db.SaveChangesAsync();
-                return admin;
+                return true;
             }
             catch (System.Exception)
             {
-
                 throw new Exception("Task Failed");
             }
-
         }
-        async Task<ProfileDTO> AddStudent(ProfileDTO dto)
+        async Task<bool> AddStudent(int UserID, int ProgramID)
         {
             try
             {
                 //enting data in TblStudent
-                student.UserId = user.UserId;
-                student.ProgramId = dto.Student.ProgramId;
-                await db.TblStudents.AddAsync(student);
+                TblStudent tblStudent = new TblStudent();
+                tblStudent.UserId = UserID;
+                tblStudent.ProgramId = ProgramID;
+                await db.TblStudents.AddAsync(tblStudent);
                 await db.SaveChangesAsync();
-                return dto;
+                return true;
             }
             catch (System.Exception)
             {
-
                 throw new Exception("Task Failed");
             }
-
         }
-        async Task<TblFaculty> AddFaculty(int id)
+        async Task<bool> AddFaculty(int User_ID)
         {
             try
             {
                 //entring data in TblFaculty
-                faculty.UserId = user.UserId;
-                await db.TblFaculties.AddAsync(faculty);
+                TblFaculty tblFaculty = new TblFaculty();
+                tblFaculty.UserId = User_ID;
+                await db.TblFaculties.AddAsync(tblFaculty);
                 await db.SaveChangesAsync();
-                return faculty;
+                return true;
             }
             catch (System.Exception)
             {
@@ -213,29 +196,32 @@ namespace FYP1.Models
             }
 
         }
-        public async Task<string> Role_NIC_Check(ProfileDTO dto)
+        public async Task<GeneralDTO> Role_NIC_Check(GeneralDTO dto)
         {
             try
             {
-                var profile = await db.TblProfiles.Where(x => x.Nic == dto.Nic).FirstOrDefaultAsync();
+                var profile = await db.TblProfiles.Where(x => x.Nic == dto.Profile.Nic).FirstOrDefaultAsync();
                 if (profile != null)
                 {
-                    var user = await db.TblUsers.Where(x => x.ProfileId == profile.ProfileId && x.RoleId == dto.User.RoleId).FirstOrDefaultAsync();
+                    var user = await db.TblUsers.Where(x => x.ProfileId == profile.ProfileId && x.RoleId == dto.Role.RoleId).FirstOrDefaultAsync();
                     if (user != null)
                     {
-                        return "This User already registered with this Role";
+                        general.Text = "This User already registered with this Role";
+                        general.Icon = "error";
                     }
                 }
-                return null;
+                return general;
             }
             catch (System.Exception)
             {
 
-                throw new Exception("Role_NIC_Check! Task Failed");
+                general.Text = "Server Error";
+                general.Icon = "error";
+                return general;
             }
         }
 
-        public async Task<bool> DeleteUser(string username)
+        public async Task<GeneralDTO> DeleteUser(string username)
         {
             try
             {
@@ -243,71 +229,58 @@ namespace FYP1.Models
                 if (data.IsActive == 1)
                 {
                     data.IsActive = Convert.ToUInt32(false);
-                    await db.SaveChangesAsync();
-                    return true;
+                    general.Text = "User Deactivated";
+                    general.Icon = "success";
                 }
                 else if (data.IsActive == 0)
                 {
                     data.IsActive = Convert.ToUInt32(true);
-                    await db.SaveChangesAsync();
-                    return true;
+                    general.Text = "User Activated";
+                    general.Icon = "success";
                 }
-                else
-                {
-                    return false;
-                }
+                await db.SaveChangesAsync();
+                return general;
             }
             catch (System.Exception)
             {
-                throw new Exception("Task Failed in DeleteUser");
+                general.Text = "Server Error";
+                general.Icon = "error";
+                return general;
             }
 
         }
 
-        //will return all active users from db
-        public async Task<List<ProfileDTO>> GetUsers()
+        //will return all active/non-active users from db
+        public async Task<List<GeneralDTO>> GetUsers()
         {
-
-            var data = await db.TblUsers.Select(x => new ProfileDTO
+            List<GeneralDTO> _list = new List<GeneralDTO>();
+            try
             {
-                Nic = x.Profile.Nic,
-                Name = x.Profile.Name + " " + x.Profile.FatherName,
-                Email = x.Profile.Email,
-                Picture = x.Profile.Picture,
-                User = new UserDTO()
+                //user profile role 
+                var data = await db.TblUsers.Include(x => x.Role).Include(x => x.Profile).ToListAsync();
+                foreach (var item in data)
                 {
-                    UserName = x.UserName,
-                    UserDate = x.UserDate,
-                    IsActive = Convert.ToBoolean(x.IsActive),
-                    Role = new RoleDTO()
-                    {
-                        RoleId = x.Role.RoleId,
-                        RoleName = x.Role.RoleName
-                    }
-                },
-            }).ToListAsync();
-            return data;
+                    item.Password = "";
+                    GeneralDTO dto = new GeneralDTO();
+                    mapper.Map(item.Profile, dto.Profile = new ProfileDTO());
+                    mapper.Map(item.Role, dto.Role = new RoleDTO());
+                    mapper.Map(item, dto.User = new UserDTO());
+                    _list.Add(dto);
+                }
+                return _list;
+
+            }
+            catch (System.Exception)
+            {
+                general.Text = "Server Error";
+                general.Icon = "error";
+                _list.Add(general);
+                return _list;
+            }
+
         }
 
-        // public async Task<bool> UpdateUserProfile(ProfileDTO dto)
-        // {
-        //     var chk = await db.TblProfiles.Where(x => x.ProfileId == dto.ProfileId).FirstOrDefaultAsync();
-        //     chk.Name=dto.Name;
-        //     chk.FatherName=dto.FatherName;
-        //     chk.Gender=dto.Gender;
-        //     chk.PhoneNumber=dto.PhoneNumber;
-        //     if (dto.ProfileImage!=null)
-        //     {
-        //         var Image=UploadFile(dto);
-        //         chk.Picture=Image;
-        //     }
-        //     chk.Email=dto.Email;
-        //     chk.Address=dto.Address;
-        //     chk.City=dto.City;
-        //     chk.Country=dto.Country;
-        //     chk.DoB=dto.DoB;
 
-        // }
         //SaveImage in Folder
         private string UploadFile(ProfileDTO dto)
         {
@@ -334,8 +307,7 @@ namespace FYP1.Models
             }
             catch (System.Exception)
             {
-
-                throw new Exception("UploadFile Task Failed!");
+                return null;
             }
 
 
@@ -345,21 +317,22 @@ namespace FYP1.Models
         {
             try
             {
-
                 GeneralDTO dto = new GeneralDTO();
                 var GetProfile = await db.TblUsers.Where(x => x.UserName == username).Include(x => x.Profile).Include(x => x.Role).FirstOrDefaultAsync();
                 if (GetProfile != null)
                 {
-                    dto = mapper.Map(GetProfile.Profile, new ProfileDTO());
-                    dto = mapper.Map(GetProfile, new UserDTO());
-                    // dto = mapper.Map(GetProfile.Role, new RoleDTO());
-                    return dto;
+                    mapper.Map(GetProfile.Profile, dto.Profile = new ProfileDTO());
+                    mapper.Map(GetProfile, dto.User = new UserDTO());
+                    mapper.Map(GetProfile.Role, dto.Role = new RoleDTO());
+
                 }
-                return null;
+                return dto;
             }
-            catch (System.Exception )
+            catch (System.Exception)
             {
-                return null;
+                general.Text = "Server Error";
+                general.Icon = "error";
+                return general;
             }
 
         }

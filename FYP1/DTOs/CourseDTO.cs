@@ -1,6 +1,6 @@
 namespace FYP1.DTOs
 {
-    public class CourseDTO:GeneralDTO
+    public class CourseDTO
     {
         public int CourseId { get; set; }
         public string FullName { get; set; }

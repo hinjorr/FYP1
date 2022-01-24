@@ -26,13 +26,14 @@ CREATE TABLE `Tbl_Admin` (
   PRIMARY KEY (`AdminID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `Tbl_Admin_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Admin` */
 
 insert  into `Tbl_Admin`(`AdminID`,`UserID`) values 
 (3,76),
-(22,132);
+(22,132),
+(23,135);
 
 /*Table structure for table `Tbl_Attendence` */
 
@@ -433,29 +434,29 @@ CREATE TABLE `Tbl_Profile` (
   `DoB` varchar(50) DEFAULT NULL,
   `Gender` varchar(50) DEFAULT NULL,
   `PhoneNumber` varchar(50) DEFAULT NULL,
-  `IsActive` tinyint(1) NOT NULL,
   `Profile_Date` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`ProfileID`)
-) ENGINE=InnoDB AUTO_INCREMENT=98 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Profile` */
 
-insert  into `Tbl_Profile`(`ProfileID`,`Name`,`FatherName`,`Email`,`NIC`,`Address`,`City`,`Country`,`Picture`,`DoB`,`Gender`,`PhoneNumber`,`IsActive`,`Profile_Date`) values 
-(55,'Mohsin',NULL,'masoodarif1313@gmail.com','1111111111111','6','Karachi','Pakistan','/Upload/1111111111111.jpg','01-01-2014','male','03172945903',1,'10/11/2021'),
-(56,'Masood','Arif','masoodarif1313@gmail.com','6666663232222','6','Karachi','Pakistan','/Upload/6666663232222.jpg','01-01-2014','male','03172945903',1,'12/11/2021'),
-(59,'Mubashir',NULL,'masoodarif1313@gmail.com','3245323432321','6','Karachi','Pakistan','/Upload/3245323432321.jpg','01-01-2014','male','03172945903',1,'12/11/2021'),
-(60,'Altaf',NULL,'masoodarif1313@gmail.com','3454325243643','6','Karachi','Pakistan','/Upload/3454325243643.jpg','01-01-2014','male','03172945903',1,'12/11/2021'),
-(61,'Hussain',NULL,'masoodarif1313@gmail.com','6266663232212','6','Karachi','Pakistan','/Upload/6266663232212.jpg','01-01-2014','male','03172945903',1,'12/11/2021'),
-(67,'Sumair',NULL,'masoodarif1313@gmail.com','1112345111111','6','Karachi','Pakistan','/Upload/1112345111111.jpg','01-01-2014','male','03172945903',1,'13/11/2021'),
-(81,'Iqbal','arif','masoodarif1313@gmail.com','1234567800000',NULL,NULL,NULL,'/Upload/1234567800000.jpg','12/15/2021','male','03172945903',1,'06/12/2021'),
-(90,'Habib','Muhammad Arif','masoodarif1313@gmail.com','4130783592999','Shahlatif town','Karachi','Pakistan','/Upload/4130783592999.jpg','12/07/2021','male','03172945903',1,'26/12/2021'),
-(91,'James','Butt','jbutt@gmail.com','1234567890111','6649 N Blue Gum St','New Orleans','Orleans','/Upload/1234567890111.jpg','01/11/2022','male','50426218927',1,'02/01/2022'),
-(92,'Paprocki','Lenna','art@venere.org','7011645148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7011645148116.jpg','01/11/2022','male','50426218927',1,'02/01/2022'),
-(93,'Paprocki','Lenna','art@venere.org','7012345148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7012345148116.jpg','01/11/2022','female','50426218927',1,'02/01/2022'),
-(94,'Shabir ','Hussain','masoodarif1313@gmail.com','1234567891111','6','Karachi','Pakistan','/Upload/1234567891111.jpg','01/20/2022','male','03172945903',1,'10/01/2022'),
-(95,'Niaz ','Hussain','masoodarif1313@gmail.com','1234567895321','6','Karachi','Pakistan','/Upload/1234567895321.jpg','01/20/2022','male','03172945903',1,'10/01/2022'),
-(96,'Liaqat  Khan','Ali hsaan','masoodarif1313@gmail.com','6784567895321','6','Karachi','Pakistan','/Upload/6784567895321.jpg','01/20/2022','male','03172945903',1,'10/01/2022'),
-(97,'Masood ','Muhammad Arif','masoodarif1313@gmail.com','4130783292999','R:36 sector 17/c','Karachi','Pakistan','/Upload/4130783292999.jpg','01/12/2022','male','03172945903',1,'16/01/2022');
+insert  into `Tbl_Profile`(`ProfileID`,`Name`,`FatherName`,`Email`,`NIC`,`Address`,`City`,`Country`,`Picture`,`DoB`,`Gender`,`PhoneNumber`,`Profile_Date`) values 
+(55,'Mohsin',NULL,'masoodarif1313@gmail.com','1111111111111','6','Karachi','Pakistan','/Upload/1111111111111.jpg','01-01-2014','male','03172945903','10/11/2021'),
+(56,'Masood','Arif','masoodarif1313@gmail.com','6666663232222','6','Karachi','Pakistan','/Upload/6666663232222.jpg','01-01-2014','male','03172945903','12/11/2021'),
+(59,'Mubashir',NULL,'masoodarif1313@gmail.com','3245323432321','6','Karachi','Pakistan','/Upload/3245323432321.jpg','01-01-2014','male','03172945903','12/11/2021'),
+(60,'Altaf',NULL,'masoodarif1313@gmail.com','3454325243643','6','Karachi','Pakistan','/Upload/3454325243643.jpg','01-01-2014','male','03172945903','12/11/2021'),
+(61,'Hussain',NULL,'masoodarif1313@gmail.com','6266663232212','6','Karachi','Pakistan','/Upload/6266663232212.jpg','01-01-2014','male','03172945903','12/11/2021'),
+(67,'Sumair',NULL,'masoodarif1313@gmail.com','1112345111111','6','Karachi','Pakistan','/Upload/1112345111111.jpg','01-01-2014','male','03172945903','13/11/2021'),
+(81,'Iqbal','arif','masoodarif1313@gmail.com','1234567800000',NULL,NULL,NULL,'/Upload/1234567800000.jpg','12/15/2021','male','03172945903','06/12/2021'),
+(90,'Habib','Muhammad Arif','masoodarif1313@gmail.com','4130783592999','Shahlatif town','Karachi','Pakistan','/Upload/4130783592999.jpg','12/07/2021','male','03172945903','26/12/2021'),
+(91,'James','Butt','jbutt@gmail.com','1234567890111','6649 N Blue Gum St','New Orleans','Orleans','/Upload/1234567890111.jpg','01/11/2022','male','50426218927','02/01/2022'),
+(92,'Paprocki','Lenna','art@venere.org','7011645148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7011645148116.jpg','01/11/2022','male','50426218927','02/01/2022'),
+(93,'Paprocki','Lenna','art@venere.org','7012345148116','6649 N Blue Gum St','New Orleans','Orleans','/Upload/7012345148116.jpg','01/11/2022','female','50426218927','02/01/2022'),
+(94,'Shabir ','Hussain','masoodarif1313@gmail.com','1234567891111','6','Karachi','Pakistan','/Upload/1234567891111.jpg','01/20/2022','male','03172945903','10/01/2022'),
+(95,'Niaz ','Hussain','masoodarif1313@gmail.com','1234567895321','6','Karachi','Pakistan','/Upload/1234567895321.jpg','01/20/2022','male','03172945903','10/01/2022'),
+(96,'Liaqat  Khan','Ali hsaan','masoodarif1313@gmail.com','6784567895321','6','Karachi','Pakistan','/Upload/6784567895321.jpg','01/20/2022','male','03172945903','10/01/2022'),
+(97,'Masood ','Muhammad Arif','masoodarif1313@gmail.com','4130783292999','R:36 sector 17/c','Karachi','Pakistan','/Upload/4130783292999.jpg','01/12/2022','male','03172945903','16/01/2022'),
+(98,'Mohsin',NULL,'masoodarif1313@gmail.com','1123511111111','6','Karachi','Pakistan',NULL,'01-01-2014','male','03172945903','24/01/2022');
 
 /*Table structure for table `Tbl_ProgramSyllabus` */
 
@@ -561,14 +562,77 @@ CREATE TABLE `Tbl_RoleMenu` (
   `Id` int(11) NOT NULL AUTO_INCREMENT,
   `Menu_ID` int(11) DEFAULT NULL,
   `Role_ID` int(11) DEFAULT NULL,
+  `Check` bit(1) DEFAULT b'0',
   PRIMARY KEY (`Id`),
   KEY `Menu_ID` (`Menu_ID`),
   KEY `Role_ID` (`Role_ID`),
-  CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`),
-  CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=201 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_RoleMenu` */
+
+insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values 
+(101,20,1,''),
+(102,18,1,''),
+(103,2,1,''),
+(104,3,1,''),
+(105,4,1,''),
+(106,5,1,''),
+(107,6,1,''),
+(108,7,1,''),
+(109,8,1,''),
+(110,19,1,''),
+(111,9,1,''),
+(112,11,1,''),
+(113,12,1,''),
+(114,13,1,''),
+(115,14,1,''),
+(116,15,1,''),
+(117,16,1,''),
+(118,17,1,''),
+(119,10,1,''),
+(120,1,1,''),
+(141,20,3,'\0'),
+(142,18,3,''),
+(143,2,3,'\0'),
+(144,3,3,''),
+(145,4,3,'\0'),
+(146,5,3,''),
+(147,6,3,''),
+(148,7,3,'\0'),
+(149,8,3,'\0'),
+(150,19,3,''),
+(151,9,3,''),
+(152,11,3,'\0'),
+(153,12,3,'\0'),
+(154,13,3,'\0'),
+(155,14,3,'\0'),
+(156,15,3,'\0'),
+(157,16,3,'\0'),
+(158,17,3,'\0'),
+(159,10,3,'\0'),
+(160,1,3,'\0'),
+(181,20,2,'\0'),
+(182,18,2,''),
+(183,2,2,''),
+(184,3,2,'\0'),
+(185,4,2,'\0'),
+(186,5,2,''),
+(187,6,2,''),
+(188,7,2,'\0'),
+(189,8,2,'\0'),
+(190,19,2,''),
+(191,9,2,'\0'),
+(192,11,2,'\0'),
+(193,12,2,'\0'),
+(194,13,2,'\0'),
+(195,14,2,'\0'),
+(196,15,2,'\0'),
+(197,16,2,'\0'),
+(198,17,2,'\0'),
+(199,10,2,''),
+(200,1,2,'\0');
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -578,7 +642,7 @@ CREATE TABLE `Tbl_Roles` (
   `RoleID` int(11) NOT NULL AUTO_INCREMENT,
   `RoleName` varchar(50) NOT NULL,
   PRIMARY KEY (`RoleID`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Roles` */
 
@@ -633,26 +697,26 @@ CREATE TABLE `Tbl_Student` (
   `Student_Id` int(11) NOT NULL AUTO_INCREMENT,
   `ProgramID` int(11) DEFAULT NULL,
   `UserID` int(11) DEFAULT NULL,
-  `IsActive` bit(1) DEFAULT NULL,
   PRIMARY KEY (`Student_Id`),
   KEY `ProgramID` (`ProgramID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `Tbl_Student_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Student_ibfk_2` FOREIGN KEY (`ProgramID`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Student` */
 
-insert  into `Tbl_Student`(`Student_Id`,`ProgramID`,`UserID`,`IsActive`) values 
-(15,1,64,NULL),
-(17,1,75,NULL),
-(19,1,119,NULL),
-(20,1,120,NULL),
-(21,1,121,NULL),
-(22,1,122,NULL),
-(23,6,129,NULL),
-(24,6,130,NULL),
-(25,6,131,NULL);
+insert  into `Tbl_Student`(`Student_Id`,`ProgramID`,`UserID`) values 
+(15,1,64),
+(17,1,75),
+(19,1,119),
+(20,1,120),
+(21,1,121),
+(22,1,122),
+(23,6,129),
+(24,6,130),
+(25,6,131),
+(26,1,137);
 
 /*Table structure for table `Tbl_StudentCourseRegistration` */
 
@@ -721,14 +785,14 @@ CREATE TABLE `Tbl_User` (
   KEY `RoleID` (`RoleID`),
   CONSTRAINT `Tbl_User_ibfk_1` FOREIGN KEY (`ProfileID`) REFERENCES `Tbl_Profile` (`ProfileID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_User_ibfk_2` FOREIGN KEY (`RoleID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=133 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=138 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_User` */
 
 insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsActive`,`User_Date`) values 
 (64,'student','1050',3,55,'','10/11/2021'),
 (69,'faculty','1050',2,56,'','12/11/2021'),
-(72,'495159','10140159',2,59,'\0','12/11/2021'),
+(72,'495159','10140159',2,59,'','12/11/2021'),
 (75,'44560','1275480',3,60,'','12/11/2021'),
 (76,'826361','1050',1,61,'','12/11/2021'),
 (91,'668667','15877567',2,67,'','13/11/2021'),
@@ -740,7 +804,9 @@ insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsA
 (129,'408494','11422694',3,94,'','10/01/2022'),
 (130,'525395','12485795',3,95,'','10/01/2022'),
 (131,'341996','17323196',3,96,'','10/01/2022'),
-(132,'admin','1050',1,97,'','16/01/2022');
+(132,'admin','1050',1,97,'','16/01/2022'),
+(135,'700490','1922190',1,90,'','19/01/2022'),
+(137,'15298','16850598',3,98,'','24/01/2022');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

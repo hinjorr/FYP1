@@ -1,227 +1,89 @@
 @{
-    ViewData["Title"] = "AssignPermissions";
-    Layout = "~/Views/Shared/_Layout.cshtml";
-
+ViewData["Title"] = "Roles Management";
+Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<div class="form-panel">
-    <div class="row">
-        <div class="col-lg-4">
-            <h1><i class="fa fa-angle-right"></i> ROLES MANAGEMENT</h1>
-            <select class="form-control" id="dpDownClassDay">
-                <option>Roles</option>
-                <option>Admin</option>
-                <option>Faculty</option>
-                <option>User</option>
-            </select>
+
+<!-- <label class="checkbox">
+    <input type="checkbox" name="permissions" value="12" />
+    <span></span>&nbsp Allow</label> -->
+
+
+<!--begin::Card-->
+<div class="card card-custom gutter-b col-lg-7">
+    <div class="card-header flex-wrap py-3">
+        <div class="card-title">
+            <h3 class="card-label">Roles Management
+            </h3>
         </div>
-
     </div>
+    <div class="card-body">
+        <div class="form-group row">
+            <div class="col-sm-5">
+                <label>Select Role</label>
+                <select class="form-control" id="dpDownRoles">
+                </select>
+            </div>
+        </div>
+        <!--begin: Datatable-->
+        <table class="table table-bordered table-checkable" id="tblScreens">
+            <thead>
+                <tr>
+                    <th>S no</th>
+                    <th>Screens</th>
+                    <th>Permission</th>
+                </tr>
+            </thead>
+            <tbody>
 
+            </tbody>
+        </table>
+        <br>
+        <button type="submit" class="btn btn-primary btn-block" id="btnPermissions">Submit</button>
+        <!--end: Datatable-->
+    </div>
 </div>
-<div class="form-panel">
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="~/User/AddNewUser" class="link-primary">ADD NEW USER</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
 
-                        <input type="checkbox" value="" id="cbNewUser">
-                        ALLOW
-                    </label>
-                </h3>
-
+<div class="row">
+    <div class="col-md-4">
+        <div class="card card-custom gutter-b example example-compact">
+            <div class="card-header">
+                <h3 class="card-title">Create New Role</h3>
             </div>
+            <!--begin::Form-->
+            <div class="card-body">
+                <div class="form-group">
+                    <label id="lblname">Role Name
+                        <span class="error">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="txtRoleName" autocomplete="off">
+                </div>
+                <button type="submit" class="btn btn-primary btn-lg btn-block" id="btnSubmit">Submit</button>
+            </div>
+            <!--end::Form-->
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="~/User/ViewUsers" class="link-primary">VIEW ALL USERS</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbViewAllUsers">
-                        ALLOW
-                    </label>
-                </h3>
-
+    <div class="col-lg-8">
+        <div class="card card-custom">
+            <div class="card-header">
+                <h3 class="card-title">View Roles</h3>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="~/User/UploadBulkUsers" class="link-primary">UPLOAD BULK USERS</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbBulkUsers">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="~/AdminCourses/AssignNewClass" class="link-primary">ASSIGN NEW COURSE</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbAssignNewCourse">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="~/AdminCourses/AddNewCourse" class="link-primary">ADD NEW COURSE</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbAddNewCourse">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="~/AdminCourses/EnrollUsers" class="link-primary">MANUALLY ENROLL USER</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbEnrollUser">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="~/Roles/AssignPermissions" class="link-primary">ROLES MANAGEMENT</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbRoles">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">PROGRAM</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbProgram">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">CURRENT CLASSES</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbCurrentClasses">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">REGISTERED COURSES</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbRegisteredCourses">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">TEST RESULTS</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbTestResults">
-                        ALLOW
-                    </label>
-                </h3>
-
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6 col-sm-12">
-            <h3><a href="#" class="link-primary">UPLOAD RESULTS</a></h3>
-        </div>
-        <div class="col-md-6 col-sm-12">
-            <div class="checkbox">
-                <h3>
-                    <label>
-
-                        <input type="checkbox" value="" id="cbUploadResults">
-                        ALLOW
-                    </label>
-                </h3>
-
+            <div class="card-body">
+                <!--begin: Datatable-->
+                <table class="table table-bordered table-hover table-checkable mt-10" id="tblRoles">
+                    <thead>
+                        <tr>
+                            <th>Role ID</th>
+                            <th>Role Name</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                </table>
+                <!--end: Datatable-->
             </div>
         </div>
     </div>
 </div>
+<!--end::Card-->
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<script src="~/LMS/lib/jquery.validate.min.js"></script>
 <script type="text/javascript" src="~/LMS/ViewsJquery/RolesManagement.js"></script>

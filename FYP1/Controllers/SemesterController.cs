@@ -7,7 +7,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    [AuthorizedUserFilter]
+    [AuthenticateFilter]
 
     public class SemesterController : Controller
     {
@@ -17,6 +17,8 @@ namespace FYP1.Controllers
             this.repo = repo;
 
         }
+
+         
         [HttpGet("Semester")]
         public IActionResult Index()
         {

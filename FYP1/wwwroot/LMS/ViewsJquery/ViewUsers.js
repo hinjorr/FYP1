@@ -11,7 +11,7 @@ function GetUsers() {
     },
     columns: [
       {
-        data: "picture",
+        data: "profile.picture",
         render: function (picture) {
           return (
             '<div class="symbol symbol-50 flex-shrink-0">' +
@@ -23,9 +23,9 @@ function GetUsers() {
         },
       },
       { data: "user.userName" },
-      { data: "name" },
-      { data: "nic" },
-      { data: "email" },
+      { data: "profile.name" },
+      { data: "profile.nic" },
+      { data: "profile.email" },
       {
         data: "user.role.roleId",
         render: function (role) {
@@ -75,13 +75,23 @@ function Delete(userName) {
   $.ajax({
     url: "/user/DeleteUser?username=" + userName,
     success: function (resp) {
-      $("#viewuser").DataTable().clear().destroy();
-      cuteToast({
-        type: resp.type,
-        message: resp.msg,
-        timer: 3000,
-      });
-      GetUsers();
+
+      swal
+        .fire({
+          text: resp.text,
+          icon: resp.icon,
+          buttonsStyling: false,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn font-weight-bold btn-light-primary",
+          },
+        })
+        .then(function () {
+          KTUtil.scrollTop();
+          $("#viewuser").DataTable().clear().destroy();
+          GetUsers();
+        });
+
     },
   });
 }

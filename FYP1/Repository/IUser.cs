@@ -6,10 +6,10 @@ namespace FYP1.Repository
 {
     public interface IUser
     {
-        Task<bool> AddNewUser(ProfileDTO dto);
-        Task<string> Role_NIC_Check(ProfileDTO dto);
-        Task<List<ProfileDTO>> GetUsers();
-        Task<bool> DeleteUser(string username);
+        Task<GeneralDTO> RegisterUser(GeneralDTO dto);
+        Task<GeneralDTO> Role_NIC_Check(GeneralDTO dto);
+        Task<List<GeneralDTO>> GetUsers();
+        Task<GeneralDTO> DeleteUser(string username);
         Task<GeneralDTO> GetProfile(string username);
     }
 }

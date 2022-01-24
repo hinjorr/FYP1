@@ -10,7 +10,6 @@ namespace FYP1.dbModels
         public int StudentId { get; set; }
         public int? ProgramId { get; set; }
         public int? UserId { get; set; }
-        public ulong? IsActive { get; set; }
 
         public virtual TblProgram Program { get; set; }
         public virtual TblUser User { get; set; }

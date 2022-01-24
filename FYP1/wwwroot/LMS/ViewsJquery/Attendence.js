@@ -49,38 +49,38 @@ $("#btnView").click(function (e) {
               KTUtil.scrollTop();
             });
         }
-        else{
+        else {
           $(resp).each(function (indexInArray, item) {
             html += `<tr>
-          <td>`+item.user.userName+`</td>
-          <td>`+item.profile.name+`</td>`
-          if (item.attendence._1st==1) {
-            html+= `<td><input type="radio" name="1st`+item.user.userName+`"  value="1 " checked></td>
-                    <td><input type="radio" name="1st`+item.user.userName+`"  value="0"></td>`
-          } else {
-            html+=   `<td><input type="radio" name="1st`+item.user.userName+`"  value="1" ></td>
-                      <td><input type="radio" name="1st`+item.user.userName+`"  value="0" checked></td>`
-          }
-         if (item.attendence._2nd==1) {
-          html+=  `<td><input type="radio" name="2nd`+item.user.userName+`"  value="1" checked></td>
-          <td><input type="radio" name="2nd`+item.user.userName+`"  value="0"></td>`
-         }
-         else{
-          html+=   `<td><input type="radio" name="2nd`+item.user.userName+`"  value="1" ></td>
-          <td><input type="radio" name="2nd`+item.user.userName+`"  value="0" checked></td>`
-         }
-         html+=`
-         <td>`+item.totalSessions+`</td>
-         <td>`+item.attendence.totalMarkedSesion+`</td>
-         <td>`+item.attendence.totalPresent+`</td>
-         <td>`+item.attendence.totalAbsent+`</td> 
+          <td>`+ item.user.userName + `</td>
+          <td>`+ item.profile.name + `</td>`
+            if (item.attendence._1st == 1) {
+              html += `<td><input type="radio" name="1st` + item.user.userName + `"  value="1 " checked></td>
+                    <td><input type="radio" name="1st`+ item.user.userName + `"  value="0"></td>`
+            } else {
+              html += `<td><input type="radio" name="1st` + item.user.userName + `"  value="1" ></td>
+                      <td><input type="radio" name="1st`+ item.user.userName + `"  value="0" checked></td>`
+            }
+            if (item.attendence._2nd == 1) {
+              html += `<td><input type="radio" name="2nd` + item.user.userName + `"  value="1" checked></td>
+          <td><input type="radio" name="2nd`+ item.user.userName + `"  value="0"></td>`
+            }
+            else {
+              html += `<td><input type="radio" name="2nd` + item.user.userName + `"  value="1" ></td>
+          <td><input type="radio" name="2nd`+ item.user.userName + `"  value="0" checked></td>`
+            }
+            html += `
+         <td>`+ item.totalSessions + `</td>
+         <td>`+ item.attendence.totalMarkedSesion + `</td>
+         <td>`+ item.attendence.totalPresent + `</td>
+         <td>`+ item.attendence.totalAbsent + `</td> 
           </tr>`;
-       
-              });
-        $("#tblAttedence").html(html);
-        $("#SubmitButton").show();
+
+          });
+          $("#tblAttedence").html(html);
+          $("#SubmitButton").show();
         }
-       
+
       },
     });
   }
@@ -124,10 +124,11 @@ function SendData(AttendenceDTO) {
         })
         .then(function () {
           KTUtil.scrollTop();
-          window.location.replace("/MarkAttendence");
+          while (AttendenceDTO > 0) {
+            AttendenceDTO.pop()
+          }
         });
     },
   });
 }
 
- 

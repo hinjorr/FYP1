@@ -116,7 +116,9 @@ function SendData(MarksDTO) {
         })
         .then(function () {
           KTUtil.scrollTop();
-          window.location.replace("/UploadResults");
+          while (MarksDTO > 0) {
+            MarksDTO.pop()
+          }
         });
     },
   });

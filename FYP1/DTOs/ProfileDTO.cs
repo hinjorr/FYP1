@@ -2,7 +2,7 @@ using Microsoft.AspNetCore.Http;
 
 namespace FYP1.DTOs
 {
-    public class ProfileDTO : GeneralDTO
+    public class ProfileDTO 
     {
         public int ProfileId { get; set; }
         public string Name { get; set; }

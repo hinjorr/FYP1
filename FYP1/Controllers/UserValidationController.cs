@@ -15,12 +15,10 @@ namespace FYP1.Controllers
         }
        
         [HttpPost]
-        public async Task<IActionResult> NICCheck(ProfileDTO dto)
+        public async Task<IActionResult> NICCheck(GeneralDTO dto)
         {
             var data=await repo.CheckNIC(dto);
             return Ok(data);
         }
-
-
     }
 }
