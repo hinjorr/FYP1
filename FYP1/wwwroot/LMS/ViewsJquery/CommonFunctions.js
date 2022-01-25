@@ -116,13 +116,23 @@ var CommonFunctions = {
       },
     });
   },
+  SemesterDTO: {},
   GetCurrentSemester: function () {
-    return $.ajax({
+    $.ajax({
       async: false,
       url: "/Semester/GetCurrentSemester",
       success: function (resp) {
-        var data = JSON.stringify(resp);
-        localStorage.setItem("SemesterDetails", data);
+        if (resp != null) {
+          $("#SemesterName").text(resp.semesterName);
+          CommonFunctions.SemesterDTO.SemesterId = resp.semesterId
+          CommonFunctions.SemesterDTO.SemesterName = resp.semesterName
+          CommonFunctions.SemesterDTO.StartDate = resp.startDate
+          CommonFunctions.SemesterDTO.IsActive = resp.isActive
+        }
+        else {
+          $("#SemesterName").text("No Semester is Running");
+
+        }
       },
     });
   },
@@ -163,3 +173,4 @@ var CommonFunctions = {
     });
   },
 };
+

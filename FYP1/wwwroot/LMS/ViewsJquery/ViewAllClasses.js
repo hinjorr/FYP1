@@ -41,6 +41,14 @@ function GetAllClasses(id) {
         html += "</div>";
 
         html += '<div class="mt-9">';
+        if (item.classes.isActive != null) {
+          if (item.classes.isActive == 1) {
+            html += `<a class="label label-lg font-weight-bold label-light-success label-inline">Active</a><br><br>`
+          }
+          else {
+            html += `<a class="label label-lg font-weight-bold label-light-danger label-inline">Inactive</a><br><br>`
+          }
+        }
         html +=
           '<a href="/ViewClass/' +
           item.classes.classId +

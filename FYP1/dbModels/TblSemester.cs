@@ -11,6 +11,8 @@ namespace FYP1.dbModels
         {
             TblClassSessions = new HashSet<TblClassSession>();
             TblClasses = new HashSet<TblClass>();
+            TblFacultyCourseRegistrations = new HashSet<TblFacultyCourseRegistration>();
+            TblStudentCourseRegistrations = new HashSet<TblStudentCourseRegistration>();
         }
 
         public int SemesterId { get; set; }
@@ -21,5 +23,7 @@ namespace FYP1.dbModels
 
         public virtual ICollection<TblClassSession> TblClassSessions { get; set; }
         public virtual ICollection<TblClass> TblClasses { get; set; }
+        public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
+        public virtual ICollection<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }
     }
 }

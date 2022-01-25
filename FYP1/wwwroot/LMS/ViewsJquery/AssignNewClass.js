@@ -25,17 +25,32 @@ var ClassDTO = {
 };
 
 $("#btnSubmit").click(function (e) {
-  if (ClassDTO.ClassId != 0) {
-    ClassDTO.ClassStrength = $("#txtClasStrength").val();
-    CreateClass(ClassDTO);
-  } else {
-    ClassDTO.ProgramId = $("#dpPrograms").val();
-    ClassDTO.CourseId = $("#DpDownCourse").val();
-    ClassDTO.ClassStrength = $("#txtClasStrength").val();
-    ClassDTO.DayId = $("#dpDownClassDay").val();
-    ClassDTO.TimeId = $("#dpDownClassTime").val();
-    CreateClass(ClassDTO);
+  if (ClassDTO.SemesterId != 0) {
+    if (ClassDTO.ClassId != 0) {
+      ClassDTO.ClassStrength = $("#txtClasStrength").val();
+      CreateClass(ClassDTO);
+    } else {
+      ClassDTO.ProgramId = $("#dpPrograms").val();
+      ClassDTO.CourseId = $("#DpDownCourse").val();
+      ClassDTO.ClassStrength = $("#txtClasStrength").val();
+      ClassDTO.DayId = $("#dpDownClassDay").val();
+      ClassDTO.TimeId = $("#dpDownClassTime").val();
+      CreateClass(ClassDTO);
+    }
   }
+  else {
+    swal
+      .fire({
+        text: "No Semester is running",
+        icon: "error",
+        buttonsStyling: false,
+        confirmButtonText: "Ok, got it!",
+        customClass: {
+          confirmButton: "btn font-weight-bold btn-light-primary",
+        },
+      })
+  }
+
 });
 
 function CreateClass(ClassDTO) {
@@ -94,7 +109,7 @@ function GetAllClasses() {
           if (data != 0) {
             return "<span>" + data + "</span>";
           } else {
-            return '<a class="label label-lg font-weight-bold label-light-danger label-inline">'+data+'</a>';
+            return '<a class="label label-lg font-weight-bold label-light-danger label-inline">' + data + '</a>';
           }
         },
       },

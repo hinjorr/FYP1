@@ -12,7 +12,7 @@ function GetCourseName(id) {
     success: function (resp) {
       if (resp.icon == null) {
         $("#ShowCourse").text(id + " " + resp.course.fullName);
-        GetSessions();
+        GetSessions(id);
       } else {
         swal.fire({
           text: resp.text,
@@ -31,9 +31,9 @@ function Quiz(CID, SessionID, ContentName, ContentLink) {
   console.log(CID, SessionID, ContentName, ContentLink);
 }
 
-function GetSessions() {
+function GetSessions(Cid) {
   $.ajax({
-    url: "/Semester/GetAlllSessions",
+    url: "/Classes/GetSessionsForClass?Cid=" + Cid,
     async: false,
     success: function (resp) {
       var html = "";

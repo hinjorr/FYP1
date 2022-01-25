@@ -1,88 +1,92 @@
 $(document).ready(function () {
-  GetCurrentSemester();
-  GetSessions();
-  $(".SemesterName").text();
-});
-
-//Get Currenlty running semester
-function GetCurrentSemester() {
-  var semester = JSON.parse(localStorage.getItem("SemesterDetails"));
-  if (semester != undefined) {
-    (SemesterDTO.SemesterId = semester.semesterId),
-      (SemesterDTO.SemesterName = semester.semesterName),
-      (SemesterDTO.StartDate = semester.startDate),
-      (SemesterDTO.IsActive = semester.isActive);
-    YesSemester(semester.semesterName);
-  } else {
-    NoSemester();
+  CommonFunctions.GetCurrentSemester();
+  if (CommonFunctions.SemesterDTO.SemesterId != null) {
+    SemesterDTO.SemesterId = CommonFunctions.SemesterDTO.SemesterId
+    IsSemester()
   }
-}
+  else {
+    NotSemester()
+  }
+});
+SemesterDTO = {}
+//Get Currenlty running semester
+// function GetCurrentSemester() {
+//   var semester = localStorage.getItem("SemesterDetails");
+//   if (semester != "undefined") {
+//     semester = JSON.parse(localStorage.getItem("SemesterDetails"));
+//     (SemesterDTO.SemesterId = semester.semesterId),
+//       (SemesterDTO.SemesterName = semester.semesterName),
+//       (SemesterDTO.StartDate = semester.startDate),
+//       (SemesterDTO.IsActive = semester.isActive);
+//     IsSemester()
+//   } else {
+//     NotSemester();
+//   }
+// }
 
-var SemesterDTO = {
-  SemesterId: 0,
-  SemesterName: "",
-  StartDate: "",
-  EndDate: "",
-  IsActive: "",
-};
 
 //Close the semeter
 $("#btnend").click(function (e) {
-  // debugger;
-  if (SemesterDTO.SemesterId != 0) {
-    $.ajax({
-      type: "Post",
-      url: "/Semester/EndSemester",
-      data: SemesterDTO,
-      success: function (resp) {
-        if (resp == true) {
-          localStorage.removeItem("SemesterDetails");
-          CheckSemester();
-          NoSemester();
-        } else {
-          alert("Cant close semester");
-        }
-      },
-    });
-  } else {
-    alert("Cant close semester");
-  }
-});
-
-function GetSessions() {
-  var html = "";
-  html += `<thead>
-           <tr>
-           <th>Session Name</th>
-           </tr>
-           </thead>`;
   $.ajax({
-    url: "/Semester/GetAlllSessions",
+    type: "Post",
+    url: "/Semester/EndSemester",
+    data: SemesterDTO,
     success: function (resp) {
-      if (resp != null) {
-        $(resp).each(function (indexInArray, item) {
-          html += `<tr class="trClone">`;
-          html +=
-            `<td><input type="text" class="form-control SessionName" value="` +
-            item.sessionName +
-            `"></td>`;
-          html += `<td> <button
-          class="btn btn-danger btn-sm btnremove">-</i></button></td>`;
-          html += `</tr>`;
+      swal
+        .fire({
+          text: resp.text,
+          icon: resp.icon,
+          buttonsStyling: false,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn font-weight-bold btn-light-primary",
+          },
+        })
+        .then(function () {
+          if (resp.icon != "error") {
+            NotSemester()
+            CommonFunctions.GetCurrentSemester();
+          }
         });
-        $("#tblSessions").html(html);
-        var rows = $("#tblSessions tr").length;
-        console.log(rows - 1);
-      }
     },
   });
-}
+
+});
+
+// function GetSessions() {
+//   var html = "";
+//   html += `<thead>
+//            <tr>
+//            <th>Session Name</th>
+//            </tr>
+//            </thead>`;
+//   $.ajax({
+//     url: "/Semester/GetAlllSessions",
+//     success: function (resp) {
+//       if (resp != null) {
+//         $(resp).each(function (indexInArray, item) {
+//           html += `<tr class="trClone">`;
+//           html +=
+//             `<td><input type="text" class="form-control SessionName" value="` +
+//             item.sessionName +
+//             `"></td>`;
+//           html += `<td> <button
+//           class="btn btn-danger btn-sm btnremove">-</i></button></td>`;
+//           html += `</tr>`;
+//         });
+//         $("#tblSessions").html(html);
+//         var rows = $("#tblSessions tr").length;
+//         console.log(rows - 1);
+//       }
+//     },
+//   });
+// }
 
 var ClassSessionDTO = [];
 
 $(document).on("click", ".btnadd", function () {
   $(".trClone:first").clone().appendTo("#tblSessions");
-  // Select();
+  // Select();  
 });
 $(document).on("click", ".btnremove", function () {
   $(this).closest(".trClone").remove();
@@ -136,10 +140,8 @@ $("#newsemster").validate({
     },
   },
   submitHandler: function (form) {
-    var SemesterDTO = {
-      SemesterName: $("#txtFullname").val(),
-    };
-    AddSemester(SemesterDTO);
+    SemesterDTO.SemesterName = $("#txtFullname").val(),
+      AddSemester(SemesterDTO);
   },
 });
 
@@ -149,41 +151,40 @@ function AddSemester(SemesterDTO) {
     url: "/Semester/StartSemester",
     data: SemesterDTO,
     success: function (resp) {
-      // debugger;
-      if (resp == true) {
-        GetCurrentSemester();
-      } else {
-        cuteToast({
-          type: "error",
-          message: "Semester didnt started",
-          timer: 3000,
+      swal
+        .fire({
+          text: resp.text,
+          icon: resp.icon,
+          buttonsStyling: false,
+          confirmButtonText: "Ok, got it!",
+          customClass: {
+            confirmButton: "btn font-weight-bold btn-light-primary",
+          },
+        })
+        .then(function () {
+          if (resp.icon != "error") {
+            IsSemester()
+            CommonFunctions.GetCurrentSemester();
+            SemesterDTO.SemesterId = CommonFunctions.SemesterDTO.SemesterId
+
+          }
         });
-      }
-      // $('#newsemster').trigger("reset");
     },
   });
 }
 
-function YesSemester(semesterName) {
-  // debugger;
+
+function IsSemester() {
   $("#txtFullname").hide();
   $("#lblname").hide();
   $("#btnstart").hide();
   $("#btnend").show();
-  cuteToast({
-    type: "error",
-    message: semesterName + " is running",
-    timer: 5000,
-  });
 }
-function NoSemester() {
+
+function NotSemester() {
   $("#txtFullname").show();
   $("#lblname").show();
   $("#btnstart").show();
   $("#btnend").hide();
-  cuteToast({
-    type: "error",
-    message: "No semester is running",
-    timer: 5000,
-  });
 }
+

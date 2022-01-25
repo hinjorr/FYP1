@@ -17,8 +17,11 @@ namespace FYP1.Controllers
         {
             var data = await repo.GetRole();
             return Ok(data);
-        }
+        }                   
         public async Task<IActionResult> GetRolesinJson()
+
+
+
         {
             var _data = await repo.GetRole();
             return Json(new { data = _data });

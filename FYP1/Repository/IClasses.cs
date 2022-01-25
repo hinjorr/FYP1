@@ -17,8 +17,9 @@ namespace FYP1.Repository
         Task<List<GeneralDTO>> ViewClassesbyId(string username);
         Task<List<GeneralDTO>> ViewStudentbyClass(int cid);
         Task<bool> DeleteClass(int id);
-        
+
         Task<GeneralDTO> ClassInformation(int cid);
+        Task<List<ClassSessionDTO>> GetSessionsforClass(int Cid);
 
     }
 }

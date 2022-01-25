@@ -21,7 +21,7 @@ namespace FYP1.Controllers
             this.repo = repo;
         }
 
-         
+
         [HttpGet("AssignClasses")]
         public IActionResult AssignNewClass()
         {
@@ -38,7 +38,7 @@ namespace FYP1.Controllers
             return Ok(false);
         }
 
-         
+
         [HttpGet("ViewClass/{id}")]
         public IActionResult ViewClass()
         {
@@ -46,25 +46,21 @@ namespace FYP1.Controllers
             return View();
         }
 
-         
+
         [HttpGet("ViewAllClasses")]
         public IActionResult ViewClasses()
         {
             return View();
         }
 
-        
+
         [HttpGet("GetClass/{id}")]
         public async Task<IActionResult> GetSingleClass(int id)
         {
             var data = await repo.ClassInformation(id);
             return Ok(data);
         }
-        public async Task<IActionResult> ViewAllClasses()
-        {
-            var classes = await repo.ViewAllClass();
-            return Ok(classes);
-        }
+
         public async Task<IActionResult> ViewClassesbyId(string username)
         {
             var classes = await repo.ViewClassesbyId(username);
@@ -109,12 +105,18 @@ namespace FYP1.Controllers
             }
         }
 
-         
+
         [HttpGet("Class/{id}")]
         public IActionResult ClassInformation()
         {
             return View();
         }
-       
+
+        public async Task<IActionResult> GetSessionsForClass(int Cid)
+        {
+            var data = await repo.GetSessionsforClass(Cid);
+            return Ok(data);
+        }
+
     }
 }

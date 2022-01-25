@@ -32,7 +32,7 @@ namespace FYP1.Models
         {
             try
             {
-                var class_data = await db.TblClasses.Where(x => x.ClassId == dto.ClassId).FirstOrDefaultAsync();
+                var class_data = await db.TblClasses.Where(x => x.ClassId == dto.ClassId && x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
                 var alreadyRegisteredClass = await CheckRegisteredClass(dto.ClassId, dto.Username);
                 var chkclash = await CheckClash(dto.ClassId, dto.Username);
                 if (alreadyRegisteredClass == true)
@@ -88,7 +88,7 @@ namespace FYP1.Models
                     foreach (var item in data)
                     {
                         GeneralDTO classdto = new GeneralDTO();
-                        var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
+                        var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId && x.IsActive == Convert.ToUInt16(true)).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
                         mapper.Map(item, classdto.StudentCourseRegistration = new StudentCourseRegistrationDTO());
                         mapper.Map(course.Course, classdto.Course = new CourseDTO());
                         mapper.Map(course.Day, classdto.Day = new DayDTO());
@@ -132,8 +132,8 @@ namespace FYP1.Models
         {
             try
             {
-                var class_data = await db.TblClasses.Where(x => x.ClassId == dto.ClassId).FirstOrDefaultAsync();
-                var data = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == dto.ClassId && x.Username == dto.Username).FirstOrDefaultAsync();
+                var class_data = await db.TblClasses.Where(x => x.ClassId == dto.ClassId && x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
+                var data = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == dto.ClassId && x.Username == dto.Username && x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
                 if (data != null)
                 {
                     db.TblStudentCourseRegistrations.Remove(data);
@@ -141,17 +141,11 @@ namespace FYP1.Models
                     await db.SaveChangesAsync();
                     general.Text = "Course Dropped!";
                     general.Icon = "success";
-                    return general;
                 }
-                else
-                {
-                    general.Text = "Something went wrong!";
-                    general.Icon = "error";
-                    return general;
-                }
+                return general;
             }
             catch (System.Exception)
-            {   
+            {
                 general.Text = "Server Error!";
                 general.Icon = "error";
                 return general;
@@ -186,7 +180,7 @@ namespace FYP1.Models
 
         async Task<bool> CheckClash(int ClassId, string Username)
         {
-            var CurentClass = await db.TblClasses.Where(x => x.ClassId == ClassId).FirstOrDefaultAsync();
+            var CurentClass = await db.TblClasses.Where(x => x.ClassId == ClassId && x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
             var GetOtherClasses = await db.TblStudentCourseRegistrations.Where(x => x.Username == Username).Include(x => x.Class).ToListAsync();
             foreach (var item in GetOtherClasses)
             {
@@ -194,14 +188,12 @@ namespace FYP1.Models
                 {
                     return true;
                 }
-
             }
             return false;
         }
 
 
         //Faculty Registration Process
-
         public async Task<GeneralDTO> ResgisterFaculty(FacultyCourseRegistrationDTO dto)
         {
             try
@@ -255,7 +247,7 @@ namespace FYP1.Models
             List<GeneralDTO> faculty = new List<GeneralDTO>();
             try
             {
-                var data = await db.TblFacultyCourseRegistrations.Where(x => x.Username == username).ToListAsync();
+                var data = await db.TblFacultyCourseRegistrations.Where(x => x.Username == username && x.IsActive == Convert.ToUInt16(true)).ToListAsync();
                 if (data != null)
                 {
                     foreach (var item in data)
@@ -288,7 +280,7 @@ namespace FYP1.Models
         {
             try
             {
-                var chkcourse = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == ClassId && x.Username == Username).FirstOrDefaultAsync();
+                var chkcourse = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == ClassId && x.Username == Username && x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
                 if (chkcourse != null)
                 {
                     return true;

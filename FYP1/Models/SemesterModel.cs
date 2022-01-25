@@ -17,6 +17,7 @@ namespace FYP1.Models
         public TblClassSession sessions = new TblClassSession();
         TblSemester semester = new TblSemester();
         DateTime nowdt = DateTime.Now;
+        GeneralDTO general = new GeneralDTO();
         public SemesterModel(LMS_DBContext _db, IMapper mapper)
         {
             this.mapper = mapper;
@@ -24,44 +25,55 @@ namespace FYP1.Models
 
         }
 
-        public async Task<bool> StartSemester(SemesterDTO dto)
+        public async Task<GeneralDTO> StartSemester(SemesterDTO dto)
         {
             try
             {
                 TblSemester sem = new TblSemester()
                 {
-                    SemesterName = dto.SemesterName,
+                    SemesterName = dto.SemesterName.ToUpper(),
                     StartDate = nowdt.ToString("dd/MM/yyyy"),
                     IsActive = Convert.ToUInt32(true)
                 };
                 await db.TblSemesters.AddAsync(sem);
                 await db.SaveChangesAsync();
-                return true;
+                general.Text = "Semester Created";
+                general.Icon = "success";
+                return general;
 
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                throw e;
+                general.Text = "Server Error";
+                general.Icon = "error";
+                return general;
             }
         }
 
-        public async Task<bool> EndSemester(SemesterDTO dto)
+        public async Task<GeneralDTO> EndSemester(SemesterDTO dto)
         {
             try
             {
-
                 // mapper.Map(dto, semester);
                 var data = await db.TblSemesters.Where(x => x.SemesterId == dto.SemesterId).FirstOrDefaultAsync();
                 var endclassees = await db.TblClasses.Where(x => x.SemesterId == data.SemesterId).ToListAsync();
+                var end_stdClass = await db.TblStudentCourseRegistrations.Where(x => x.SemesterId == dto.SemesterId).ToListAsync();
+                var end_fcltyClasses = await db.TblFacultyCourseRegistrations.Where(x => x.SemesterId == dto.SemesterId).ToListAsync();
                 endclassees.ForEach(x => x.IsActive = Convert.ToUInt32(false));
+                end_stdClass.ForEach(x => x.IsActive = Convert.ToUInt32(false));
+                end_fcltyClasses.ForEach(x => x.IsActive = Convert.ToUInt32(false));
                 data.EndDate = nowdt.ToString("dd/MM/yyyy");
                 data.IsActive = Convert.ToUInt32(false);
                 await db.SaveChangesAsync();
-                return true;
+                general.Text = "Semester Ended";
+                general.Icon = "success";
+                return general;
             }
-            catch (System.Exception e)
+            catch (System.Exception)
             {
-                throw e;
+                general.Text = "Server Error";
+                general.Icon = "error";
+                return general;
             }
         }
 

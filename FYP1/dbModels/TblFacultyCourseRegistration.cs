@@ -11,9 +11,11 @@ namespace FYP1.dbModels
         public int? UserId { get; set; }
         public string Username { get; set; }
         public int? ClassId { get; set; }
+        public int? SemesterId { get; set; }
         public ulong? IsActive { get; set; }
 
         public virtual TblClass Class { get; set; }
+        public virtual TblSemester Semester { get; set; }
         public virtual TblUser User { get; set; }
     }
 }

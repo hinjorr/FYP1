@@ -1,6 +1,6 @@
 /*
 SQLyog Community v13.1.7 (64 bit)
-MySQL - 5.7.36-0ubuntu0.18.04.1 : Database - LMS
+MySQL - 8.0.27-0ubuntu0.20.04.1 : Database - LMS
 *********************************************************************
 */
 
@@ -12,7 +12,7 @@ MySQL - 5.7.36-0ubuntu0.18.04.1 : Database - LMS
 /*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
 /*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
-CREATE DATABASE /*!32312 IF NOT EXISTS*/`LMS` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`LMS` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 USE `LMS`;
 
@@ -21,8 +21,8 @@ USE `LMS`;
 DROP TABLE IF EXISTS `Tbl_Admin`;
 
 CREATE TABLE `Tbl_Admin` (
-  `AdminID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserID` int(11) DEFAULT NULL,
+  `AdminID` int NOT NULL AUTO_INCREMENT,
+  `UserID` int DEFAULT NULL,
   PRIMARY KEY (`AdminID`),
   KEY `UserID` (`UserID`),
   CONSTRAINT `Tbl_Admin_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -40,10 +40,10 @@ insert  into `Tbl_Admin`(`AdminID`,`UserID`) values
 DROP TABLE IF EXISTS `Tbl_Attendence`;
 
 CREATE TABLE `Tbl_Attendence` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Class_ID` int(11) DEFAULT NULL,
-  `Session_ID` int(11) DEFAULT NULL,
-  `User_ID` int(11) DEFAULT NULL,
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Class_ID` int DEFAULT NULL,
+  `Session_ID` int DEFAULT NULL,
+  `User_ID` int DEFAULT NULL,
   `User_Name` varchar(50) DEFAULT NULL,
   `1st` bit(1) DEFAULT b'0',
   `2nd` bit(1) DEFAULT b'0',
@@ -104,9 +104,9 @@ insert  into `Tbl_Attendence`(`Id`,`Class_ID`,`Session_ID`,`User_ID`,`User_Name`
 DROP TABLE IF EXISTS `Tbl_ClassContent`;
 
 CREATE TABLE `Tbl_ClassContent` (
-  `Content_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Class_ID` int(11) DEFAULT NULL,
-  `Session_ID` int(11) DEFAULT NULL,
+  `Content_ID` int NOT NULL AUTO_INCREMENT,
+  `Class_ID` int DEFAULT NULL,
+  `Session_ID` int DEFAULT NULL,
   `ContentName` varchar(100) DEFAULT NULL,
   `ContentLink` varchar(200) DEFAULT NULL,
   PRIMARY KEY (`Content_ID`),
@@ -123,13 +123,13 @@ CREATE TABLE `Tbl_ClassContent` (
 DROP TABLE IF EXISTS `Tbl_ClassSessions`;
 
 CREATE TABLE `Tbl_ClassSessions` (
-  `Session_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Semester_ID` int(11) DEFAULT NULL,
+  `Session_ID` int NOT NULL AUTO_INCREMENT,
+  `Semester_ID` int DEFAULT NULL,
   `SessionName` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`Session_ID`),
   KEY `Tbl_ClassSessions_ibfk_1` (`Semester_ID`),
   CONSTRAINT `Tbl_ClassSessions_ibfk_1` FOREIGN KEY (`Semester_ID`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=181 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_ClassSessions` */
 
@@ -146,14 +146,14 @@ insert  into `Tbl_ClassSessions`(`Session_ID`,`Semester_ID`,`SessionName`) value
 DROP TABLE IF EXISTS `Tbl_Classes`;
 
 CREATE TABLE `Tbl_Classes` (
-  `Class_Id` int(11) NOT NULL AUTO_INCREMENT,
-  `ClassStrength` int(11) DEFAULT NULL,
-  `Enrolled_Std` int(11) DEFAULT '0',
-  `Course_Id` int(11) DEFAULT NULL,
-  `Semester_Id` int(11) DEFAULT NULL,
-  `Program_Id` int(11) DEFAULT NULL,
-  `Day_Id` int(11) DEFAULT NULL,
-  `Time_Id` int(11) DEFAULT NULL,
+  `Class_Id` int NOT NULL AUTO_INCREMENT,
+  `ClassStrength` int DEFAULT NULL,
+  `Enrolled_Std` int DEFAULT '0',
+  `Course_Id` int DEFAULT NULL,
+  `Semester_Id` int DEFAULT NULL,
+  `Program_Id` int DEFAULT NULL,
+  `Day_Id` int DEFAULT NULL,
+  `Time_Id` int DEFAULT NULL,
   `IsActive` bit(1) DEFAULT NULL,
   `Class_Image` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`Class_Id`),
@@ -172,26 +172,26 @@ CREATE TABLE `Tbl_Classes` (
 /*Data for the table `Tbl_Classes` */
 
 insert  into `Tbl_Classes`(`Class_Id`,`ClassStrength`,`Enrolled_Std`,`Course_Id`,`Semester_Id`,`Program_Id`,`Day_Id`,`Time_Id`,`IsActive`,`Class_Image`) values 
-(46,3,2,31,52,1,2,1,'',NULL),
-(48,12,1,32,52,1,3,2,'',NULL),
-(50,12,6,37,52,1,6,2,'','/Upload/1134531111111.jpg'),
-(51,34,0,49,52,1,6,1,'',NULL),
-(52,34,1,30,52,1,6,3,'',NULL),
-(57,23,1,31,52,1,6,1,'',NULL),
-(59,12,1,39,52,1,2,1,'',NULL),
-(75,23,1,51,52,1,1,1,'',NULL),
-(76,12,0,51,52,1,2,2,'',NULL),
-(77,23,0,37,52,1,6,1,'',NULL);
+(46,3,2,31,52,1,2,1,'\0',NULL),
+(48,12,1,32,52,1,3,2,'\0',NULL),
+(50,12,6,37,52,1,6,2,'\0','/Upload/1134531111111.jpg'),
+(51,34,0,49,52,1,6,1,'\0',NULL),
+(52,34,1,30,52,1,6,3,'\0',NULL),
+(57,23,1,31,52,1,6,1,'\0',NULL),
+(59,12,1,39,52,1,2,1,'\0',NULL),
+(75,23,1,51,52,1,1,1,'\0',NULL),
+(76,12,0,51,52,1,2,2,'\0',NULL),
+(77,23,0,37,52,1,6,1,'\0',NULL);
 
 /*Table structure for table `Tbl_CourseEligiblity` */
 
 DROP TABLE IF EXISTS `Tbl_CourseEligiblity`;
 
 CREATE TABLE `Tbl_CourseEligiblity` (
-  `Elgibilty_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `Class_Id` int(11) DEFAULT NULL,
-  `Program_Id` int(11) DEFAULT NULL,
-  `RqdCourse_Id` int(11) DEFAULT NULL,
+  `Elgibilty_ID` int NOT NULL AUTO_INCREMENT,
+  `Class_Id` int DEFAULT NULL,
+  `Program_Id` int DEFAULT NULL,
+  `RqdCourse_Id` int DEFAULT NULL,
   PRIMARY KEY (`Elgibilty_ID`),
   KEY `Class_Id` (`Class_Id`),
   KEY `Program_Id` (`Program_Id`),
@@ -208,10 +208,10 @@ CREATE TABLE `Tbl_CourseEligiblity` (
 DROP TABLE IF EXISTS `Tbl_Courses`;
 
 CREATE TABLE `Tbl_Courses` (
-  `CourseID` int(11) NOT NULL AUTO_INCREMENT,
+  `CourseID` int NOT NULL AUTO_INCREMENT,
   `FullName` varchar(100) DEFAULT NULL,
   `ShortName` varchar(50) DEFAULT NULL,
-  `CrHr` int(11) DEFAULT NULL,
+  `CrHr` int DEFAULT NULL,
   `IsActive` bit(1) DEFAULT b'1',
   PRIMARY KEY (`CourseID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=85 DEFAULT CHARSET=latin1;
@@ -279,7 +279,7 @@ insert  into `Tbl_Courses`(`CourseID`,`FullName`,`ShortName`,`CrHr`,`IsActive`) 
 DROP TABLE IF EXISTS `Tbl_Days`;
 
 CREATE TABLE `Tbl_Days` (
-  `Day_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Day_Id` int NOT NULL AUTO_INCREMENT,
   `DayName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Day_Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
@@ -300,8 +300,8 @@ insert  into `Tbl_Days`(`Day_Id`,`DayName`) values
 DROP TABLE IF EXISTS `Tbl_Faculty`;
 
 CREATE TABLE `Tbl_Faculty` (
-  `FacultyId` int(11) NOT NULL AUTO_INCREMENT,
-  `UserID` int(11) DEFAULT NULL,
+  `FacultyId` int NOT NULL AUTO_INCREMENT,
+  `UserID` int DEFAULT NULL,
   PRIMARY KEY (`FacultyId`),
   KEY `Tbl_Faculty_ibfk_1` (`UserID`),
   CONSTRAINT `Tbl_Faculty_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -320,40 +320,43 @@ insert  into `Tbl_Faculty`(`FacultyId`,`UserID`) values
 DROP TABLE IF EXISTS `Tbl_FacultyCourseRegistration`;
 
 CREATE TABLE `Tbl_FacultyCourseRegistration` (
-  `FCR_ID` int(11) NOT NULL AUTO_INCREMENT,
-  `UserId` int(11) DEFAULT NULL,
+  `FCR_ID` int NOT NULL AUTO_INCREMENT,
+  `UserId` int DEFAULT NULL,
   `Username` varchar(50) DEFAULT NULL,
-  `Class_ID` int(11) DEFAULT NULL,
+  `Class_ID` int DEFAULT NULL,
+  `SemesterId` int DEFAULT NULL,
   `IsActive` bit(1) DEFAULT NULL,
   PRIMARY KEY (`FCR_ID`),
   KEY `Tbl_FacultyCourseRegistration_ibfk_1` (`UserId`),
   KEY `Tbl_FacultyCourseRegistration_ibfk_2` (`Class_ID`),
+  KEY `SemesterId` (`SemesterId`),
   CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_2` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_2` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_3` FOREIGN KEY (`SemesterId`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_FacultyCourseRegistration` */
 
-insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class_ID`,`IsActive`) values 
-(8,101,'863281',59,''),
-(16,69,'faculty',50,''),
-(17,69,'faculty',46,''),
-(18,69,'faculty',52,''),
-(22,101,'863281',77,''),
-(23,72,'495159',51,'');
+insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class_ID`,`SemesterId`,`IsActive`) values 
+(8,101,'863281',59,52,'\0'),
+(16,69,'faculty',50,52,'\0'),
+(17,69,'faculty',46,52,'\0'),
+(18,69,'faculty',52,52,'\0'),
+(22,101,'863281',77,52,'\0'),
+(23,72,'495159',51,52,'\0');
 
 /*Table structure for table `Tbl_Marks` */
 
 DROP TABLE IF EXISTS `Tbl_Marks`;
 
 CREATE TABLE `Tbl_Marks` (
-  `Marks_Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Class_Id` int(11) DEFAULT NULL,
+  `Marks_Id` int NOT NULL AUTO_INCREMENT,
+  `Class_Id` int DEFAULT NULL,
   `Assement_Name` varchar(50) DEFAULT NULL,
-  `User_Id` int(11) DEFAULT NULL,
+  `User_Id` int DEFAULT NULL,
   `UserName` varchar(50) DEFAULT NULL,
-  `Total_Marks` int(11) DEFAULT NULL,
-  `Obtained_Makrs` int(11) DEFAULT '0',
+  `Total_Marks` int DEFAULT NULL,
+  `Obtained_Makrs` int DEFAULT '0',
   PRIMARY KEY (`Marks_Id`),
   KEY `Tbl_Marks_ibfk_1` (`Class_Id`),
   KEY `Tbl_Marks_ibfk_2` (`User_Id`),
@@ -393,7 +396,7 @@ insert  into `Tbl_Marks`(`Marks_Id`,`Class_Id`,`Assement_Name`,`User_Id`,`UserNa
 DROP TABLE IF EXISTS `Tbl_Menu`;
 
 CREATE TABLE `Tbl_Menu` (
-  `Menu_ID` int(11) NOT NULL AUTO_INCREMENT,
+  `Menu_ID` int NOT NULL AUTO_INCREMENT,
   `Controller` varchar(50) DEFAULT NULL,
   `Action` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Menu_ID`)
@@ -428,7 +431,7 @@ insert  into `Tbl_Menu`(`Menu_ID`,`Controller`,`Action`) values
 DROP TABLE IF EXISTS `Tbl_Profile`;
 
 CREATE TABLE `Tbl_Profile` (
-  `ProfileID` int(11) NOT NULL AUTO_INCREMENT,
+  `ProfileID` int NOT NULL AUTO_INCREMENT,
   `Name` varchar(50) DEFAULT NULL,
   `FatherName` varchar(50) DEFAULT NULL,
   `Email` varchar(50) DEFAULT NULL,
@@ -469,11 +472,11 @@ insert  into `Tbl_Profile`(`ProfileID`,`Name`,`FatherName`,`Email`,`NIC`,`Addres
 DROP TABLE IF EXISTS `Tbl_ProgramSyllabus`;
 
 CREATE TABLE `Tbl_ProgramSyllabus` (
-  `Syllabus_Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Program_Id` int(11) DEFAULT NULL,
-  `Course_Id` int(11) DEFAULT NULL,
-  `RqdCourse_Id` int(11) DEFAULT '0',
-  `Required_CrHr` int(11) DEFAULT '0',
+  `Syllabus_Id` int NOT NULL AUTO_INCREMENT,
+  `Program_Id` int DEFAULT NULL,
+  `Course_Id` int DEFAULT NULL,
+  `RqdCourse_Id` int DEFAULT '0',
+  `Required_CrHr` int DEFAULT '0',
   PRIMARY KEY (`Syllabus_Id`),
   KEY `Tbl_ProgramSyllabus_ibfk_1` (`Program_Id`),
   KEY `Tbl_ProgramSyllabus_ibfk_2` (`Course_Id`),
@@ -547,7 +550,7 @@ insert  into `Tbl_ProgramSyllabus`(`Syllabus_Id`,`Program_Id`,`Course_Id`,`RqdCo
 DROP TABLE IF EXISTS `Tbl_Programs`;
 
 CREATE TABLE `Tbl_Programs` (
-  `ProgramID` int(11) NOT NULL AUTO_INCREMENT,
+  `ProgramID` int NOT NULL AUTO_INCREMENT,
   `ProgramFullName` varchar(50) NOT NULL,
   `ProgramShortName` varchar(50) DEFAULT NULL,
   `IsActive` bit(1) DEFAULT NULL,
@@ -565,9 +568,9 @@ insert  into `Tbl_Programs`(`ProgramID`,`ProgramFullName`,`ProgramShortName`,`Is
 DROP TABLE IF EXISTS `Tbl_RoleMenu`;
 
 CREATE TABLE `Tbl_RoleMenu` (
-  `Id` int(11) NOT NULL AUTO_INCREMENT,
-  `Menu_ID` int(11) DEFAULT NULL,
-  `Role_ID` int(11) DEFAULT NULL,
+  `Id` int NOT NULL AUTO_INCREMENT,
+  `Menu_ID` int DEFAULT NULL,
+  `Role_ID` int DEFAULT NULL,
   `Check` bit(1) DEFAULT b'0',
   PRIMARY KEY (`Id`),
   KEY `Menu_ID` (`Menu_ID`),
@@ -665,7 +668,7 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 DROP TABLE IF EXISTS `Tbl_Roles`;
 
 CREATE TABLE `Tbl_Roles` (
-  `RoleID` int(11) NOT NULL AUTO_INCREMENT,
+  `RoleID` int NOT NULL AUTO_INCREMENT,
   `RoleName` varchar(50) NOT NULL,
   PRIMARY KEY (`RoleID`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
@@ -684,13 +687,13 @@ insert  into `Tbl_Roles`(`RoleID`,`RoleName`) values
 DROP TABLE IF EXISTS `Tbl_Semester`;
 
 CREATE TABLE `Tbl_Semester` (
-  `Semester_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Semester_Id` int NOT NULL AUTO_INCREMENT,
   `SemesterName` varchar(50) DEFAULT NULL,
   `StartDate` varchar(50) DEFAULT NULL,
   `EndDate` varchar(50) DEFAULT NULL,
   `IsActive` bit(1) DEFAULT NULL,
   PRIMARY KEY (`Semester_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=62 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Semester` */
 
@@ -712,19 +715,24 @@ insert  into `Tbl_Semester`(`Semester_Id`,`SemesterName`,`StartDate`,`EndDate`,`
 (49,'Fall 20212','13/11/2021','16/11/2021','\0'),
 (50,'fall21','16/11/2021','02/12/2021','\0'),
 (51,'Fall2023','02/12/2021','02/12/2021','\0'),
-(52,'Fall 2023','02/12/2021','25/12/2021',''),
-(59,'fall 2020','24/12/2021',NULL,'\0'),
-(60,'fall 2020','25/12/2021',NULL,'\0'),
-(61,'fall 2020','25/12/2021',NULL,'\0');
+(52,'Fall 2023','02/12/2021','25/01/2022','\0'),
+(62,'Fall 2022','25/01/2022',NULL,'\0'),
+(65,'Fall 2021','25/01/2022',NULL,'\0'),
+(66,'fall 2020','25/01/2022','25/01/2022','\0'),
+(67,'FALL21','25/01/2022','25/01/2022','\0'),
+(68,'FALL 2021','25/01/2022','25/01/2022','\0'),
+(69,'FALL 2020','25/01/2022','25/01/2022','\0'),
+(70,'FALL 2020111','25/01/2022','25/01/2022','\0'),
+(71,'SPRING 2022','25/01/2022',NULL,'');
 
 /*Table structure for table `Tbl_Student` */
 
 DROP TABLE IF EXISTS `Tbl_Student`;
 
 CREATE TABLE `Tbl_Student` (
-  `Student_Id` int(11) NOT NULL AUTO_INCREMENT,
-  `ProgramID` int(11) DEFAULT NULL,
-  `UserID` int(11) DEFAULT NULL,
+  `Student_Id` int NOT NULL AUTO_INCREMENT,
+  `ProgramID` int DEFAULT NULL,
+  `UserID` int DEFAULT NULL,
   PRIMARY KEY (`Student_Id`),
   KEY `ProgramID` (`ProgramID`),
   KEY `UserID` (`UserID`),
@@ -750,40 +758,43 @@ insert  into `Tbl_Student`(`Student_Id`,`ProgramID`,`UserID`) values
 DROP TABLE IF EXISTS `Tbl_StudentCourseRegistration`;
 
 CREATE TABLE `Tbl_StudentCourseRegistration` (
-  `SCR_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `SCR_Id` int NOT NULL AUTO_INCREMENT,
   `Username` varchar(50) DEFAULT NULL,
-  `User_ID` int(11) NOT NULL,
-  `Class_ID` int(11) NOT NULL,
+  `User_ID` int NOT NULL,
+  `Class_ID` int NOT NULL,
+  `SemesterId` int DEFAULT NULL,
   `IsActive` bit(1) NOT NULL,
   PRIMARY KEY (`SCR_Id`),
   KEY `Tbl_StudentCourseRegistration_ibfk_2` (`User_ID`),
   KEY `Tbl_StudentCourseRegistration_ibfk_3` (`Class_ID`),
+  KEY `SemesterId` (`SemesterId`),
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
+  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_4` FOREIGN KEY (`SemesterId`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_StudentCourseRegistration` */
 
-insert  into `Tbl_StudentCourseRegistration`(`SCR_Id`,`Username`,`User_ID`,`Class_ID`,`IsActive`) values 
-(15,'student',64,52,''),
-(23,'518290',119,50,''),
-(24,'518290',119,59,''),
-(26,'44560',75,50,''),
-(29,'student',64,75,''),
-(30,'student',64,50,''),
-(33,'24691',120,50,''),
-(34,'183492',121,50,''),
-(35,'793093',122,50,''),
-(38,'student',64,48,''),
-(42,'341996',131,57,''),
-(44,'44560',75,46,'');
+insert  into `Tbl_StudentCourseRegistration`(`SCR_Id`,`Username`,`User_ID`,`Class_ID`,`SemesterId`,`IsActive`) values 
+(15,'student',64,52,52,'\0'),
+(23,'518290',119,50,52,'\0'),
+(24,'518290',119,59,52,'\0'),
+(26,'44560',75,50,52,'\0'),
+(29,'student',64,75,52,'\0'),
+(30,'student',64,50,52,'\0'),
+(33,'24691',120,50,52,'\0'),
+(34,'183492',121,50,52,'\0'),
+(35,'793093',122,50,52,'\0'),
+(38,'student',64,48,52,'\0'),
+(42,'341996',131,57,52,'\0'),
+(44,'44560',75,46,52,'\0');
 
 /*Table structure for table `Tbl_Time` */
 
 DROP TABLE IF EXISTS `Tbl_Time`;
 
 CREATE TABLE `Tbl_Time` (
-  `Time_Id` int(11) NOT NULL AUTO_INCREMENT,
+  `Time_Id` int NOT NULL AUTO_INCREMENT,
   `TimeName` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`Time_Id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
@@ -800,11 +811,11 @@ insert  into `Tbl_Time`(`Time_Id`,`TimeName`) values
 DROP TABLE IF EXISTS `Tbl_User`;
 
 CREATE TABLE `Tbl_User` (
-  `UserID` int(11) NOT NULL AUTO_INCREMENT,
+  `UserID` int NOT NULL AUTO_INCREMENT,
   `UserName` varchar(50) NOT NULL,
   `Password` varchar(50) NOT NULL,
-  `RoleID` int(11) NOT NULL,
-  `ProfileID` int(11) NOT NULL,
+  `RoleID` int NOT NULL,
+  `ProfileID` int NOT NULL,
   `IsActive` bit(1) DEFAULT NULL,
   `User_Date` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`UserID`),
