@@ -11,7 +11,7 @@ namespace FYP1.Repository
     {
         Task<GeneralDTO> StartSemester(SemesterDTO dto);
         Task<GeneralDTO> EndSemester(SemesterDTO dto);
-        Task<bool> AddClassSession(List<ClassSessionDTO> dto);
+        Task<GeneralDTO> AddClassSession(List<ClassSessionDTO> dto);
         Task<TblSemester> GetCurrentSemester();
         Task<List<ClassSessionDTO>> GetAllSessions();
     }

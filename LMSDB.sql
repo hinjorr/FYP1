@@ -129,7 +129,7 @@ CREATE TABLE `Tbl_ClassSessions` (
   PRIMARY KEY (`Session_ID`),
   KEY `Tbl_ClassSessions_ibfk_1` (`Semester_ID`),
   CONSTRAINT `Tbl_ClassSessions_ibfk_1` FOREIGN KEY (`Semester_ID`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=182 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=205 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_ClassSessions` */
 
@@ -139,7 +139,22 @@ insert  into `Tbl_ClassSessions`(`Session_ID`,`Semester_ID`,`SessionName`) value
 (177,52,'25 October - 31 October'),
 (178,52,'1 November - 7 November'),
 (179,52,'8 November - 14 November'),
-(180,52,'15 November - 21 November');
+(180,52,'15 November - 21 November'),
+(190,71,'Jan '),
+(191,71,'Feb'),
+(192,71,'March'),
+(193,71,'April '),
+(194,71,'May '),
+(195,72,'27 September - 3 October'),
+(196,72,'4 October - 10 October'),
+(197,72,'11 October - 17 October'),
+(198,72,'18 October - 24 October'),
+(199,72,'25 October - 31 October'),
+(200,72,'1 November - 7 November'),
+(201,72,'8 November - 14 November'),
+(202,72,'15 November - 21 November'),
+(203,72,'22 November - 28 November'),
+(204,72,'6 December - 12 December');
 
 /*Table structure for table `Tbl_Classes` */
 
@@ -399,32 +414,59 @@ CREATE TABLE `Tbl_Menu` (
   `Menu_ID` int NOT NULL AUTO_INCREMENT,
   `Controller` varchar(50) DEFAULT NULL,
   `Action` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`Menu_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=latin1;
+  `DisplayLink` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `DisplayName` varchar(50) DEFAULT NULL,
+  `Parent` int DEFAULT NULL,
+  `Icon` text,
+  PRIMARY KEY (`Menu_ID`),
+  KEY `Parent` (`Parent`),
+  CONSTRAINT `Tbl_Menu_ibfk_1` FOREIGN KEY (`Parent`) REFERENCES `Tbl_ParentMenu` (`ParentID`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Menu` */
 
-insert  into `Tbl_Menu`(`Menu_ID`,`Controller`,`Action`) values 
-(1,'AdminCourses','AddNewCourse'),
-(2,'Attendence','MarkAttedence'),
-(3,'Attendence','AttendenceReport'),
-(4,'Classes','AssignNewClass'),
-(5,'Classes','ViewClass'),
-(6,'Classes','ViewClasses'),
-(7,'Classes','ClassInformation'),
-(8,'Home','Index'),
-(9,'Marks','StudentTestResults'),
-(10,'Marks','UploadTestResults'),
-(11,'Programs','AddNewProgram'),
-(12,'ProgramSyllabus','AddNewSyllabus'),
-(13,'RegisterCourses','EnrollStdents'),
-(14,'RegisterCourses','EnrollFaculty'),
-(15,'Semester','Index'),
-(16,'User','AddNewUser'),
-(17,'User','ViewUsers'),
-(18,'User','ViewProfile'),
-(19,'User','Calender'),
-(20,'Roles','AssignPermissions');
+insert  into `Tbl_Menu`(`Menu_ID`,`Controller`,`Action`,`DisplayLink`,`DisplayName`,`Parent`,`Icon`) values 
+(1,'AdminCourses','AddNewCourse','AddNewCourse','Add new Course',2,NULL),
+(2,'Attendence','MarkAttedence','MarkAttendence','Mark Attendence',6,NULL),
+(3,'Attendence','AttendenceReport','AttendenceReport','Attendence Report',6,NULL),
+(4,'Classes','AssignNewClass','AssignClasses','Assign new class',2,NULL),
+(5,'Classes','ViewClass',NULL,NULL,NULL,NULL),
+(6,'Classes','ViewClasses','ViewAllClasses','All Classes',2,NULL),
+(7,'Classes','ClassInformation',NULL,NULL,NULL,NULL),
+(8,'Home','Index','Home','Dashboard',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <path\r\n                                    d=\"M3.95709826,8.41510662 L11.47855,3.81866389 C11.7986624,3.62303967 12.2013376,3.62303967 12.52145,3.81866389 L20.0429,8.41510557 C20.6374094,8.77841684 21,9.42493654 21,10.1216692 L21,19.0000642 C21,20.1046337 20.1045695,21.0000642 19,21.0000642 L4.99998155,21.0000673 C3.89541205,21.0000673 2.99998155,20.1046368 2.99998155,19.0000673 L2.99999828,10.1216672 C2.99999935,9.42493561 3.36258984,8.77841732 3.95709826,8.41510662 Z M10,13 C9.44771525,13 9,13.4477153 9,14 L9,17 C9,17.5522847 9.44771525,18 10,18 L14,18 C14.5522847,18 15,17.5522847 15,17 L15,14 C15,13.4477153 14.5522847,13 14,13 L10,13 Z\"\r\n                                    fill=\"#000000\" />\r\n                            </g>\r\n                        </svg>'),
+(9,'Marks','StudentTestResults','ViewResults','Test Results',5,NULL),
+(10,'Marks','UploadTestResults','UploadResults','Upload Results',5,NULL),
+(11,'Programs','AddNewProgram','AddNewProgram','Add new Program',3,NULL),
+(12,'ProgramSyllabus','AddNewSyllabus','NewSyllabus','Programs Syllabus',3,NULL),
+(13,'RegisterCourses','EnrollStdents','EnrollStdents','Enroll Students',4,NULL),
+(14,'RegisterCourses','EnrollFaculty','EnrollFaculty','Enroll Faculty',4,NULL),
+(15,'Semester','Index','Semester','Semester',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\" x=\"4\" y=\"4\" width=\"16\" height=\"16\" rx=\"2\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\" x=\"9\" y=\"9\" width=\"6\" height=\"6\" />\r\n                                <path\r\n                                    d=\"M20,7 L21,7 C21.5522847,7 22,7.44771525 22,8 L22,8 C22,8.55228475 21.5522847,9 21,9 L20,9 L20,7 Z\"\r\n                                    fill=\"#000000\" />\r\n                                <path\r\n                                    d=\"M20,11 L21,11 C21.5522847,11 22,11.4477153 22,12 L22,12 C22,12.5522847 21.5522847,13 21,13 L20,13 L20,11 Z\"\r\n                                    fill=\"#000000\" />\r\n                                <path\r\n                                    d=\"M20,15 L21,15 C21.5522847,15 22,15.4477153 22,16 L22,16 C22,16.5522847 21.5522847,17 21,17 L20,17 L20,15 Z\"\r\n                                    fill=\"#000000\" />\r\n                                <path\r\n                                    d=\"M3,7 L4,7 L4,9 L3,9 C2.44771525,9 2,8.55228475 2,8 L2,8 C2,7.44771525 2.44771525,7 3,7 Z\"\r\n                                    fill=\"#000000\" />\r\n                                <path\r\n                                    d=\"M3,11 L4,11 L4,13 L3,13 C2.44771525,13 2,12.5522847 2,12 L2,12 C2,11.4477153 2.44771525,11 3,11 Z\"\r\n                                    fill=\"#000000\" />\r\n                                <path\r\n                                    d=\"M3,15 L4,15 L4,17 L3,17 C2.44771525,17 2,16.5522847 2,16 L2,16 C2,15.4477153 2.44771525,15 3,15 Z\"\r\n                                    fill=\"#000000\" />\r\n                            </g>\r\n                        </svg>'),
+(16,'User','AddNewUser','NewUser','Add new user',1,NULL),
+(17,'User','ViewUsers','ViewUsers','View all users',1,NULL),
+(18,'User','ViewProfile',NULL,NULL,NULL,NULL),
+(19,'User','Calender','Calender','Calender',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <polygon points=\"0 0 24 0 24 24 0 24\" />\r\n                                <path\r\n                                    d=\"M18.5,8 C17.1192881,8 16,6.88071187 16,5.5 C16,4.11928813 17.1192881,3 18.5,3 C19.8807119,3 21,4.11928813 21,5.5 C21,6.88071187 19.8807119,8 18.5,8 Z M18.5,21 C17.1192881,21 16,19.8807119 16,18.5 C16,17.1192881 17.1192881,16 18.5,16 C19.8807119,16 21,17.1192881 21,18.5 C21,19.8807119 19.8807119,21 18.5,21 Z M5.5,21 C4.11928813,21 3,19.8807119 3,18.5 C3,17.1192881 4.11928813,16 5.5,16 C6.88071187,16 8,17.1192881 8,18.5 C8,19.8807119 6.88071187,21 5.5,21 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M5.5,8 C4.11928813,8 3,6.88071187 3,5.5 C3,4.11928813 4.11928813,3 5.5,3 C6.88071187,3 8,4.11928813 8,5.5 C8,6.88071187 6.88071187,8 5.5,8 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 C14,5.55228475 13.5522847,6 13,6 L11,6 C10.4477153,6 10,5.55228475 10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,18 L13,18 C13.5522847,18 14,18.4477153 14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 C10,18.4477153 10.4477153,18 11,18 Z M5,10 C5.55228475,10 6,10.4477153 6,11 L6,13 C6,13.5522847 5.55228475,14 5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 C18.4477153,14 18,13.5522847 18,13 L18,11 C18,10.4477153 18.4477153,10 19,10 Z\"\r\n                                    fill=\"#000000\" />\r\n                            </g>\r\n                        </svg>'),
+(20,'Roles','AssignPermissions','Permissions','Roles Management',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <path\r\n                                    d=\"M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                            </g>\r\n                        </svg>');
+
+/*Table structure for table `Tbl_ParentMenu` */
+
+DROP TABLE IF EXISTS `Tbl_ParentMenu`;
+
+CREATE TABLE `Tbl_ParentMenu` (
+  `ParentID` int NOT NULL AUTO_INCREMENT,
+  `DisplayName` varchar(50) DEFAULT NULL,
+  `Icon` text,
+  PRIMARY KEY (`ParentID`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_ParentMenu` */
+
+insert  into `Tbl_ParentMenu`(`ParentID`,`DisplayName`,`Icon`) values 
+(1,'Users','<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <polygon points=\"0 0 24 0 24 24 0 24\" />\r\n                                <path\r\n                                    d=\"M12,11 C9.790861,11 8,9.209139 8,7 C8,4.790861 9.790861,3 12,3 C14.209139,3 16,4.790861 16,7 C16,9.209139 14.209139,11 12,11 Z\"\r\n                                    fill=\"#000000\" fill-rule=\"nonzero\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M3.00065168,20.1992055 C3.38825852,15.4265159 7.26191235,13 11.9833413,13 C16.7712164,13 20.7048837,15.2931929 20.9979143,20.2 C21.0095879,20.3954741 20.9979143,21 20.2466999,21 C16.541124,21 11.0347247,21 3.72750223,21 C3.47671215,21 2.97953825,20.45918 3.00065168,20.1992055 Z\"\r\n                                    fill=\"#000000\" fill-rule=\"nonzero\" />\r\n                            </g>\r\n                        </svg>'),
+(2,'Courses','<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <path\r\n                                    d=\"M5,3 L6,3 C6.55228475,3 7,3.44771525 7,4 L7,20 C7,20.5522847 6.55228475,21 6,21 L5,21 C4.44771525,21 4,20.5522847 4,20 L4,4 C4,3.44771525 4.44771525,3 5,3 Z M10,3 L11,3 C11.5522847,3 12,3.44771525 12,4 L12,20 C12,20.5522847 11.5522847,21 11,21 L10,21 C9.44771525,21 9,20.5522847 9,20 L9,4 C9,3.44771525 9.44771525,3 10,3 Z\"\r\n                                    fill=\"#000000\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\"\r\n                                    transform=\"translate(17.825568, 11.945519) rotate(-19.000000) translate(-17.825568, -11.945519) \"\r\n                                    x=\"16.3255682\" y=\"2.94551858\" width=\"3\" height=\"18\" rx=\"1\" />\r\n                            </g>\r\n                        </svg>'),
+(3,'Programs','<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <path\r\n                                    d=\"M5,5 C5,4.44771525 5.44771525,4 6,4 L15.75,4 C15.9073787,4 16.0555728,4.07409708 16.15,4.2 L18.9,7.86666667 C18.9649111,7.95321475 19,8.05848156 19,8.16666667 L19,19 C19,19.5522847 18.5522847,20 18,20 L6,20 C5.44771525,20 5,19.5522847 5,19 L5,5 Z M7,6 L7,9 L9,9 L9,6 L7,6 Z M10,6 L10,9 L12,9 L12,6 L10,6 Z M13,6 L13,9 L15,9 L15,6 L13,6 Z\"\r\n                                    fill=\"#000000\" />\r\n                            </g>\r\n                        </svg>'),
+(4,'User Registration','<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <rect fill=\"#000000\" x=\"4\" y=\"5\" width=\"16\" height=\"3\" rx=\"1.5\" />\r\n                                <path\r\n                                    d=\"M5.5,15 L18.5,15 C19.3284271,15 20,15.6715729 20,16.5 C20,17.3284271 19.3284271,18 18.5,18 L5.5,18 C4.67157288,18 4,17.3284271 4,16.5 C4,15.6715729 4.67157288,15 5.5,15 Z M5.5,10 L18.5,10 C19.3284271,10 20,10.6715729 20,11.5 C20,12.3284271 19.3284271,13 18.5,13 L5.5,13 C4.67157288,13 4,12.3284271 4,11.5 C4,10.6715729 4.67157288,10 5.5,10 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                            </g>\r\n                        </svg>'),
+(5,'Marks','<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <polygon points=\"0 0 24 0 24 24 0 24\" />\r\n                                <path\r\n                                    d=\"M5.85714286,2 L13.7364114,2 C14.0910962,2 14.4343066,2.12568431 14.7051108,2.35473959 L19.4686994,6.3839416 C19.8056532,6.66894833 20,7.08787823 20,7.52920201 L20,20.0833333 C20,21.8738751 19.9795521,22 18.1428571,22 L5.85714286,22 C4.02044787,22 4,21.8738751 4,20.0833333 L4,3.91666667 C4,2.12612489 4.02044787,2 5.85714286,2 Z\"\r\n                                    fill=\"#000000\" fill-rule=\"nonzero\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M8.95128003,13.8153448 L10.9077535,13.8153448 L10.9077535,15.8230161 C10.9077535,16.0991584 11.1316112,16.3230161 11.4077535,16.3230161 L12.4310522,16.3230161 C12.7071946,16.3230161 12.9310522,16.0991584 12.9310522,15.8230161 L12.9310522,13.8153448 L14.8875257,13.8153448 C15.1636681,13.8153448 15.3875257,13.5914871 15.3875257,13.3153448 C15.3875257,13.1970331 15.345572,13.0825545 15.2691225,12.9922598 L12.3009997,9.48659872 C12.1225648,9.27584861 11.8070681,9.24965194 11.596318,9.42808682 C11.5752308,9.44594059 11.5556598,9.46551156 11.5378061,9.48659872 L8.56968321,12.9922598 C8.39124833,13.2030099 8.417445,13.5185067 8.62819511,13.6969416 C8.71848979,13.773391 8.8329684,13.8153448 8.95128003,13.8153448 Z\"\r\n                                    fill=\"#000000\" />\r\n                            </g>\r\n                        </svg>'),
+(6,'Attendence','<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <path\r\n                                    d=\"M8,3 L8,3.5 C8,4.32842712 8.67157288,5 9.5,5 L14.5,5 C15.3284271,5 16,4.32842712 16,3.5 L16,3 L18,3 C19.1045695,3 20,3.8954305 20,5 L20,21 C20,22.1045695 19.1045695,23 18,23 L6,23 C4.8954305,23 4,22.1045695 4,21 L4,5 C4,3.8954305 4.8954305,3 6,3 L8,3 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M11,2 C11,1.44771525 11.4477153,1 12,1 C12.5522847,1 13,1.44771525 13,2 L14.5,2 C14.7761424,2 15,2.22385763 15,2.5 L15,3.5 C15,3.77614237 14.7761424,4 14.5,4 L9.5,4 C9.22385763,4 9,3.77614237 9,3.5 L9,2.5 C9,2.22385763 9.22385763,2 9.5,2 L11,2 Z\"\r\n                                    fill=\"#000000\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\" x=\"10\" y=\"9\" width=\"7\" height=\"2\" rx=\"1\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\" x=\"7\" y=\"9\" width=\"2\" height=\"2\" rx=\"1\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\" x=\"7\" y=\"13\" width=\"2\" height=\"2\" rx=\"1\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\" x=\"10\" y=\"13\" width=\"7\" height=\"2\" rx=\"1\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\" x=\"7\" y=\"17\" width=\"2\" height=\"2\" rx=\"1\" />\r\n                                <rect fill=\"#000000\" opacity=\"0.3\" x=\"10\" y=\"17\" width=\"7\" height=\"2\" rx=\"1\" />\r\n                            </g>\r\n                        </svg>');
 
 /*Table structure for table `Tbl_Profile` */
 
@@ -577,31 +619,11 @@ CREATE TABLE `Tbl_RoleMenu` (
   KEY `Role_ID` (`Role_ID`),
   CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=327 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=367 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_RoleMenu` */
 
 insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values 
-(207,1,1,''),
-(208,18,1,''),
-(209,17,1,''),
-(210,16,1,''),
-(211,15,1,''),
-(212,14,1,''),
-(213,13,1,''),
-(214,12,1,''),
-(215,11,1,''),
-(216,10,1,''),
-(217,9,1,''),
-(218,8,1,''),
-(219,7,1,''),
-(220,6,1,''),
-(221,5,1,''),
-(222,4,1,''),
-(223,3,1,''),
-(224,2,1,''),
-(225,19,1,''),
-(226,20,1,''),
 (247,1,3,'\0'),
 (248,18,3,'\0'),
 (249,17,3,'\0'),
@@ -613,7 +635,7 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (255,11,3,'\0'),
 (256,10,3,'\0'),
 (257,9,3,''),
-(258,8,3,'\0'),
+(258,8,3,''),
 (259,7,3,'\0'),
 (260,6,3,''),
 (261,5,3,''),
@@ -633,7 +655,7 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (275,11,4,''),
 (276,10,4,'\0'),
 (277,9,4,'\0'),
-(278,8,4,'\0'),
+(278,8,4,''),
 (279,7,4,'\0'),
 (280,6,4,'\0'),
 (281,5,4,'\0'),
@@ -650,7 +672,7 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (312,5,2,''),
 (313,6,2,''),
 (314,7,2,'\0'),
-(315,8,2,'\0'),
+(315,8,2,''),
 (316,19,2,''),
 (317,9,2,'\0'),
 (318,11,2,'\0'),
@@ -661,7 +683,27 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (323,16,2,'\0'),
 (324,17,2,'\0'),
 (325,10,2,''),
-(326,1,2,'\0');
+(326,1,2,'\0'),
+(347,20,1,''),
+(348,18,1,''),
+(349,2,1,''),
+(350,3,1,''),
+(351,4,1,''),
+(352,5,1,''),
+(353,6,1,''),
+(354,7,1,''),
+(355,8,1,''),
+(356,19,1,''),
+(357,9,1,''),
+(358,11,1,''),
+(359,12,1,''),
+(360,13,1,''),
+(361,14,1,''),
+(362,15,1,''),
+(363,16,1,''),
+(364,17,1,''),
+(365,10,1,''),
+(366,1,1,'');
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -693,7 +735,7 @@ CREATE TABLE `Tbl_Semester` (
   `EndDate` varchar(50) DEFAULT NULL,
   `IsActive` bit(1) DEFAULT NULL,
   PRIMARY KEY (`Semester_Id`)
-) ENGINE=InnoDB AUTO_INCREMENT=72 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=73 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Semester` */
 
@@ -723,7 +765,8 @@ insert  into `Tbl_Semester`(`Semester_Id`,`SemesterName`,`StartDate`,`EndDate`,`
 (68,'FALL 2021','25/01/2022','25/01/2022','\0'),
 (69,'FALL 2020','25/01/2022','25/01/2022','\0'),
 (70,'FALL 2020111','25/01/2022','25/01/2022','\0'),
-(71,'SPRING 2022','25/01/2022',NULL,'');
+(71,'SPRING 2022','25/01/2022','26/01/2022','\0'),
+(72,'FALL 2022','26/01/2022',NULL,'');
 
 /*Table structure for table `Tbl_Student` */
 
@@ -830,7 +873,7 @@ CREATE TABLE `Tbl_User` (
 insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsActive`,`User_Date`) values 
 (64,'student','1050',3,55,'','10/11/2021'),
 (69,'faculty','1050',2,56,'','12/11/2021'),
-(72,'495159','10140159',2,59,'','12/11/2021'),
+(72,'495159','10140159',2,59,'\0','12/11/2021'),
 (75,'44560','1275480',3,60,'','12/11/2021'),
 (76,'826361','1050',1,61,'','12/11/2021'),
 (91,'668667','15877567',2,67,'','13/11/2021'),

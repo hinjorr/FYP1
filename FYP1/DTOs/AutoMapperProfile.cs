@@ -15,6 +15,9 @@ namespace FYP1.DTOs
             CreateMap<TblUser, UserDTO>();
             CreateMap<AdminDTO, TblAdmin>();
 
+            CreateMap<TblParentMenu, ParentMenuDTO>();
+            CreateMap<ParentMenuDTO, TblParentMenu>();
+
             CreateMap<TblMenu, MenuDTO>();
             CreateMap<MenuDTO, TblMenu>();
 

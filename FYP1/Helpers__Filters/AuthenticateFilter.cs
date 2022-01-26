@@ -23,32 +23,25 @@ namespace FYP1.Helpers__Filters
 
             if (data == null)
             {
-                var controller = (ControllerBase)filterContext.Controller;
+                 var controller = (ControllerBase)filterContext.Controller;
                 filterContext.Result = controller.RedirectToAction("Login", "Authentication");
             }
             else
             {
+                bool chk = true;
                 foreach (var i in permissions)
-                {
+                {   
                     if (i.Menu.Controller == _controller && i.Menu.Action == _action)
                     {
-                        foreach (var j in permissions)
-                        {
-                            if (i.Menu.MenuId == j.RoleMenu.MenuId && j.RoleMenu.RoleId == data.Role.RoleId && j.RoleMenu.Check == true)
-                            {
-                                base.OnActionExecuting(filterContext);
-                                break;
-                            }
-                            else if (i.Menu.MenuId == j.RoleMenu.MenuId && j.RoleMenu.RoleId == data.Role.RoleId && j.RoleMenu.Check == false)
-                            {
-                                var controller = (ControllerBase)filterContext.Controller;
-                                filterContext.Result = controller.RedirectToAction("Error404Page", "Authentication");
-                                break;
-                            }
-                        }
+                        base.OnActionExecuting(filterContext);
+                        chk = false;
                         break;
                     }
-
+                }
+                if (chk)
+                {
+                    var controller = (ControllerBase)filterContext.Controller;
+                    filterContext.Result = controller.RedirectToAction("Error404Page", "Authentication");
                 }
             }
             // base.OnActionExecuting(filterContext);

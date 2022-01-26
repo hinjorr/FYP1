@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    [AuthenticateFilter]
 
     public class ProgramSyllabusController : Controller
     {
@@ -19,7 +18,7 @@ namespace FYP1.Controllers
             this.repo = repo;
         }
 
-         
+         [AuthenticateFilter]
         [HttpGet("NewSyllabus")]
         public IActionResult AddNewSyllabus()
         {

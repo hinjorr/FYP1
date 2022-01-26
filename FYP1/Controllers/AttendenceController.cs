@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace FYP1.Controllers
 {
 
-    [AuthenticateFilter]
+    
     public class AttendenceController : Controller
     {
         private readonly IAttendence repo;
@@ -22,14 +22,14 @@ namespace FYP1.Controllers
             repo = _repo;
         }
 
-         
+         [AuthenticateFilter]
         [HttpGet("MarkAttendence")]
         public IActionResult MarkAttedence()
         {
             return View();
         }
         
-         
+         [AuthenticateFilter]
         [HttpGet("AttendenceReport")]
         public IActionResult AttendenceReport()
         {

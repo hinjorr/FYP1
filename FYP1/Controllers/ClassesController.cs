@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace FYP1.Controllers
 {
 
-    [AuthenticateFilter]
+
 
     public class ClassesController : Controller
     {
@@ -21,7 +21,7 @@ namespace FYP1.Controllers
             this.repo = repo;
         }
 
-
+        [AuthenticateFilter]
         [HttpGet("AssignClasses")]
         public IActionResult AssignNewClass()
         {
@@ -38,7 +38,7 @@ namespace FYP1.Controllers
             return Ok(false);
         }
 
-
+        [AuthenticateFilter]
         [HttpGet("ViewClass/{id}")]
         public IActionResult ViewClass()
         {
@@ -46,7 +46,7 @@ namespace FYP1.Controllers
             return View();
         }
 
-
+        [AuthenticateFilter]
         [HttpGet("ViewAllClasses")]
         public IActionResult ViewClasses()
         {
@@ -105,7 +105,7 @@ namespace FYP1.Controllers
             }
         }
 
-
+        [AuthenticateFilter]
         [HttpGet("Class/{id}")]
         public IActionResult ClassInformation()
         {

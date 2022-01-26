@@ -4,11 +4,10 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    [AuthenticateFilter]
 
     public class HomeController : Controller
     {
-         
+         [AuthenticateFilter]
         [HttpGet("Home")]
         public IActionResult Index()
         {

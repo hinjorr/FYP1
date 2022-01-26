@@ -10,7 +10,6 @@ using FYP1.Helpers__Filters;
 namespace FYP1.Controllers
 {
 
-    [AuthenticateFilter]
     public class UserController : Controller
     {
         private readonly IUser repo;
@@ -22,7 +21,7 @@ namespace FYP1.Controllers
             repo = _repo;
             this.Env = Env;
         }
-
+        [AuthenticateFilter]
         [HttpGet("NewUser")]
         public IActionResult AddNewUser()
         {
@@ -62,14 +61,14 @@ namespace FYP1.Controllers
             var chk = await repo.Role_NIC_Check(dto);
             return Ok(chk);
         }
-
+        [AuthenticateFilter]
         [HttpGet("ViewUsers")]
         public IActionResult ViewUsers()
         {
             return View();
         }
 
-
+        [AuthenticateFilter]
         [HttpGet("Profile/{id}")]
         public IActionResult ViewProfile()
         {
@@ -102,7 +101,7 @@ namespace FYP1.Controllers
         //     return View();
         // }
 
-
+        [AuthenticateFilter]
         [HttpGet("Calender")]
         public IActionResult Calender()
         {

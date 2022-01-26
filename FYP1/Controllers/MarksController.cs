@@ -8,7 +8,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    [AuthenticateFilter]
 
     public class MarksController : Controller
     {
@@ -19,14 +18,14 @@ namespace FYP1.Controllers
             repo = _repo;
         }
 
-         
+         [AuthenticateFilter]
         [HttpGet("ViewResults")]
         public IActionResult StudentTestResults()
         {
             return View();
         }
 
-         
+         [AuthenticateFilter]
         [HttpGet("UploadResults")]
         public IActionResult UploadTestResults()
         {

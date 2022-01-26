@@ -29,6 +29,7 @@ namespace FYP1.dbModels
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
         public virtual DbSet<TblMark> TblMarks { get; set; }
         public virtual DbSet<TblMenu> TblMenus { get; set; }
+        public virtual DbSet<TblParentMenu> TblParentMenus { get; set; }
         public virtual DbSet<TblProfile> TblProfiles { get; set; }
         public virtual DbSet<TblProgram> TblPrograms { get; set; }
         public virtual DbSet<TblProgramSyllabus> TblProgramSyllabi { get; set; }
@@ -425,11 +426,38 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_Menu");
 
+                entity.HasIndex(e => e.Parent, "Parent");
+
                 entity.Property(e => e.MenuId).HasColumnName("Menu_ID");
 
                 entity.Property(e => e.Action).HasMaxLength(50);
 
                 entity.Property(e => e.Controller).HasMaxLength(50);
+
+                entity.Property(e => e.DisplayLink).HasMaxLength(50);
+
+                entity.Property(e => e.DisplayName).HasMaxLength(50);
+
+                entity.Property(e => e.Icon).HasColumnType("text");
+
+                entity.HasOne(d => d.ParentNavigation)
+                    .WithMany(p => p.TblMenus)
+                    .HasForeignKey(d => d.Parent)
+                    .HasConstraintName("Tbl_Menu_ibfk_1");
+            });
+
+            modelBuilder.Entity<TblParentMenu>(entity =>
+            {
+                entity.HasKey(e => e.ParentId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_ParentMenu");
+
+                entity.Property(e => e.ParentId).HasColumnName("ParentID");
+
+                entity.Property(e => e.DisplayName).HasMaxLength(50);
+
+                entity.Property(e => e.Icon).HasColumnType("text");
             });
 
             modelBuilder.Entity<TblProfile>(entity =>

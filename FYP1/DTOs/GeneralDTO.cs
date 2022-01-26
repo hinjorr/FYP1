@@ -10,6 +10,7 @@ namespace FYP1.DTOs
         public string ReturnUrl { get; set; }
         public int TotalSessions { get; set; }
 
+        public ParentMenuDTO ParentMenu { get; set; }
         public ProfileDTO Profile { get; set; }
         public UserDTO User { get; set; }
         public RoleDTO Role { get; set; }

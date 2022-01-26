@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace FYP1.Controllers
 {
-    [AuthenticateFilter]
 
     public class ProgramsController : Controller
     {
@@ -17,7 +16,7 @@ namespace FYP1.Controllers
             repo = _repo;
         }
 
-         
+         [AuthenticateFilter]
         [HttpGet("AddNewProgram")]
         public IActionResult AddNewProgram()
         {

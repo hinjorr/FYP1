@@ -11,7 +11,6 @@ using Microsoft.Extensions.Logging;
 
 namespace FYP1.Controllers
 {
-    [AuthenticateFilter]
 
     public class RolesController : Controller
     {
@@ -22,7 +21,7 @@ namespace FYP1.Controllers
             repo = _repo;
         }
 
-         
+         [AuthenticateFilter]
         [HttpGet("Permissions")]
         public IActionResult AssignPermissions()
         {

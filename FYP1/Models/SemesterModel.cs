@@ -85,33 +85,40 @@ namespace FYP1.Models
             return data;
         }
 
-        public async Task<bool> AddClassSession(List<ClassSessionDTO> dto)
+        public async Task<GeneralDTO> AddClassSession(List<ClassSessionDTO> dto)
         {
             try
             {
                 var semester_id = dto.ElementAt(0);
-                var chkId = await db.TblClassSessions.Where(x => x.SemesterId == semester_id.SemesterId).ToListAsync();
-                if (chkId != null)
+                if (semester_id != null)
                 {
-                    db.TblClassSessions.RemoveRange(chkId);
-                    await db.SaveChangesAsync();
+                    var chkId = await db.TblClassSessions.Where(x => x.SemesterId == semester_id.SemesterId).ToListAsync();
+                    if (chkId != null)
+                    {
+                        db.TblClassSessions.RemoveRange(chkId);
+                        await db.SaveChangesAsync();
+                    }
                     foreach (var item in dto)
                     {
                         mapper.Map(item, sessions);
                         var data = await db.TblClassSessions.AddAsync(sessions);
                         await db.SaveChangesAsync();
                     }
-                    return true;
+                    general.Text = "Sessions Added";
+                    general.Icon = "success";
                 }
                 else
                 {
-                    return false;
+                    general.Text = "Register a new Semester First";
+                    general.Icon = "error";
                 }
+                return general;
             }
             catch (System.Exception)
             {
-                return false;
-                throw new Exception("Task Failed in AddClassSession");
+                general.Text = "Server Error";
+                general.Icon = "error";
+                return general;
             }
         }
 
@@ -131,7 +138,6 @@ namespace FYP1.Models
 
             }
             return null;
-
         }
     }
 }

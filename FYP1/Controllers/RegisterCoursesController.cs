@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 
 namespace FYP1.Controllers
 {
-    [AuthenticateFilter]
 
     public class RegisterCoursesController : Controller
     {
@@ -17,14 +16,14 @@ namespace FYP1.Controllers
             repo = _repo;
         }
 
-         
+         [AuthenticateFilter]
         [HttpGet("EnrollStdents")]
         public IActionResult EnrollStdents()
         {
             return View();
         }
 
-         
+         [AuthenticateFilter]
         [HttpGet("EnrollFaculty")]
         public IActionResult EnrollFaculty()
         {
