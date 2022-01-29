@@ -16,25 +16,6 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`LMS` /*!40100 DEFAULT CHARACTER SET lat
 
 USE `LMS`;
 
-/*Table structure for table `Tbl_Admin` */
-
-DROP TABLE IF EXISTS `Tbl_Admin`;
-
-CREATE TABLE `Tbl_Admin` (
-  `AdminID` int NOT NULL AUTO_INCREMENT,
-  `UserID` int DEFAULT NULL,
-  PRIMARY KEY (`AdminID`),
-  KEY `UserID` (`UserID`),
-  CONSTRAINT `Tbl_Admin_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
-
-/*Data for the table `Tbl_Admin` */
-
-insert  into `Tbl_Admin`(`AdminID`,`UserID`) values 
-(3,76),
-(22,132),
-(23,135);
-
 /*Table structure for table `Tbl_Attendence` */
 
 DROP TABLE IF EXISTS `Tbl_Attendence`;
@@ -182,7 +163,7 @@ CREATE TABLE `Tbl_Classes` (
   CONSTRAINT `Tbl_Classes_ibfk_5` FOREIGN KEY (`Program_Id`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Classes_ibfk_6` FOREIGN KEY (`Day_Id`) REFERENCES `Tbl_Days` (`Day_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Classes_ibfk_7` FOREIGN KEY (`Time_Id`) REFERENCES `Tbl_Time` (`Time_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=81 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Classes` */
 
@@ -196,7 +177,10 @@ insert  into `Tbl_Classes`(`Class_Id`,`ClassStrength`,`Enrolled_Std`,`Course_Id`
 (59,12,1,39,52,1,2,1,'\0',NULL),
 (75,23,1,51,52,1,1,1,'\0',NULL),
 (76,12,0,51,52,1,2,2,'\0',NULL),
-(77,23,0,37,52,1,6,1,'\0',NULL);
+(77,23,0,37,52,1,6,1,'\0',NULL),
+(78,14,0,44,72,1,1,1,'',NULL),
+(79,12,0,42,72,1,3,1,'',NULL),
+(80,12,0,47,72,6,2,2,'',NULL);
 
 /*Table structure for table `Tbl_CourseEligiblity` */
 
@@ -310,25 +294,20 @@ insert  into `Tbl_Days`(`Day_Id`,`DayName`) values
 (6,'Saturday'),
 (7,'Sunday');
 
-/*Table structure for table `Tbl_Faculty` */
+/*Table structure for table `Tbl_EmailConfiguration` */
 
-DROP TABLE IF EXISTS `Tbl_Faculty`;
+DROP TABLE IF EXISTS `Tbl_EmailConfiguration`;
 
-CREATE TABLE `Tbl_Faculty` (
-  `FacultyId` int NOT NULL AUTO_INCREMENT,
-  `UserID` int DEFAULT NULL,
-  PRIMARY KEY (`FacultyId`),
-  KEY `Tbl_Faculty_ibfk_1` (`UserID`),
-  CONSTRAINT `Tbl_Faculty_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+CREATE TABLE `Tbl_EmailConfiguration` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `From` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `Host` varchar(50) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `Password` varchar(50) DEFAULT NULL,
+  `Port` int DEFAULT NULL,
+  PRIMARY KEY (`ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
-/*Data for the table `Tbl_Faculty` */
-
-insert  into `Tbl_Faculty`(`FacultyId`,`UserID`) values 
-(1,69),
-(2,72),
-(6,91),
-(7,101);
+/*Data for the table `Tbl_EmailConfiguration` */
 
 /*Table structure for table `Tbl_FacultyCourseRegistration` */
 
@@ -487,7 +466,7 @@ CREATE TABLE `Tbl_Profile` (
   `PhoneNumber` varchar(50) DEFAULT NULL,
   `Profile_Date` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`ProfileID`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=108 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Profile` */
 
@@ -507,7 +486,14 @@ insert  into `Tbl_Profile`(`ProfileID`,`Name`,`FatherName`,`Email`,`NIC`,`Addres
 (95,'Niaz ','Hussain','masoodarif1313@gmail.com','1234567895321','6','Karachi','Pakistan','/Upload/1234567895321.jpg','01/20/2022','male','03172945903','10/01/2022'),
 (96,'Liaqat  Khan','Ali hsaan','masoodarif1313@gmail.com','6784567895321','6','Karachi','Pakistan','/Upload/6784567895321.jpg','01/20/2022','male','03172945903','10/01/2022'),
 (97,'Masood ','Muhammad Arif','masoodarif1313@gmail.com','4130783292999','R:36 sector 17/c','Karachi','Pakistan','/Upload/4130783292999.jpg','01/12/2022','male','03172945903','16/01/2022'),
-(99,'Ali','Saqib','masoodarif1313@gmail.com','4130782563299','6','Karachi','Pakistan','/Upload/4130782563299.jpg','01/13/2022','male','03172945903','24/01/2022');
+(99,'Ali','Saqib','masoodarif1313@gmail.com','4130782563299','6','Karachi','Pakistan','/Upload/4130782563299.jpg','01/13/2022','male','03172945903','24/01/2022'),
+(100,'Masood Arif',NULL,'masoodarif1313@gmail.com','1234567890332','R:36 sector 17/c','Karachi','Pakistan','/Upload/1234567890332.jpg','01/12/2022','male','03172945903','27/01/2022'),
+(102,'Mohsin',NULL,'masoodarif1313@gmail.com','1111123421111','6','Karachi','Pakistan','/Upload/1111123421111.jpg','01-01-2014','male','03172945903','27/01/2022'),
+(103,'Mohsin',NULL,'masoodarif1313@gmail.com','1134511111111','6','Karachi','Pakistan','/Upload/1134511111111.jpg','01-01-2014','male','03172945903','27/01/2022'),
+(104,'Mohsin',NULL,'masoodarif1313@gmail.com','1134511341111','6','Karachi','Pakistan','/Upload/1134511341111.jpg','01-01-2014','male','03172945903','27/01/2022'),
+(105,'Mohsin',NULL,'masoodarif1313@gmail.com','1134517841111','6','Karachi','Pakistan','/Upload/1134517841111.jpg','01-01-2014','male','03172945903','27/01/2022'),
+(106,'Masood Arif',NULL,'masoodarif1313@gmail.com','1234567890122','6','Karachi','Pakistan','/Upload/1234567890122.jpg','12/28/2021','male','03172945903','28/01/2022'),
+(107,'Masood Arif','Muhammad Arif','masoodarif1313@gmail.com','7453471234578','6','Karachi','Pakistan','/Upload/7453471234578.jpg','01/11/2022','male','03172945903','29/01/2022');
 
 /*Table structure for table `Tbl_ProgramSyllabus` */
 
@@ -619,91 +605,91 @@ CREATE TABLE `Tbl_RoleMenu` (
   KEY `Role_ID` (`Role_ID`),
   CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=367 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=610 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_RoleMenu` */
 
 insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values 
-(247,1,3,'\0'),
-(248,18,3,'\0'),
-(249,17,3,'\0'),
-(250,16,3,'\0'),
-(251,15,3,'\0'),
-(252,14,3,'\0'),
-(253,13,3,'\0'),
-(254,12,3,'\0'),
-(255,11,3,'\0'),
-(256,10,3,'\0'),
-(257,9,3,''),
-(258,8,3,''),
-(259,7,3,'\0'),
-(260,6,3,''),
-(261,5,3,''),
-(262,4,3,'\0'),
-(263,3,3,''),
-(264,2,3,'\0'),
-(265,19,3,''),
-(266,20,3,'\0'),
-(267,1,4,'\0'),
-(268,18,4,'\0'),
-(269,17,4,'\0'),
-(270,16,4,'\0'),
-(271,15,4,'\0'),
-(272,14,4,'\0'),
-(273,13,4,'\0'),
-(274,12,4,''),
-(275,11,4,''),
-(276,10,4,'\0'),
-(277,9,4,'\0'),
-(278,8,4,''),
-(279,7,4,'\0'),
-(280,6,4,'\0'),
-(281,5,4,'\0'),
-(282,4,4,'\0'),
-(283,3,4,'\0'),
-(284,2,4,'\0'),
-(285,19,4,'\0'),
-(286,20,4,'\0'),
-(307,20,2,'\0'),
-(308,18,2,'\0'),
-(309,2,2,''),
-(310,3,2,'\0'),
-(311,4,2,'\0'),
-(312,5,2,''),
-(313,6,2,''),
-(314,7,2,'\0'),
-(315,8,2,''),
-(316,19,2,''),
-(317,9,2,'\0'),
-(318,11,2,'\0'),
-(319,12,2,'\0'),
-(320,13,2,'\0'),
-(321,14,2,'\0'),
-(322,15,2,'\0'),
-(323,16,2,'\0'),
-(324,17,2,'\0'),
-(325,10,2,''),
-(326,1,2,'\0'),
-(347,20,1,''),
-(348,18,1,''),
-(349,2,1,''),
-(350,3,1,''),
-(351,4,1,''),
-(352,5,1,''),
-(353,6,1,''),
-(354,7,1,''),
-(355,8,1,''),
-(356,19,1,''),
-(357,9,1,''),
-(358,11,1,''),
-(359,12,1,''),
-(360,13,1,''),
-(361,14,1,''),
-(362,15,1,''),
-(363,16,1,''),
-(364,17,1,''),
-(365,10,1,''),
-(366,1,1,'');
+(530,20,1,''),
+(531,18,1,''),
+(532,2,1,'\0'),
+(533,3,1,'\0'),
+(534,4,1,''),
+(535,5,1,''),
+(536,6,1,''),
+(537,7,1,''),
+(538,8,1,''),
+(539,19,1,''),
+(540,9,1,'\0'),
+(541,11,1,''),
+(542,12,1,''),
+(543,13,1,''),
+(544,14,1,''),
+(545,15,1,''),
+(546,16,1,''),
+(547,17,1,''),
+(548,10,1,'\0'),
+(549,1,1,''),
+(550,20,2,'\0'),
+(551,18,2,''),
+(552,2,2,''),
+(553,3,2,'\0'),
+(554,4,2,'\0'),
+(555,5,2,''),
+(556,6,2,''),
+(557,7,2,'\0'),
+(558,8,2,''),
+(559,19,2,''),
+(560,9,2,'\0'),
+(561,11,2,'\0'),
+(562,12,2,'\0'),
+(563,13,2,'\0'),
+(564,14,2,'\0'),
+(565,15,2,'\0'),
+(566,16,2,'\0'),
+(567,17,2,'\0'),
+(568,10,2,''),
+(569,1,2,'\0'),
+(570,20,3,'\0'),
+(571,18,3,''),
+(572,2,3,'\0'),
+(573,3,3,''),
+(574,4,3,'\0'),
+(575,5,3,''),
+(576,6,3,''),
+(577,7,3,'\0'),
+(578,8,3,''),
+(579,19,3,''),
+(580,9,3,''),
+(581,11,3,'\0'),
+(582,12,3,'\0'),
+(583,13,3,'\0'),
+(584,14,3,'\0'),
+(585,15,3,'\0'),
+(586,16,3,'\0'),
+(587,17,3,'\0'),
+(588,10,3,'\0'),
+(589,1,3,'\0'),
+(590,20,4,'\0'),
+(591,18,4,''),
+(592,2,4,'\0'),
+(593,3,4,'\0'),
+(594,4,4,'\0'),
+(595,5,4,'\0'),
+(596,6,4,'\0'),
+(597,7,4,'\0'),
+(598,8,4,''),
+(599,19,4,'\0'),
+(600,9,4,'\0'),
+(601,11,4,''),
+(602,12,4,''),
+(603,13,4,'\0'),
+(604,14,4,'\0'),
+(605,15,4,'\0'),
+(606,16,4,'\0'),
+(607,17,4,'\0'),
+(608,10,4,'\0'),
+(609,1,4,'\0');
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -781,7 +767,7 @@ CREATE TABLE `Tbl_Student` (
   KEY `UserID` (`UserID`),
   CONSTRAINT `Tbl_Student_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Student_ibfk_2` FOREIGN KEY (`ProgramID`) REFERENCES `Tbl_Programs` (`ProgramID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Student` */
 
@@ -794,7 +780,9 @@ insert  into `Tbl_Student`(`Student_Id`,`ProgramID`,`UserID`) values
 (22,1,122),
 (23,6,129),
 (24,6,130),
-(25,6,131);
+(25,6,131),
+(26,1,139),
+(27,1,151);
 
 /*Table structure for table `Tbl_StudentCourseRegistration` */
 
@@ -866,28 +854,40 @@ CREATE TABLE `Tbl_User` (
   KEY `RoleID` (`RoleID`),
   CONSTRAINT `Tbl_User_ibfk_1` FOREIGN KEY (`ProfileID`) REFERENCES `Tbl_Profile` (`ProfileID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_User_ibfk_2` FOREIGN KEY (`RoleID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=139 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_User` */
 
 insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsActive`,`User_Date`) values 
 (64,'student','1050',3,55,'','10/11/2021'),
 (69,'faculty','1050',2,56,'','12/11/2021'),
-(72,'495159','10140159',2,59,'\0','12/11/2021'),
-(75,'44560','1275480',3,60,'','12/11/2021'),
+(72,'495159','1050',2,59,'\0','12/11/2021'),
+(75,'44560','1050',3,60,'\0','12/11/2021'),
 (76,'826361','1050',1,61,'','12/11/2021'),
-(91,'668667','15877567',2,67,'','13/11/2021'),
-(101,'863281','9826181',2,81,'','06/12/2021'),
-(119,'518290','11087590',3,90,'','26/12/2021'),
-(120,'24691','9478291',3,91,'','02/01/2022'),
-(121,'183492','17111492',3,92,'','02/01/2022'),
-(122,'793093','12878193',3,93,'','02/01/2022'),
-(129,'408494','11422694',3,94,'','10/01/2022'),
-(130,'525395','12485795',3,95,'','10/01/2022'),
-(131,'341996','17323196',3,96,'','10/01/2022'),
+(91,'668667','1050',2,67,'','13/11/2021'),
+(101,'863281','1050',2,81,'','06/12/2021'),
+(119,'518290','1050',3,90,'','26/12/2021'),
+(120,'24691','1050',3,91,'','02/01/2022'),
+(121,'183492','1050',3,92,'','02/01/2022'),
+(122,'793093','1050',3,93,'','02/01/2022'),
+(129,'408494','1050',3,94,'','10/01/2022'),
+(130,'525395','1050',3,95,'','10/01/2022'),
+(131,'341996','1050',3,96,'','10/01/2022'),
 (132,'admin','1050',1,97,'','16/01/2022'),
-(135,'700490','1922190',1,90,'','19/01/2022'),
-(138,'382499','9560699',4,99,'','24/01/2022');
+(135,'700490','1050',1,90,'','19/01/2022'),
+(138,'382499','1050',4,99,'','24/01/2022'),
+(139,'Std29100','1050',3,100,'','27/01/2022'),
+(142,'Emp4955','1050',4,55,'','27/01/2022'),
+(143,'Emp5055','1050',6,55,'','27/01/2022'),
+(144,'Emp5055','1050',6,55,'','27/01/2022'),
+(145,'Emp50102','1050',2,102,'','27/01/2022'),
+(146,'Emp58103','1050',4,103,'','27/01/2022'),
+(147,'Emp36104','1050',2,104,'','27/01/2022'),
+(148,'Emp46105','1050',2,105,'','27/01/2022'),
+(149,'Emp51105','masood',4,105,'','27/01/2022'),
+(150,'Emp58106','1050',2,106,'','28/01/2022'),
+(151,'Std22107','1050',3,107,'','29/01/2022'),
+(152,'Emp34107','1050',4,107,'','29/01/2022');
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
