@@ -2,13 +2,15 @@ $(document).ready(function () {
   var route = window.location.href;
   UserID = route.substring(route.lastIndexOf("/") + 1);
   GetProfile(UserID);
+
+  var role = $("#GetUsersRole").text();
+  alert(role)
 });
 
 function GetProfile(username) {
   $.ajax({
     url: "/GetProfile?username=" + username,
     success: function (resp) {
-      console.log(resp);
       $(".GetImage").css(
         "background-image",
         "url(" + resp.profile.picture + ")"
@@ -25,13 +27,9 @@ function GetProfile(username) {
       $("#txtAddress").val(resp.profile.address);
       $("#txtCity").val(resp.profile.city);
       $("#txtCountry").val(resp.profile.country);
-      $("#txtUsername").val(resp.userName);
+      $("#txtUsername").val(resp.user.userName);
       $("#txtEmail").val(resp.profile.email);
       $("#txtPhone").val(resp.profile.phoneNumber);
-      // $("#").val(resp.);
-      // $("#").val(resp.);
-
-      // $("input[name=gender]:checked").val();
     },
   });
 }
@@ -49,7 +47,6 @@ $("#btnSubmitProfile").click(function (e) {
   ProfileDTO.append("City", $("#txtCity").val());
   ProfileDTO.append("Country", $("#txtCountry").val());
   ProfileDTO.append("IsActive", 1);
-  console.log(ProfileDTO);
   $.ajax({
     type: "Post",
     url: "/UpdateProfile",
@@ -58,7 +55,6 @@ $("#btnSubmitProfile").click(function (e) {
     contentType: false,
     processData: false,
     success: function (resp) {
-      console.log(resp);
       // cuteToast({
       //   type: resp.type,
       //   message: resp.msg,
@@ -71,7 +67,7 @@ $("#btnSubmitProfile").click(function (e) {
   });
 });
 
-function UpdateProfile() {}
+function UpdateProfile() { }
 
 // ProfileDTO.append(
 //   "Student.ProgramId",

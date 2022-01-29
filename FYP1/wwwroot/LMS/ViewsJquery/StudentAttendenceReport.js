@@ -8,7 +8,6 @@ function GetAttendence(user_id) {
     url: "/Attendence/StudentAttendenceReport?UserName=" + user_id,
     success: function (resp) {
       var data = resp[0];
-      console.log(resp);
       if (data.icon != null) {
         swal
           .fire({

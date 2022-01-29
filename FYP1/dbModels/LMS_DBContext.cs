@@ -17,7 +17,6 @@ namespace FYP1.dbModels
         {
         }
 
-        public virtual DbSet<TblAdmin> TblAdmins { get; set; }
         public virtual DbSet<TblAttendence> TblAttendences { get; set; }
         public virtual DbSet<TblClass> TblClasses { get; set; }
         public virtual DbSet<TblClassContent> TblClassContents { get; set; }
@@ -25,7 +24,7 @@ namespace FYP1.dbModels
         public virtual DbSet<TblCourse> TblCourses { get; set; }
         public virtual DbSet<TblCourseEligiblity> TblCourseEligiblities { get; set; }
         public virtual DbSet<TblDay> TblDays { get; set; }
-        public virtual DbSet<TblFaculty> TblFaculties { get; set; }
+        public virtual DbSet<TblEmailConfiguration> TblEmailConfigurations { get; set; }
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
         public virtual DbSet<TblMark> TblMarks { get; set; }
         public virtual DbSet<TblMenu> TblMenus { get; set; }
@@ -53,26 +52,6 @@ namespace FYP1.dbModels
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasCharSet("latin1");
-
-            modelBuilder.Entity<TblAdmin>(entity =>
-            {
-                entity.HasKey(e => e.AdminId)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("Tbl_Admin");
-
-                entity.HasIndex(e => e.UserId, "UserID");
-
-                entity.Property(e => e.AdminId).HasColumnName("AdminID");
-
-                entity.Property(e => e.UserId).HasColumnName("UserID");
-
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.TblAdmins)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("Tbl_Admin_ibfk_1");
-            });
 
             modelBuilder.Entity<TblAttendence>(entity =>
             {
@@ -319,22 +298,17 @@ namespace FYP1.dbModels
                 entity.Property(e => e.DayName).HasMaxLength(50);
             });
 
-            modelBuilder.Entity<TblFaculty>(entity =>
+            modelBuilder.Entity<TblEmailConfiguration>(entity =>
             {
-                entity.HasKey(e => e.FacultyId)
-                    .HasName("PRIMARY");
+                entity.ToTable("Tbl_EmailConfiguration");
 
-                entity.ToTable("Tbl_Faculty");
+                entity.Property(e => e.Id).HasColumnName("ID");
 
-                entity.HasIndex(e => e.UserId, "Tbl_Faculty_ibfk_1");
+                entity.Property(e => e.From).HasMaxLength(50);
 
-                entity.Property(e => e.UserId).HasColumnName("UserID");
+                entity.Property(e => e.Host).HasMaxLength(50);
 
-                entity.HasOne(d => d.User)
-                    .WithMany(p => p.TblFaculties)
-                    .HasForeignKey(d => d.UserId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("Tbl_Faculty_ibfk_1");
+                entity.Property(e => e.Password).HasMaxLength(50);
             });
 
             modelBuilder.Entity<TblFacultyCourseRegistration>(entity =>

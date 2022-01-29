@@ -26,7 +26,6 @@ $("#addnewcourse").validate({
       (CourseDTO.ShortName = $("#txtshortName").val()),
       (CourseDTO.CrHr = $("#txtcourseCrHr").val()),
       AddNewCourse(CourseDTO);
-    console.log(CourseDTO);
     $("#addnewcourse").trigger("reset");
   },
 });

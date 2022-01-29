@@ -9,9 +9,7 @@ namespace FYP1.dbModels
     {
         public TblUser()
         {
-            TblAdmins = new HashSet<TblAdmin>();
             TblAttendences = new HashSet<TblAttendence>();
-            TblFaculties = new HashSet<TblFaculty>();
             TblFacultyCourseRegistrations = new HashSet<TblFacultyCourseRegistration>();
             TblMarks = new HashSet<TblMark>();
             TblStudentCourseRegistrations = new HashSet<TblStudentCourseRegistration>();
@@ -28,9 +26,7 @@ namespace FYP1.dbModels
 
         public virtual TblProfile Profile { get; set; }
         public virtual TblRole Role { get; set; }
-        public virtual ICollection<TblAdmin> TblAdmins { get; set; }
         public virtual ICollection<TblAttendence> TblAttendences { get; set; }
-        public virtual ICollection<TblFaculty> TblFaculties { get; set; }
         public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
         public virtual ICollection<TblMark> TblMarks { get; set; }
         public virtual ICollection<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }

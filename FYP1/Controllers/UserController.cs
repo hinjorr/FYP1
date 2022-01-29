@@ -53,6 +53,7 @@ namespace FYP1.Controllers
         // }
         public async Task<IActionResult> DeleteUser(string username)
         {
+            username.ToLower();
             var chk = await repo.DeleteUser(username);
             return Ok(chk);
         }
@@ -79,6 +80,7 @@ namespace FYP1.Controllers
         [HttpGet("GetProfile")]
         public async Task<IActionResult> GetProfile(string username)
         {
+            username.ToLower();
             var data = await repo.GetProfile(username);
             return Ok(data);
         }

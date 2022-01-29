@@ -5,8 +5,8 @@
 
   // $("#DpDownCourse").select2();
   GetAllClasses();
-  var semester = JSON.parse(localStorage.getItem("SemesterDetails"));
-  ClassDTO.SemesterId = semester.semesterId;
+  CommonFunctions.GetCurrentSemester();
+  ClassDTO.SemesterId = CommonFunctions.SemesterDTO.SemesterId;
 });
 
 $("#dpPrograms").change(function (e) {
@@ -14,19 +14,12 @@ $("#dpPrograms").change(function (e) {
   CommonFunctions.GetCoursesbyPrograms("#DpDownCourse", id);
 });
 
-var ClassDTO = {
-  ClassStrength: 0,
-  CourseId: 0,
-  SemesterId: 0,
-  ProgramId: 0,
-  DayId: 0,
-  TimeId: 0,
-  ClassId: 0,
-};
+var ClassDTO = {};
 
 $("#btnSubmit").click(function (e) {
+  // debugger
   if (ClassDTO.SemesterId != 0) {
-    if (ClassDTO.ClassId != 0) {
+    if (ClassDTO.ClassId != undefined) {
       ClassDTO.ClassStrength = $("#txtClasStrength").val();
       CreateClass(ClassDTO);
     } else {
@@ -35,7 +28,7 @@ $("#btnSubmit").click(function (e) {
       ClassDTO.ClassStrength = $("#txtClasStrength").val();
       ClassDTO.DayId = $("#dpDownClassDay").val();
       ClassDTO.TimeId = $("#dpDownClassTime").val();
-      CreateClass(ClassDTO);
+       CreateClass(ClassDTO);
     }
   }
   else {

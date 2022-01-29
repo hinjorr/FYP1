@@ -1,4 +1,4 @@
-using System.Diagnostics;
+using System.Threading;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,8 +9,6 @@ using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
-using System.IO;
-using Microsoft.AspNetCore.Mvc;
 
 
 namespace FYP1.Models
@@ -19,7 +17,6 @@ namespace FYP1.Models
     {
         private readonly IMapper mapper;
         private readonly LMS_DBContext db;
-        private static readonly Random _random = new Random();
         DateTime datenow = DateTime.Now;
         GeneralDTO general = new GeneralDTO();
         public IWebHostEnvironment Env { get; }
@@ -32,10 +29,7 @@ namespace FYP1.Models
         }
 
         //generating random number for username/passowrd
-        public static int RandomNumber(int min, int max)
-        {
-            return _random.Next(min, max);
-        }
+
         public async Task<GeneralDTO> RegisterUser(GeneralDTO dto)
         {
             using (var transaction = await db.Database.BeginTransactionAsync())
@@ -47,17 +41,9 @@ namespace FYP1.Models
                     if (profilechk != null)
                     {
                         dto.Profile.ProfileId = profilechk.ProfileId;
-                        int user_id = await AddUser(dto.Role.RoleId, dto.Profile.ProfileId);
+                        int user_id = await AddUser(dto.Profile.Name, dto.Role.RoleId, dto.Profile.ProfileId, dto.Profile.Email);
                         // condition whether the user is Student/Faculty/Admin
-                        if (dto.Role.RoleId == 1)
-                        {
-                            await AddAdmin(user_id);
-                        }
-                        else if (dto.Role.RoleId == 2)
-                        {
-                            await AddFaculty(user_id);
-                        }
-                        else if (dto.Student.ProgramId != 0 && dto.Role.RoleId == 3)
+                        if (dto.Student.ProgramId != 0 && dto.Role.RoleId == 3)
                         {
                             await AddStudent(user_id, dto.Student.ProgramId);
                         }
@@ -68,28 +54,26 @@ namespace FYP1.Models
                     {
                         TblProfile tblProfile = new TblProfile();
                         mapper.Map(dto.Profile, tblProfile);
-                        string ImagePath = UploadFile(dto.Profile);
+                        if (dto.Profile.ProfileImage != null)
+                        {
+                            string ImagePath = Misc.UploadFile(dto.Profile, Env);
+                            if (ImagePath != null)
+                            {
+                                dto.Profile.Picture = ImagePath;
 
-                        dto.Profile.Picture = ImagePath;
+                            }
+                        }
                         int profile_id = await AddProfile(dto.Profile);
                         dto.Profile.ProfileId = profile_id;
 
-                        int user_id = await AddUser(dto.Role.RoleId, profile_id);
+                        int user_id = await AddUser(dto.Profile.Name, dto.Role.RoleId, dto.Profile.ProfileId, dto.Profile.Email);
                         // condition whether the user is Student/Faculty/Admin
-                        if (dto.Role.RoleId == 1)
-                        {
-                            await AddAdmin(user_id);
-                        }
-                        else if (dto.Role.RoleId == 2)
-                        {
-                            await AddFaculty(user_id);
-                        }
-                        else if (dto.Student.ProgramId != 0 && dto.Role.RoleId == 3)
+                        if (dto.Student.ProgramId != 0 && dto.Role.RoleId == 3)
                         {
                             await AddStudent(user_id, dto.Student.ProgramId);
                         }
-
                     }
+
                     await transaction.CommitAsync();
                     general.Text = "User Registered";
                     general.Icon = "success";
@@ -122,7 +106,7 @@ namespace FYP1.Models
             }
 
         }
-        async Task<int> AddUser(int RoleID, int ProfileID)
+        async Task<int> AddUser(string profile_name, int RoleID, int ProfileID, string Email)
         {
             try
             {
@@ -131,11 +115,30 @@ namespace FYP1.Models
                 tblUser.RoleId = RoleID;
                 tblUser.IsActive = Convert.ToUInt32(true);
                 tblUser.UserDate = datenow.ToString("dd/MM/yyyy");
-                tblUser.Password = RandomNumber(93456, 193123) + ProfileID.ToString();
+                tblUser.Password = "1050";
                 tblUser.ProfileId = ProfileID;
-                tblUser.UserName = RandomNumber(121, 9131) + ProfileID.ToString();
+                switch (RoleID)
+                {
+                    case 1:
+                        tblUser.UserName = "Admin" + Misc.RandomNumber(1, 31) + ProfileID.ToString();
+                        break;
+                    case 3:
+                        tblUser.UserName = "Std" + Misc.RandomNumber(1, 31) + ProfileID.ToString();
+                        break;
+                    default:
+                        tblUser.UserName = "Emp" + Misc.RandomNumber(32, 62) + ProfileID.ToString();
+                        break;
+                }
+
+                tblUser.UserName.ToLower();
                 await db.TblUsers.AddAsync(tblUser);
-                await db.SaveChangesAsync();
+                int chk = await db.SaveChangesAsync();
+                if (chk == 1)
+                {
+                    Thread thread = new Thread(() => Misc.NewUserEmail(profile_name, tblUser.UserName, tblUser.Password, Email, Env));
+                    thread.Start();
+
+                }
                 return tblUser.UserId;
             }
             catch (System.Exception)
@@ -145,22 +148,7 @@ namespace FYP1.Models
             }
 
         }
-        async Task<bool> AddAdmin(int UserID)
-        {
-            try
-            {
-                //entring data in TblAdmin
-                TblAdmin tblAdmin = new TblAdmin();
-                tblAdmin.UserId = UserID;
-                await db.TblAdmins.AddAsync(tblAdmin);
-                await db.SaveChangesAsync();
-                return true;
-            }
-            catch (System.Exception)
-            {
-                throw new Exception("Task Failed");
-            }
-        }
+
         async Task<bool> AddStudent(int UserID, int ProgramID)
         {
             try
@@ -178,24 +166,7 @@ namespace FYP1.Models
                 throw new Exception("Task Failed");
             }
         }
-        async Task<bool> AddFaculty(int User_ID)
-        {
-            try
-            {
-                //entring data in TblFaculty
-                TblFaculty tblFaculty = new TblFaculty();
-                tblFaculty.UserId = User_ID;
-                await db.TblFaculties.AddAsync(tblFaculty);
-                await db.SaveChangesAsync();
-                return true;
-            }
-            catch (System.Exception)
-            {
 
-                throw new Exception("Task Failed");
-            }
-
-        }
         public async Task<GeneralDTO> Role_NIC_Check(GeneralDTO dto)
         {
             try
@@ -282,36 +253,7 @@ namespace FYP1.Models
 
 
         //SaveImage in Folder
-        private string UploadFile(ProfileDTO dto)
-        {
-            try
-            {
-                string FilePath = null;
-                string Extension = Path.GetExtension(dto.ProfileImage.FileName);
-                if (dto.ProfileImage != null)
-                {
-                    string FolderUpload = Path.Combine(Env.WebRootPath, "Upload");
-                    if (!Directory.Exists(FolderUpload))
-                    {
-                        Directory.CreateDirectory(FolderUpload);
-                    }
-                    FilePath = Path.Combine(FolderUpload, dto.Nic + Extension);
 
-                    using (var filestream = new FileStream(FilePath, FileMode.Create))
-                    {
-                        dto.ProfileImage.CopyTo(filestream);
-                    }
-                }
-                return "/Upload" + "/" + dto.Nic + Extension;
-
-            }
-            catch (System.Exception)
-            {
-                return null;
-            }
-
-
-        }
 
         public async Task<GeneralDTO> GetProfile(string username)
         {

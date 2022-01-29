@@ -9,6 +9,7 @@ function GetUsers() {
       type: "Get",
       datatype: "json",
     },
+    paging: false,
     columns: [
       {
         data: "profile.picture",
@@ -29,8 +30,8 @@ function GetUsers() {
       {
         data: "role.roleName",
         render: function (role) {
-            return '<a  class="label label-lg font-weight-bold label-light-warning label-inline"><i class="flaticon-user icon-nm"></i>'+role+'</a>';
-          
+          return '<a  class="label label-lg font-weight-bold label-light-warning label-inline"><i class="flaticon-user icon-nm"></i>' + role + '</a>';
+
         },
       },
       {
@@ -48,12 +49,8 @@ function GetUsers() {
         data: "user.userName",
         render: function (userName) {
           return (
-            '<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="Update(' +
-            userName +
-            ')"><i class="la la-edit"></i></button>' +
-            '<button class="btn btn-sm btn-clean btn-icon" title="Change Status" onclick="Delete(' +
-            userName +
-            ')"><i class="la la-trash"></i></button>'
+            `<button class="btn btn-sm btn-clean btn-icon" title="Edit details" onclick="Update('`+userName+`')"><i class="la la-edit"></i></button> 
+            <button class="btn btn-sm btn-clean btn-icon" title="Change Status" onclick="Delete('`+userName+`')"><i class="la la-trash"></i></button>`
           );
         },
       },

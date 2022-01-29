@@ -49,6 +49,30 @@ namespace FYP1.Controllers
             return View("Login");
         }
 
+        public async Task<IActionResult> ForgetPassword(string username, string email)
+        {
+            var data = await repo.ForgetPassword(username, email);
+            return Ok(data);
+        }
+        public async Task<IActionResult> ResetPassword(UserDTO dto)
+        {
+            var data = await repo.ResetPassword(dto);
+            return Ok(data);
+        }
+
+        [HttpGet("ResetPassword/{id}")]
+        public IActionResult ResetPassword()
+        {
+            var data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
+            if (data != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
+            else
+            {
+                return View();
+            }
+        }
         // [HttpGet("404Error")]
         public IActionResult Error404Page()
         {

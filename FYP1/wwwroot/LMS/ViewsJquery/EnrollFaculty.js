@@ -117,7 +117,6 @@ var DTO = {};
 $("#btnAdd").click(function (e) {
   DTO.ClassId = $("input[name=radio-button]:checked").val();
   if (DTO.Username != 0 && DTO.ClassId != undefined) {
-    console.log(DTO);
     $.ajax({
       type: "Post",
       url: "/RegisterCourses/ResgisterFaculty",
@@ -184,7 +183,6 @@ $("#btnDrop").click(function (e) {
   var model = {};
   model.ClassId = $("input[name=radio-button12]:checked").val();
   model.Username = $("#txtStudent").val();
-  console.log(model);
   if (model.ClassId != undefined && model.Username != 0) {
     $.ajax({
       url: "/RegisterCourses/DropFacultyCourse",

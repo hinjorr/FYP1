@@ -102,7 +102,6 @@ function Menus(roleId) {
             datatype: "json",
         },
         paging: false,
-        scrollY: 400,
         bInfo: false,
         columns: [
             { data: "menu.menuId" },
@@ -158,7 +157,6 @@ $("#btnPermissions").click(function (e) {
 });
 
 function SendData(RoleMenuDTO) {
-    console.log(RoleMenuDTO)
     $.ajax({
         method: "Post",
         url: "/Roles/AssignPermissions",

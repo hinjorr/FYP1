@@ -185,7 +185,6 @@ $("#btnDrop").click(function (e) {
   var model = {};
   model.ClassId = $("input[name=radio-button12]:checked").val();
   model.Username = $("#txtStudent").val();
-  console.log(model);
   if (model.ClassId != undefined && model.Username != 0) {
     $.ajax({
       url: "/RegisterCourses/DropCourse",

@@ -1,3 +1,4 @@
+using System.Threading;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 using System;
@@ -10,6 +11,7 @@ using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using FYP1.Helpers__Filters;
+using Microsoft.AspNetCore.Hosting;
 
 namespace FYP1.Models
 {
@@ -19,18 +21,20 @@ namespace FYP1.Models
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
         IHttpContextAccessor _httpContext;
-
+        private readonly IWebHostEnvironment Env;
         GeneralDTO general = new GeneralDTO();
-        public AuthenticationModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext)
+        public AuthenticationModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext, IWebHostEnvironment env)
         {
             this.db = db;
             this.mapper = mapper;
             _httpContext = httpContext;
+            Env = env;
         }
         public async Task<GeneralDTO> Login(UserDTO dto)
         {
             try
             {
+                dto.UserName.ToLower();
                 GeneralDTO general = new GeneralDTO();
                 var data = await db.TblUsers.Where(x => x.UserName == dto.UserName && x.Password == dto.Password).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
                 if (data != null)
@@ -76,7 +80,6 @@ namespace FYP1.Models
             {
                 List<GeneralDTO> general_list = new List<GeneralDTO>();
                 var _list = await db.TblRoleMenus.Where(x => x.RoleId == Role_Id && x.Check == Convert.ToUInt16(true)).ToListAsync();
-
                 foreach (var item in _list)
                 {
                     var menus = await db.TblMenus.Where(x => x.MenuId == item.MenuId).Include(x => x.ParentNavigation).FirstOrDefaultAsync();
@@ -85,9 +88,9 @@ namespace FYP1.Models
                     mapper.Map(menus, dto.Menu = new MenuDTO());
                     mapper.Map(menus.ParentNavigation, dto.ParentMenu = new ParentMenuDTO());
                     general_list.Add(dto);
-
                 }
-                _httpContext.HttpContext.Session.SetObjectAsJson("Permissions", general_list);
+                List<GeneralDTO> ordered = general_list.OrderBy(x => x.Menu.MenuId).ToList();
+                _httpContext.HttpContext.Session.SetObjectAsJson("Permissions", ordered);
                 return true;
             }
             catch (System.Exception)
@@ -97,6 +100,73 @@ namespace FYP1.Models
                 return false;
             }
         }
+        string verification_code = null;
+        public async Task<GeneralDTO> ForgetPassword(string _username, string _email)
+        {
+            try
+            {
+                string email = null;
+                var chk_username = await db.TblUsers.Where(x => x.UserName == _username).FirstOrDefaultAsync();
+                if (chk_username != null)
+                {
+                    var chk_email = await db.TblProfiles.Where(x => x.ProfileId == chk_username.ProfileId && x.Email == _email).FirstOrDefaultAsync();
+                    if (chk_email != null)
+                    {
+                        email = chk_email.Email;
+                    }
+                }
+                if (chk_username != null && email != null)
+                {
+                    var current_date = DateTime.Now;
+                    var nxt10minutes = current_date.AddMinutes(10);
+                    verification_code = new DateTimeOffset(nxt10minutes).ToUnixTimeSeconds().ToString();
+                    verification_code = verification_code + "-" + chk_username.UserId;
+                    Thread thread = new Thread(() => Misc.ForgetPasswordEmail(_username, verification_code, _email, Env));
+                    thread.Start();
+                    general.Icon = "success";
+                    general.Text = "A verification code has been sent to your registered Email Address";
+                }
+                else
+                {
+                    general.Icon = "error";
+                    general.Text = "No Username/Email found in Gramiq!";
+                }
+                return general;
 
+            }
+            catch (System.Exception)
+            {
+                general.Icon = "error";
+                general.Text = "Server Error!";
+                return general;
+            }
+        }
+
+    public async Task<GeneralDTO> ResetPassword(UserDTO dto)
+        {
+            try
+            {
+                var chk_user = await db.TblUsers.Where(x => x.UserId == dto.UserId).FirstOrDefaultAsync();
+                if (chk_user != null)
+                {
+                    chk_user.Password = dto.Password;
+                    await db.SaveChangesAsync();
+                    general.Icon = "success";
+                    general.Text = "Password Updated!";
+                }
+                else
+                {
+                    general.Icon = "error";
+                    general.Text = "No Username found in Gramiq!";
+                }
+                return general;
+            }
+            catch (System.Exception)
+            {
+                general.Icon = "error";
+                general.Text = "Server Error!";
+                return general;
+            }
+        }
     }
 }

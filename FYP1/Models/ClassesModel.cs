@@ -127,19 +127,17 @@ namespace FYP1.Models
                 }
                 else
                 {
-                    var all_classes = await db.TblClasses.ToListAsync();
+                    var all_classes = await db.TblClasses.OrderByDescending(x => x.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).ToListAsync();
                     foreach (var item in all_classes)
                     {
                         GeneralDTO classdto = new GeneralDTO();
-                        var course = await db.TblClasses.Where(x => x.ClassId == item.ClassId).Include(x => x.Course).Include(x => x.Time).Include(x => x.Day).FirstOrDefaultAsync();
-                        mapper.Map(course, classdto.Classes = new ClassDTO());
-                        mapper.Map(course.Course, classdto.Course = new CourseDTO());
-                        mapper.Map(course.Day, classdto.Day = new DayDTO());
-                        mapper.Map(course.Time, classdto.Time = new TimeDTO());
+                        mapper.Map(item, classdto.Classes = new ClassDTO());
+                        mapper.Map(item.Course, classdto.Course = new CourseDTO());
+                        mapper.Map(item.Day, classdto.Day = new DayDTO());
+                        mapper.Map(item.Time, classdto.Time = new TimeDTO());
                         classlist.Add(classdto);
                     }
                 }
-
                 return classlist;
             }
             catch (System.Exception)

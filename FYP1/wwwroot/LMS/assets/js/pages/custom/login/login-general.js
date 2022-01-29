@@ -57,33 +57,33 @@ var KTLogin = (function () {
 
       validation.validate().then(function (status) {
         if (status == "Valid") {
-        //   swal
-        //     .fire({
-        //       text: "All is cool! Now you submit this form",
-        //       icon: "success",
-        //       buttonsStyling: false,
-        //       confirmButtonText: "Ok, got it!",
-        //       customClass: {
-        //         confirmButton: "btn font-weight-bold btn-light-primary",
-        //       },
-        //     })
-        //     .then(function () {
-        //       KTUtil.scrollTop();
-        //     });
+          //   swal
+          //     .fire({
+          //       text: "All is cool! Now you submit this form",
+          //       icon: "success",
+          //       buttonsStyling: false,
+          //       confirmButtonText: "Ok, got it!",
+          //       customClass: {
+          //         confirmButton: "btn font-weight-bold btn-light-primary",
+          //       },
+          //     })
+          //     .then(function () {
+          //       KTUtil.scrollTop();
+          //     });
         } else {
-        //   swal
-        //     .fire({
-        //       text: "Sorry, looks like there are some errors detected, please try again.",
-        //       icon: "error",
-        //       buttonsStyling: false,
-        //       confirmButtonText: "Ok, got it!",
-        //       customClass: {
-        //         confirmButton: "btn font-weight-bold btn-light-primary",
-        //       },
-        //     })
-        //     .then(function () {
-        //       KTUtil.scrollTop();
-        //     });
+          //   swal
+          //     .fire({
+          //       text: "Sorry, looks like there are some errors detected, please try again.",
+          //       icon: "error",
+          //       buttonsStyling: false,
+          //       confirmButtonText: "Ok, got it!",
+          //       customClass: {
+          //         confirmButton: "btn font-weight-bold btn-light-primary",
+          //       },
+          //     })
+          //     .then(function () {
+          //       KTUtil.scrollTop();
+          //     });
         }
       });
     });
@@ -203,65 +203,12 @@ var KTLogin = (function () {
     });
   };
 
-  var _handleForgotForm = function (e) {
-    var validation;
+   // Handle cancel button
+   $("#kt_login_forgot_cancel").on("click", function (e) {
+    e.preventDefault();
 
-    // Init form validation rules. For more info check the FormValidation plugin's official documentation:https://formvalidation.io/
-    validation = FormValidation.formValidation(
-      KTUtil.getById("kt_login_forgot_form"),
-      {
-        fields: {
-          email: {
-            validators: {
-              notEmpty: {
-                message: "Email address is required",
-              },
-              emailAddress: {
-                message: "The value is not a valid email address",
-              },
-            },
-          },
-        },
-        plugins: {
-          trigger: new FormValidation.plugins.Trigger(),
-          bootstrap: new FormValidation.plugins.Bootstrap(),
-        },
-      }
-    );
-
-    // Handle submit button
-    $("#kt_login_forgot_submit").on("click", function (e) {
-      e.preventDefault();
-
-      validation.validate().then(function (status) {
-        if (status == "Valid") {
-          // Submit form
-          KTUtil.scrollTop();
-        } else {
-          swal
-            .fire({
-              text: "Sorry, looks like there are some errors detected, please try again.",
-              icon: "error",
-              buttonsStyling: false,
-              confirmButtonText: "Ok, got it!",
-              customClass: {
-                confirmButton: "btn font-weight-bold btn-light-primary",
-              },
-            })
-            .then(function () {
-              KTUtil.scrollTop();
-            });
-        }
-      });
-    });
-
-    // Handle cancel button
-    $("#kt_login_forgot_cancel").on("click", function (e) {
-      e.preventDefault();
-
-      _showForm("signin");
-    });
-  };
+    _showForm("signin");
+  });
 
   // Public Functions
   return {

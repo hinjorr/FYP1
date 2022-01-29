@@ -24,7 +24,6 @@ namespace FYP1.Repository
         Task<int> ToTalCourses();
         Task<int> ToTalActiveClasses();
         Task<List<GeneralDTO>> GetStudents();
-        Task<List<GeneralDTO>> GetFaculty();
 
     }
 }

@@ -9,5 +9,7 @@ namespace FYP1.Repository
     public interface IAuthentication
     {
         Task<GeneralDTO> Login(UserDTO dto);
+        Task<GeneralDTO> ForgetPassword(string _username, string _email);
+        Task<GeneralDTO> ResetPassword(UserDTO dto);
     }
 }
