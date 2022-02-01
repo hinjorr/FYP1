@@ -60,7 +60,6 @@ namespace FYP1.Models
                             if (ImagePath != null)
                             {
                                 dto.Profile.Picture = ImagePath;
-
                             }
                         }
                         int profile_id = await AddProfile(dto.Profile);

@@ -82,7 +82,7 @@ namespace FYP1.Models
             List<GeneralDTO> students = new List<GeneralDTO>();
             try
             {
-                var data = await db.TblStudentCourseRegistrations.Where(x => x.Username == username).ToListAsync();
+                var data = await db.TblStudentCourseRegistrations.Where(x => x.Username == username && x.IsActive == Convert.ToUInt64(true)).ToListAsync();
                 if (data != null)
                 {
                     foreach (var item in data)
@@ -181,7 +181,7 @@ namespace FYP1.Models
         async Task<bool> CheckClash(int ClassId, string Username)
         {
             var CurentClass = await db.TblClasses.Where(x => x.ClassId == ClassId && x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
-            var GetOtherClasses = await db.TblStudentCourseRegistrations.Where(x => x.Username == Username).Include(x => x.Class).ToListAsync();
+            var GetOtherClasses = await db.TblStudentCourseRegistrations.Where(x => x.Username == Username && x.IsActive == Convert.ToUInt64(true)).Include(x => x.Class).ToListAsync();
             foreach (var item in GetOtherClasses)
             {
                 if (CurentClass.DayId == item.Class.DayId && CurentClass.TimeId == item.Class.TimeId)
@@ -301,7 +301,7 @@ namespace FYP1.Models
         async Task<bool> CheckFacultyClash(int ClassId, string Username)
         {
             var CurentClass = await db.TblClasses.Where(x => x.ClassId == ClassId).FirstOrDefaultAsync();
-            var GetOtherClasses = await db.TblFacultyCourseRegistrations.Where(x => x.Username == Username).Include(x => x.Class).ToListAsync();
+            var GetOtherClasses = await db.TblFacultyCourseRegistrations.Where(x => x.Username == Username && x.IsActive == Convert.ToUInt64(true)).Include(x => x.Class).ToListAsync();
             foreach (var item in GetOtherClasses)
             {
                 if (CurentClass.DayId == item.Class.DayId && CurentClass.TimeId == item.Class.TimeId)

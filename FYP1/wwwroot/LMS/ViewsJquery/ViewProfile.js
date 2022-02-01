@@ -67,7 +67,7 @@ $("#btnSubmitProfile").click(function (e) {
   });
 });
 
-function UpdateProfile() { }
+function UpdatePassword() { }
 
 // ProfileDTO.append(
 //   "Student.ProgramId",

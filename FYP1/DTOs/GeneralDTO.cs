@@ -20,6 +20,7 @@ namespace FYP1.DTOs
         public SemesterDTO Semester { get; set; }
         public ClassSessionDTO ClassSession { get; set; }
         public ClassDTO Classes { get; set; }
+        public UrlDTO Url { get; set; }
         public DayDTO Day { get; set; }
         public TimeDTO Time { get; set; }
         public CourseDTO Course { get; set; }

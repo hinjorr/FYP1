@@ -16,6 +16,29 @@ CREATE DATABASE /*!32312 IF NOT EXISTS*/`LMS` /*!40100 DEFAULT CHARACTER SET lat
 
 USE `LMS`;
 
+/*Table structure for table `Tbl_Assesments` */
+
+DROP TABLE IF EXISTS `Tbl_Assesments`;
+
+CREATE TABLE `Tbl_Assesments` (
+  `AssesmentId` int NOT NULL AUTO_INCREMENT,
+  `Class_ID` int DEFAULT NULL,
+  `Session_ID` int DEFAULT NULL,
+  `AssesmentName` varchar(500) DEFAULT NULL,
+  `Description` varchar(500) DEFAULT NULL,
+  `AttachmentID` int DEFAULT NULL,
+  `Start` varchar(500) DEFAULT NULL,
+  `End` varchar(500) DEFAULT NULL,
+  `LateSubmission` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`AssesmentId`),
+  KEY `Class_ID` (`Class_ID`),
+  KEY `Session_ID` (`Session_ID`),
+  CONSTRAINT `Tbl_Assesments_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
+  CONSTRAINT `Tbl_Assesments_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Assesments` */
+
 /*Table structure for table `Tbl_Attendence` */
 
 DROP TABLE IF EXISTS `Tbl_Attendence`;
@@ -178,9 +201,9 @@ insert  into `Tbl_Classes`(`Class_Id`,`ClassStrength`,`Enrolled_Std`,`Course_Id`
 (75,23,1,51,52,1,1,1,'\0',NULL),
 (76,12,0,51,52,1,2,2,'\0',NULL),
 (77,23,0,37,52,1,6,1,'\0',NULL),
-(78,14,0,44,72,1,1,1,'',NULL),
-(79,12,0,42,72,1,3,1,'',NULL),
-(80,12,0,47,72,6,2,2,'',NULL);
+(78,14,6,44,72,1,1,1,'',NULL),
+(79,12,5,42,72,1,3,1,'',NULL),
+(80,12,4,47,72,6,2,2,'',NULL);
 
 /*Table structure for table `Tbl_CourseEligiblity` */
 
@@ -327,7 +350,7 @@ CREATE TABLE `Tbl_FacultyCourseRegistration` (
   CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_1` FOREIGN KEY (`UserId`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_2` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_FacultyCourseRegistration_ibfk_3` FOREIGN KEY (`SemesterId`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_FacultyCourseRegistration` */
 
@@ -337,7 +360,22 @@ insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class
 (17,69,'faculty',46,52,'\0'),
 (18,69,'faculty',52,52,'\0'),
 (22,101,'863281',77,52,'\0'),
-(23,72,'495159',51,52,'\0');
+(23,72,'495159',51,52,'\0'),
+(24,147,'Emp36104',78,NULL,''),
+(26,101,'863281',80,NULL,''),
+(27,69,'faculty',79,NULL,'');
+
+/*Table structure for table `Tbl_Files` */
+
+DROP TABLE IF EXISTS `Tbl_Files`;
+
+CREATE TABLE `Tbl_Files` (
+  `File_ID` int NOT NULL AUTO_INCREMENT,
+  `Path` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`File_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Files` */
 
 /*Table structure for table `Tbl_Marks` */
 
@@ -802,7 +840,7 @@ CREATE TABLE `Tbl_StudentCourseRegistration` (
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_4` FOREIGN KEY (`SemesterId`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=45 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=60 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_StudentCourseRegistration` */
 
@@ -818,7 +856,22 @@ insert  into `Tbl_StudentCourseRegistration`(`SCR_Id`,`Username`,`User_ID`,`Clas
 (35,'793093',122,50,52,'\0'),
 (38,'student',64,48,52,'\0'),
 (42,'341996',131,57,52,'\0'),
-(44,'44560',75,46,52,'\0');
+(44,'44560',75,46,52,'\0'),
+(45,'24691',120,78,72,''),
+(46,'44560',75,78,72,''),
+(47,'518290',119,78,72,''),
+(48,'793093',122,78,72,''),
+(49,'Std22107',151,79,72,''),
+(50,'student',64,79,72,''),
+(51,'student',64,80,72,''),
+(52,'518290',119,80,72,''),
+(53,'793093',122,79,72,''),
+(54,'793093',122,80,72,''),
+(55,'525395',130,80,72,''),
+(56,'525395',130,79,72,''),
+(57,'525395',130,78,72,''),
+(58,'student',64,78,72,''),
+(59,'518290',119,79,72,'');
 
 /*Table structure for table `Tbl_Time` */
 
@@ -836,6 +889,30 @@ insert  into `Tbl_Time`(`Time_Id`,`TimeName`) values
 (1,'9:00-12:00 (morning)'),
 (2,'1:00-3:00 (noon)'),
 (3,'6:00-9:00 (evening)');
+
+/*Table structure for table `Tbl_Url` */
+
+DROP TABLE IF EXISTS `Tbl_Url`;
+
+CREATE TABLE `Tbl_Url` (
+  `Url_ID` int NOT NULL AUTO_INCREMENT,
+  `Class_ID` int DEFAULT NULL,
+  `Session_ID` int DEFAULT NULL,
+  `DisplayName` varchar(200) DEFAULT NULL,
+  `Link` varchar(300) DEFAULT NULL,
+  PRIMARY KEY (`Url_ID`),
+  KEY `Class_ID` (`Class_ID`),
+  KEY `Session_ID` (`Session_ID`),
+  CONSTRAINT `Tbl_Url_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
+  CONSTRAINT `Tbl_Url_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Url` */
+
+insert  into `Tbl_Url`(`Url_ID`,`Class_ID`,`Session_ID`,`DisplayName`,`Link`) values 
+(99,79,195,'Embed ','d'),
+(100,79,196,'Youtube','zxc'),
+(101,79,196,'Github','zxc');
 
 /*Table structure for table `Tbl_User` */
 

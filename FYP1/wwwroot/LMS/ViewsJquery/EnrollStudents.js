@@ -1,5 +1,7 @@
 $(document).ready(function () {
   CommonFunctions.GetAllActiveCourses("#GetActiveCourse");
+  CommonFunctions.GetCurrentSemester();
+  DTO.SemesterId = CommonFunctions.SemesterDTO.SemesterId
   GetAllStudents();
   GetStudentInfo();
 });

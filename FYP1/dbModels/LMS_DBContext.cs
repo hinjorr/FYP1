@@ -17,6 +17,7 @@ namespace FYP1.dbModels
         {
         }
 
+        public virtual DbSet<TblAssesment> TblAssesments { get; set; }
         public virtual DbSet<TblAttendence> TblAttendences { get; set; }
         public virtual DbSet<TblClass> TblClasses { get; set; }
         public virtual DbSet<TblClassContent> TblClassContents { get; set; }
@@ -26,6 +27,7 @@ namespace FYP1.dbModels
         public virtual DbSet<TblDay> TblDays { get; set; }
         public virtual DbSet<TblEmailConfiguration> TblEmailConfigurations { get; set; }
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
+        public virtual DbSet<TblFile> TblFiles { get; set; }
         public virtual DbSet<TblMark> TblMarks { get; set; }
         public virtual DbSet<TblMenu> TblMenus { get; set; }
         public virtual DbSet<TblParentMenu> TblParentMenus { get; set; }
@@ -38,6 +40,7 @@ namespace FYP1.dbModels
         public virtual DbSet<TblStudent> TblStudents { get; set; }
         public virtual DbSet<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }
         public virtual DbSet<TblTime> TblTimes { get; set; }
+        public virtual DbSet<TblUrl> TblUrls { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -52,6 +55,44 @@ namespace FYP1.dbModels
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.HasCharSet("latin1");
+
+            modelBuilder.Entity<TblAssesment>(entity =>
+            {
+                entity.HasKey(e => e.AssesmentId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Assesments");
+
+                entity.HasIndex(e => e.ClassId, "Class_ID");
+
+                entity.HasIndex(e => e.SessionId, "Session_ID");
+
+                entity.Property(e => e.AssesmentName).HasMaxLength(500);
+
+                entity.Property(e => e.AttachmentId).HasColumnName("AttachmentID");
+
+                entity.Property(e => e.ClassId).HasColumnName("Class_ID");
+
+                entity.Property(e => e.Description).HasMaxLength(500);
+
+                entity.Property(e => e.End).HasMaxLength(500);
+
+                entity.Property(e => e.LateSubmission).HasColumnType("bit(1)");
+
+                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
+
+                entity.Property(e => e.Start).HasMaxLength(500);
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblAssesments)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("Tbl_Assesments_ibfk_1");
+
+                entity.HasOne(d => d.Session)
+                    .WithMany(p => p.TblAssesments)
+                    .HasForeignKey(d => d.SessionId)
+                    .HasConstraintName("Tbl_Assesments_ibfk_2");
+            });
 
             modelBuilder.Entity<TblAttendence>(entity =>
             {
@@ -349,6 +390,18 @@ namespace FYP1.dbModels
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_1");
+            });
+
+            modelBuilder.Entity<TblFile>(entity =>
+            {
+                entity.HasKey(e => e.FileId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Files");
+
+                entity.Property(e => e.FileId).HasColumnName("File_ID");
+
+                entity.Property(e => e.Path).HasMaxLength(300);
             });
 
             modelBuilder.Entity<TblMark>(entity =>
@@ -677,6 +730,38 @@ namespace FYP1.dbModels
                 entity.Property(e => e.TimeId).HasColumnName("Time_Id");
 
                 entity.Property(e => e.TimeName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TblUrl>(entity =>
+            {
+                entity.HasKey(e => e.UrlId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Url");
+
+                entity.HasIndex(e => e.ClassId, "Class_ID");
+
+                entity.HasIndex(e => e.SessionId, "Session_ID");
+
+                entity.Property(e => e.UrlId).HasColumnName("Url_ID");
+
+                entity.Property(e => e.ClassId).HasColumnName("Class_ID");
+
+                entity.Property(e => e.DisplayName).HasMaxLength(200);
+
+                entity.Property(e => e.Link).HasMaxLength(300);
+
+                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblUrls)
+                    .HasForeignKey(d => d.ClassId)
+                    .HasConstraintName("Tbl_Url_ibfk_1");
+
+                entity.HasOne(d => d.Session)
+                    .WithMany(p => p.TblUrls)
+                    .HasForeignKey(d => d.SessionId)
+                    .HasConstraintName("Tbl_Url_ibfk_2");
             });
 
             modelBuilder.Entity<TblUser>(entity =>

@@ -54,6 +54,7 @@ namespace FYP1
             services.AddScoped<IMarks, MarksModel>();
             services.AddScoped<IAttendence, AttendenceModel>();
             services.AddScoped<IRoleManagement, RoleManagementModel>();
+            services.AddScoped<IClassContent, ClassContentModel>();
             // services.AddDataProtection();
 
         }

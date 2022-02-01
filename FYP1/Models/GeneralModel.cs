@@ -136,7 +136,7 @@ namespace FYP1.Models
             var data = await db.TblClasses.Where(x => x.IsActive == Convert.ToUInt16(true)).CountAsync();
             return data;
         }
-        
+
         public async Task<List<GeneralDTO>> GetStudents()
         {
             try
@@ -154,10 +154,32 @@ namespace FYP1.Models
                 }
                 return dto;
             }
-            catch (System.Exception )
+            catch (System.Exception)
             {
                 return null;
             }
+        }
+
+        public async Task<List<GeneralDTO>> GetFaculty()
+        {
+            try
+            {
+                List<GeneralDTO> dto = new List<GeneralDTO>();
+                var data = await db.TblUsers.Where(x => x.RoleId == 2).Include(x => x.Profile).ToListAsync();
+                foreach (var item in data)
+                {
+                    var a = new GeneralDTO();
+                    mapper.Map(item, a.User = new UserDTO());
+                    mapper.Map(item.Profile, a.Profile = new ProfileDTO());
+                    dto.Add(a);
+                }
+                return dto;
+            }
+            catch (System.Exception)
+            {
+                return null;
+            }
+
         }
 
 
