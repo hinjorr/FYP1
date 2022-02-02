@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FYP1.dbModels;
@@ -10,6 +11,7 @@ using FYP1.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
@@ -18,15 +20,17 @@ namespace FYP1.Models
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
         private IHttpContextAccessor _httpContext;
+        private readonly IConfiguration config;
         GeneralDTO general = new GeneralDTO();
         TblClass Class = new TblClass();
         GeneralDTO user_data;
 
-        public ClassesModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext)
+        public ClassesModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext, IConfiguration config)
         {
             this.db = db;
             this.mapper = mapper;
             _httpContext = httpContext;
+            this.config = config;
             user_data = _httpContext.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
         }
 
@@ -58,8 +62,10 @@ namespace FYP1.Models
                 return general;
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 return general;
@@ -83,8 +89,10 @@ namespace FYP1.Models
                     return false;
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 return false;
             }
         }
@@ -140,8 +148,10 @@ namespace FYP1.Models
                 }
                 return classlist;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 throw;
@@ -174,8 +184,10 @@ namespace FYP1.Models
                 }
                 return studentlist;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 studentlist.Add(general);
@@ -206,8 +218,10 @@ namespace FYP1.Models
                 }
                 return class_list;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 class_list.Add(general);
@@ -228,8 +242,10 @@ namespace FYP1.Models
                                      }).Distinct().ToListAsync();
                 return courses;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 throw;
             }
 
@@ -296,8 +312,10 @@ namespace FYP1.Models
 
                 return dto;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 return general;

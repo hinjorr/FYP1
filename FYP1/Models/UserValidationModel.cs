@@ -1,11 +1,13 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
@@ -14,13 +16,14 @@ namespace FYP1.Models
     {
 
         private readonly LMS_DBContext db;
+        private readonly IConfiguration config;
         private readonly IMapper mapper;
 
-        public UserValidationModel(IMapper _mapper, LMS_DBContext _db)
+        public UserValidationModel(IMapper _mapper, LMS_DBContext _db, IConfiguration config)
         {
             mapper = _mapper;
             db = _db;
-
+            this.config = config;
         }
         public async Task<GeneralDTO> CheckNIC(GeneralDTO dto)
         {
@@ -38,7 +41,7 @@ namespace FYP1.Models
                     //     RoleId = user.Role.RoleId,
                     //     RoleName = user.Role.RoleName
                     // };
-                     return dto;
+                    return dto;
                 }
                 else
                 {
@@ -46,9 +49,10 @@ namespace FYP1.Models
                 }
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 throw;
             }
 

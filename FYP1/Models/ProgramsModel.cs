@@ -8,6 +8,8 @@ using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Threading;
 
 namespace FYP1.Models
 {
@@ -15,11 +17,13 @@ namespace FYP1.Models
     {
         private readonly IMapper mapper;
         private readonly LMS_DBContext db;
+        private readonly IConfiguration config;
         TblProgram program = new TblProgram();
-        public ProgramsModel(IMapper _mapper, LMS_DBContext _db)
+        public ProgramsModel(IMapper _mapper, LMS_DBContext _db, IConfiguration config)
         {
             mapper = _mapper;
             db = _db;
+            this.config = config;
         }
         public async Task<bool> AddProgram(ProgramDTO dto)
         {
@@ -31,9 +35,10 @@ namespace FYP1.Models
                 await db.SaveChangesAsync();
                 return true;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 return false;
             }
         }
@@ -58,9 +63,10 @@ namespace FYP1.Models
                 }
                 return _list;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 throw;
             }
         }

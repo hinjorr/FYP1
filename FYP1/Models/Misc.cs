@@ -1,8 +1,12 @@
 using System;
 using System.IO;
 using System.Net.Mail;
+using System.Text;
+using FYP1.dbModels;
 using FYP1.DTOs;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
+using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
@@ -16,7 +20,7 @@ namespace FYP1.Models
 
         }
 
-        public static bool NewUserEmail(string profile_name, string username, string password, string user_email, IWebHostEnvironment Env)
+        public static bool NewUserEmail(string profile_name, string username, string password, string user_email, IWebHostEnvironment Env, IConfiguration config)
         {
             string FolderUpload = Path.Combine(Env.WebRootPath, "Email");
             string FilePath = Path.Combine(FolderUpload, "newUser.html");
@@ -26,10 +30,10 @@ namespace FYP1.Models
             body = body.Replace("[profile_name]", profile_name);
             body = body.Replace("[username]", username);
             body = body.Replace("[password]", password);
-            SendEmail(user_email, "Gramiq | User Credentials Information", body);
+            SendEmail(user_email, "Gramiq | User Credentials Information", body, config);
             return true;
         }
-        public static bool ForgetPasswordEmail(string username, string code, string user_email, IWebHostEnvironment Env)
+        public static bool ForgetPasswordEmail(string username, string code, string user_email, IWebHostEnvironment Env, IConfiguration config)
         {
             string FolderUpload = Path.Combine(Env.WebRootPath, "Email");
             string FilePath = Path.Combine(FolderUpload, "password-reset.html");
@@ -38,22 +42,28 @@ namespace FYP1.Models
             str.Close();
             body = body.Replace("[username]", username);
             body = body.Replace("[code]", code);
-            SendEmail(user_email, "Gramiq | Password Reset Link", body);
+            SendEmail(user_email, "Gramiq | Password Reset Link", body, config);
             return true;
         }
-        public static bool SendEmail(string user_email, string subject, string body)
+        public static void SendExceptionEmail(Exception ex, IConfiguration config)
+        {
+
+            SendEmail("gramiq.hinjorr@gmail.com", "Whole string", ex.ToString(), config);
+        }
+
+        public static bool SendEmail(string user_email, string subject, string body, IConfiguration config)
         {
             try
             {
                 MailMessage mail = new MailMessage();
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
-                mail.From = new MailAddress("gramiq.hinjorr@gmail.com", "Gramiq");
+                SmtpClient SmtpServer = new SmtpClient(config["Email:Host"]);
+                mail.From = new MailAddress(config["Email:From"], config["Email:DisplayName"]);
                 mail.To.Add(user_email);
                 mail.Subject = subject;
                 mail.IsBodyHtml = true;
                 mail.Body = body;
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("gramiq.hinjorr@gmail.com", "masood1050");
+                SmtpServer.Port = Convert.ToInt16(config["Email:Port"]);
+                SmtpServer.Credentials = new System.Net.NetworkCredential(config["Email:From"], config["Email:Password"]);
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(mail);
                 return true;
@@ -65,35 +75,36 @@ namespace FYP1.Models
             }
         }
 
-        public static string UploadFile(ProfileDTO dto, IWebHostEnvironment Env)
+        public static string UploadFile(IFormFile File, IWebHostEnvironment Env, string Filename = "")
         {
             try
             {
                 string FilePath = null;
-                string Extension = Path.GetExtension(dto.ProfileImage.FileName);
-                if (dto.ProfileImage != null)
+                string Extension = Path.GetExtension(File.FileName);
+                string FolderUpload = Path.Combine(Env.WebRootPath, "Upload");
+                if (!Directory.Exists(FolderUpload))
                 {
-                    string FolderUpload = Path.Combine(Env.WebRootPath, "Upload");
-                    if (!Directory.Exists(FolderUpload))
-                    {
-                        Directory.CreateDirectory(FolderUpload);
-                    }
-                    FilePath = Path.Combine(FolderUpload, dto.Nic + Extension);
-
-                    using (var filestream = new FileStream(FilePath, FileMode.Create))
-                    {
-                        dto.ProfileImage.CopyTo(filestream);
-                    }
+                    Directory.CreateDirectory(FolderUpload);
                 }
-                return "/Upload" + "/" + dto.Nic + Extension;
-
+                if (Filename != "")
+                {
+                    FilePath = Path.Combine(FolderUpload, Filename + Extension);
+                }
+                else
+                {
+                    FilePath = Path.Combine(FolderUpload, File.FileName + Extension);
+                    Filename = Path.GetFileNameWithoutExtension(File.FileName);
+                }
+                using (var filestream = new FileStream(FilePath, FileMode.Create))
+                {
+                    File.CopyTo(filestream);
+                }
+                return "/Upload" + "/" + Filename + Extension;
             }
             catch (System.Exception)
             {
                 return null;
             }
-
-
         }
     }
 }

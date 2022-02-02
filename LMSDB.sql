@@ -25,19 +25,33 @@ CREATE TABLE `Tbl_Assesments` (
   `Class_ID` int DEFAULT NULL,
   `Session_ID` int DEFAULT NULL,
   `AssesmentName` varchar(500) DEFAULT NULL,
-  `Description` varchar(500) DEFAULT NULL,
-  `AttachmentID` int DEFAULT NULL,
-  `Start` varchar(500) DEFAULT NULL,
-  `End` varchar(500) DEFAULT NULL,
+  `Description` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  `Start` datetime DEFAULT NULL,
+  `End` datetime DEFAULT NULL,
   `LateSubmission` bit(1) DEFAULT NULL,
   PRIMARY KEY (`AssesmentId`),
   KEY `Class_ID` (`Class_ID`),
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Assesments_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Assesments_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Assesments` */
+
+/*Table structure for table `Tbl_AssesmetnAttachments` */
+
+DROP TABLE IF EXISTS `Tbl_AssesmetnAttachments`;
+
+CREATE TABLE `Tbl_AssesmetnAttachments` (
+  `File_ID` int NOT NULL AUTO_INCREMENT,
+  `AssesmentId` int DEFAULT NULL,
+  `Path` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  PRIMARY KEY (`File_ID`),
+  KEY `Tbl_AssesmetnAttachments_ibfk_1` (`AssesmentId`),
+  CONSTRAINT `Tbl_AssesmetnAttachments_ibfk_1` FOREIGN KEY (`AssesmentId`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_AssesmetnAttachments` */
 
 /*Table structure for table `Tbl_Attendence` */
 
@@ -364,18 +378,6 @@ insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class
 (24,147,'Emp36104',78,NULL,''),
 (26,101,'863281',80,NULL,''),
 (27,69,'faculty',79,NULL,'');
-
-/*Table structure for table `Tbl_Files` */
-
-DROP TABLE IF EXISTS `Tbl_Files`;
-
-CREATE TABLE `Tbl_Files` (
-  `File_ID` int NOT NULL AUTO_INCREMENT,
-  `Path` varchar(300) DEFAULT NULL,
-  PRIMARY KEY (`File_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
-
-/*Data for the table `Tbl_Files` */
 
 /*Table structure for table `Tbl_Marks` */
 
@@ -905,14 +907,12 @@ CREATE TABLE `Tbl_Url` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Url_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Url_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=102 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Url` */
 
 insert  into `Tbl_Url`(`Url_ID`,`Class_ID`,`Session_ID`,`DisplayName`,`Link`) values 
-(99,79,195,'Embed ','d'),
-(100,79,196,'Youtube','zxc'),
-(101,79,196,'Github','zxc');
+(106,79,195,'Github',NULL);
 
 /*Table structure for table `Tbl_User` */
 

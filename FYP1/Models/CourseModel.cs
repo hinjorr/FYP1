@@ -7,6 +7,8 @@ using FYP1.DTOs;
 using FYP1.Repository;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
+using System.Threading;
 
 namespace FYP1.Models
 {
@@ -14,12 +16,14 @@ namespace FYP1.Models
     {
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
+        private readonly IConfiguration config;
         TblCourse course = new TblCourse();
 
-        public CourseModel(LMS_DBContext db, IMapper mapper)
+        public CourseModel(LMS_DBContext db, IMapper mapper, IConfiguration config)
         {
             this.db = db;
             this.mapper = mapper;
+            this.config = config;
         }
         public async Task<bool> AddNewCourse(CourseDTO dto)
         {
@@ -32,8 +36,10 @@ namespace FYP1.Models
                 await db.SaveChangesAsync();
                 return true;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 return false;
             }
 
@@ -55,8 +61,10 @@ namespace FYP1.Models
                     return false;
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 return false;
                 throw;
             }
@@ -72,9 +80,10 @@ namespace FYP1.Models
                 await db.SaveChangesAsync();
                 return true;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 throw;
             }
 

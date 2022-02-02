@@ -45,10 +45,11 @@ function GetSessions(Cid) {
           `<div class="row">
         <div class="col-lg-9">
             <h4 style="font-family: Georgia, serif;font-size: x-large;color:#036f7a"><i class="fa fa-angle-right"></i>` + item.sessionName + `</h4>
-          <div id="content`+ item.sessionId + `"></div>
+          <div id="urls`+ item.sessionId + `"></div>
+          <div id="assements`+ item.sessionId + `"></div>
         </div>`
-        GetUrls(item.sessionId, ClassId)
-
+        GetUrls(item.sessionId)
+        GetAssesments(item.sessionId)
         //anything
         if (role == "Faculty") {
           html += ActivityButton(item.sessionId)
@@ -62,21 +63,7 @@ function GetSessions(Cid) {
       $("#data").html(html);
       $('.start_date').datetimepicker();
       $('.end_date').datetimepicker();
-      $(".kt_dropzone_3").dropzone({
-        url: "https://keenthemes.com/scripts/void.php", // Set the url for your upload script location
-        paramName: "file", // The name that will be used to transfer the file
-        maxFiles: 10,
-        maxFilesize: 10, // MB
-        addRemoveLinks: true,
-        acceptedFiles: "image/*,application/pdf,.psd",
-        accept: function (file, done) {
-          if (file.name == "justinbieber.jpg") {
-            done("Naha, you don't.");
-          } else {
-            done();
-          }
-        },
-      });
+
     },
   });
 }
@@ -120,7 +107,7 @@ function ActivityButton(sessionId) {
 </div>`
 }
 
-//<--------Assesment Modal working Start---->
+//<--------Assesment Modal working Start------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 function AssesmentModal(sessionId) {
   return `<div class="modal fade" id="AssignmentModal` + sessionId + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
@@ -149,38 +136,29 @@ function AssesmentModal(sessionId) {
                       name="txtDescription"></textarea>
               </div>
               <div class="form-group">
-                  <input type="file" class="form-control" placeholder="" id="upload_files`+ sessionId + `" name="upload_files">
+                  <input type="file" class="form-control" placeholder="" id="upload_files`+ sessionId + `" name="upload_files" multiple>
               </div>
-              <!-- <div class="form-group">
-                  <label>Upload Attachment</label>
-                  <div class="dropzone dropzone-default" id="kt_dropzone_1">
-                      <div class="dropzone-msg dz-message needsclick">
-                          <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
-                          <span class="dropzone-msg-desc">This is just a demo dropzone. Selected files are
-                              <strong>not</strong>actually uploaded.</span>
-                      </div>
-                  </div>
-              </div> -->
+             
               <div class="row">
               <div class="form-group col-lg-6">
                   <label>Start</label>
                   <span class="error">*</span>
-                  <input type="text" class="start_date form-control form-control-solid datetimepicker-input" placeholder="Select date &amp; time" data-toggle="datetimepicker" data-target=".start_date" />
+                  <input type="text" class="start_date form-control form-control-solid datetimepicker-input" id="assesmentStart`+ sessionId + `" placeholder="Select date &amp; time" data-toggle="datetimepicker" data-target=".start_date" />
               </div>
               <div class="form-group col-lg-6">
                   <label>End</label>
                   <span class="error">*</span>
-                  <input type="text" class="end_date  form-control form-control-solid datetimepicker-input" placeholder="Select date &amp; time" data-toggle="datetimepicker" data-target=".end_date" />
+                  <input type="text" class="end_date  form-control form-control-solid datetimepicker-input" id="assesmentEnd`+ sessionId + `" placeholder="Select date &amp; time" data-toggle="datetimepicker" data-target=".end_date" />
               </div>
               </div>
                 <div class="form-group ">
                   <label class="checkbox">
-                      <input type="checkbox" checked="checked" name="LateSubmit`+ sessionId + `" />
+                      <input type="checkbox"  name="LateSubmit`+ sessionId + `" />
                       <span></span>&nbsp; No late Submission</label>
               </div>
           </div>
           <div class="modal-footer mt">
-              <button type="button" class="btn btn-primary" onClick="GetAssesmentModal(`+ sessionId + `)" >Submit</button>
+              <button type="button" class="btn btn-primary" onClick="UploadAssesment(`+ sessionId + `)" >Submit</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
       </div>
@@ -188,15 +166,79 @@ function AssesmentModal(sessionId) {
 </div>`
 }
 
-function GetAssesmentModal(sessionId) {
-  var dto = {}
-  dto.ClassId = ClassId
-  dto.SessionId = sessionId
-  console.log(dto)
-}
-//<--------Assesment Modal working End---->
 
-//<--------Attachment Modal working Start---->
+function UploadAssesment(sessionId) {
+  var dto = new FormData()
+  dto.append("ClassId", ClassId)
+  dto.append("SessionId", sessionId)
+  dto.append("AssesmentName", $("#txtName" + sessionId).val())
+  dto.append("Description", $("#txtDescription" + sessionId).val())
+  dto.append("Start", $("#assesmentStart" + sessionId).val())
+  dto.append("End", $("#assesmentEnd" + sessionId).val())
+  dto.append("LateSubmission", $('input[name="LateSubmit' + sessionId + '"]').prop('checked'))
+  // dto.append("LateSubmission", $(('input[name="LateSubmit' + sessionId + '"]').is(":checked")))
+  var input = document.getElementById("upload_files" + sessionId)
+  images = input.files;
+  $.each(images, function (indexInArray, valueOfElement) {
+    dto.append("Attachments", images[indexInArray])
+  });
+
+  $.ajax({
+    type: "Post",
+    url: "/ClassContent/UploadAssesment",
+    data: dto,
+    contentType: false,
+    processData: false,
+    success: function (resp) {
+      cuteToast({
+        type: resp.type,
+        message: resp.message,
+        timer: 3000,
+      })
+      if (resp.type != "error") {
+        GetAssesments(sessionId)
+        $('#AssignmentModal' + sessionId).modal('hide');
+        $('#exampleModal_' + sessionId).modal('hide');
+
+      }
+    }
+  });
+}
+
+function GetAssesments(SessionId) {
+  $.ajax({
+    url: "/ClassContent/GetAssesment?_sessionId=" + SessionId + "&_classId=" + ClassId,
+    success: function (resp) {
+      var html = ""
+      $(resp).each(function (indexInArray, item) {
+        html += `<a href="` + item.assesmentId + `" target="_blank" style="margin-left: 20px;"> <img src="https://img.icons8.com/color/48/4a90e2/task--v1.png" style="height: 20px;">` + item.assesmentName + `</a>&nbsp&nbsp&nbsp&nbsp`
+        if (role == "Faculty") {
+          html += `<button type="button" class="btn btn-sm btn-icon  btn-hover-light-primary "><i class="fas fa-edit" title="Edit" onClick="OpenAssesmentModal(` + SessionId + `,` + item.assesmentId + `)"></i></button>`
+          html += `<button type="button" class="btn btn-sm btn-icon btn-hover-light-danger"><i class="fas fa-trash" title="Delete" onClick="DeleteAssesment(` + SessionId + `,` + item.assesmentId + `)"></i></button>`
+        }
+        html += "<br>"
+      });
+      $("#assements" + SessionId).html(html);
+
+    }
+  });
+}
+
+function DeleteAssesment(sessionId, id) {
+  $.ajax({
+    url: "/ClassContent/DeleteAssesment?id=" + id,
+    success: function (resp) {
+      GetAssesments(sessionId)
+    }
+  });
+}
+
+function OpenAssesmentModal(sessionId, classId) {
+  $("#AssignmentModal" + sessionId).modal("show")
+}
+//<--------Assesment Modal working End------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+//<--------Attachment Modal working Start-------------------------------------------------------------------------------------------------------------------->
 
 function AttachmentModal(sessionId) {
   return `<div class="modal fade" id="AttachmentModal` + sessionId + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -211,9 +253,10 @@ function AttachmentModal(sessionId) {
           <div class="modal-body">
              
               <div class="form-group">
-              <div class="dropzone dropzone-default dropzone-success kt_dropzone_3">
+              <div class="dropzone dropzone-default dropzone-success">
               <div class="dropzone-msg dz-message needsclick">
                   <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
+                  <input type="file" class="kt_dropzone_3">
                   <span class="dropzone-msg-desc">Only image, pdf and psd files are allowed for upload</span>
               </div>
           </div>
@@ -228,10 +271,10 @@ function AttachmentModal(sessionId) {
 </div>`
 }
 
-//<--------Attachment Modal working End---->
+//<--------Attachment Modal working End------------------------------------------------------------------------------------------------------------------------>
 
 
-//<--------Url Modal working Start---->
+//<--------Url Modal working Start------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 function UrlModal(sessionId) {
   return `<div class="modal fade" id="UrlModal` + sessionId + `" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
@@ -260,7 +303,7 @@ function UrlModal(sessionId) {
               </div>
           </div>
           <div class="modal-footer mt">
-          <button type="button" class="btn btn-primary" onClick="AddUrl('` + sessionId + `')">Submit</button>
+          <button type="button" class="btn btn-primary" onClick="UploadUrl('` + sessionId + `')">Submit</button>
               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
           </div>
       </div>
@@ -268,7 +311,7 @@ function UrlModal(sessionId) {
 </div>`
 }
 
-function AddUrl(sessionId) {
+function UploadUrl(sessionId) {
   UrlDTO.ClassId = ClassId
   UrlDTO.SessionId = sessionId
   UrlDTO.DisplayName = $("#link_id" + sessionId).val();
@@ -279,30 +322,37 @@ function AddUrl(sessionId) {
     url: "/ClassContent/AddUrl",
     data: UrlDTO,
     success: function (resp) {
-      if (resp.icon == "success") {
-        GetUrls(sessionId, ClassId)
+      cuteToast({
+        type: resp.type,
+        message: resp.message,
+        timer: 3000,
+      })
+      if (resp.type != "error") {
+        GetUrls(sessionId)
         $('#UrlModal' + sessionId).modal('hide');
         $('#exampleModal_' + sessionId).modal('hide');
-      }
 
+      }
     }
   });
 }
 
-function GetUrls(SessionId, ClassId) {
+function GetUrls(SessionId) {
   var html = ""
   $.ajax({
     url: "/ClassContent/GetUrls?sessionId=" + SessionId + "&classId=" + ClassId,
     success: function (resp) {
       $(resp).each(function (indexInArray, item) {
-        html += `<a href="` + item.url.link + `" target="_blank" style="margin-left: 20px;"> <i class="fas fa-link  icon-nm"></i>` + item.url.displayName + `</a>&nbsp&nbsp&nbsp&nbsp`
+        html += `<a href="` + item.link + `" target="_blank" style="margin-left: 20px;"> <img src="https://img.icons8.com/fluency/48/4a90e2/chain.png" style="height: 20px;">` + item.displayName + `</a>&nbsp&nbsp&nbsp&nbsp`
         if (role == "Faculty") {
-          html += `<button type="button" class="btn btn-sm btn-icon  btn-hover-light-primary "><i class="fas fa-edit" title="Edit" onClick="openUrlModal(` + SessionId + `,` + item.url.urlId + `)"></i></button>`
-          html += `<button type="button" class="btn btn-sm btn-icon btn-hover-light-danger"><i class="fas fa-trash" title="Delete" onClick="DeleteUrl(` + SessionId + `,` + item.url.urlId + `)"></i></button>`
+          html += `<button type="button" class="btn btn-sm btn-icon  btn-hover-light-primary "><i class="fas fa-edit" title="Edit" onClick="openUrlModal(` + SessionId + `,` + item.urlId + `)"></i></button>`
+          html += `<button type="button" class="btn btn-sm btn-icon btn-hover-light-danger"><i class="fas fa-trash" title="Delete" onClick="DeleteUrl(` + SessionId + `,` + item.urlId + `)"></i></button>`
         }
         html += "<br>"
       });
-      $("#content" + SessionId).html(html);
+      $("#urls" + SessionId).html(html);
+
+
     }
   });
 }
@@ -330,4 +380,4 @@ function DeleteUrl(sessionId, id) {
 }
 
 
-//<--------Url Modal working End---->
+//<--------Url Modal working End------------------------------------------------------------------------------------------------------------------------------------------>

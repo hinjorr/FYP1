@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
@@ -14,13 +16,15 @@ namespace FYP1.Models
     {
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
+        private readonly IConfiguration config;
         public TblClassSession sessions = new TblClassSession();
         TblSemester semester = new TblSemester();
         DateTime nowdt = DateTime.Now;
         GeneralDTO general = new GeneralDTO();
-        public SemesterModel(LMS_DBContext _db, IMapper mapper)
+        public SemesterModel(LMS_DBContext _db, IMapper mapper,IConfiguration config)
         {
             this.mapper = mapper;
+            this.config = config;
             db = _db;
 
         }
@@ -42,8 +46,10 @@ namespace FYP1.Models
                 return general;
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 return general;
@@ -69,8 +75,10 @@ namespace FYP1.Models
                 general.Icon = "success";
                 return general;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 return general;
@@ -114,8 +122,10 @@ namespace FYP1.Models
                 }
                 return general;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 return general;

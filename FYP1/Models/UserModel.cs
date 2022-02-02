@@ -9,7 +9,7 @@ using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
-
+using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
@@ -17,15 +17,17 @@ namespace FYP1.Models
     {
         private readonly IMapper mapper;
         private readonly LMS_DBContext db;
+        private readonly IConfiguration config;
         DateTime datenow = DateTime.Now;
         GeneralDTO general = new GeneralDTO();
         public IWebHostEnvironment Env { get; }
 
-        public UserModel(IMapper _mapper, LMS_DBContext _db, IWebHostEnvironment env)
+        public UserModel(IMapper _mapper, LMS_DBContext _db, IWebHostEnvironment env, IConfiguration config)
         {
             mapper = _mapper;
             db = _db;
             Env = env;
+            this.config = config;
         }
 
         //generating random number for username/passowrd
@@ -56,7 +58,8 @@ namespace FYP1.Models
                         mapper.Map(dto.Profile, tblProfile);
                         if (dto.Profile.ProfileImage != null)
                         {
-                            string ImagePath = Misc.UploadFile(dto.Profile, Env);
+
+                            string ImagePath = Misc.UploadFile(dto.Profile.ProfileImage, Env, dto.Profile.Nic);
                             if (ImagePath != null)
                             {
                                 dto.Profile.Picture = ImagePath;
@@ -66,7 +69,7 @@ namespace FYP1.Models
                         dto.Profile.ProfileId = profile_id;
 
                         int user_id = await AddUser(dto.Profile.Name, dto.Role.RoleId, dto.Profile.ProfileId, dto.Profile.Email);
-                        // condition whether the user is Student/Faculty/Admin
+                        // condition whether the user is Student or not
                         if (dto.Student.ProgramId != 0 && dto.Role.RoleId == 3)
                         {
                             await AddStudent(user_id, dto.Student.ProgramId);
@@ -78,8 +81,10 @@ namespace FYP1.Models
                     general.Icon = "success";
                     return general;
                 }
-                catch (System.Exception)
+                catch (System.Exception ex)
                 {
+                    Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                     general.Text = "Server Error";
                     general.Icon = "error";
                     return general;
@@ -99,8 +104,10 @@ namespace FYP1.Models
                 await db.SaveChangesAsync();
                 return tblProfile.ProfileId;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 throw new Exception("Task Failed");
             }
 
@@ -134,15 +141,16 @@ namespace FYP1.Models
                 int chk = await db.SaveChangesAsync();
                 if (chk == 1)
                 {
-                    Thread thread = new Thread(() => Misc.NewUserEmail(profile_name, tblUser.UserName, tblUser.Password, Email, Env));
+                    Thread thread = new Thread(() => Misc.NewUserEmail(profile_name, tblUser.UserName, tblUser.Password, Email, Env, config));
                     thread.Start();
 
                 }
                 return tblUser.UserId;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 throw new Exception("Task Failed");
             }
 
@@ -160,8 +168,10 @@ namespace FYP1.Models
                 await db.SaveChangesAsync();
                 return true;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 throw new Exception("Task Failed");
             }
         }
@@ -182,8 +192,10 @@ namespace FYP1.Models
                 }
                 return general;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
 
                 general.Text = "Server Error";
                 general.Icon = "error";
@@ -211,8 +223,10 @@ namespace FYP1.Models
                 await db.SaveChangesAsync();
                 return general;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 return general;
@@ -240,8 +254,10 @@ namespace FYP1.Models
                 return _list;
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 _list.Add(general);
@@ -269,8 +285,10 @@ namespace FYP1.Models
                 }
                 return dto;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
                 return general;

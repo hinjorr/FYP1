@@ -12,6 +12,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Http;
 using FYP1.Helpers__Filters;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
@@ -22,13 +23,15 @@ namespace FYP1.Models
         private readonly IMapper mapper;
         IHttpContextAccessor _httpContext;
         private readonly IWebHostEnvironment Env;
+        private readonly IConfiguration config;
         GeneralDTO general = new GeneralDTO();
-        public AuthenticationModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext, IWebHostEnvironment env)
+        public AuthenticationModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext, IWebHostEnvironment env, IConfiguration config)
         {
             this.db = db;
             this.mapper = mapper;
             _httpContext = httpContext;
             Env = env;
+            this.config = config;
         }
         public async Task<GeneralDTO> Login(UserDTO dto)
         {
@@ -66,8 +69,10 @@ namespace FYP1.Models
                 }
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Icon = "error";
                 general.Text = "Server Error!";
                 return general;
@@ -93,10 +98,11 @@ namespace FYP1.Models
                 _httpContext.HttpContext.Session.SetObjectAsJson("Permissions", ordered);
                 return true;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
 
-
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 return false;
             }
         }
@@ -121,7 +127,7 @@ namespace FYP1.Models
                     var nxt10minutes = current_date.AddMinutes(10);
                     verification_code = new DateTimeOffset(nxt10minutes).ToUnixTimeSeconds().ToString();
                     verification_code = verification_code + "-" + chk_username.UserId;
-                    Thread thread = new Thread(() => Misc.ForgetPasswordEmail(_username, verification_code, _email, Env));
+                    Thread thread = new Thread(() => Misc.ForgetPasswordEmail(_username, verification_code, _email, Env, config));
                     thread.Start();
                     general.Icon = "success";
                     general.Text = "A verification code has been sent to your registered Email Address";
@@ -134,15 +140,17 @@ namespace FYP1.Models
                 return general;
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Icon = "error";
                 general.Text = "Server Error!";
                 return general;
             }
         }
 
-    public async Task<GeneralDTO> ResetPassword(UserDTO dto)
+        public async Task<GeneralDTO> ResetPassword(UserDTO dto)
         {
             try
             {
@@ -161,8 +169,10 @@ namespace FYP1.Models
                 }
                 return general;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Icon = "error";
                 general.Text = "Server Error!";
                 return general;

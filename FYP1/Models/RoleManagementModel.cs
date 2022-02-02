@@ -1,12 +1,14 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
@@ -14,13 +16,15 @@ namespace FYP1.Models
     {
         private LMS_DBContext db;
         private readonly IMapper mapper;
+        private readonly IConfiguration config;
         TblRoleMenu TblRoleMenu = new TblRoleMenu();
         TblRole tbl_role = new TblRole();
         GeneralDTO general = new GeneralDTO();
-        public RoleManagementModel(LMS_DBContext _db, IMapper _mapper)
+        public RoleManagementModel(LMS_DBContext _db, IMapper _mapper, IConfiguration config)
         {
             db = _db;
             mapper = _mapper;
+            this.config = config;
         }
 
         public async Task<GeneralDTO> CreateRole(RoleDTO dto)
@@ -47,8 +51,10 @@ namespace FYP1.Models
                 general.Icon = "success";
                 return general;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Icon = "error";
                 general.Text = "Server Error";
                 return general;
@@ -65,8 +71,10 @@ namespace FYP1.Models
                     mapper.Map(role, general.Role = new RoleDTO());
                 }
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Icon = "error";
                 general.Text = "Server Error";
             }
@@ -100,8 +108,10 @@ namespace FYP1.Models
                 return general;
 
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Icon = "error";
                 general.Text = "Server Error";
                 return general;
@@ -148,8 +158,10 @@ namespace FYP1.Models
                 }
                 return _list;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Icon = "error";
                 general.Text = "Server Error";
                 _list.Add(general);
@@ -176,8 +188,10 @@ namespace FYP1.Models
                 general.Text = "Permissions Assigned!";
                 return general;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 general.Icon = "error";
                 general.Text = "Server Error!";
                 return general;
@@ -207,8 +221,10 @@ namespace FYP1.Models
                 }
                 return false;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
                 return false;
             }
         }
