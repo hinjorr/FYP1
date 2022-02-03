@@ -1,6 +1,6 @@
 /*
 SQLyog Community v13.1.7 (64 bit)
-MySQL - 8.0.27-0ubuntu0.20.04.1 : Database - LMS
+MySQL - 8.0.28-0ubuntu0.20.04.3 : Database - LMS
 *********************************************************************
 */
 
@@ -15,6 +15,32 @@ MySQL - 8.0.27-0ubuntu0.20.04.1 : Database - LMS
 CREATE DATABASE /*!32312 IF NOT EXISTS*/`LMS` /*!40100 DEFAULT CHARACTER SET latin1 */ /*!80016 DEFAULT ENCRYPTION='N' */;
 
 USE `LMS`;
+
+/*Table structure for table `Tbl_AssesmentSubmission` */
+
+DROP TABLE IF EXISTS `Tbl_AssesmentSubmission`;
+
+CREATE TABLE `Tbl_AssesmentSubmission` (
+  `SubmissionId` int NOT NULL AUTO_INCREMENT,
+  `UserID` int DEFAULT NULL,
+  `AssesmentID` int DEFAULT NULL,
+  `FilePath` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `DisplayName` varchar(300) DEFAULT NULL,
+  `SubmissionTime` datetime DEFAULT NULL,
+  `LateSubmit` bit(1) DEFAULT NULL,
+  PRIMARY KEY (`SubmissionId`),
+  KEY `UserID` (`UserID`),
+  KEY `AssesmentID` (`AssesmentID`),
+  CONSTRAINT `Tbl_AssesmentSubmission_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_AssesmentSubmission_ibfk_2` FOREIGN KEY (`AssesmentID`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_AssesmentSubmission` */
+
+insert  into `Tbl_AssesmentSubmission`(`SubmissionId`,`UserID`,`AssesmentID`,`FilePath`,`DisplayName`,`SubmissionTime`,`LateSubmit`) values 
+(3,64,36,'/Upload/student-Mohsin-Assignment 1-79.pdf','student-Mohsin-Assignment 1-79','2022-02-04 00:25:25',''),
+(4,151,36,'/Upload/Std22107-Masood Arif-Assignment 1-79.pdf','Std22107-Masood Arif-Assignment 1-79','2022-02-04 00:52:33',''),
+(5,119,36,'/Upload/518290-Habib-Assignment 1-79.pdf','518290-Habib-Assignment 1-79','2022-02-04 01:37:46','');
 
 /*Table structure for table `Tbl_Assesments` */
 
@@ -34,9 +60,12 @@ CREATE TABLE `Tbl_Assesments` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Assesments_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Assesments_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=27 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Assesments` */
+
+insert  into `Tbl_Assesments`(`AssesmentId`,`Class_ID`,`Session_ID`,`AssesmentName`,`Description`,`Start`,`End`,`LateSubmission`) values 
+(36,79,195,'Assignment 1',NULL,'2022-02-03 20:24:00','2022-02-03 20:24:00','');
 
 /*Table structure for table `Tbl_AssesmetnAttachments` */
 
@@ -45,13 +74,18 @@ DROP TABLE IF EXISTS `Tbl_AssesmetnAttachments`;
 CREATE TABLE `Tbl_AssesmetnAttachments` (
   `File_ID` int NOT NULL AUTO_INCREMENT,
   `AssesmentId` int DEFAULT NULL,
+  `DisplayName` varchar(400) DEFAULT NULL,
   `Path` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY (`File_ID`),
   KEY `Tbl_AssesmetnAttachments_ibfk_1` (`AssesmentId`),
   CONSTRAINT `Tbl_AssesmetnAttachments_ibfk_1` FOREIGN KEY (`AssesmentId`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=87 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmetnAttachments` */
+
+insert  into `Tbl_AssesmetnAttachments`(`File_ID`,`AssesmentId`,`DisplayName`,`Path`) values 
+(85,36,'Fee Bill.pdf','/Upload/Fee Bill.pdf'),
+(86,36,'delta-fact-339916-a210693749f2.json','/Upload/delta-fact-339916-a210693749f2.json');
 
 /*Table structure for table `Tbl_Attendence` */
 
@@ -440,7 +474,7 @@ CREATE TABLE `Tbl_Menu` (
   PRIMARY KEY (`Menu_ID`),
   KEY `Parent` (`Parent`),
   CONSTRAINT `Tbl_Menu_ibfk_1` FOREIGN KEY (`Parent`) REFERENCES `Tbl_ParentMenu` (`ParentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Menu` */
 
@@ -464,7 +498,8 @@ insert  into `Tbl_Menu`(`Menu_ID`,`Controller`,`Action`,`DisplayLink`,`DisplayNa
 (17,'User','ViewUsers','ViewUsers','View all users',1,NULL),
 (18,'User','ViewProfile',NULL,NULL,NULL,NULL),
 (19,'User','Calender','Calender','Calender',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <polygon points=\"0 0 24 0 24 24 0 24\" />\r\n                                <path\r\n                                    d=\"M18.5,8 C17.1192881,8 16,6.88071187 16,5.5 C16,4.11928813 17.1192881,3 18.5,3 C19.8807119,3 21,4.11928813 21,5.5 C21,6.88071187 19.8807119,8 18.5,8 Z M18.5,21 C17.1192881,21 16,19.8807119 16,18.5 C16,17.1192881 17.1192881,16 18.5,16 C19.8807119,16 21,17.1192881 21,18.5 C21,19.8807119 19.8807119,21 18.5,21 Z M5.5,21 C4.11928813,21 3,19.8807119 3,18.5 C3,17.1192881 4.11928813,16 5.5,16 C6.88071187,16 8,17.1192881 8,18.5 C8,19.8807119 6.88071187,21 5.5,21 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M5.5,8 C4.11928813,8 3,6.88071187 3,5.5 C3,4.11928813 4.11928813,3 5.5,3 C6.88071187,3 8,4.11928813 8,5.5 C8,6.88071187 6.88071187,8 5.5,8 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 C14,5.55228475 13.5522847,6 13,6 L11,6 C10.4477153,6 10,5.55228475 10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,18 L13,18 C13.5522847,18 14,18.4477153 14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 C10,18.4477153 10.4477153,18 11,18 Z M5,10 C5.55228475,10 6,10.4477153 6,11 L6,13 C6,13.5522847 5.55228475,14 5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 C18.4477153,14 18,13.5522847 18,13 L18,11 C18,10.4477153 18.4477153,10 19,10 Z\"\r\n                                    fill=\"#000000\" />\r\n                            </g>\r\n                        </svg>'),
-(20,'Roles','AssignPermissions','Permissions','Roles Management',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <path\r\n                                    d=\"M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                            </g>\r\n                        </svg>');
+(20,'Roles','AssignPermissions','Permissions','Roles Management',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <path\r\n                                    d=\"M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                            </g>\r\n                        </svg>'),
+(24,'ClassContent','ViewAssesment',NULL,NULL,NULL,NULL);
 
 /*Table structure for table `Tbl_ParentMenu` */
 
@@ -645,71 +680,11 @@ CREATE TABLE `Tbl_RoleMenu` (
   KEY `Role_ID` (`Role_ID`),
   CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=610 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=679 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_RoleMenu` */
 
 insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values 
-(530,20,1,''),
-(531,18,1,''),
-(532,2,1,'\0'),
-(533,3,1,'\0'),
-(534,4,1,''),
-(535,5,1,''),
-(536,6,1,''),
-(537,7,1,''),
-(538,8,1,''),
-(539,19,1,''),
-(540,9,1,'\0'),
-(541,11,1,''),
-(542,12,1,''),
-(543,13,1,''),
-(544,14,1,''),
-(545,15,1,''),
-(546,16,1,''),
-(547,17,1,''),
-(548,10,1,'\0'),
-(549,1,1,''),
-(550,20,2,'\0'),
-(551,18,2,''),
-(552,2,2,''),
-(553,3,2,'\0'),
-(554,4,2,'\0'),
-(555,5,2,''),
-(556,6,2,''),
-(557,7,2,'\0'),
-(558,8,2,''),
-(559,19,2,''),
-(560,9,2,'\0'),
-(561,11,2,'\0'),
-(562,12,2,'\0'),
-(563,13,2,'\0'),
-(564,14,2,'\0'),
-(565,15,2,'\0'),
-(566,16,2,'\0'),
-(567,17,2,'\0'),
-(568,10,2,''),
-(569,1,2,'\0'),
-(570,20,3,'\0'),
-(571,18,3,''),
-(572,2,3,'\0'),
-(573,3,3,''),
-(574,4,3,'\0'),
-(575,5,3,''),
-(576,6,3,''),
-(577,7,3,'\0'),
-(578,8,3,''),
-(579,19,3,''),
-(580,9,3,''),
-(581,11,3,'\0'),
-(582,12,3,'\0'),
-(583,13,3,'\0'),
-(584,14,3,'\0'),
-(585,15,3,'\0'),
-(586,16,3,'\0'),
-(587,17,3,'\0'),
-(588,10,3,'\0'),
-(589,1,3,'\0'),
 (590,20,4,'\0'),
 (591,18,4,''),
 (592,2,4,'\0'),
@@ -729,7 +704,71 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (606,16,4,'\0'),
 (607,17,4,'\0'),
 (608,10,4,'\0'),
-(609,1,4,'\0');
+(609,1,4,'\0'),
+(613,24,4,'\0'),
+(616,24,2,''),
+(617,19,2,''),
+(618,2,2,''),
+(619,3,2,'\0'),
+(620,4,2,'\0'),
+(621,5,2,''),
+(622,6,2,''),
+(623,7,2,'\0'),
+(624,8,2,''),
+(625,9,2,'\0'),
+(626,10,2,''),
+(627,11,2,'\0'),
+(628,12,2,'\0'),
+(629,13,2,'\0'),
+(630,14,2,'\0'),
+(631,15,2,'\0'),
+(632,16,2,'\0'),
+(633,17,2,'\0'),
+(634,18,2,''),
+(635,20,2,'\0'),
+(636,1,2,'\0'),
+(637,24,1,''),
+(638,19,1,''),
+(639,2,1,'\0'),
+(640,3,1,'\0'),
+(641,4,1,''),
+(642,5,1,''),
+(643,6,1,''),
+(644,7,1,''),
+(645,8,1,''),
+(646,9,1,'\0'),
+(647,10,1,'\0'),
+(648,11,1,''),
+(649,12,1,''),
+(650,13,1,''),
+(651,14,1,''),
+(652,15,1,''),
+(653,16,1,''),
+(654,17,1,''),
+(655,18,1,''),
+(656,20,1,''),
+(657,1,1,''),
+(658,24,3,''),
+(659,19,3,''),
+(660,2,3,'\0'),
+(661,3,3,''),
+(662,4,3,'\0'),
+(663,5,3,''),
+(664,6,3,''),
+(665,7,3,'\0'),
+(666,8,3,''),
+(667,9,3,''),
+(668,10,3,'\0'),
+(669,11,3,'\0'),
+(670,12,3,'\0'),
+(671,13,3,'\0'),
+(672,14,3,'\0'),
+(673,15,3,'\0'),
+(674,16,3,'\0'),
+(675,17,3,'\0'),
+(676,18,3,''),
+(677,20,3,'\0'),
+(678,1,3,'\0');
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -912,7 +951,7 @@ CREATE TABLE `Tbl_Url` (
 /*Data for the table `Tbl_Url` */
 
 insert  into `Tbl_Url`(`Url_ID`,`Class_ID`,`Session_ID`,`DisplayName`,`Link`) values 
-(106,79,195,'Github',NULL);
+(106,79,195,'Github','https://lms.kiet.edu.pk/kietlms/course/view.php?id=3327');
 
 /*Table structure for table `Tbl_User` */
 

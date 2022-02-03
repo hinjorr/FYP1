@@ -211,7 +211,7 @@ function GetAssesments(SessionId) {
     success: function (resp) {
       var html = ""
       $(resp).each(function (indexInArray, item) {
-        html += `<a href="` + item.assesmentId + `" target="_blank" style="margin-left: 20px;"> <img src="https://img.icons8.com/color/48/4a90e2/task--v1.png" style="height: 20px;">` + item.assesmentName + `</a>&nbsp&nbsp&nbsp&nbsp`
+        html += `<a href="/ViewAssesment/` + ClassId + `/` + item.assesmentId + `" target="_blank" style="margin-left: 20px;"> <img src="https://img.icons8.com/color/48/4a90e2/task--v1.png" style="height: 20px;">` + item.assesmentName + `</a>&nbsp&nbsp&nbsp&nbsp`
         if (role == "Faculty") {
           html += `<button type="button" class="btn btn-sm btn-icon  btn-hover-light-primary "><i class="fas fa-edit" title="Edit" onClick="OpenAssesmentModal(` + SessionId + `,` + item.assesmentId + `)"></i></button>`
           html += `<button type="button" class="btn btn-sm btn-icon btn-hover-light-danger"><i class="fas fa-trash" title="Delete" onClick="DeleteAssesment(` + SessionId + `,` + item.assesmentId + `)"></i></button>`

@@ -17,7 +17,7 @@ namespace FYP1.DTOs
         public string Description { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
-        public ulong? LateSubmission { get; set; }
+        public bool? LateSubmission { get; set; }
 
         [JsonIgnore]
         public List<IFormFile> Attachments { get; set; }

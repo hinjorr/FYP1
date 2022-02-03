@@ -6,6 +6,7 @@ using FYP1.DTOs;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using FYP1.Helpers__Filters;
 
 namespace FYP1.Controllers
 {
@@ -56,6 +57,33 @@ namespace FYP1.Controllers
             return Ok();
         }
 
+        [AuthenticateFilter]
+        [HttpGet("ViewAssesment/{classid}/{assesmentid}")]
+        public IActionResult ViewAssesment(int id)
+        {
+            return View();
+        }
+        public async Task<IActionResult> GetAssesmentDetail(int id)
+        {
+            var data = await repo.GetAssesmentDetail(id);
+            return Ok(data);
+        }
+        public async Task<IActionResult> AssesmentStudents(int class_id, int assesment_id)
+        {
+            var _data = await repo.AssesmentStudents(class_id, assesment_id);
+            return Json(new { data = _data });
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> AssesmentSubmission([FromForm] AssesmentSubmissionDTO dto)
+        {
+            var data = await repo.AssesmentSubmission(dto);
+            return Ok(data);
+        }
+        public async Task<IActionResult> GetSingleAssesment(int assesment_id)
+        {
+            var data = await repo.GetSingleAssesment(assesment_id);
+            return Ok(data);
+        }
     }
 }

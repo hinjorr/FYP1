@@ -9,6 +9,7 @@ namespace FYP1.dbModels
     {
         public TblAssesment()
         {
+            TblAssesmentSubmissions = new HashSet<TblAssesmentSubmission>();
             TblAssesmetnAttachments = new HashSet<TblAssesmetnAttachment>();
         }
 
@@ -23,6 +24,7 @@ namespace FYP1.dbModels
 
         public virtual TblClass Class { get; set; }
         public virtual TblClassSession Session { get; set; }
+        public virtual ICollection<TblAssesmentSubmission> TblAssesmentSubmissions { get; set; }
         public virtual ICollection<TblAssesmetnAttachment> TblAssesmetnAttachments { get; set; }
     }
 }

@@ -1,0 +1,47 @@
+@{
+ViewData["Title"] = "View Assesment";
+Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="card-header">
+    <h3 class="card-label" id="course_header">
+    </h3>
+</div>
+<br>
+
+
+<div class="row">
+    <div class="col-md-8">
+        <!--begin::Card-->
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <span class="card-icon">
+                        <img src="https://img.icons8.com/color/48/4a90e2/task--v1.png">
+                    </span>
+                    <h3 class="card-label" id="assesment_name">
+                    </h3>
+                </div>
+                <div class="card-toolbar">
+                    <div class="dropdown dropdown-inline" data-toggle="tooltip" title="Due Date" data-placement="left">
+                        <small style="color: #ff001b;font-size: 100%;" id="due_date"></small>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body assesment_description"></div>
+        </div>
+        <!--end::Card-->
+    </div>
+    <div class="col-md-4" id="submission_area">
+
+    </div>
+</div>
+<br>
+<div class="row" id="submission_list">
+    
+</div>
+
+
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<script src="~/LMS/lib/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/LMS/ViewsJquery/AssesmentSubmission.js"></script>

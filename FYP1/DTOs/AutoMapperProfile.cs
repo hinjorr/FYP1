@@ -17,6 +17,12 @@ namespace FYP1.DTOs
             CreateMap<TblFile, FileDTO>();
             CreateMap<FileDTO, TblFile>();
 
+            CreateMap<AssesmetnAttachmentDTO, TblAssesmetnAttachment>();
+            CreateMap<TblAssesmetnAttachment, AssesmetnAttachmentDTO>();
+
+            CreateMap<TblAssesmentSubmission, AssesmentSubmissionDTO>();
+            CreateMap<AssesmentSubmissionDTO, TblAssesmentSubmission>();
+
 
             CreateMap<TblParentMenu, ParentMenuDTO>();
             CreateMap<ParentMenuDTO, TblParentMenu>();

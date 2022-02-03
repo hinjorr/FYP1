@@ -18,6 +18,7 @@ namespace FYP1.dbModels
         }
 
         public virtual DbSet<TblAssesment> TblAssesments { get; set; }
+        public virtual DbSet<TblAssesmentSubmission> TblAssesmentSubmissions { get; set; }
         public virtual DbSet<TblAssesmetnAttachment> TblAssesmetnAttachments { get; set; }
         public virtual DbSet<TblAttendence> TblAttendences { get; set; }
         public virtual DbSet<TblClass> TblClasses { get; set; }
@@ -43,14 +44,14 @@ namespace FYP1.dbModels
         public virtual DbSet<TblUrl> TblUrls { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
 
-//         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
-//         {
-//             if (!optionsBuilder.IsConfigured)
-//             {
-// #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-//                 optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"));
-//             }
-//         }
+        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        {
+            if (!optionsBuilder.IsConfigured)
+            {
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"));
+            }
+        }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -92,6 +93,42 @@ namespace FYP1.dbModels
                     .HasConstraintName("Tbl_Assesments_ibfk_2");
             });
 
+            modelBuilder.Entity<TblAssesmentSubmission>(entity =>
+            {
+                entity.HasKey(e => e.SubmissionId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_AssesmentSubmission");
+
+                entity.HasIndex(e => e.AssesmentId, "AssesmentID");
+
+                entity.HasIndex(e => e.UserId, "UserID");
+
+                entity.Property(e => e.AssesmentId).HasColumnName("AssesmentID");
+
+                entity.Property(e => e.DisplayName).HasMaxLength(300);
+
+                entity.Property(e => e.FilePath).HasMaxLength(300);
+
+                entity.Property(e => e.LateSubmit).HasColumnType("bit(1)");
+
+                entity.Property(e => e.SubmissionTime).HasColumnType("datetime");
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.HasOne(d => d.Assesment)
+                    .WithMany(p => p.TblAssesmentSubmissions)
+                    .HasForeignKey(d => d.AssesmentId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_AssesmentSubmission_ibfk_2");
+
+                entity.HasOne(d => d.User)
+                    .WithMany(p => p.TblAssesmentSubmissions)
+                    .HasForeignKey(d => d.UserId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_AssesmentSubmission_ibfk_1");
+            });
+
             modelBuilder.Entity<TblAssesmetnAttachment>(entity =>
             {
                 entity.HasKey(e => e.FileId)
@@ -102,6 +139,8 @@ namespace FYP1.dbModels
                 entity.HasIndex(e => e.AssesmentId, "Tbl_AssesmetnAttachments_ibfk_1");
 
                 entity.Property(e => e.FileId).HasColumnName("File_ID");
+
+                entity.Property(e => e.DisplayName).HasMaxLength(400);
 
                 entity.Property(e => e.Path).HasMaxLength(500);
 

@@ -12,6 +12,9 @@ namespace FYP1.DTOs
         public string ReturnUrl { get; set; }
         public int TotalSessions { get; set; }
 
+        public List<AssesmetnAttachmentDTO> AssesmentAttachmentList { get; set; }
+        public AssesmentSubmissionDTO AssesmentSubmission { get; set; }
+        public AssesmetnAttachmentDTO AssesmentAttachment { get; set; }
         public AssesmentDTO Assesment { get; set; }
         public ParentMenuDTO ParentMenu { get; set; }
         public ProfileDTO Profile { get; set; }

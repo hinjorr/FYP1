@@ -48,7 +48,7 @@ namespace FYP1.Models
         public static void SendExceptionEmail(Exception ex, IConfiguration config)
         {
 
-            SendEmail("gramiq.hinjorr@gmail.com", "Whole string", ex.ToString(), config);
+            SendEmail("masoodarif1313@gmail.com", "Exception in Gramiq", ex.ToString(), config);
         }
 
         public static bool SendEmail(string user_email, string subject, string body, IConfiguration config)
@@ -92,7 +92,7 @@ namespace FYP1.Models
                 }
                 else
                 {
-                    FilePath = Path.Combine(FolderUpload, File.FileName + Extension);
+                    FilePath = Path.Combine(FolderUpload, File.FileName);
                     Filename = Path.GetFileNameWithoutExtension(File.FileName);
                 }
                 using (var filestream = new FileStream(FilePath, FileMode.Create))
