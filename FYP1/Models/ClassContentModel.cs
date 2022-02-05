@@ -242,6 +242,12 @@ namespace FYP1.Models
             try
             {
                 TblAssesmentSubmission tbl = new TblAssesmentSubmission();
+                var chkAlreadyFile = await db.TblAssesmentSubmissions.Where(x => x.UserId == session_data.User.UserId).FirstOrDefaultAsync();
+                if (chkAlreadyFile != null)
+                {
+                    db.TblAssesmentSubmissions.Remove(chkAlreadyFile);
+                }
+
                 dto.UserId = session_data.User.UserId;
                 var assesment_info = await db.TblAssesments.Where(x => x.AssesmentId == dto.AssesmentId).FirstOrDefaultAsync();
                 dto.DisplayName = session_data.User.UserName + "-" + session_data.Profile.Name + "-" + assesment_info.AssesmentName + "-" + assesment_info.ClassId;
@@ -273,6 +279,7 @@ namespace FYP1.Models
         {
             try
             {
+                //student ko already  uploaded assesment show krega
                 var data = await db.TblAssesmentSubmissions.Where(x => x.AssesmentId == assesment_id && x.UserId == session_data.User.UserId).FirstOrDefaultAsync();
                 mapper.Map(data, general.AssesmentSubmission = new AssesmentSubmissionDTO());
                 return general;

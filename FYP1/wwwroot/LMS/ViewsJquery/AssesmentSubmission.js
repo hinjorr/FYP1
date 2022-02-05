@@ -47,7 +47,6 @@ function SubmissionAreaHTML() {
                 <i class="flaticon2-chat-1 text-primary"></i>
             </span> -->
             <h3 class="card-label">Your Work
-                <small>Not graded</small>
             </h3>
         </div>
         <!-- <div class="card-toolbar">
@@ -55,7 +54,8 @@ function SubmissionAreaHTML() {
                 <i class="flaticon2-cube"></i>Reports</a>
         </div> -->
     </div>
-    <div class="card-body">
+    <div class="card-body" >
+    <div id="SubmittedFile"></div>
     <div class="dropzone dropzone-default dropzone-success" id="assesment_submission">
     <div class="dropzone-msg dz-message needsclick">
         <h3 class="dropzone-msg-title" >Drop file here or click to upload.</h3>
@@ -63,8 +63,8 @@ function SubmissionAreaHTML() {
     </div>
 </div>
     </div>
-    <div class="card-footer d-flex justify-content-between">
-        <button class="btn btn-light-primary font-weight-bold btn-lg btn-block" onClick="SubmitAssesment()">Submit</button>
+    <div class="card-footer d-flex justify-content-between" id="submitBtnDiv">
+        <button class="btn btn-light-primary font-weight-bold btn-lg btn-block" id="assesmentSubmitBtn" onClick="SubmitAssesment()">Submit</button>
     </div>
 </div>`
     $("#submission_area").html(html);
@@ -214,8 +214,18 @@ function GetUploadedAssesment(assesmentId) {
                     })
             }
             else {
-                
+                $("#SubmittedFile").html(`<a href="` + resp.assesmentSubmission.filePath + `" target="_blank"><img src="https://img.icons8.com/color/50/4a90e2/check-file.png" style="height: 30px;"/>` + resp.assesmentSubmission.displayName + `</a>`);
+                $("#submitBtnDiv").append(`<button class="btn btn-light-danger font-weight-bold btn-lg btn-block" onClick="resubmitBtnfn()" id="resubmitBtn">Resubmit</button>`);
+                $("#assesmentSubmitBtn").hide();
+                $("#assesment_submission").hide();
             }
         }
     });
+}
+
+function resubmitBtnfn() {
+    $("#assesmentSubmitBtn").show();
+    $("#assesment_submission").show();
+    $("#resubmitBtn").hide();
+    $("#SubmittedFile").hide();
 }

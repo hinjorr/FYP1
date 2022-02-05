@@ -95,10 +95,18 @@ namespace FYP1.Models
                     FilePath = Path.Combine(FolderUpload, File.FileName);
                     Filename = Path.GetFileNameWithoutExtension(File.FileName);
                 }
+                FileInfo path = new FileInfo(FilePath);
+                if (path.Exists)
+                {
+                    path.Delete();
+                }
+
                 using (var filestream = new FileStream(FilePath, FileMode.Create))
                 {
                     File.CopyTo(filestream);
                 }
+
+
                 return "/Upload" + "/" + Filename + Extension;
             }
             catch (System.Exception)

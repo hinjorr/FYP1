@@ -49,7 +49,7 @@ namespace FYP1.dbModels
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.27-mysql"));
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
             }
         }
 
@@ -456,15 +456,13 @@ namespace FYP1.dbModels
 
                 entity.ToTable("Tbl_Marks");
 
+                entity.HasIndex(e => e.AssesmentId, "AssesmentId");
+
                 entity.HasIndex(e => e.ClassId, "Tbl_Marks_ibfk_1");
 
                 entity.HasIndex(e => e.UserId, "Tbl_Marks_ibfk_2");
 
                 entity.Property(e => e.MarksId).HasColumnName("Marks_Id");
-
-                entity.Property(e => e.AssementName)
-                    .HasMaxLength(50)
-                    .HasColumnName("Assement_Name");
 
                 entity.Property(e => e.ClassId).HasColumnName("Class_Id");
 
@@ -476,7 +474,11 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.UserId).HasColumnName("User_Id");
 
-                entity.Property(e => e.UserName).HasMaxLength(50);
+                entity.HasOne(d => d.Assesment)
+                    .WithMany(p => p.TblMarks)
+                    .HasForeignKey(d => d.AssesmentId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_Marks_ibfk_3");
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblMarks)

@@ -11,6 +11,7 @@ namespace FYP1.dbModels
         {
             TblAssesmentSubmissions = new HashSet<TblAssesmentSubmission>();
             TblAssesmetnAttachments = new HashSet<TblAssesmetnAttachment>();
+            TblMarks = new HashSet<TblMark>();
         }
 
         public int AssesmentId { get; set; }
@@ -26,5 +27,6 @@ namespace FYP1.dbModels
         public virtual TblClassSession Session { get; set; }
         public virtual ICollection<TblAssesmentSubmission> TblAssesmentSubmissions { get; set; }
         public virtual ICollection<TblAssesmetnAttachment> TblAssesmetnAttachments { get; set; }
+        public virtual ICollection<TblMark> TblMarks { get; set; }
     }
 }

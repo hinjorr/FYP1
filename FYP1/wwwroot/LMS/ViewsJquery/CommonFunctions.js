@@ -153,9 +153,9 @@ var CommonFunctions = {
       },
     });
   },
-  GetAllClasses: function (username, id) {
+  GetAllClasses: function (id) {
     $.ajax({
-      url: "/Classes/ViewClassesbyId?username=" + username,
+      url: "/Classes/ViewClassesbyId",
       success: function (resp) {
         var html = `<option value="0">Select Class</option>`;
         $(resp).each(function (indexInArray, item) {

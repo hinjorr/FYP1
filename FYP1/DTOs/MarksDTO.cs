@@ -9,10 +9,10 @@ namespace FYP1.DTOs
     {
         public int MarksId { get; set; }
         public int? ClassId { get; set; }
-        public string AssementName { get; set; }
+        public string AssesmentName { get; set; }
+        public int? AssesmentId { get; set; }
         public int? UserId { get; set; }
-        public string UserName { get; set; }
-        public double TotalMarks { get; set; }
-        public double ObtainedMakrs { get; set; }
+        public int? TotalMarks { get; set; }
+        public int? ObtainedMakrs { get; set; }
     }
 }

@@ -10,5 +10,7 @@ namespace FYP1.Repository
     {
         Task<GeneralDTO> UploadMarks(List<MarksDTO> dto);
         Task<List<MarksDTO>> GetResults(MarksDTO dto);
+        Task<List<AssesmentDTO>> GetAssesmentsList(int classId);
+        Task<List<GeneralDTO>> GetTestResults(MarksDTO dto);
     }
 }

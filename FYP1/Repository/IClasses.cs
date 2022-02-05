@@ -14,7 +14,7 @@ namespace FYP1.Repository
         Task<List<CourseDTO>> ViewAllActiveCourses();
         Task<List<GeneralDTO>> GetClassesByCourse(int id);
 
-        Task<List<GeneralDTO>> ViewClassesbyId(string username);
+        Task<List<GeneralDTO>> ViewClassesbyId();
         Task<List<GeneralDTO>> ViewStudentbyClass(int cid);
         Task<bool> DeleteClass(int id);
 

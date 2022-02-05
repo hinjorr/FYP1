@@ -1,6 +1,5 @@
 $(document).ready(function () {
-  dto.UserName = $("#GetUserName").html();
-  CommonFunctions.GetAllClasses(dto.UserName, "#dpDownClasses");
+  CommonFunctions.GetAllClasses("#dpDownClasses");
 });
 
 var dto = {};
@@ -19,7 +18,7 @@ $("#dpDownClasses").change(function (e) {
           item.classId +
           `</td>
             <td>` +
-          item.assementName +
+          item.assesmentName +
           `</td>
             <td>` +
           item.totalMarks +

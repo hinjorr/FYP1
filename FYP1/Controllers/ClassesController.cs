@@ -61,9 +61,9 @@ namespace FYP1.Controllers
             return Ok(data);
         }
 
-        public async Task<IActionResult> ViewClassesbyId(string username)
+        public async Task<IActionResult> ViewClassesbyId()
         {
-            var classes = await repo.ViewClassesbyId(username);
+            var classes = await repo.ViewClassesbyId();
             return Ok(classes);
         }
 

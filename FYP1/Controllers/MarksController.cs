@@ -18,14 +18,14 @@ namespace FYP1.Controllers
             repo = _repo;
         }
 
-         [AuthenticateFilter]
+        [AuthenticateFilter]
         [HttpGet("ViewResults")]
         public IActionResult StudentTestResults()
         {
             return View();
         }
 
-         [AuthenticateFilter]
+        [AuthenticateFilter]
         [HttpGet("UploadResults")]
         public IActionResult UploadTestResults()
         {
@@ -39,6 +39,16 @@ namespace FYP1.Controllers
         public async Task<IActionResult> GetResults(MarksDTO dto)
         {
             var data = await repo.GetResults(dto);
+            return Ok(data);
+        }
+        public async Task<IActionResult> GetTestResults(MarksDTO dto)
+        {
+            var _data = await repo.GetTestResults(dto);
+            return Json(new { data = _data });
+        }
+        public async Task<IActionResult> GetAssesmentsList(int classId)
+        {
+            var data = await repo.GetAssesmentsList(classId);
             return Ok(data);
         }
 

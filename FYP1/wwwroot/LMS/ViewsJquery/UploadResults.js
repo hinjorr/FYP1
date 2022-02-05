@@ -1,25 +1,55 @@
 ﻿$(document).ready(function () {
-  var user_id = $("#GetUserName").html();
-  CommonFunctions.GetAllClasses(user_id, "#dpDownClasses");
+  CommonFunctions.GetAllClasses("#dpDownClasses");
   $("#btnSubmit").hide();
 
 });
 
 var MarksDTO = [];
 
+function AssesmentsList(classId) {
+  $.ajax({
+    url: "/Marks/GetAssesmentsList?classId=" + classId,
+    success: function (resp) {
+      var html = ` <option value="0">Select Assesment</option>`
+      $(resp).each(function (indexInArray, item) {
+        html += "<option value=" + item.assesmentId + ">" + item.assesmentName + "</option>"
+      });
+      $("#dpDownAssements").html(html);
+    }
+  });
+}
+
 $("#dpDownClasses").change(function (e) {
   var classid = $("#dpDownClasses").val();
-  if (classid != 0 && classid != undefined) {
-    $("#GetStudents").DataTable().clear().destroy();
-    GetUsers(classid);
-  } else {
+  if (classid != 0) {
+    AssesmentsList(classid)
+  }
+  else {
     $("#GetStudents").DataTable().clear().destroy();
   }
 });
 
-function GetUsers(classid) {
+$("#dpDownAssements").change(function (e) {
+  var assesmentId = $("#dpDownAssements").val();
+  var classid = $("#dpDownClasses").val();
+  if (assesmentId != 0 && classid != 0) {
+    $("#GetStudents").DataTable().clear().destroy();
+    GetUsers(classid, assesmentId);
+  }
+  else {
+    $("#GetStudents").DataTable().clear().destroy();
+  }
+
+});
+
+function GetUsers(classId, assesmentId) {
+  dto = {
+    ClassId: classId,
+    AssesmentId: assesmentId
+  }
   $.ajax({
-    url: "/Classes/ViewStudentbyClass?cid=" + classid,
+    url: "/Marks/GetTestResults",
+    data: dto,
     success: function (resp) {
       var data = resp.data[0];
       if (data.icon != null) {
@@ -39,7 +69,8 @@ function GetUsers(classid) {
       } else {
         $("#GetStudents").DataTable({
           ajax: {
-            url: "/Classes/ViewStudentbyClass?cid=" + classid,
+            url: "/Marks/GetTestResults",
+            data: dto,
             type: "Get",
             datatype: "json",
           },
@@ -48,24 +79,32 @@ function GetUsers(classid) {
               data: "profile.picture",
               render: function (picture) {
                 return (
-                  '<div class="symbol symbol-50 flex-shrink-0">' +
-                  '<img src="' +
-                  picture +
-                  '">' +
-                  "</div>"
+                  `<div class="symbol symbol-50 flex-shrink-0"><img src="` + picture + `" > </div>`
                 );
               },
             },
-            { data: "user.userName" },
-            { data: "profile.name" },
             {
               data: "user.userName",
-              render: function (id) {
-                return (
-                  '<input type="text" class="form-control" id="' +
-                  id +
-                  '" name="obtainedmarks" style="width: 50px;" > '
-                );
+              render: function (data, type, row) {
+                return `<div>` + data + `<label style="display:none" class="need">` + row.user.userId + `</label></div>`
+              }
+            },
+            {
+              data: "profile.name"
+            },
+            {
+              data: "marks.obtainedMakrs",
+              render: function (marks) {
+                if (marks != null) {
+                  return (
+                    '<input type="text" class="form-control" value="' + marks + '"  style="width: 50px;" > '
+                  );
+                }
+                else {
+                  return (
+                    '<input type="text" class="form-control" value=0 style="width: 50px;" > '
+                  );
+                }
               },
             },
           ],
@@ -78,17 +117,17 @@ function GetUsers(classid) {
 
 $("#btnSubmit").click(function (e) {
   var ClassId = $("#dpDownClasses").val();
-  var AssementName = $("#dpDownAssements").val();
+  var AssesmentId = $("#dpDownAssements").val();
   var TotalMarks = $("#totalMarks").val();
-  if (ClassId != 0 && AssementName != "") {
+  if (ClassId != 0 && AssesmentId != 0) {
     if (TotalMarks != "") {
       $("#GetStudents tr").each(function (indexInArray, tr) {
         var dto = {};
         if (indexInArray != 0) {
           dto.ClassId = ClassId;
-          dto.AssementName = AssementName;
+          dto.AssesmentId = AssesmentId;
           dto.TotalMarks = TotalMarks;
-          dto.UserName = $(this).find("td:eq(1) ").text();
+          dto.UserId = $(this).find(".need").text();
           dto.ObtainedMakrs = $(this).find("td:eq(3) input[type='text']").val();
           MarksDTO.push(dto);
         }
@@ -98,7 +137,7 @@ $("#btnSubmit").click(function (e) {
   }
 });
 
-function SendData(MarksDTO) {
+function SendData() {
   $.ajax({
     type: "Post",
     url: "/Marks/UploadMarks",
@@ -116,7 +155,7 @@ function SendData(MarksDTO) {
         })
         .then(function () {
           KTUtil.scrollTop();
-          while (MarksDTO > 0) {
+          while (MarksDTO.length > 0) {
             MarksDTO.pop()
           }
         });

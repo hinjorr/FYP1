@@ -9,7 +9,6 @@ using FYP1.DTOs;
 using FYP1.Helpers__Filters;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -64,7 +63,7 @@ namespace FYP1.Models
             }
             catch (System.Exception ex)
             {
-                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
                 thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
@@ -91,21 +90,20 @@ namespace FYP1.Models
             }
             catch (System.Exception ex)
             {
-                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
                 thr.Start();
                 return false;
             }
         }
-        public async Task<List<GeneralDTO>> ViewClassesbyId(string username)
+        public async Task<List<GeneralDTO>> ViewClassesbyId()
         {
             try
             {
                 List<GeneralDTO> classlist = new List<GeneralDTO>();
 
-                var chkRole = await db.TblUsers.Where(x => x.UserName == username).FirstOrDefaultAsync();
-                if (chkRole.RoleId == 2)
+                if (user_data.Role.RoleId == 2)
                 {
-                    var facultyclasses = await db.TblFacultyCourseRegistrations.Where(x => x.Username == username && x.IsActive == Convert.ToUInt16(true)).Include(x => x.Class).ToListAsync();
+                    var facultyclasses = await db.TblFacultyCourseRegistrations.Where(x => x.UserId == user_data.User.UserId  && x.IsActive == Convert.ToUInt16(true)).Include(x => x.Class).ToListAsync();
                     foreach (var item in facultyclasses)
                     {
                         GeneralDTO classdto = new GeneralDTO();
@@ -118,9 +116,9 @@ namespace FYP1.Models
                         classlist.Add(classdto);
                     }
                 }
-                else if (chkRole.RoleId == 3)
+                else if (user_data.Role.RoleId == 3)
                 {
-                    var studentclasses = await db.TblStudentCourseRegistrations.Where(x => x.Username == username && x.IsActive == Convert.ToUInt16(true)).ToListAsync();
+                    var studentclasses = await db.TblStudentCourseRegistrations.Where(x => x.UserId == user_data.User.UserId && x.IsActive == Convert.ToUInt16(true)).ToListAsync();
                     foreach (var item in studentclasses)
                     {
                         GeneralDTO classdto = new GeneralDTO();
@@ -150,7 +148,7 @@ namespace FYP1.Models
             }
             catch (System.Exception ex)
             {
-                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
                 thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
@@ -186,7 +184,7 @@ namespace FYP1.Models
             }
             catch (System.Exception ex)
             {
-                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
                 thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
@@ -220,7 +218,7 @@ namespace FYP1.Models
             }
             catch (System.Exception ex)
             {
-                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
                 thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
@@ -244,7 +242,7 @@ namespace FYP1.Models
             }
             catch (System.Exception ex)
             {
-                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
                 thr.Start();
                 throw;
             }
@@ -314,7 +312,7 @@ namespace FYP1.Models
             }
             catch (System.Exception ex)
             {
-                 Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
                 thr.Start();
                 general.Text = "Server Error";
                 general.Icon = "error";
