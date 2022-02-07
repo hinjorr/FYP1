@@ -15,6 +15,7 @@ namespace FYP1.DTOs
         public int? AssesmentId { get; set; }
         public string FilePath { get; set; }
         public string DisplayName { get; set; }
+        public string TimeRemarks { get; set; }
         public DateTime? SubmissionTime { get; set; }
 
         public bool LateSubmit {get;set;}

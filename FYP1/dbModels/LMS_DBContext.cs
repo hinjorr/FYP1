@@ -76,7 +76,9 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.End).HasColumnType("datetime");
 
-                entity.Property(e => e.LateSubmission).HasColumnType("bit(1)");
+                entity.Property(e => e.LateSubmission)
+                    .HasColumnType("bit(1)")
+                    .HasDefaultValueSql("b'0'");
 
                 entity.Property(e => e.SessionId).HasColumnName("Session_ID");
 
@@ -109,8 +111,6 @@ namespace FYP1.dbModels
                 entity.Property(e => e.DisplayName).HasMaxLength(300);
 
                 entity.Property(e => e.FilePath).HasMaxLength(300);
-
-                entity.Property(e => e.LateSubmit).HasColumnType("bit(1)");
 
                 entity.Property(e => e.SubmissionTime).HasColumnType("datetime");
 

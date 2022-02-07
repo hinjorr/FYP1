@@ -7,20 +7,185 @@ Layout = "~/Views/Shared/_Layout.cshtml";
 <div class="card card-custom gutter-b example example-compact">
     <div class="card-header">
         <h3 class="card-title" style="font-weight:bold;color:#036f7a" id="ShowCourse"></h3>
+        <div class="col-md-4" id="ActivityBtn">
+            <button type="button" class="btn btn-primary font-weight-bold" style="margin-top: 15px;" data-toggle="modal"
+                data-target="#exampleModal_">Add an
+                Activity or resource</button>
+        </div>
     </div>
     <div id="data">
     </div>
-   
 </div>
 
 
 
+<div class="modal fade" id="exampleModal_" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">All Activities</h5>
+            </div>
+            <div class="modal-body">
+                <button type="button" class="btn btn-default col-lg-3 " data-toggle="modal"
+                    data-target="#AssignmentModal">
+                    <i class="fas fa-file-signature"></i><br />Assesment
+                </button>
+                <button type="button" class="btn btn-default col-lg-3" data-toggle="modal" data-target="#UrlModal">
+                    <i class="fas fa-link"></i><br />Url
+                </button>
+                <button type="button" class="btn btn-default col-lg-3" data-toggle="modal"
+                    data-target="#AttachmentModal">
+                    <i class="fa fa-folder-open"></i><br />Upload Files
+                </button><br><br>
+                <button type="button" class="btn btn-default col-lg-3">
+                    <i class="fas fa-laptop-code"></i><br />Embed Video
+                </button>
+                <button type="button" class="btn btn-default col-lg-3">
+                    <i class="fas fa-question-circle"></i><br />Online Quiz
+                </button>
+            </div>
+            <div class="modal-footer mt">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="UrlModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">URL </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="col-md-7"> <select class="form-control" id="url_sessions"></select>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>
+                        Link Name
+                        <span class="error">*</span>
+                    </label>
+                    <input type="text" class="form-control" id="link_id" autocomplete="off" hidden>
+                    <input type="text" class="form-control" placeholder="" id="link_name" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>
+                        URL
+                        <span class="error">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="" id="link_url" autocomplete="off">
+                </div>
+            </div>
+            <div class="modal-footer mt">
+                <button type="button" class="btn btn-primary" id="btnUrlSumit">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="AssignmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Assesment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="col-md-7"> <select class="form-control" id="assesment_sessions"></select>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <label>
+                        Assesment Name
+                        <span class="error">*</span>
+                    </label>
+                    <input type="text" class="form-control" placeholder="" id="txtName" autocomplete="off">
+                </div>
+                <div class="form-group">
+                    <label>
+                        Description
+                    </label>
+                    <textarea type="text" class="form-control" placeholder="" id="txtDescription"
+                        name="txtDescription"></textarea>
+                </div>
+                <div class="form-group">
+                         <div id="SubmittedFile"></div>
+                <div class="dropzone dropzone-default dropzone-success" id="upload_files">
+                    <div class="dropzone-msg dz-message needsclick">
+                        <h3 class="dropzone-msg-title">Drop file here or click to upload.</h3>
+                        <span class="dropzone-msg-desc">Upload any kind of file </span>
+                    </div>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="form-group col-lg-6">
+                        <label>Start</label>
+                        <span class="error">*</span>
+                        <input type="text" class="start_date form-control form-control-solid datetimepicker-input"
+                            id="assesmentStart" placeholder="Select date &amp; time" data-toggle="datetimepicker"
+                            data-target=".start_date" />
+                    </div>
+                    <div class="form-group col-lg-6">
+                        <label>End</label>
+                        <span class="error">*</span>
+                        <input type="text" class="end_date  form-control form-control-solid datetimepicker-input"
+                            id="assesmentEnd" placeholder="Select date &amp; time" data-toggle="datetimepicker"
+                            data-target=".end_date" />
+                    </div>
+                </div>
+                <div class="form-group ">
+                    <label class="checkbox">
+                        <input type="checkbox" id="LateSubmit" />
+                        <span></span>&nbsp; No late Submission</label>
+                </div>
+            </div>
+            <div class="modal-footer mt">
+                <button type="button" class="btn btn-primary" id="btnAssesmentSubmit">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 
-
+<div class="modal fade" id="AttachmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">URL </h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="col-md-7"> <select class="form-control" id="attachment_sessions"></select>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="dropzone dropzone-default dropzone-success">
+                        <div class="dropzone-msg dz-message needsclick">
+                            <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
+                            <span class="dropzone-msg-desc">Only image, pdf and psd files are allowed for upload</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer mt">
+                <button type="button" class="btn btn-primary">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+        </div>
+    </div>
+</div>
 
 <script src="~/LMS/lib/jquery-3.6.0.js"></script>
 <script src="~/LMS/lib/jquery.validate.min.js"></script>
 <script type="text/javascript" src="~/LMS/ViewsJquery/SingleClassView.js"></script>
-
-

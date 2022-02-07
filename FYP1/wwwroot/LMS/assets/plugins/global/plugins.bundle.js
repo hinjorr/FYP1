@@ -49378,7 +49378,7 @@ var Dropzone = /*#__PURE__*/function (_Emitter) {
         /**
          * If `addRemoveLinks` is true, the text to be used to remove a file.
          */
-        dictRemoveFile: "Remove file",
+        dictRemoveFile: "Remove Attachment",
 
         /**
          * If this is not null, then the user will be prompted before removing a file.

@@ -85,5 +85,10 @@ namespace FYP1.Controllers
             var data = await repo.GetSingleAssesment(assesment_id);
             return Ok(data);
         }
+        public async Task<IActionResult> DeleteAssesmentAttachment(int fileId)
+        {
+            var data = await repo.DeleteAssesmentAttachment(fileId);
+            return Ok();
+        }
     }
 }

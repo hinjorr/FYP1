@@ -172,5 +172,22 @@ var CommonFunctions = {
       },
     });
   },
+  GetSessions(id) {
+    $.ajax({
+      url: "/Semester/GetAlllSessions",
+      success: function (resp) {
+        var html = `<option value="0">Select Week</option>`;
+        $(resp).each(function (indexInArray, item) {
+          html +=
+            `<option value="` +
+            item.sessionId +
+            `">` +
+            item.sessionName +
+            `</option>`;
+        });
+        $(id).html(html);
+      },
+    });
+  }
 };
 

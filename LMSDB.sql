@@ -27,20 +27,17 @@ CREATE TABLE `Tbl_AssesmentSubmission` (
   `FilePath` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `DisplayName` varchar(300) DEFAULT NULL,
   `SubmissionTime` datetime DEFAULT NULL,
-  `LateSubmit` bit(1) DEFAULT NULL,
   PRIMARY KEY (`SubmissionId`),
   KEY `UserID` (`UserID`),
   KEY `AssesmentID` (`AssesmentID`),
   CONSTRAINT `Tbl_AssesmentSubmission_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_AssesmentSubmission_ibfk_2` FOREIGN KEY (`AssesmentID`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmentSubmission` */
 
-insert  into `Tbl_AssesmentSubmission`(`SubmissionId`,`UserID`,`AssesmentID`,`FilePath`,`DisplayName`,`SubmissionTime`,`LateSubmit`) values 
-(4,151,36,'/Upload/Std22107-Masood Arif-Assignment 1-79.pdf','Std22107-Masood Arif-Assignment 1-79','2022-02-04 00:52:33',''),
-(5,119,36,'/Upload/518290-Habib-Assignment 1-79.pdf','518290-Habib-Assignment 1-79','2022-02-04 01:37:46',''),
-(6,64,36,'/Upload/student-Mohsin-Assignment 1-79.pdf','student-Mohsin-Assignment 1-79','2022-02-05 20:16:59','\0');
+insert  into `Tbl_AssesmentSubmission`(`SubmissionId`,`UserID`,`AssesmentID`,`FilePath`,`DisplayName`,`SubmissionTime`) values 
+(16,64,58,'/Upload/student-Mohsin-Assignment 1-79.pdf','student-Mohsin-Assignment 1-79','2022-02-07 14:39:26');
 
 /*Table structure for table `Tbl_Assesments` */
 
@@ -54,19 +51,20 @@ CREATE TABLE `Tbl_Assesments` (
   `Description` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
   `Start` datetime DEFAULT NULL,
   `End` datetime DEFAULT NULL,
-  `LateSubmission` bit(1) DEFAULT NULL,
+  `LateSubmission` bit(1) DEFAULT b'0',
   PRIMARY KEY (`AssesmentId`),
   KEY `Class_ID` (`Class_ID`),
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Assesments_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Assesments_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Assesments` */
 
 insert  into `Tbl_Assesments`(`AssesmentId`,`Class_ID`,`Session_ID`,`AssesmentName`,`Description`,`Start`,`End`,`LateSubmission`) values 
-(36,79,195,'Assignment 1',NULL,'2022-02-03 20:24:00','2022-02-03 20:24:00',''),
-(37,82,195,'Quiz 2',NULL,'2022-02-06 01:03:00','2022-02-06 01:03:00','');
+(58,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
+(65,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
+(66,79,202,'Last Paper',NULL,'2022-02-08 00:27:00','2022-02-08 00:27:00','');
 
 /*Table structure for table `Tbl_AssesmetnAttachments` */
 
@@ -80,16 +78,20 @@ CREATE TABLE `Tbl_AssesmetnAttachments` (
   PRIMARY KEY (`File_ID`),
   KEY `Tbl_AssesmetnAttachments_ibfk_1` (`AssesmentId`),
   CONSTRAINT `Tbl_AssesmetnAttachments_ibfk_1` FOREIGN KEY (`AssesmentId`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=90 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmetnAttachments` */
 
 insert  into `Tbl_AssesmetnAttachments`(`File_ID`,`AssesmentId`,`DisplayName`,`Path`) values 
-(85,36,'Fee Bill.pdf','/Upload/Fee Bill.pdf'),
-(86,36,'delta-fact-339916-a210693749f2.json','/Upload/delta-fact-339916-a210693749f2.json'),
-(87,37,'Ch_14HTTP.ppt','/Upload/Ch_14HTTP.ppt'),
-(88,37,'Ch 8 and 9.pptx','/Upload/Ch 8 and 9.pptx'),
-(89,37,'ch_15ActiveDirectory.ppt','/Upload/ch_15ActiveDirectory.ppt');
+(127,66,'Screenshot from 2022-02-07 23-29-35.png','/Upload/Screenshot from 2022-02-07 23-29-35.png'),
+(134,66,'Screenshot from 2022-02-03 00-29-29.png','/Upload/Screenshot from 2022-02-03 00-29-29.png'),
+(135,66,'Screenshot from 2022-02-03 11-31-19.png','/Upload/Screenshot from 2022-02-03 11-31-19.png'),
+(136,66,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
+(137,58,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
+(138,65,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
+(139,65,'Screenshot from 2022-02-07 23-29-37.png','/Upload/Screenshot from 2022-02-07 23-29-37.png'),
+(140,65,'Screenshot from 2022-02-01 22-57-06.png','/Upload/Screenshot from 2022-02-01 22-57-06.png'),
+(141,65,'image3.1.jpg','/Upload/image3.1.jpg');
 
 /*Table structure for table `Tbl_Attendence` */
 
@@ -442,18 +444,6 @@ CREATE TABLE `Tbl_Marks` (
 ) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Marks` */
-
-insert  into `Tbl_Marks`(`Marks_Id`,`Class_Id`,`AssesmentId`,`User_Id`,`Total_Marks`,`Obtained_Makrs`) values 
-(143,79,36,151,100,50),
-(144,79,36,122,100,50),
-(145,79,36,130,100,50),
-(146,79,36,119,100,50),
-(147,79,36,64,100,50),
-(148,79,36,75,100,76),
-(149,79,36,120,100,23),
-(150,79,36,129,100,0),
-(151,79,36,131,100,0),
-(152,79,36,139,100,22);
 
 /*Table structure for table `Tbl_Menu` */
 
@@ -951,12 +941,16 @@ CREATE TABLE `Tbl_Url` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Url_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Url_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Url` */
 
 insert  into `Tbl_Url`(`Url_ID`,`Class_ID`,`Session_ID`,`DisplayName`,`Link`) values 
-(106,79,195,'Github','https://lms.kiet.edu.pk/kietlms/course/view.php?id=3327');
+(107,79,196,'Github',NULL),
+(108,79,195,'Youtube',NULL),
+(109,79,198,'One',NULL),
+(110,79,195,'OneD',NULL),
+(111,79,196,'OneDrive',NULL);
 
 /*Table structure for table `Tbl_User` */
 

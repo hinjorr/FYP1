@@ -74,7 +74,15 @@ namespace FYP1.Models
                 throw;
             }
         }
-
+        public static void DeleteFile(IWebHostEnvironment Env, string path)
+        {
+            string Folder = Path.Combine(Env.WebRootPath + path);
+            FileInfo filepath = new FileInfo(Folder);
+            if (filepath.Exists)
+            {
+                filepath.Delete();
+            }
+        }
         public static string UploadFile(IFormFile File, IWebHostEnvironment Env, string Filename = "")
         {
             try
@@ -113,6 +121,18 @@ namespace FYP1.Models
             {
                 return null;
             }
+        }
+
+        public static long CreateUnixTime(DateTime _date)
+        {
+            long i = new DateTimeOffset(_date).ToUnixTimeSeconds();
+            return i;
+        }
+        public static string DecodeUnixTime(int _date)
+        {
+            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
+            string s = dateTime.AddSeconds(_date).ToLocalTime().ToString();
+            return s;
         }
     }
 }

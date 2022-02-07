@@ -17,6 +17,9 @@ namespace FYP1.DTOs
         public string Description { get; set; }
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
+        public string StartString { get; set; }
+        public string EndString { get; set; }
+        public long UnixTime { get; set; }
         public bool? LateSubmission { get; set; }
 
         [JsonIgnore]

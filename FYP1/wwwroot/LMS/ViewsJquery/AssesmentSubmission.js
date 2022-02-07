@@ -5,11 +5,11 @@ $(document).ready(function () {
     GetAssesmentDeatils(assesmentId)
     role = $("#GetUsersRole").text();
     if (role == "Student") {
-        SubmissionAreaHTML()
         _DropZone(assesmentId)
         GetUploadedAssesment(assesmentId)
     }
     else {
+        $("#submission_area").remove();
         StudentsSubmissionListHTML(classId, assesmentId)
     }
 });
@@ -21,9 +21,20 @@ function GetAssesmentDeatils(id) {
     $.ajax({
         url: "/ClassContent/GetAssesmentDetail?id=" + id,
         success: function (resp) {
-            var date = new Date(Date.parse(resp.assesment.end))
-            date = date.toLocaleString('en-us', { weekday: 'long' }) + " , " + date.getDate() + " " + date.toLocaleString('default', { month: 'long' }) + " " + date.getFullYear() + " , " + date.toLocaleString('en-US', { hour: 'numeric', minute: 'numeric', hour12: true })
-            $("#due_date").text(date);
+            var curenttime = Math.floor(Date.now() / 1000)
+            if (curenttime > resp.assesment.unixTime) {
+                console.log(curenttime)
+                $("#due_date").text(resp.assesment.endString).css("color", "#ff001b")
+                if (resp.assesment.lateSubmission == true) {
+                    $("#assesment_submission").remove();
+                    $("#resubmitBtn").remove();
+                    $("#assesmentSubmitBtn").remove();
+                }
+            }
+            else {
+                $("#due_date").text(resp.assesment.endString)
+            }
+            $("#due_date").text(resp.assesment.endString)
             $("#assesment_name").text(resp.assesment.assesmentName);
             $(".assesment_description").text(resp.assesment.description);
             $("#course_header").text(resp.course.fullName + " " + resp.course.courseId);
@@ -39,37 +50,7 @@ function GetAssesmentDeatils(id) {
     });
 }
 
-function SubmissionAreaHTML() {
-    var html = `  <div class="card card-custom">
-    <div class="card-header">
-        <div class="card-title">
-            <!-- <span class="card-icon">
-                <i class="flaticon2-chat-1 text-primary"></i>
-            </span> -->
-            <h3 class="card-label">Your Work
-            </h3>
-        </div>
-        <!-- <div class="card-toolbar">
-            <a href="#" class="btn btn-sm btn-success font-weight-bold">
-                <i class="flaticon2-cube"></i>Reports</a>
-        </div> -->
-    </div>
-    <div class="card-body" >
-    <div id="SubmittedFile"></div>
-    <div class="dropzone dropzone-default dropzone-success" id="assesment_submission">
-    <div class="dropzone-msg dz-message needsclick">
-        <h3 class="dropzone-msg-title" >Drop file here or click to upload.</h3>
-        <span class="dropzone-msg-desc" style="color:#d30b2f">Only pdf and single file is allowed for upload</span>
-    </div>
-</div>
-    </div>
-    <div class="card-footer d-flex justify-content-between" id="submitBtnDiv">
-        <button class="btn btn-light-primary font-weight-bold btn-lg btn-block" id="assesmentSubmitBtn" onClick="SubmitAssesment()">Submit</button>
-    </div>
-</div>`
-    $("#submission_area").html(html);
 
-}
 
 function StudentsSubmissionListHTML(classId, AssesmentId) {
     var html = ` <div class="col-lg-12">
@@ -135,7 +116,7 @@ function StudentsSubmissionList(classId, AssesmentId) {
             {
                 data: "assesmentSubmission.submissionTime", render: function (data, type, row) {
                     if (data == null) {
-                        return `Not available`
+                        return ``
                     }
                     else {
                         var date = new Date(Date.parse(data))
@@ -146,7 +127,6 @@ function StudentsSubmissionList(classId, AssesmentId) {
                         else {
                             return date;
                         }
-
                     }
                 }
             },
@@ -192,7 +172,10 @@ function _DropZone(assesmentId) {
         accept: function (file, done) {
             data.append("Attachment", file)
             data.append("AssesmentId", assesmentId)
+            done();
+            //done("sakjdh")
         }
+       
     });
 }
 
@@ -214,18 +197,20 @@ function GetUploadedAssesment(assesmentId) {
                     })
             }
             else {
-                $("#SubmittedFile").html(`<a href="` + resp.assesmentSubmission.filePath + `" target="_blank"><img src="https://img.icons8.com/color/50/4a90e2/check-file.png" style="height: 30px;"/>` + resp.assesmentSubmission.displayName + `</a>`);
-                $("#submitBtnDiv").append(`<button class="btn btn-light-danger font-weight-bold btn-lg btn-block" onClick="resubmitBtnfn()" id="resubmitBtn">Resubmit</button>`);
-                $("#assesmentSubmitBtn").hide();
-                $("#assesment_submission").hide();
+                if (resp.assesmentSubmission.filePath != null) {
+                    $("#SubmittedFile").html(`<a href="` + resp.assesmentSubmission.filePath + `" target="_blank"><img src="https://img.icons8.com/color/50/4a90e2/check-file.png" style="height: 30px;"/>` + resp.assesmentSubmission.displayName + `</a>`);
+                    $("#resubmitBtn").show();
+                    $("#assesmentSubmitBtn").hide();
+                    $("#assesment_submission").hide();
+                }
             }
         }
     });
 }
 
-function resubmitBtnfn() {
+$("#resubmitBtn").click(function (e) {
     $("#assesmentSubmitBtn").show();
     $("#assesment_submission").show();
     $("#resubmitBtn").hide();
     $("#SubmittedFile").hide();
-}
+});

@@ -1,27 +1,10 @@
 $(document).ready(function () {
   var user_id = $("#GetUserName").html();
-  CommonFunctions.GetAllClasses(user_id, "#dpDownClasses");
-  GetSessions();
+  CommonFunctions.GetAllClasses("#dpDownClasses");
+  CommonFunctions.GetSessions("#dpdownSelectWeek");
   $("#SubmitButton").hide();
 });
 
-function GetSessions() {
-  $.ajax({
-    url: "/Semester/GetAlllSessions",
-    success: function (resp) {
-      var html = `<option value="0">Select Week</option>`;
-      $(resp).each(function (indexInArray, item) {
-        html +=
-          `<option value="` +
-          item.sessionId +
-          `">` +
-          item.sessionName +
-          `</option>`;
-      });
-      $("#dpdownSelectWeek").html(html);
-    },
-  });
-}
 
 dto = {};
 $("#btnView").click(function (e) {

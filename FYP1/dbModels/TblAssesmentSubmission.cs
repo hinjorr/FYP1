@@ -13,7 +13,6 @@ namespace FYP1.dbModels
         public string FilePath { get; set; }
         public string DisplayName { get; set; }
         public DateTime? SubmissionTime { get; set; }
-        public ulong? LateSubmit { get; set; }
 
         public virtual TblAssesment Assesment { get; set; }
         public virtual TblUser User { get; set; }

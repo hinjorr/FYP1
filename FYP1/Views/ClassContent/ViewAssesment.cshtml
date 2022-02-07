@@ -24,7 +24,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 </div>
                 <div class="card-toolbar">
                     <div class="dropdown dropdown-inline" data-toggle="tooltip" title="Due Date" data-placement="left">
-                        <small style="color: #ff001b;font-size: 100%;" id="due_date"></small>
+                        <small style="font-size: 100%;" id="due_date"></small>
                     </div>
                 </div>
             </div>
@@ -33,12 +33,40 @@ Layout = "~/Views/Shared/_Layout.cshtml";
         <!--end::Card-->
     </div>
     <div class="col-md-4" id="submission_area">
+        <div class="card card-custom">
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label">Your Work</h3>
+                </div>
+            </div>
 
+            <div class="card-body">
+                <div id="SubmittedFile"></div>
+                <div class="dropzone dropzone-default dropzone-success" id="assesment_submission">
+                    <div class="dropzone-msg dz-message needsclick">
+                        <h3 class="dropzone-msg-title">Drop file here or click to upload.</h3>
+                        <span class="dropzone-msg-desc" style="color:#d30b2f">Only pdf and single file is allowed for
+                            upload</span>
+                    </div>
+                </div>
+            </div>
+            <div class="card-header">
+                <div class="card-title">
+                    <h3 class="card-label" id="submit_time" style="font-size: 12px;">Time:</h3>
+                </div>
+            </div>
+            <div class="card-footer d-flex justify-content-between" id="submitBtnDiv">
+                <button class="btn btn-light-danger font-weight-bold btn-lg btn-block" style="display:none"
+                    id="resubmitBtn">Resubmit</button>
+                <button class="btn btn-light-primary font-weight-bold btn-lg btn-block" id="assesmentSubmitBtn"
+                    onClick="SubmitAssesment()">Submit</button>
+            </div>
+        </div>
     </div>
 </div>
 <br>
 <div class="row" id="submission_list">
-    
+
 </div>
 
 
