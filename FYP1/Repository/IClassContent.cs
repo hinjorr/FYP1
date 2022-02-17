@@ -20,5 +20,8 @@ namespace FYP1.Repository
         Task<GeneralDTO> AssesmentSubmission(AssesmentSubmissionDTO dto);
         Task<GeneralDTO> GetSingleAssesment(int assesment_id);
         Task<bool> DeleteAssesmentAttachment(int fileId);
+        Task<List<FilesDTO>> GetFiles(int sessionId, int classId);
+        Task<GeneralDTO> UploadFiles(List<FilesDTO> files);
+        Task<bool> DeleteFile(int fileId);
     }
 }

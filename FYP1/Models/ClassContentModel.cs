@@ -26,20 +26,25 @@ namespace FYP1.Models
         GeneralDTO general = new GeneralDTO();
         GeneralDTO session_data;
         TblAssesment tbl_assesment = new TblAssesment();
+        IDropBoxMisc _dropbox;
         public ClassContentModel(LMS_DBContext _db, IMapper _mapper, IWebHostEnvironment env, IConfiguration config, IHttpContextAccessor http)
         {
+
             db = _db;
             mapper = _mapper;
             Env = env;
             this.config = config;
             this.http = http;
             session_data = this.http.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
+            _dropbox = new DropBoxMiscModel(config);
+
         }
 
         public async Task<GeneralDTO> AddUrl(UrlDTO dto)
         {
             try
             {
+
                 if (dto.UrlId == 0)
                 {
                     TblUrl tbl = new TblUrl();
@@ -148,7 +153,8 @@ namespace FYP1.Models
                             TblAssesmetnAttachment tbl = new TblAssesmetnAttachment();
                             tbl.AssesmentId = primary_key;
                             tbl.DisplayName = item.FileName;
-                            tbl.Path = Misc.UploadFile(item, Env);
+                            tbl.PathId = await _dropbox.UploadFile(item);
+                            // tbl.Path = Misc.UploadFile(item, Env);
                             await db.TblAssesmetnAttachments.AddAsync(tbl);
                             await db.SaveChangesAsync();
                         }
@@ -173,14 +179,14 @@ namespace FYP1.Models
             var chk = await db.TblAssesmetnAttachments.Where(x => x.FileId == fileId).FirstOrDefaultAsync();
             if (chk != null)
             {
-                Misc.DeleteFile(Env, chk.Path);
+                // Misc.DeleteFile(Env, chk.Path);
                 db.TblAssesmetnAttachments.Remove(chk);
             }
             await db.SaveChangesAsync();
             return true;
         }
         public async Task<List<AssesmentDTO>> GetAssesment(int _sessionId, int _classId)
-        {   
+        {
             try
             {
                 List<AssesmentDTO> _list = new List<AssesmentDTO>();
@@ -208,13 +214,14 @@ namespace FYP1.Models
         {
             try
             {
+
                 var data = db.TblAssesments.Where(x => x.AssesmentId == _id).FirstOrDefault();
                 var files = db.TblAssesmetnAttachments.Where(x => x.AssesmentId == _id).ToList();
                 if (files.Count != 0)
                 {
                     foreach (var item in files)
                     {
-                        Misc.DeleteFile(Env, item.Path);
+                        // Misc.DeleteFile(Env, item.Path);
                     }
                 }
                 db.TblAssesments.Remove(data);
@@ -352,5 +359,71 @@ namespace FYP1.Models
                 return general;
             }
         }
+        public async Task<GeneralDTO> UploadFiles(List<FilesDTO> files)
+        {
+            try
+            {
+                List<TblFile> _list = new List<TblFile>();
+                foreach (var item in files)
+                {
+                    TblFile tbl = new TblFile();
+
+                    item.FilePath = Misc.UploadFile(item.Attachment, Env, item.DisplayName);
+                    mapper.Map(item, tbl);
+                    _list.Add(tbl);
+                }
+                await db.TblFiles.AddRangeAsync(_list);
+                await db.SaveChangesAsync();
+                general.type = "success";
+                general.message = "Files Uploaded";
+                return general;
+            }
+            catch (System.Exception ex)
+            {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
+                general.type = "error";
+                general.message = "Server Error";
+                return general;
+            }
+        }
+        public async Task<List<FilesDTO>> GetFiles(int sessionId, int classId)
+        {
+            try
+            {
+                List<FilesDTO> _list = new List<FilesDTO>();
+                var data = await db.TblFiles.Where(x => x.ClassId == classId && x.SessionId == sessionId).ToListAsync();
+                mapper.Map(data, _list);
+                return _list;
+            }
+            catch (System.Exception ex)
+            {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteFile(int fileId)
+        {
+            try
+            {
+                var chk = await db.TblFiles.Where(x => x.FileId == fileId).FirstOrDefaultAsync();
+                if (chk != null)
+                {
+                    Misc.DeleteFile(Env, chk.FilePath);
+                    db.TblFiles.Remove(chk);
+                    await db.SaveChangesAsync();
+                }
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
+                return false;
+            }
+        }
+
     }
 }

@@ -1,3 +1,6 @@
+
+
+
 $(document).ready(function () {
   var route = window.location.href;
   ClassId = route.substring(route.lastIndexOf("/") + 1);
@@ -8,7 +11,8 @@ $(document).ready(function () {
   CommonFunctions.GetSessions("#assesment_sessions");
   CommonFunctions.GetSessions("#url_sessions");
   role = $("#GetUsersRole").text();
-  _Dropzone()
+  Assesment_Attachments()
+  File_Upload(ClassId)
   if (role == "Student") {
     $("#ActivityBtn").remove();
   }
@@ -18,24 +22,7 @@ $(document).ready(function () {
 var role;
 var ClassId;
 var UrlDTO = {}
-var AssesmentDTO = new FormData()
 
-function _Dropzone() {
-  $('#upload_files').dropzone({
-    url: "#",
-    paramName: "file",
-    addRemoveLinks: true,
-    // removedfile: function (file) {
-    //   AssesmentDTO.delete("")
-    //   return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
-    // },
-    accept: function (file, done) {
-      AssesmentDTO.append("Attachments", file)
-      done();
-      //done("sakjdh")
-    }
-  });
-}
 
 
 function GetCourseName(id) {
@@ -85,10 +72,75 @@ function GetSessions(Cid) {
   });
 }
 
+//<--------FileUpload Modal working Start------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+var FilesDTO = []
+function UploadFiles() {
+  $.ajax({
+    url: "/ClassContent/UploadFiles",
+    data: { files: FilesDTO },
+    contentType: false,
+    processData: false,
+    success: function (resp) {
+      cuteToast({
+        type: resp.type,
+        message: resp.message,
+        timer: 3000,
+      })
+      if (resp.type != "error") {
+        AssesmentDTO.delete("AssesmentId")
+        GetAssesments(session_id)
+        $('#AttachmentModal').modal('hide');
+        $('#exampleModal_').modal('hide');
+      }
+    }
+  });
+}
+
+function File_Upload(classId) {
+  var sessionId = $("#attachment_sessions").val();
+  $('#files_upload').dropzone({
+    url: "#",
+    paramName: "file",
+    addRemoveLinks: true,
+    // removedfile: function (file) {
+    //   AssesmentDTO.delete("")
+    //   return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+    // },
+    accept: function (file, done) {
+      var dto = new FormData();
+      dto.append("Attachment", file)
+      dto.append("DisplayName", file.name)
+      dto.append("SessionId", sessionId)
+      dto.append("ClassId", classId)
+      FilesDTO.push(dto);
+      done();
+    }
+  });
+}
+
+//<--------FileUpload Modal working End------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
 
 
 //<--------Assesment Modal working Start------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+var AssesmentDTO = new FormData()
 
+function Assesment_Attachments() {
+  $('#assesment_attachments').dropzone({
+    url: "#",
+    paramName: "file",
+    addRemoveLinks: true,
+    // removedfile: function (file) {
+    //   AssesmentDTO.delete("")
+    //   return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
+    // },
+    accept: function (file, done) {
+      AssesmentDTO.append("Attachments", file)
+      done();
+      //done("sakjdh")
+    }
+  });
+}
 
 
 $("#btnAssesmentSubmit").click(function (e) {
@@ -100,7 +152,7 @@ $("#btnAssesmentSubmit").click(function (e) {
   AssesmentDTO.append("Start", $("#assesmentStart").val())
   AssesmentDTO.append("End", $("#assesmentEnd").val())
   AssesmentDTO.append("LateSubmission", $('#LateSubmit').prop('checked'))
-  // var input = document.getElementById("upload_files")
+  // var input = document.getElementById("assesment_attachments")
   // images = input.files;
   // $.each(images, function (indexInArray, valueOfElement) {
   //   AssesmentDTO.append("Attachments", images[indexInArray])
@@ -170,10 +222,10 @@ function OpenAssesmentModal(assesmentId) {
       $('#LateSubmit').prop('checked', resp.assesment.lateSubmission);
       if (resp.assesmentAttachmentList[0] != null) {
         ShowAttachments(resp.assesmentAttachmentList, assesmentId)
-        $("#upload_files").hide();
+        $("#assesment_attachments").hide();
       }
       else {
-        $("#upload_files").show();
+        $("#assesment_attachments").show();
         $("#SubmittedFile").html("");
       }
       $("#AssignmentModal").modal("show")
@@ -197,7 +249,7 @@ function DeleteAttachments(id, assesmentId) {
       $.ajax({
         url: "/ClassContent/GetAssesmentDetail?id=" + assesmentId,
         success: function (resp) {
-          ShowAttachments(resp.assesmentAttachmentList,assesmentId)
+          ShowAttachments(resp.assesmentAttachmentList, assesmentId)
         }
       });
     }
@@ -206,7 +258,7 @@ function DeleteAttachments(id, assesmentId) {
 
 function DropZoneBtn(obj) {
   $(obj).hide();
-  $("#upload_files").show();
+  $("#assesment_attachments").show();
 }
 
 //<--------Assesment Modal working End------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------>

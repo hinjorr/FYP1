@@ -7,6 +7,8 @@
   <ItemGroup>
       <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
       <PackageReference Include="CSVLibraryAK.Core" Version="1.0.0" />
+      <PackageReference Include="Dropbox.Api" Version="6.24.0" />
+      <PackageReference Include="Google.Apis.Drive.v3" Version="1.55.0.2566" />
     <PackageReference Include="jQuery.Validation" Version="1.19.3" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.0">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>

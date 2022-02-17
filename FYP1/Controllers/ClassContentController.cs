@@ -90,5 +90,20 @@ namespace FYP1.Controllers
             var data = await repo.DeleteAssesmentAttachment(fileId);
             return Ok();
         }
+        public async Task<IActionResult> GetFiles(int sessionId, int classId)
+        {
+            var data = await repo.GetFiles(sessionId, classId);
+            return Ok(data);
+        }
+        public async Task<IActionResult> UploadFiles([FromForm]List<FilesDTO> files)
+        {
+            var data = await repo.UploadFiles(files);
+            return Ok(data);
+        }
+        public async Task<IActionResult> DeleteFile(int fileId)
+        {
+            var data = await repo.DeleteFile(fileId);
+            return Ok(data);
+        }
     }
 }

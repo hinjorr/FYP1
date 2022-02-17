@@ -87,35 +87,36 @@ namespace FYP1.Models
         {
             try
             {
-                string FilePath = null;
-                string Extension = Path.GetExtension(File.FileName);
-                string FolderUpload = Path.Combine(Env.WebRootPath, "Upload");
-                if (!Directory.Exists(FolderUpload))
-                {
-                    Directory.CreateDirectory(FolderUpload);
-                }
-                if (Filename != "")
-                {
-                    FilePath = Path.Combine(FolderUpload, Filename + Extension);
-                }
-                else
-                {
-                    FilePath = Path.Combine(FolderUpload, File.FileName);
-                    Filename = Path.GetFileNameWithoutExtension(File.FileName);
-                }
-                FileInfo path = new FileInfo(FilePath);
-                if (path.Exists)
-                {
-                    path.Delete();
-                }
+                // string FilePath = null;
+                // string Extension = Path.GetExtension(File.FileName);
+                // string FolderUpload = Path.Combine(Env.WebRootPath, "Upload");
+                // if (!Directory.Exists(FolderUpload))
+                // {
+                //     Directory.CreateDirectory(FolderUpload);
+                // }
+                // if (Filename != "")
+                // {
+                //     FilePath = Path.Combine(FolderUpload, Filename + Extension);
+                // }
+                // else
+                // {
+                //     FilePath = Path.Combine(FolderUpload, File.FileName);
+                //     Filename = Path.GetFileNameWithoutExtension(File.FileName);
+                // }
+                // FileInfo path = new FileInfo(FilePath);
+                // if (path.Exists)
+                // {
+                //     path.Delete();
+                // }
 
-                using (var filestream = new FileStream(FilePath, FileMode.Create))
-                {
-                    File.CopyTo(filestream);
-                }
+                // using (var filestream = new FileStream(FilePath, FileMode.Create))
+                // {
+                //     File.CopyTo(filestream);
+                // }
 
 
-                return "/Upload" + "/" + Filename + Extension;
+                // return "/Upload" + "/" + Filename + Extension;
+                return "";
             }
             catch (System.Exception)
             {

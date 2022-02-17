@@ -22,13 +22,13 @@ namespace FYP1.dbModels
         public virtual DbSet<TblAssesmetnAttachment> TblAssesmetnAttachments { get; set; }
         public virtual DbSet<TblAttendence> TblAttendences { get; set; }
         public virtual DbSet<TblClass> TblClasses { get; set; }
-        public virtual DbSet<TblClassContent> TblClassContents { get; set; }
         public virtual DbSet<TblClassSession> TblClassSessions { get; set; }
         public virtual DbSet<TblCourse> TblCourses { get; set; }
         public virtual DbSet<TblCourseEligiblity> TblCourseEligiblities { get; set; }
         public virtual DbSet<TblDay> TblDays { get; set; }
         public virtual DbSet<TblEmailConfiguration> TblEmailConfigurations { get; set; }
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
+        public virtual DbSet<TblFile> TblFiles { get; set; }
         public virtual DbSet<TblMark> TblMarks { get; set; }
         public virtual DbSet<TblMenu> TblMenus { get; set; }
         public virtual DbSet<TblParentMenu> TblParentMenus { get; set; }
@@ -142,7 +142,7 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.DisplayName).HasMaxLength(400);
 
-                entity.Property(e => e.Path).HasMaxLength(500);
+                entity.Property(e => e.PathId).HasMaxLength(500);
 
                 entity.HasOne(d => d.Assesment)
                     .WithMany(p => p.TblAssesmetnAttachments)
@@ -268,40 +268,6 @@ namespace FYP1.dbModels
                     .HasForeignKey(d => d.TimeId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_Classes_ibfk_7");
-            });
-
-            modelBuilder.Entity<TblClassContent>(entity =>
-            {
-                entity.HasKey(e => e.ContentId)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("Tbl_ClassContent");
-
-                entity.HasIndex(e => e.ClassId, "Tbl_ClassContent_ibfk_1");
-
-                entity.HasIndex(e => e.SessionId, "Tbl_ClassContent_ibfk_2");
-
-                entity.Property(e => e.ContentId).HasColumnName("Content_ID");
-
-                entity.Property(e => e.ClassId).HasColumnName("Class_ID");
-
-                entity.Property(e => e.ContentLink).HasMaxLength(200);
-
-                entity.Property(e => e.ContentName).HasMaxLength(100);
-
-                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
-
-                entity.HasOne(d => d.Class)
-                    .WithMany(p => p.TblClassContents)
-                    .HasForeignKey(d => d.ClassId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("Tbl_ClassContent_ibfk_1");
-
-                entity.HasOne(d => d.Session)
-                    .WithMany(p => p.TblClassContents)
-                    .HasForeignKey(d => d.SessionId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("Tbl_ClassContent_ibfk_2");
             });
 
             modelBuilder.Entity<TblClassSession>(entity =>
@@ -447,6 +413,42 @@ namespace FYP1.dbModels
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_1");
+            });
+
+            modelBuilder.Entity<TblFile>(entity =>
+            {
+                entity.HasKey(e => e.FileId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Files");
+
+                entity.HasIndex(e => e.ClassId, "Class_Id");
+
+                entity.HasIndex(e => e.SessionId, "Session_ID");
+
+                entity.Property(e => e.FileId).HasColumnName("File_ID");
+
+                entity.Property(e => e.ClassId).HasColumnName("Class_Id");
+
+                entity.Property(e => e.DisplayName).HasMaxLength(500);
+
+                entity.Property(e => e.FilePath)
+                    .HasMaxLength(500)
+                    .HasColumnName("File_Path");
+
+                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblFiles)
+                    .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_Files_ibfk_1");
+
+                entity.HasOne(d => d.Session)
+                    .WithMany(p => p.TblFiles)
+                    .HasForeignKey(d => d.SessionId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_Files_ibfk_2");
             });
 
             modelBuilder.Entity<TblMark>(entity =>

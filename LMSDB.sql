@@ -63,8 +63,8 @@ CREATE TABLE `Tbl_Assesments` (
 
 insert  into `Tbl_Assesments`(`AssesmentId`,`Class_ID`,`Session_ID`,`AssesmentName`,`Description`,`Start`,`End`,`LateSubmission`) values 
 (58,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
-(65,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
-(66,79,202,'Last Paper',NULL,'2022-02-08 00:27:00','2022-02-08 00:27:00','');
+(65,79,195,'Assignment 2',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
+(66,79,196,'Last Paper',NULL,'2022-02-08 00:27:00','2022-02-08 00:27:00','');
 
 /*Table structure for table `Tbl_AssesmetnAttachments` */
 
@@ -74,24 +74,34 @@ CREATE TABLE `Tbl_AssesmetnAttachments` (
   `File_ID` int NOT NULL AUTO_INCREMENT,
   `AssesmentId` int DEFAULT NULL,
   `DisplayName` varchar(400) DEFAULT NULL,
-  `Path` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `PathId` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY (`File_ID`),
   KEY `Tbl_AssesmetnAttachments_ibfk_1` (`AssesmentId`),
   CONSTRAINT `Tbl_AssesmetnAttachments_ibfk_1` FOREIGN KEY (`AssesmentId`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=142 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmetnAttachments` */
 
-insert  into `Tbl_AssesmetnAttachments`(`File_ID`,`AssesmentId`,`DisplayName`,`Path`) values 
+insert  into `Tbl_AssesmetnAttachments`(`File_ID`,`AssesmentId`,`DisplayName`,`PathId`) values 
 (127,66,'Screenshot from 2022-02-07 23-29-35.png','/Upload/Screenshot from 2022-02-07 23-29-35.png'),
 (134,66,'Screenshot from 2022-02-03 00-29-29.png','/Upload/Screenshot from 2022-02-03 00-29-29.png'),
 (135,66,'Screenshot from 2022-02-03 11-31-19.png','/Upload/Screenshot from 2022-02-03 11-31-19.png'),
-(136,66,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
 (137,58,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
 (138,65,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
 (139,65,'Screenshot from 2022-02-07 23-29-37.png','/Upload/Screenshot from 2022-02-07 23-29-37.png'),
 (140,65,'Screenshot from 2022-02-01 22-57-06.png','/Upload/Screenshot from 2022-02-01 22-57-06.png'),
-(141,65,'image3.1.jpg','/Upload/image3.1.jpg');
+(141,65,'image3.1.jpg','/Upload/image3.1.jpg'),
+(142,58,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
+(143,65,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
+(144,66,'Screenshot from 2022-02-01 22-57-06.png','/Upload/Screenshot from 2022-02-01 22-57-06.png'),
+(151,58,'Fee Bill main.pdf','id:M2X8dMrWuIAAAAAAAAAAOA'),
+(152,58,'Fee Bill city.pdf','id:M2X8dMrWuIAAAAAAAAAAOQ'),
+(153,65,'Screenshot from 2022-02-03 00-29-29.png','id:M2X8dMrWuIAAAAAAAAAAOg'),
+(154,58,'Google Drive API Integration And Use Of Functions10.png','id:M2X8dMrWuIAAAAAAAAAAOw'),
+(155,58,'Google Drive API Integration And Use Of Functions10.png','id:M2X8dMrWuIAAAAAAAAAAOw'),
+(156,58,'Fee Bill city.pdf','id:M2X8dMrWuIAAAAAAAAAAOQ'),
+(157,58,'Screenshot from 2022-02-03 00-29-29.png','id:M2X8dMrWuIAAAAAAAAAAPA'),
+(158,66,'YIFYStatus.com.txt','id:M2X8dMrWuIAAAAAAAAAAPQ');
 
 /*Table structure for table `Tbl_Attendence` */
 
@@ -156,25 +166,6 @@ insert  into `Tbl_Attendence`(`Id`,`Class_ID`,`Session_ID`,`User_ID`,`User_Name`
 (197,50,179,120,'24691','\0',''),
 (198,50,179,121,'183492','\0','\0'),
 (199,50,179,122,'793093','\0','\0');
-
-/*Table structure for table `Tbl_ClassContent` */
-
-DROP TABLE IF EXISTS `Tbl_ClassContent`;
-
-CREATE TABLE `Tbl_ClassContent` (
-  `Content_ID` int NOT NULL AUTO_INCREMENT,
-  `Class_ID` int DEFAULT NULL,
-  `Session_ID` int DEFAULT NULL,
-  `ContentName` varchar(100) DEFAULT NULL,
-  `ContentLink` varchar(200) DEFAULT NULL,
-  PRIMARY KEY (`Content_ID`),
-  KEY `Tbl_ClassContent_ibfk_1` (`Class_ID`),
-  KEY `Tbl_ClassContent_ibfk_2` (`Session_ID`),
-  CONSTRAINT `Tbl_ClassContent_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Tbl_ClassContent_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `Tbl_ClassContent` */
 
 /*Table structure for table `Tbl_ClassSessions` */
 
@@ -422,6 +413,25 @@ insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class
 (27,69,'faculty',79,NULL,''),
 (28,72,'495159',81,NULL,''),
 (29,69,'faculty',82,NULL,'');
+
+/*Table structure for table `Tbl_Files` */
+
+DROP TABLE IF EXISTS `Tbl_Files`;
+
+CREATE TABLE `Tbl_Files` (
+  `File_ID` int NOT NULL AUTO_INCREMENT,
+  `File_Path` varchar(500) DEFAULT NULL,
+  `DisplayName` varchar(500) DEFAULT NULL,
+  `Class_Id` int DEFAULT NULL,
+  `Session_ID` int DEFAULT NULL,
+  PRIMARY KEY (`File_ID`),
+  KEY `Class_Id` (`Class_Id`),
+  KEY `Session_ID` (`Session_ID`),
+  CONSTRAINT `Tbl_Files_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Files_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Files` */
 
 /*Table structure for table `Tbl_Marks` */
 

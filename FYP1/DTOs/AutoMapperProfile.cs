@@ -14,8 +14,7 @@ namespace FYP1.DTOs
             CreateMap<UserDTO, TblUser>();
             CreateMap<TblUser, UserDTO>();
 
-            CreateMap<TblFile, FileDTO>();
-            CreateMap<FileDTO, TblFile>();
+        
 
             CreateMap<AssesmetnAttachmentDTO, TblAssesmetnAttachment>();
             CreateMap<TblAssesmetnAttachment, AssesmetnAttachmentDTO>();
@@ -32,6 +31,9 @@ namespace FYP1.DTOs
 
             CreateMap<TblMenu, MenuDTO>();
             CreateMap<MenuDTO, TblMenu>();
+
+            CreateMap<TblFile, FilesDTO>();
+            CreateMap<FilesDTO, TblFile>();
 
             CreateMap<RoleMenuDTO, TblRoleMenu>();
             CreateMap<TblRoleMenu, RoleMenuDTO>();

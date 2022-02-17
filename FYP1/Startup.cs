@@ -26,7 +26,7 @@ namespace FYP1
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-                
+
             services.AddDbContext<LMS_DBContext>(x => x.UseMySql(Configuration.GetConnectionString("Default"), ServerVersion.Parse("5.7.36-mysql")));
             services.AddAutoMapper(typeof(AutoMapperProfile));
             services.AddControllersWithViews();
@@ -55,6 +55,7 @@ namespace FYP1
             services.AddScoped<IAttendence, AttendenceModel>();
             services.AddScoped<IRoleManagement, RoleManagementModel>();
             services.AddScoped<IClassContent, ClassContentModel>();
+            services.AddScoped<IDropBoxMisc, DropBoxMiscModel>();
             // services.AddDataProtection();
 
         }
