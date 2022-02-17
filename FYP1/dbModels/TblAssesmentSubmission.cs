@@ -12,6 +12,7 @@ namespace FYP1.dbModels
         public int? AssesmentId { get; set; }
         public string FilePath { get; set; }
         public string DisplayName { get; set; }
+        public string Link { get; set; }
         public DateTime? SubmissionTime { get; set; }
 
         public virtual TblAssesment Assesment { get; set; }

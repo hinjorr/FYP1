@@ -1,3 +1,4 @@
+using System.IO;
 using System.Net.Mail;
 using System.Threading;
 using System;
@@ -150,11 +151,12 @@ namespace FYP1.Models
                     {
                         foreach (var item in dto.Attachments)
                         {
+                            var data = await _dropbox.UploadFile(item, "Assesment_Attachment");
                             TblAssesmetnAttachment tbl = new TblAssesmetnAttachment();
                             tbl.AssesmentId = primary_key;
-                            tbl.DisplayName = item.FileName;
-                            tbl.PathId = await _dropbox.UploadFile(item);
-                            // tbl.Path = Misc.UploadFile(item, Env);
+                            tbl.DisplayName = data.DisplayName;
+                            tbl.Path = data.Path;
+                            tbl.Link = data.Link;
                             await db.TblAssesmetnAttachments.AddAsync(tbl);
                             await db.SaveChangesAsync();
                         }
@@ -179,7 +181,8 @@ namespace FYP1.Models
             var chk = await db.TblAssesmetnAttachments.Where(x => x.FileId == fileId).FirstOrDefaultAsync();
             if (chk != null)
             {
-                // Misc.DeleteFile(Env, chk.Path);
+                Thread th = new Thread(() => _dropbox.DeleteFile(chk.Path));
+                th.Start();
                 db.TblAssesmetnAttachments.Remove(chk);
             }
             await db.SaveChangesAsync();
@@ -214,13 +217,14 @@ namespace FYP1.Models
         {
             try
             {
-
                 var data = db.TblAssesments.Where(x => x.AssesmentId == _id).FirstOrDefault();
                 var files = db.TblAssesmetnAttachments.Where(x => x.AssesmentId == _id).ToList();
                 if (files.Count != 0)
                 {
                     foreach (var item in files)
                     {
+                        Thread th = new Thread(() => _dropbox.DeleteFile(item.Path));
+                        th.Start();
                         // Misc.DeleteFile(Env, item.Path);
                     }
                 }
@@ -310,17 +314,19 @@ namespace FYP1.Models
                 }
                 dto.UserId = session_data.User.UserId;
                 var assesment_info = await db.TblAssesments.Where(x => x.AssesmentId == dto.AssesmentId).FirstOrDefaultAsync();
-                dto.DisplayName = session_data.User.UserName + "-" + session_data.Profile.Name + "-" + assesment_info.AssesmentName + "-" + assesment_info.ClassId;
+                dto.DisplayName = session_data.User.UserName + "-" + session_data.Profile.Name + "-" + assesment_info.AssesmentName + "-" + assesment_info.ClassId + Path.GetExtension(dto.Attachment.FileName);
                 dto.SubmissionTime = DateTime.Now;
 
                 // TimeSpan t = assesment_info.End.Value.Subtract(dto.SubmissionTime.Value);
                 // general.AssesmentSubmission.TimeRemarks = t.ToString();
                 if (assesment_info.End < dto.SubmissionTime)
                 {
-
                     general.message = "Late Submission";
                 }
-                dto.FilePath = Misc.UploadFile(dto.Attachment, Env, dto.DisplayName);
+                var data = await _dropbox.UploadFile(dto.Attachment, "Assesments_Submission", dto.DisplayName);
+                dto.FilePath = data.Path;
+                dto.Link = data.Link;
+                dto.DisplayName = data.DisplayName;
                 mapper.Map(dto, tbl);
                 await db.TblAssesmentSubmissions.AddAsync(tbl);
                 await db.SaveChangesAsync();

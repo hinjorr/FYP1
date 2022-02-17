@@ -130,6 +130,7 @@ function Assesment_Attachments() {
     url: "#",
     paramName: "file",
     addRemoveLinks: true,
+    maxFilesize: 150,
     // removedfile: function (file) {
     //   AssesmentDTO.delete("")
     //   return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
@@ -152,19 +153,16 @@ $("#btnAssesmentSubmit").click(function (e) {
   AssesmentDTO.append("Start", $("#assesmentStart").val())
   AssesmentDTO.append("End", $("#assesmentEnd").val())
   AssesmentDTO.append("LateSubmission", $('#LateSubmit').prop('checked'))
-  // var input = document.getElementById("assesment_attachments")
-  // images = input.files;
-  // $.each(images, function (indexInArray, valueOfElement) {
-  //   AssesmentDTO.append("Attachments", images[indexInArray])
-  // });
-  // console.log("post", AssesmentDTO.get("AssesmentId"))
+  $("#assesmentBar").show();
   $.ajax({
     type: "Post",
     url: "/ClassContent/UploadAssesment",
     data: AssesmentDTO,
     contentType: false,
     processData: false,
+
     success: function (resp) {
+      $("#assesmentBar").hide();
       cuteToast({
         type: resp.type,
         message: resp.message,
@@ -179,6 +177,7 @@ $("#btnAssesmentSubmit").click(function (e) {
     }
   });
 });
+
 
 function GetAssesments(SessionId) {
   $.ajax({
@@ -235,7 +234,7 @@ function OpenAssesmentModal(assesmentId) {
 function ShowAttachments(list, assesmentId) {
   var html = ""
   $(list).each(function (indexInArray, item) {
-    html += `<a href="` + item.path + `" target="_blank">` + item.displayName + `</a> &nbsp &nbsp<i onmouseover="this.style.cursor='pointer'" class="fas fa-trash" title="Delete" onClick="DeleteAttachments(` + item.fileId + `,` + assesmentId + `)"></i>`
+    html += `<a href="` + item.link + `" target="_blank">` + item.displayName + `</a> &nbsp &nbsp<i onmouseover="this.style.cursor='pointer'" class="fas fa-trash" title="Delete" onClick="DeleteAttachments(` + item.fileId + `,` + assesmentId + `)"></i>`
     html += "<br>"
   });
   html += `<br><button class="btn btn-light-primary font-weight-bold btn-sm btn-block" onClick="DropZoneBtn(this)">Upload More</button><br>`

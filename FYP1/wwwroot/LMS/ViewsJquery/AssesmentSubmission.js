@@ -41,7 +41,7 @@ function GetAssesmentDeatils(id) {
             if (resp.assesmentAttachmentList[0] != null) {
                 var html = `<br><br><h3 class="card-label">Attachment(s)</h3><ul>`
                 $(resp.assesmentAttachmentList).each(function (indexInArray, item) {
-                    html += `<li><a href="` + item.path + `" target="_blank">` + item.displayName + `</a></li>`
+                    html += `<li><a href="` + item.link + `" target="_blank">` + item.displayName + `</a></li>`
                 });
                 html += "</ul>"
                 $(".assesment_description").append(html);
@@ -104,7 +104,7 @@ function StudentsSubmissionList(classId, AssesmentId) {
             { data: "user.userName" },
             { data: "profile.name" },
             {
-                data: "assesmentSubmission.filePath", render: function (data, type, row) {
+                data: "assesmentSubmission.link", render: function (data, type, row) {
                     if (data != null) {
                         return `<a href="` + data + `" target="_blank">` + row.assesmentSubmission.displayName + `</a>`
                     }
@@ -198,7 +198,7 @@ function GetUploadedAssesment(assesmentId) {
             }
             else {
                 if (resp.assesmentSubmission.filePath != null) {
-                    $("#SubmittedFile").html(`<a href="` + resp.assesmentSubmission.filePath + `" target="_blank"><img src="https://img.icons8.com/color/50/4a90e2/check-file.png" style="height: 30px;"/>` + resp.assesmentSubmission.displayName + `</a>`);
+                    $("#SubmittedFile").html(`<a href="` + resp.assesmentSubmission.link + `" target="_blank"><img src="https://img.icons8.com/color/50/4a90e2/check-file.png" style="height: 30px;"/>` + resp.assesmentSubmission.displayName + `</a>`);
                     $("#resubmitBtn").show();
                     $("#assesmentSubmitBtn").hide();
                     $("#assesment_submission").hide();

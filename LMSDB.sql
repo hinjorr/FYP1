@@ -26,18 +26,19 @@ CREATE TABLE `Tbl_AssesmentSubmission` (
   `AssesmentID` int DEFAULT NULL,
   `FilePath` varchar(300) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   `DisplayName` varchar(300) DEFAULT NULL,
+  `Link` varchar(500) DEFAULT NULL,
   `SubmissionTime` datetime DEFAULT NULL,
   PRIMARY KEY (`SubmissionId`),
   KEY `UserID` (`UserID`),
   KEY `AssesmentID` (`AssesmentID`),
   CONSTRAINT `Tbl_AssesmentSubmission_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_AssesmentSubmission_ibfk_2` FOREIGN KEY (`AssesmentID`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmentSubmission` */
 
-insert  into `Tbl_AssesmentSubmission`(`SubmissionId`,`UserID`,`AssesmentID`,`FilePath`,`DisplayName`,`SubmissionTime`) values 
-(16,64,58,'/Upload/student-Mohsin-Assignment 1-79.pdf','student-Mohsin-Assignment 1-79','2022-02-07 14:39:26');
+insert  into `Tbl_AssesmentSubmission`(`SubmissionId`,`UserID`,`AssesmentID`,`FilePath`,`DisplayName`,`Link`,`SubmissionTime`) values 
+(16,64,58,'/Upload/student-Mohsin-Assignment 1-79.pdf','student-Mohsin-Assignment 1-79','https://www.dropbox.com/s/sf8adsgd140kyt8/student-Mohsin-Quiz%202%20Testing-79.pdf?dl=0','2022-02-07 14:39:26');
 
 /*Table structure for table `Tbl_Assesments` */
 
@@ -57,14 +58,12 @@ CREATE TABLE `Tbl_Assesments` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Assesments_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Assesments_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=67 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Assesments` */
 
 insert  into `Tbl_Assesments`(`AssesmentId`,`Class_ID`,`Session_ID`,`AssesmentName`,`Description`,`Start`,`End`,`LateSubmission`) values 
-(58,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
-(65,79,195,'Assignment 2',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
-(66,79,196,'Last Paper',NULL,'2022-02-08 00:27:00','2022-02-08 00:27:00','');
+(58,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00','');
 
 /*Table structure for table `Tbl_AssesmetnAttachments` */
 
@@ -74,34 +73,18 @@ CREATE TABLE `Tbl_AssesmetnAttachments` (
   `File_ID` int NOT NULL AUTO_INCREMENT,
   `AssesmentId` int DEFAULT NULL,
   `DisplayName` varchar(400) DEFAULT NULL,
-  `PathId` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `Path` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `Link` varchar(5000) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
   PRIMARY KEY (`File_ID`),
   KEY `Tbl_AssesmetnAttachments_ibfk_1` (`AssesmentId`),
   CONSTRAINT `Tbl_AssesmetnAttachments_ibfk_1` FOREIGN KEY (`AssesmentId`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=159 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmetnAttachments` */
 
-insert  into `Tbl_AssesmetnAttachments`(`File_ID`,`AssesmentId`,`DisplayName`,`PathId`) values 
-(127,66,'Screenshot from 2022-02-07 23-29-35.png','/Upload/Screenshot from 2022-02-07 23-29-35.png'),
-(134,66,'Screenshot from 2022-02-03 00-29-29.png','/Upload/Screenshot from 2022-02-03 00-29-29.png'),
-(135,66,'Screenshot from 2022-02-03 11-31-19.png','/Upload/Screenshot from 2022-02-03 11-31-19.png'),
-(137,58,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
-(138,65,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
-(139,65,'Screenshot from 2022-02-07 23-29-37.png','/Upload/Screenshot from 2022-02-07 23-29-37.png'),
-(140,65,'Screenshot from 2022-02-01 22-57-06.png','/Upload/Screenshot from 2022-02-01 22-57-06.png'),
-(141,65,'image3.1.jpg','/Upload/image3.1.jpg'),
-(142,58,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
-(143,65,'Screenshot from 2022-02-01 22-57-28.png','/Upload/Screenshot from 2022-02-01 22-57-28.png'),
-(144,66,'Screenshot from 2022-02-01 22-57-06.png','/Upload/Screenshot from 2022-02-01 22-57-06.png'),
-(151,58,'Fee Bill main.pdf','id:M2X8dMrWuIAAAAAAAAAAOA'),
-(152,58,'Fee Bill city.pdf','id:M2X8dMrWuIAAAAAAAAAAOQ'),
-(153,65,'Screenshot from 2022-02-03 00-29-29.png','id:M2X8dMrWuIAAAAAAAAAAOg'),
-(154,58,'Google Drive API Integration And Use Of Functions10.png','id:M2X8dMrWuIAAAAAAAAAAOw'),
-(155,58,'Google Drive API Integration And Use Of Functions10.png','id:M2X8dMrWuIAAAAAAAAAAOw'),
-(156,58,'Fee Bill city.pdf','id:M2X8dMrWuIAAAAAAAAAAOQ'),
-(157,58,'Screenshot from 2022-02-03 00-29-29.png','id:M2X8dMrWuIAAAAAAAAAAPA'),
-(158,66,'YIFYStatus.com.txt','id:M2X8dMrWuIAAAAAAAAAAPQ');
+insert  into `Tbl_AssesmetnAttachments`(`File_ID`,`AssesmentId`,`DisplayName`,`Path`,`Link`) values 
+(198,58,'Screenshot from 2022-02-03 00-29-29-835757.png','/Assesment_Attachment/Screenshot from 2022-02-03 00-29-29-835757.png','https://www.dropbox.com/s/1i7b2un9v1m37pd/Screenshot%20from%202022-02-03%2000-29-29-835757.png?dl=0'),
+(199,58,'image3.1-192441.jpg','/Assesment_Attachment/image3.1-192441.jpg','https://www.dropbox.com/s/27skdox0x6pm3xa/image3.1-192441.jpg?dl=0');
 
 /*Table structure for table `Tbl_Attendence` */
 
@@ -958,9 +941,7 @@ CREATE TABLE `Tbl_Url` (
 insert  into `Tbl_Url`(`Url_ID`,`Class_ID`,`Session_ID`,`DisplayName`,`Link`) values 
 (107,79,196,'Github',NULL),
 (108,79,195,'Youtube',NULL),
-(109,79,198,'One',NULL),
-(110,79,195,'OneD',NULL),
-(111,79,196,'OneDrive',NULL);
+(110,79,195,'OneD',NULL);
 
 /*Table structure for table `Tbl_User` */
 

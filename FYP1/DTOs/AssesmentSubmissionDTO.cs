@@ -15,10 +15,10 @@ namespace FYP1.DTOs
         public int? AssesmentId { get; set; }
         public string FilePath { get; set; }
         public string DisplayName { get; set; }
-        public string TimeRemarks { get; set; }
+        public string Link { get; set; }
         public DateTime? SubmissionTime { get; set; }
-
-        public bool LateSubmit {get;set;}
+        public string TimeRemarks { get; set; }
+        public bool LateSubmit { get; set; }
 
         [JsonIgnore]
         public IFormFile Attachment { get; set; }
