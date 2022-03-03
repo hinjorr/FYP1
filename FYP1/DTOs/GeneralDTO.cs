@@ -13,7 +13,7 @@ namespace FYP1.DTOs
         public int TotalSessions { get; set; }
 
         public List<AssesmetnAttachmentDTO> AssesmentAttachmentList { get; set; }
-        public FilesDTO Files { get; set; }
+        public VideosDTO Videos { get; set; }
         public AssesmentSubmissionDTO AssesmentSubmission { get; set; }
         public AssesmetnAttachmentDTO AssesmentAttachment { get; set; }
         public AssesmentDTO Assesment { get; set; }

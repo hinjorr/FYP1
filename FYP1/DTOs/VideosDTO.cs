@@ -7,15 +7,14 @@ using Microsoft.AspNetCore.Http;
 
 namespace FYP1.DTOs
 {
-    public class FilesDTO
+    public class VideosDTO
     {
-        public int FileId { get; set; }
-        public string FilePath { get; set; }
-        public string DisplayName { get; set; }
+        public int VideoId { get; set; }
+        public string YtubeVideoId { get; set; }
         public int? ClassId { get; set; }
         public int? SessionId { get; set; }
 
         [JsonIgnore]
-        public IFormFile Attachment { get; set; }
+        public List<IFormFile> Attachment { get; set; }
     }
 }

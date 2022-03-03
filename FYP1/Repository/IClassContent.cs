@@ -10,7 +10,7 @@ namespace FYP1.Repository
     {
         Task<GeneralDTO> AddUrl(UrlDTO dto);
         Task<List<UrlDTO>> GetUrls(int _sessionId, int _classId);
-        void DeleteUrl(int _id);
+        Task DeleteUrl(int _id);
         Task<UrlDTO> GetSingleUrl(int _id);
         Task<GeneralDTO> UploadAssesment(AssesmentDTO dto);
         Task<List<AssesmentDTO>> GetAssesment(int _sessionId, int _classId);
@@ -20,8 +20,7 @@ namespace FYP1.Repository
         Task<GeneralDTO> AssesmentSubmission(AssesmentSubmissionDTO dto);
         Task<GeneralDTO> GetSingleAssesment(int assesment_id);
         Task<bool> DeleteAssesmentAttachment(int fileId);
-        Task<List<FilesDTO>> GetFiles(int sessionId, int classId);
-        Task<GeneralDTO> UploadFiles(List<FilesDTO> files);
-        Task<bool> DeleteFile(int fileId);
+        Task<GeneralDTO> UploadVideos(VideosDTO _videos);
+        Task<List<VideosDTO>> GetVideos(int sessionId, int classId);
     }
 }

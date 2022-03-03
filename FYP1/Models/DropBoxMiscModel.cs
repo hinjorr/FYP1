@@ -18,10 +18,12 @@ namespace FYP1.Models
     {
         private readonly IConfiguration config;
         Guid guid = Guid.NewGuid();
+        YoutubeMix _youtube;
 
         public DropBoxMiscModel(IConfiguration _config)
         {
             config = _config;
+            _youtube = new YoutubeMix(_config);
         }
 
         private DropboxClient GetToken(IConfiguration _config)
@@ -55,6 +57,7 @@ namespace FYP1.Models
         {
             try
             {
+                // await _youtube.GetVideoLink(file);
                 AssesmetnAttachmentDTO dto = new AssesmetnAttachmentDTO();
                 await CreateFolder(Folder);
                 DropboxClient token = GetToken(config);
@@ -63,7 +66,7 @@ namespace FYP1.Models
                 {
                     using (var memstream = new MemoryStream())
                     {
-                        reader.BaseStream.CopyTo(memstream);
+                        await reader.BaseStream.CopyToAsync(memstream);
                         bytes = memstream.ToArray();
                     }
                 }

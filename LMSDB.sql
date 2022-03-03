@@ -397,25 +397,6 @@ insert  into `Tbl_FacultyCourseRegistration`(`FCR_ID`,`UserId`,`Username`,`Class
 (28,72,'495159',81,NULL,''),
 (29,69,'faculty',82,NULL,'');
 
-/*Table structure for table `Tbl_Files` */
-
-DROP TABLE IF EXISTS `Tbl_Files`;
-
-CREATE TABLE `Tbl_Files` (
-  `File_ID` int NOT NULL AUTO_INCREMENT,
-  `File_Path` varchar(500) DEFAULT NULL,
-  `DisplayName` varchar(500) DEFAULT NULL,
-  `Class_Id` int DEFAULT NULL,
-  `Session_ID` int DEFAULT NULL,
-  PRIMARY KEY (`File_ID`),
-  KEY `Class_Id` (`Class_Id`),
-  KEY `Session_ID` (`Session_ID`),
-  CONSTRAINT `Tbl_Files_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `Tbl_Files_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `Tbl_Files` */
-
 /*Table structure for table `Tbl_Marks` */
 
 DROP TABLE IF EXISTS `Tbl_Marks`;
@@ -934,14 +915,15 @@ CREATE TABLE `Tbl_Url` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Url_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Url_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=112 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Url` */
 
 insert  into `Tbl_Url`(`Url_ID`,`Class_ID`,`Session_ID`,`DisplayName`,`Link`) values 
 (107,79,196,'Github',NULL),
 (108,79,195,'Youtube',NULL),
-(110,79,195,'OneD',NULL);
+(110,79,195,'OneD',NULL),
+(112,82,195,'Github','adsa');
 
 /*Table structure for table `Tbl_User` */
 
@@ -994,6 +976,27 @@ insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsA
 (150,'Emp58106','1050',2,106,'','28/01/2022'),
 (151,'Std22107','1050',3,107,'','29/01/2022'),
 (152,'Emp34107','1050',4,107,'','29/01/2022');
+
+/*Table structure for table `Tbl_Videos` */
+
+DROP TABLE IF EXISTS `Tbl_Videos`;
+
+CREATE TABLE `Tbl_Videos` (
+  `VideoID` int NOT NULL AUTO_INCREMENT,
+  `YTube_Video_ID` varchar(500) CHARACTER SET latin1 COLLATE latin1_swedish_ci DEFAULT NULL,
+  `Class_Id` int DEFAULT NULL,
+  `Session_ID` int DEFAULT NULL,
+  PRIMARY KEY (`VideoID`),
+  KEY `Class_Id` (`Class_Id`),
+  KEY `Session_ID` (`Session_ID`),
+  CONSTRAINT `Tbl_Videos_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Videos_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Videos` */
+
+insert  into `Tbl_Videos`(`VideoID`,`YTube_Video_ID`,`Class_Id`,`Session_ID`) values 
+(1,'ixOfkBf4-OQ',82,195);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

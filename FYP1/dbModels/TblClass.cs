@@ -13,10 +13,10 @@ namespace FYP1.dbModels
             TblAttendences = new HashSet<TblAttendence>();
             TblCourseEligiblities = new HashSet<TblCourseEligiblity>();
             TblFacultyCourseRegistrations = new HashSet<TblFacultyCourseRegistration>();
-            TblFiles = new HashSet<TblFile>();
             TblMarks = new HashSet<TblMark>();
             TblStudentCourseRegistrations = new HashSet<TblStudentCourseRegistration>();
             TblUrls = new HashSet<TblUrl>();
+            TblVideos = new HashSet<TblVideo>();
         }
 
         public int ClassId { get; set; }
@@ -39,9 +39,9 @@ namespace FYP1.dbModels
         public virtual ICollection<TblAttendence> TblAttendences { get; set; }
         public virtual ICollection<TblCourseEligiblity> TblCourseEligiblities { get; set; }
         public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
-        public virtual ICollection<TblFile> TblFiles { get; set; }
         public virtual ICollection<TblMark> TblMarks { get; set; }
         public virtual ICollection<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }
         public virtual ICollection<TblUrl> TblUrls { get; set; }
+        public virtual ICollection<TblVideo> TblVideos { get; set; }
     }
 }

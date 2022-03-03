@@ -1,6 +1,4 @@
 
-
-
 $(document).ready(function () {
   var route = window.location.href;
   ClassId = route.substring(route.lastIndexOf("/") + 1);
@@ -12,7 +10,7 @@ $(document).ready(function () {
   CommonFunctions.GetSessions("#url_sessions");
   role = $("#GetUsersRole").text();
   Assesment_Attachments()
-  File_Upload(ClassId)
+  File_Upload()
   if (role == "Student") {
     $("#ActivityBtn").remove();
   }
@@ -61,9 +59,11 @@ function GetSessions(Cid) {
             <h4 style="font-family: Georgia, serif;font-size: x-large;color:#036f7a"><i class="fa fa-angle-right"></i>` + item.sessionName + `</h4>
           <div id="urls`+ item.sessionId + `"></div>
           <div id="assements`+ item.sessionId + `"></div>
+          <div id="videos`+ item.sessionId + `"></div>
         </div>`
         GetUrls(item.sessionId)
         GetAssesments(item.sessionId)
+        GetVideos(item.sessionId)
         html += `</div><hr>`;
       });
       html += "</div>";
@@ -73,51 +73,67 @@ function GetSessions(Cid) {
 }
 
 //<--------FileUpload Modal working Start------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
-var FilesDTO = []
+var VideosDTO = new FormData()
 function UploadFiles() {
+  var sessionId = $("#attachment_sessions").val();
+  VideosDTO.append("ClassId", ClassId)
+  VideosDTO.append("SessionId", sessionId)
+  console.log(VideosDTO.get("Attachment"))
+
+  $("#VideosBar").show();
   $.ajax({
-    url: "/ClassContent/UploadFiles",
-    data: { files: FilesDTO },
+    type: "Post",
+    url: "/ClassContent/UploadVideos",
+    data: VideosDTO,
     contentType: false,
     processData: false,
     success: function (resp) {
+      $("#VideosBar").hide();
       cuteToast({
         type: resp.type,
         message: resp.message,
         timer: 3000,
       })
       if (resp.type != "error") {
-        AssesmentDTO.delete("AssesmentId")
-        GetAssesments(session_id)
-        $('#AttachmentModal').modal('hide');
+        $('#VideosModal').modal('hide');
         $('#exampleModal_').modal('hide');
       }
     }
   });
 }
 
-function File_Upload(classId) {
-  var sessionId = $("#attachment_sessions").val();
+function File_Upload() {
   $('#files_upload').dropzone({
     url: "#",
     paramName: "file",
     addRemoveLinks: true,
+    acceptedFiles: "video/*",
     // removedfile: function (file) {
     //   AssesmentDTO.delete("")
     //   return (_ref = file.previewElement) != null ? _ref.parentNode.removeChild(file.previewElement) : void 0;
     // },
     accept: function (file, done) {
-      var dto = new FormData();
-      dto.append("Attachment", file)
-      dto.append("DisplayName", file.name)
-      dto.append("SessionId", sessionId)
-      dto.append("ClassId", classId)
-      FilesDTO.push(dto);
+      VideosDTO.append("Attachment", file)
       done();
     }
   });
 }
 
+
+function GetVideos(sessionId) {
+  $.ajax({
+    url: "/ClassContent/GetVideos?sessionId=" + sessionId + "&classId=" + ClassId,
+    success: function (resp) {
+      var html = ""
+      if (resp[0] != null) {
+        $(resp).each(function (index, item) {
+          html += `<iframe src="https://www.youtube.com/embed/` + item.ytubeVideoId + `" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen="" width="400" height="250" frameborder="0"></iframe>`
+        });
+        $("#videos" + sessionId).append(html);
+      }
+    }
+  });
+}
 //<--------FileUpload Modal working End------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------->
 
 
@@ -160,7 +176,6 @@ $("#btnAssesmentSubmit").click(function (e) {
     data: AssesmentDTO,
     contentType: false,
     processData: false,
-
     success: function (resp) {
       $("#assesmentBar").hide();
       cuteToast({

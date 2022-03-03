@@ -25,6 +25,7 @@ namespace FYP1.Models
         private readonly IWebHostEnvironment Env;
         private readonly IConfiguration config;
         GeneralDTO general = new GeneralDTO();
+        YoutubeMix _youtube;
         public AuthenticationModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor httpContext, IWebHostEnvironment env, IConfiguration config)
         {
             this.db = db;
@@ -32,6 +33,7 @@ namespace FYP1.Models
             _httpContext = httpContext;
             Env = env;
             this.config = config;
+            _youtube = new YoutubeMix(config);
         }
         public async Task<GeneralDTO> Login(UserDTO dto)
         {
@@ -58,6 +60,13 @@ namespace FYP1.Models
                         await GetPermissions(general.Role.RoleId);
                         general.Icon = "success";
                         general.Text = "Login Succesfull!";
+
+                        // var youtube_token = await _youtube.GetAccessToken();
+                        // CookieOptions options = new CookieOptions()
+                        // {
+                        //     Expires = DateTime.Now.AddMinutes(59)
+                        // };
+                        // _httpContext.HttpContext.Response.Cookies.Append("AccessToken", youtube_token, options);
                         return general;
                     }
                 }

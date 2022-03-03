@@ -1,3 +1,4 @@
+using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using FYP1.DTOs;
@@ -44,8 +45,9 @@ namespace FYP1.Controllers
         [HttpGet("Logout")]
         public IActionResult Logout()
         {
+
             _httpContext.HttpContext.Session.Remove("UserDetails");
-            _httpContext.HttpContext.Response.Cookies.Delete(".AspNetCore.Session");
+
             return View("Login");
         }
 

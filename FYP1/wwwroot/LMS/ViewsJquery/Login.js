@@ -26,10 +26,14 @@ $("#kt_login_signin_submit").click(function (e) {
               $("#kt_login_signin_submit").removeClass("spinner spinner-white spinner-right");
             });
         } else {
+          var cookies = document.cookie
+          cookies = cookies.split("=")
+          localStorage.setItem("AccessToken", cookies[1])
           if (resp.returnUrl != null) {
             location.replace(resp.returnUrl);
           }
           else {
+
             location.replace("/Home");
           }
         }

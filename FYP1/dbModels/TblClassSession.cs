@@ -11,8 +11,8 @@ namespace FYP1.dbModels
         {
             TblAssesments = new HashSet<TblAssesment>();
             TblAttendences = new HashSet<TblAttendence>();
-            TblFiles = new HashSet<TblFile>();
             TblUrls = new HashSet<TblUrl>();
+            TblVideos = new HashSet<TblVideo>();
         }
 
         public int SessionId { get; set; }
@@ -22,7 +22,7 @@ namespace FYP1.dbModels
         public virtual TblSemester Semester { get; set; }
         public virtual ICollection<TblAssesment> TblAssesments { get; set; }
         public virtual ICollection<TblAttendence> TblAttendences { get; set; }
-        public virtual ICollection<TblFile> TblFiles { get; set; }
         public virtual ICollection<TblUrl> TblUrls { get; set; }
+        public virtual ICollection<TblVideo> TblVideos { get; set; }
     }
 }

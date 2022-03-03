@@ -28,6 +28,7 @@ namespace FYP1.Models
         GeneralDTO session_data;
         TblAssesment tbl_assesment = new TblAssesment();
         IDropBoxMisc _dropbox;
+        YoutubeMix _youtube;
         public ClassContentModel(LMS_DBContext _db, IMapper _mapper, IWebHostEnvironment env, IConfiguration config, IHttpContextAccessor http)
         {
 
@@ -38,6 +39,7 @@ namespace FYP1.Models
             this.http = http;
             session_data = this.http.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
             _dropbox = new DropBoxMiscModel(config);
+            _youtube = new YoutubeMix(config);
 
         }
 
@@ -91,10 +93,11 @@ namespace FYP1.Models
             }
         }
 
-        public void DeleteUrl(int _id)
+        public async Task DeleteUrl(int _id)
         {
             try
             {
+                // await _youtube.GetAccessToken();
                 var data = db.TblUrls.Where(x => x.UrlId == _id).FirstOrDefault();
                 db.TblUrls.Remove(data);
                 db.SaveChanges();
@@ -217,6 +220,7 @@ namespace FYP1.Models
         {
             try
             {
+
                 var data = db.TblAssesments.Where(x => x.AssesmentId == _id).FirstOrDefault();
                 var files = db.TblAssesmetnAttachments.Where(x => x.AssesmentId == _id).ToList();
                 if (files.Count != 0)
@@ -365,23 +369,33 @@ namespace FYP1.Models
                 return general;
             }
         }
-        public async Task<GeneralDTO> UploadFiles(List<FilesDTO> files)
+        public async Task<GeneralDTO> UploadVideos(VideosDTO _videos)
         {
             try
             {
-                List<TblFile> _list = new List<TblFile>();
-                foreach (var item in files)
+                List<TblVideo> tbl_list = new List<TblVideo>();
+                foreach (var video in _videos.Attachment)
                 {
-                    TblFile tbl = new TblFile();
-
-                    item.FilePath = Misc.UploadFile(item.Attachment, Env, item.DisplayName);
-                    mapper.Map(item, tbl);
-                    _list.Add(tbl);
+                    // var video_id = await _youtube.GetVideoLink(video);
+                    if (true)
+                    {
+                        // TblVideo dto = new TblVideo();
+                        // dto.ClassId = _videos.ClassId;
+                        // dto.SessionId = _videos.SessionId;
+                        // dto.YtubeVideoId = video_id;
+                        // tbl_list.Add(dto);
+                        general.type = "success";
+                        general.message = "Videos Uploaded";
+                    }
+                    else
+                    {
+                        general.type = "error";
+                        general.message = "Uploading Failed!";
+                    }
                 }
-                await db.TblFiles.AddRangeAsync(_list);
+
+                await db.TblVideos.AddRangeAsync(tbl_list);
                 await db.SaveChangesAsync();
-                general.type = "success";
-                general.message = "Files Uploaded";
                 return general;
             }
             catch (System.Exception ex)
@@ -393,12 +407,12 @@ namespace FYP1.Models
                 return general;
             }
         }
-        public async Task<List<FilesDTO>> GetFiles(int sessionId, int classId)
+        public async Task<List<VideosDTO>> GetVideos(int sessionId, int classId)
         {
             try
             {
-                List<FilesDTO> _list = new List<FilesDTO>();
-                var data = await db.TblFiles.Where(x => x.ClassId == classId && x.SessionId == sessionId).ToListAsync();
+                List<VideosDTO> _list = new List<VideosDTO>();
+                var data = await db.TblVideos.Where(x => x.ClassId == classId && x.SessionId == sessionId).ToListAsync();
                 mapper.Map(data, _list);
                 return _list;
             }
@@ -410,26 +424,26 @@ namespace FYP1.Models
             }
         }
 
-        public async Task<bool> DeleteFile(int fileId)
-        {
-            try
-            {
-                var chk = await db.TblFiles.Where(x => x.FileId == fileId).FirstOrDefaultAsync();
-                if (chk != null)
-                {
-                    Misc.DeleteFile(Env, chk.FilePath);
-                    db.TblFiles.Remove(chk);
-                    await db.SaveChangesAsync();
-                }
-                return true;
-            }
-            catch (System.Exception ex)
-            {
-                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
-                thr.Start();
-                return false;
-            }
-        }
+        // public async Task<bool> DeleteFile(int fileId)
+        // {
+        //     try
+        //     {
+        //         var chk = await db.TblFiles.Where(x => x.FileId == fileId).FirstOrDefaultAsync();
+        //         if (chk != null)
+        //         {
+        //             Misc.DeleteFile(Env, chk.FilePath);
+        //             db.TblFiles.Remove(chk);
+        //             await db.SaveChangesAsync();
+        //         }
+        //         return true;
+        //     }
+        //     catch (System.Exception ex)
+        //     {
+        //         Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+        //         thr.Start();
+        //         return false;
+        //     }
+        // }
 
     }
 }

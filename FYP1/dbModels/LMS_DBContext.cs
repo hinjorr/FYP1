@@ -28,7 +28,6 @@ namespace FYP1.dbModels
         public virtual DbSet<TblDay> TblDays { get; set; }
         public virtual DbSet<TblEmailConfiguration> TblEmailConfigurations { get; set; }
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
-        public virtual DbSet<TblFile> TblFiles { get; set; }
         public virtual DbSet<TblMark> TblMarks { get; set; }
         public virtual DbSet<TblMenu> TblMenus { get; set; }
         public virtual DbSet<TblParentMenu> TblParentMenus { get; set; }
@@ -43,6 +42,7 @@ namespace FYP1.dbModels
         public virtual DbSet<TblTime> TblTimes { get; set; }
         public virtual DbSet<TblUrl> TblUrls { get; set; }
         public virtual DbSet<TblUser> TblUsers { get; set; }
+        public virtual DbSet<TblVideo> TblVideos { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -417,42 +417,6 @@ namespace FYP1.dbModels
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.Cascade)
                     .HasConstraintName("Tbl_FacultyCourseRegistration_ibfk_1");
-            });
-
-            modelBuilder.Entity<TblFile>(entity =>
-            {
-                entity.HasKey(e => e.FileId)
-                    .HasName("PRIMARY");
-
-                entity.ToTable("Tbl_Files");
-
-                entity.HasIndex(e => e.ClassId, "Class_Id");
-
-                entity.HasIndex(e => e.SessionId, "Session_ID");
-
-                entity.Property(e => e.FileId).HasColumnName("File_ID");
-
-                entity.Property(e => e.ClassId).HasColumnName("Class_Id");
-
-                entity.Property(e => e.DisplayName).HasMaxLength(500);
-
-                entity.Property(e => e.FilePath)
-                    .HasMaxLength(500)
-                    .HasColumnName("File_Path");
-
-                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
-
-                entity.HasOne(d => d.Class)
-                    .WithMany(p => p.TblFiles)
-                    .HasForeignKey(d => d.ClassId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("Tbl_Files_ibfk_1");
-
-                entity.HasOne(d => d.Session)
-                    .WithMany(p => p.TblFiles)
-                    .HasForeignKey(d => d.SessionId)
-                    .OnDelete(DeleteBehavior.Cascade)
-                    .HasConstraintName("Tbl_Files_ibfk_2");
             });
 
             modelBuilder.Entity<TblMark>(entity =>
@@ -857,6 +821,40 @@ namespace FYP1.dbModels
                     .WithMany(p => p.TblUsers)
                     .HasForeignKey(d => d.RoleId)
                     .HasConstraintName("Tbl_User_ibfk_2");
+            });
+
+            modelBuilder.Entity<TblVideo>(entity =>
+            {
+                entity.HasKey(e => e.VideoId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Videos");
+
+                entity.HasIndex(e => e.ClassId, "Class_Id");
+
+                entity.HasIndex(e => e.SessionId, "Session_ID");
+
+                entity.Property(e => e.VideoId).HasColumnName("VideoID");
+
+                entity.Property(e => e.ClassId).HasColumnName("Class_Id");
+
+                entity.Property(e => e.SessionId).HasColumnName("Session_ID");
+
+                entity.Property(e => e.YtubeVideoId)
+                    .HasMaxLength(500)
+                    .HasColumnName("YTube_Video_ID");
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblVideos)
+                    .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_Videos_ibfk_1");
+
+                entity.HasOne(d => d.Session)
+                    .WithMany(p => p.TblVideos)
+                    .HasForeignKey(d => d.SessionId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_Videos_ibfk_2");
             });
 
             OnModelCreatingPartial(modelBuilder);

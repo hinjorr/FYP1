@@ -32,8 +32,8 @@ namespace FYP1.DTOs
             CreateMap<TblMenu, MenuDTO>();
             CreateMap<MenuDTO, TblMenu>();
 
-            CreateMap<TblFile, FilesDTO>();
-            CreateMap<FilesDTO, TblFile>();
+            CreateMap<TblVideo, VideosDTO>();
+            CreateMap<VideosDTO, TblVideo>();
 
             CreateMap<RoleMenuDTO, TblRoleMenu>();
             CreateMap<TblRoleMenu, RoleMenuDTO>();

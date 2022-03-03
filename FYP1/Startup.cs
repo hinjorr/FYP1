@@ -33,7 +33,7 @@ namespace FYP1
             // services.AddDistributedMemoryCache();
             services.AddSession(options =>
             {
-                options.IdleTimeout = TimeSpan.FromMinutes(20);//You can set Time   
+                options.IdleTimeout = TimeSpan.FromMinutes(59);//You can set Time   
                 // options.Cookie.SecurePolicy = CookieSecurePolicy.Always;
                 // options.Cookie.SameSite = SameSiteMode.Strict;
                 // options.Cookie.HttpOnly = true;
