@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using System.IO;
 using System.Net.Mail;
 using System.Threading;
@@ -373,17 +374,18 @@ namespace FYP1.Models
         {
             try
             {
+
                 List<TblVideo> tbl_list = new List<TblVideo>();
                 foreach (var video in _videos.Attachment)
                 {
-                    // var video_id = await _youtube.GetVideoLink(video);
-                    if (true)
+                    var video_id = await _youtube.GetVideoLink(video);
+                    if (video_id != null)
                     {
-                        // TblVideo dto = new TblVideo();
-                        // dto.ClassId = _videos.ClassId;
-                        // dto.SessionId = _videos.SessionId;
-                        // dto.YtubeVideoId = video_id;
-                        // tbl_list.Add(dto);
+                        TblVideo dto = new TblVideo();
+                        dto.ClassId = _videos.ClassId;
+                        dto.SessionId = _videos.SessionId;
+                        dto.YtubeVideoId = video_id;
+                        tbl_list.Add(dto);
                         general.type = "success";
                         general.message = "Videos Uploaded";
                     }
@@ -391,6 +393,7 @@ namespace FYP1.Models
                     {
                         general.type = "error";
                         general.message = "Uploading Failed!";
+                        break;
                     }
                 }
 
@@ -424,26 +427,111 @@ namespace FYP1.Models
             }
         }
 
-        // public async Task<bool> DeleteFile(int fileId)
-        // {
-        //     try
-        //     {
-        //         var chk = await db.TblFiles.Where(x => x.FileId == fileId).FirstOrDefaultAsync();
-        //         if (chk != null)
-        //         {
-        //             Misc.DeleteFile(Env, chk.FilePath);
-        //             db.TblFiles.Remove(chk);
-        //             await db.SaveChangesAsync();
-        //         }
-        //         return true;
-        //     }
-        //     catch (System.Exception ex)
-        //     {
-        //         Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
-        //         thr.Start();
-        //         return false;
-        //     }
-        // }
+        public async Task<bool> DeleteVideo(int _videoId)
+        {
+            try
+            {
+                var chk = await db.TblVideos.Where(x => x.VideoId == _videoId).FirstOrDefaultAsync();
+                if (chk != null)
+                {
+                    db.TblVideos.Remove(chk);
+                    await db.SaveChangesAsync();
+                }
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
+                return false;
+            }
+        }
+
+        public static readonly List<string> VideoExtensions = new List<string> { ".MP4", ".MOV", ".WMV", ".AVI", ".AVCHD", "MKV", " WEBM", "MPEG-2" };
+
+        public async Task<GeneralDTO> UploadDocs(DocDTO dto)
+        {
+            try
+            {
+                List<TblDoc> tbl_list = new List<TblDoc>();
+                foreach (var file in dto.Attachments)
+                {
+                    if (!VideoExtensions.Contains(Path.GetExtension(file.FileName)))
+                    {
+                        var data = await _dropbox.UploadFile(file, "Lectures");
+                        if (data != null)
+                        {
+                            TblDoc obj = new TblDoc();
+                            obj.ClassId = dto.ClassId;
+                            obj.SessionId = dto.SessionId;
+                            obj.DisplayName = data.DisplayName;
+                            obj.Path = data.Path;
+                            obj.Link = data.Link;
+                            tbl_list.Add(obj);
+                            general.type = "success";
+                            general.message = "Files Uploaded";
+                        }
+                        else
+                        {
+                            general.type = "error";
+                            general.message = "Uploading Failed!";
+                            break;
+                        }
+                    }
+                }
+                await db.TblDocs.AddRangeAsync(tbl_list);
+                await db.SaveChangesAsync();
+                return general;
+
+            }
+            catch (System.Exception ex)
+            {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
+                general.type = "error";
+                general.message = "Server Error!";
+                return general;
+            }
+        }
+
+        public async Task<List<DocDTO>> GetDocFiles(int class_id, int sessionId)
+        {
+            try
+            {
+                List<DocDTO> _list = new List<DocDTO>();
+                var data = await db.TblDocs.Where(x => x.ClassId == class_id && x.SessionId == sessionId).ToListAsync();
+                mapper.Map(data, _list);
+                return _list;
+            }
+            catch (System.Exception ex)
+            {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
+                return null;
+            }
+        }
+
+        public async Task<bool> DeleteDocFile(int doc_id)
+        {
+            try
+            {
+                var chk = await db.TblDocs.Where(x => x.DocId == doc_id).FirstOrDefaultAsync();
+                if (chk != null)
+                {
+                    db.TblDocs.Remove(chk);
+                    Thread th = new Thread(() => _dropbox.DeleteFile(chk.Path));
+                    th.Start();
+                }
+                await db.SaveChangesAsync();
+                return true;
+            }
+            catch (System.Exception ex)
+            {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
+                return false;
+            }
+        }
 
     }
 }

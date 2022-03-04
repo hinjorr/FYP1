@@ -22,5 +22,9 @@ namespace FYP1.Repository
         Task<bool> DeleteAssesmentAttachment(int fileId);
         Task<GeneralDTO> UploadVideos(VideosDTO _videos);
         Task<List<VideosDTO>> GetVideos(int sessionId, int classId);
+        Task<bool> DeleteVideo(int _videoId);
+        Task<GeneralDTO> UploadDocs(DocDTO dto);
+        Task<List<DocDTO>> GetDocFiles(int class_id, int sessionId);
+        Task<bool> DeleteDocFile(int doc_id);
     }
 }

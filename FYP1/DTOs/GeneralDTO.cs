@@ -14,6 +14,7 @@ namespace FYP1.DTOs
 
         public List<AssesmetnAttachmentDTO> AssesmentAttachmentList { get; set; }
         public VideosDTO Videos { get; set; }
+        public DocDTO Docs { get; set; }
         public AssesmentSubmissionDTO AssesmentSubmission { get; set; }
         public AssesmetnAttachmentDTO AssesmentAttachment { get; set; }
         public AssesmentDTO Assesment { get; set; }

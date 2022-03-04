@@ -36,8 +36,12 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 </button>
                 <button type="button" class="btn btn-default col-lg-3" data-toggle="modal"
                     data-target="#VideosModal">
-                    <i class="fa fa-folder-open"></i><br />Upload Videos
+                    <i class="fas fa-video"></i><br />Upload Videos
                 </button><br><br>
+                <button type="button" class="btn btn-default col-lg-3" data-toggle="modal"
+                    data-target="#DocsModal">
+                    <i class="fa fa-folder-open"></i><br />Upload Files
+                </button>
                 <button type="button" class="btn btn-default col-lg-3">
                     <i class="fas fa-laptop-code"></i><br />Embed Video
                 </button>
@@ -187,6 +191,39 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
             </div>
             <div class="progress" style="display: none;" id="VideosBar">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+                    style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="DocsModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+    aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Upload Files</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <div class="col-md-7"> <select class="form-control" id="docs_sessions"></select>
+                </div>
+            </div>
+            <div class="modal-body">
+                <div class="form-group">
+                    <div class="dropzone dropzone-default dropzone-success" id="docs_upload">
+                        <div class="dropzone-msg dz-message needsclick">
+                            <h3 class="dropzone-msg-title">Drop files here or click to upload.</h3>
+                            <span class="dropzone-msg-desc">Any kind of files are accepted, except Videos</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer mt">
+                <button type="button" class="btn btn-primary" onClick="UploadDocs()">Submit</button>
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </div>
+            <div class="progress" style="display: none;" id="Docsbar">
                 <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
                     style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>

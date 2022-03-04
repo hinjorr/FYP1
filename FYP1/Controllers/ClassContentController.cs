@@ -1,3 +1,4 @@
+using System.IO;
 using System.Runtime.InteropServices;
 using System.ComponentModel;
 using System.Collections.Generic;
@@ -101,10 +102,27 @@ namespace FYP1.Controllers
             var data = await repo.UploadVideos(videos);
             return Ok(data);
         }
-        // public async Task<IActionResult> DeleteFile(int fileId)
-        // {
-        //     var data = await repo.DeleteFile(fileId);
-        //     return Ok(data);
-        // }
+        public async Task<IActionResult> DeleteVideo(int id)
+        {
+            var data = await repo.DeleteVideo(id);
+            return Ok(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> UploadDocFiles([FromForm] DocDTO docs)
+        {
+            var data = await repo.UploadDocs(docs);
+            return Ok(data);
+        }
+        public async Task<IActionResult> GetDocFiles(int class_id, int sessionId)
+        {
+            var data = await repo.GetDocFiles(class_id,sessionId);
+            return Ok(data);
+        }
+        public async Task<IActionResult> DeleteDocFile(int doc_id)
+        {
+            var data = await repo.DeleteDocFile(doc_id);
+            return Ok(data);
+        }
     }
 }

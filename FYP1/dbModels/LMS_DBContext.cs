@@ -26,6 +26,7 @@ namespace FYP1.dbModels
         public virtual DbSet<TblCourse> TblCourses { get; set; }
         public virtual DbSet<TblCourseEligiblity> TblCourseEligiblities { get; set; }
         public virtual DbSet<TblDay> TblDays { get; set; }
+        public virtual DbSet<TblDoc> TblDocs { get; set; }
         public virtual DbSet<TblEmailConfiguration> TblEmailConfigurations { get; set; }
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
         public virtual DbSet<TblMark> TblMarks { get; set; }
@@ -364,6 +365,42 @@ namespace FYP1.dbModels
                 entity.Property(e => e.DayId).HasColumnName("Day_Id");
 
                 entity.Property(e => e.DayName).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<TblDoc>(entity =>
+            {
+                entity.HasKey(e => e.DocId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Docs");
+
+                entity.HasIndex(e => e.ClassId, "CLassId");
+
+                entity.HasIndex(e => e.SessionId, "SessionId");
+
+                entity.Property(e => e.DocId).HasColumnName("Doc_Id");
+
+                entity.Property(e => e.ClassId).HasColumnName("CLassId");
+
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(500)
+                    .HasColumnName("Display_Name");
+
+                entity.Property(e => e.Link).HasMaxLength(500);
+
+                entity.Property(e => e.Path).HasMaxLength(500);
+
+                entity.HasOne(d => d.Class)
+                    .WithMany(p => p.TblDocs)
+                    .HasForeignKey(d => d.ClassId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_Docs_ibfk_2");
+
+                entity.HasOne(d => d.Session)
+                    .WithMany(p => p.TblDocs)
+                    .HasForeignKey(d => d.SessionId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_Docs_ibfk_1");
             });
 
             modelBuilder.Entity<TblEmailConfiguration>(entity =>

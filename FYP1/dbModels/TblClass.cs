@@ -12,6 +12,7 @@ namespace FYP1.dbModels
             TblAssesments = new HashSet<TblAssesment>();
             TblAttendences = new HashSet<TblAttendence>();
             TblCourseEligiblities = new HashSet<TblCourseEligiblity>();
+            TblDocs = new HashSet<TblDoc>();
             TblFacultyCourseRegistrations = new HashSet<TblFacultyCourseRegistration>();
             TblMarks = new HashSet<TblMark>();
             TblStudentCourseRegistrations = new HashSet<TblStudentCourseRegistration>();
@@ -38,6 +39,7 @@ namespace FYP1.dbModels
         public virtual ICollection<TblAssesment> TblAssesments { get; set; }
         public virtual ICollection<TblAttendence> TblAttendences { get; set; }
         public virtual ICollection<TblCourseEligiblity> TblCourseEligiblities { get; set; }
+        public virtual ICollection<TblDoc> TblDocs { get; set; }
         public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
         public virtual ICollection<TblMark> TblMarks { get; set; }
         public virtual ICollection<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }

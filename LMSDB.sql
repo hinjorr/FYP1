@@ -347,6 +347,34 @@ insert  into `Tbl_Days`(`Day_Id`,`DayName`) values
 (6,'Saturday'),
 (7,'Sunday');
 
+/*Table structure for table `Tbl_Docs` */
+
+DROP TABLE IF EXISTS `Tbl_Docs`;
+
+CREATE TABLE `Tbl_Docs` (
+  `Doc_Id` int NOT NULL AUTO_INCREMENT,
+  `SessionId` int DEFAULT NULL,
+  `CLassId` int DEFAULT NULL,
+  `Display_Name` varchar(500) DEFAULT NULL,
+  `Path` varchar(500) DEFAULT NULL,
+  `Link` varchar(500) DEFAULT NULL,
+  PRIMARY KEY (`Doc_Id`),
+  KEY `SessionId` (`SessionId`),
+  KEY `CLassId` (`CLassId`),
+  CONSTRAINT `Tbl_Docs_ibfk_1` FOREIGN KEY (`SessionId`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_Docs_ibfk_2` FOREIGN KEY (`CLassId`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Docs` */
+
+insert  into `Tbl_Docs`(`Doc_Id`,`SessionId`,`CLassId`,`Display_Name`,`Path`,`Link`) values 
+(12,196,79,'Screenshot from 2022-03-04 19-48-19-650294.png','/Lectures/Screenshot from 2022-03-04 19-48-19-650294.png','https://www.dropbox.com/s/9fskiuuvbdu16xy/Screenshot%20from%202022-03-04%2019-48-19-650294.png?dl=0'),
+(13,196,79,'Google Drive API Integration And Use Of Functions10-664755.png','/Lectures/Google Drive API Integration And Use Of Functions10-664755.png','https://www.dropbox.com/s/h1v5k3tkjbga8pt/Google%20Drive%20API%20Integration%20And%20Use%20Of%20Functions10-664755.png?dl=0'),
+(14,196,79,'FYP Proposal Updated-455950.pdf','/Lectures/FYP Proposal Updated-455950.pdf','https://www.dropbox.com/s/hajq2i247b2xy46/FYP%20Proposal%20Updated-455950.pdf?dl=0'),
+(15,196,79,'FYP Proposal-774695.pdf','/Lectures/FYP Proposal-774695.pdf','https://www.dropbox.com/s/ui9x00zn6r50823/FYP%20Proposal-774695.pdf?dl=0'),
+(16,196,79,'dailymotion-banner-27010.jpg','/Lectures/dailymotion-banner-27010.jpg','https://www.dropbox.com/s/fka94w95bxqlqy8/dailymotion-banner-27010.jpg?dl=0'),
+(17,196,79,'asdsada-86409.pdf','/Lectures/asdsada-86409.pdf','https://www.dropbox.com/s/9zprs08mrajcdzw/asdsada-86409.pdf?dl=0');
+
 /*Table structure for table `Tbl_EmailConfiguration` */
 
 DROP TABLE IF EXISTS `Tbl_EmailConfiguration`;
@@ -991,12 +1019,13 @@ CREATE TABLE `Tbl_Videos` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Videos_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Videos_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Videos` */
 
 insert  into `Tbl_Videos`(`VideoID`,`YTube_Video_ID`,`Class_Id`,`Session_ID`) values 
-(1,'ixOfkBf4-OQ',82,195);
+(1,'ixOfkBf4-OQ',82,195),
+(8,'tirokjiZgn4',79,196);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
