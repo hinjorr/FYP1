@@ -25,12 +25,13 @@ namespace FYP1.Models
         private readonly IWebHostEnvironment Env;
         private readonly IConfiguration config;
         private readonly IHttpContextAccessor http;
+        private readonly INotifications notifications;
         GeneralDTO general = new GeneralDTO();
         GeneralDTO session_data;
         TblAssesment tbl_assesment = new TblAssesment();
         IDropBoxMisc _dropbox;
         YoutubeMix _youtube;
-        public ClassContentModel(LMS_DBContext _db, IMapper _mapper, IWebHostEnvironment env, IConfiguration config, IHttpContextAccessor http)
+        public ClassContentModel(LMS_DBContext _db, IMapper _mapper, IWebHostEnvironment env, IConfiguration config, IHttpContextAccessor http, INotifications notifications)
         {
 
             db = _db;
@@ -38,6 +39,7 @@ namespace FYP1.Models
             Env = env;
             this.config = config;
             this.http = http;
+            this.notifications = notifications;
             session_data = this.http.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
             _dropbox = new DropBoxMiscModel(config);
             _youtube = new YoutubeMix(config);
@@ -61,10 +63,14 @@ namespace FYP1.Models
                     update.Link = dto.Link;
                     update.DisplayName = dto.DisplayName;
                 }
+                var session_name = await db.TblClassSessions.Where(x => x.SessionId == dto.SessionId).FirstOrDefaultAsync();
                 await db.SaveChangesAsync();
                 general.type = "success";
                 general.message = "Url Added";
+                await notifications.Send_GroupNotification(Convert.ToInt32(dto.ClassId), 2, "new reference Link has been added in " + session_name.SessionName);
+
                 return general;
+
             }
             catch (System.Exception ex)
             {
@@ -94,7 +100,7 @@ namespace FYP1.Models
             }
         }
 
-        public async Task DeleteUrl(int _id)
+        public void DeleteUrl(int _id)
         {
             try
             {
@@ -167,6 +173,8 @@ namespace FYP1.Models
                     }
                     await transaction.CommitAsync();
                     general.type = "success";
+                    await notifications.Send_GroupNotification(Convert.ToInt32(dto.ClassId), 1, dto.AssesmentName + " has been assigned.");
+
                     return general;
                 }
                 catch (System.Exception ex)
@@ -374,7 +382,6 @@ namespace FYP1.Models
         {
             try
             {
-
                 List<TblVideo> tbl_list = new List<TblVideo>();
                 foreach (var video in _videos.Attachment)
                 {
@@ -396,9 +403,12 @@ namespace FYP1.Models
                         break;
                     }
                 }
+                var session_name = await db.TblClassSessions.Where(x => x.SessionId == _videos.SessionId).FirstOrDefaultAsync();
 
                 await db.TblVideos.AddRangeAsync(tbl_list);
                 await db.SaveChangesAsync();
+                await notifications.Send_GroupNotification(Convert.ToInt32(_videos.ClassId), 2, "New Lecture video(s) has been uploaded in " + session_name.SessionName);
+
                 return general;
             }
             catch (System.Exception ex)
@@ -479,8 +489,11 @@ namespace FYP1.Models
                         }
                     }
                 }
+                var session_name = await db.TblClassSessions.Where(x => x.SessionId == dto.SessionId).FirstOrDefaultAsync();
+
                 await db.TblDocs.AddRangeAsync(tbl_list);
                 await db.SaveChangesAsync();
+                await notifications.Send_GroupNotification(Convert.ToInt32(dto.ClassId), 2, "New Lecture File(s) has been uploaded in " + session_name.SessionName);
                 return general;
 
             }

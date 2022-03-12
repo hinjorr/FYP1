@@ -74367,8 +74367,8 @@ code {
   height: 40px;
   width: 40px;
   position: absolute;
-  -webkit-animation: animation-pulse 3.5s ease-out;
-  animation: animation-pulse 3.5s ease-out;
+  -webkit-animation: animation-pulse 1s ease-out;
+  animation: animation-pulse 1s ease-out;
   -webkit-animation-iteration-count: infinite;
   animation-iteration-count: infinite;
   opacity: 0;
@@ -74383,7 +74383,7 @@ code {
   }
 }
 .pulse.pulse-primary .pulse-ring {
-  border-color: rgba(54, 153, 255, 0.75);
+  border-color: rgba(255, 0, 0);
 }
 .pulse.pulse-secondary .pulse-ring {
   border-color: rgba(228, 230, 239, 0.75);

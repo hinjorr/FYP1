@@ -58,12 +58,13 @@ CREATE TABLE `Tbl_Assesments` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Assesments_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Assesments_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=74 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Assesments` */
 
 insert  into `Tbl_Assesments`(`AssesmentId`,`Class_ID`,`Session_ID`,`AssesmentName`,`Description`,`Start`,`End`,`LateSubmission`) values 
-(58,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00','');
+(58,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
+(74,82,199,'Quiz 5',NULL,'2022-03-12 19:29:00','2022-03-24 19:29:00','\0');
 
 /*Table structure for table `Tbl_AssesmetnAttachments` */
 
@@ -78,13 +79,14 @@ CREATE TABLE `Tbl_AssesmetnAttachments` (
   PRIMARY KEY (`File_ID`),
   KEY `Tbl_AssesmetnAttachments_ibfk_1` (`AssesmentId`),
   CONSTRAINT `Tbl_AssesmetnAttachments_ibfk_1` FOREIGN KEY (`AssesmentId`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=210 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmetnAttachments` */
 
 insert  into `Tbl_AssesmetnAttachments`(`File_ID`,`AssesmentId`,`DisplayName`,`Path`,`Link`) values 
 (198,58,'Screenshot from 2022-02-03 00-29-29-835757.png','/Assesment_Attachment/Screenshot from 2022-02-03 00-29-29-835757.png','https://www.dropbox.com/s/1i7b2un9v1m37pd/Screenshot%20from%202022-02-03%2000-29-29-835757.png?dl=0'),
-(199,58,'image3.1-192441.jpg','/Assesment_Attachment/image3.1-192441.jpg','https://www.dropbox.com/s/27skdox0x6pm3xa/image3.1-192441.jpg?dl=0');
+(199,58,'image3.1-192441.jpg','/Assesment_Attachment/image3.1-192441.jpg','https://www.dropbox.com/s/27skdox0x6pm3xa/image3.1-192441.jpg?dl=0'),
+(210,74,'NICU (1)-455908.xlsx','/Assesment_Attachment/NICU (1)-455908.xlsx','https://www.dropbox.com/scl/fi/dbtqjd89t3z53c16nrg5l/NICU-1-455908.xlsx?dl=0&rlkey=h37rot4r2fzrs2s0bcb4x12a4');
 
 /*Table structure for table `Tbl_Attendence` */
 
@@ -363,7 +365,7 @@ CREATE TABLE `Tbl_Docs` (
   KEY `CLassId` (`CLassId`),
   CONSTRAINT `Tbl_Docs_ibfk_1` FOREIGN KEY (`SessionId`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Docs_ibfk_2` FOREIGN KEY (`CLassId`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Docs` */
 
@@ -373,7 +375,11 @@ insert  into `Tbl_Docs`(`Doc_Id`,`SessionId`,`CLassId`,`Display_Name`,`Path`,`Li
 (14,196,79,'FYP Proposal Updated-455950.pdf','/Lectures/FYP Proposal Updated-455950.pdf','https://www.dropbox.com/s/hajq2i247b2xy46/FYP%20Proposal%20Updated-455950.pdf?dl=0'),
 (15,196,79,'FYP Proposal-774695.pdf','/Lectures/FYP Proposal-774695.pdf','https://www.dropbox.com/s/ui9x00zn6r50823/FYP%20Proposal-774695.pdf?dl=0'),
 (16,196,79,'dailymotion-banner-27010.jpg','/Lectures/dailymotion-banner-27010.jpg','https://www.dropbox.com/s/fka94w95bxqlqy8/dailymotion-banner-27010.jpg?dl=0'),
-(17,196,79,'asdsada-86409.pdf','/Lectures/asdsada-86409.pdf','https://www.dropbox.com/s/9zprs08mrajcdzw/asdsada-86409.pdf?dl=0');
+(17,196,79,'asdsada-86409.pdf','/Lectures/asdsada-86409.pdf','https://www.dropbox.com/s/9zprs08mrajcdzw/asdsada-86409.pdf?dl=0'),
+(18,199,79,'NICU (1)-585515.xlsx','/Lectures/NICU (1)-585515.xlsx','https://www.dropbox.com/scl/fi/b6vh0ll5vhqj580tnl99w/NICU-1-585515.xlsx?dl=0&rlkey=6e5vbup15m4p1hczw59ns4zle'),
+(19,201,79,'Resume Masood Arif-193843.pdf','/Lectures/Resume Masood Arif-193843.pdf','https://www.dropbox.com/s/79ani5d5hxp8ien/Resume%20Masood%20Arif-193843.pdf?dl=0'),
+(20,197,82,'Resume Masood Arif-426625.pdf','/Lectures/Resume Masood Arif-426625.pdf','https://www.dropbox.com/s/nt626yzr5zgpcpw/Resume%20Masood%20Arif-426625.pdf?dl=0'),
+(21,197,82,'Resume Masood Arif-791743.docx','/Lectures/Resume Masood Arif-791743.docx','https://www.dropbox.com/scl/fi/xptpiqx73yadw8jrcidow/Resume-Masood-Arif-791743.docx?dl=0&rlkey=hzk3b7qsixlhympztra215it7');
 
 /*Table structure for table `Tbl_EmailConfiguration` */
 
@@ -462,7 +468,7 @@ CREATE TABLE `Tbl_Menu` (
   PRIMARY KEY (`Menu_ID`),
   KEY `Parent` (`Parent`),
   CONSTRAINT `Tbl_Menu_ibfk_1` FOREIGN KEY (`Parent`) REFERENCES `Tbl_ParentMenu` (`ParentID`)
-) ENGINE=InnoDB AUTO_INCREMENT=25 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Menu` */
 
@@ -487,7 +493,140 @@ insert  into `Tbl_Menu`(`Menu_ID`,`Controller`,`Action`,`DisplayLink`,`DisplayNa
 (18,'User','ViewProfile',NULL,NULL,NULL,NULL),
 (19,'User','Calender','Calender','Calender',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <polygon points=\"0 0 24 0 24 24 0 24\" />\r\n                                <path\r\n                                    d=\"M18.5,8 C17.1192881,8 16,6.88071187 16,5.5 C16,4.11928813 17.1192881,3 18.5,3 C19.8807119,3 21,4.11928813 21,5.5 C21,6.88071187 19.8807119,8 18.5,8 Z M18.5,21 C17.1192881,21 16,19.8807119 16,18.5 C16,17.1192881 17.1192881,16 18.5,16 C19.8807119,16 21,17.1192881 21,18.5 C21,19.8807119 19.8807119,21 18.5,21 Z M5.5,21 C4.11928813,21 3,19.8807119 3,18.5 C3,17.1192881 4.11928813,16 5.5,16 C6.88071187,16 8,17.1192881 8,18.5 C8,19.8807119 6.88071187,21 5.5,21 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M5.5,8 C4.11928813,8 3,6.88071187 3,5.5 C3,4.11928813 4.11928813,3 5.5,3 C6.88071187,3 8,4.11928813 8,5.5 C8,6.88071187 6.88071187,8 5.5,8 Z M11,4 L13,4 C13.5522847,4 14,4.44771525 14,5 C14,5.55228475 13.5522847,6 13,6 L11,6 C10.4477153,6 10,5.55228475 10,5 C10,4.44771525 10.4477153,4 11,4 Z M11,18 L13,18 C13.5522847,18 14,18.4477153 14,19 C14,19.5522847 13.5522847,20 13,20 L11,20 C10.4477153,20 10,19.5522847 10,19 C10,18.4477153 10.4477153,18 11,18 Z M5,10 C5.55228475,10 6,10.4477153 6,11 L6,13 C6,13.5522847 5.55228475,14 5,14 C4.44771525,14 4,13.5522847 4,13 L4,11 C4,10.4477153 4.44771525,10 5,10 Z M19,10 C19.5522847,10 20,10.4477153 20,11 L20,13 C20,13.5522847 19.5522847,14 19,14 C18.4477153,14 18,13.5522847 18,13 L18,11 C18,10.4477153 18.4477153,10 19,10 Z\"\r\n                                    fill=\"#000000\" />\r\n                            </g>\r\n                        </svg>'),
 (20,'Roles','AssignPermissions','Permissions','Roles Management',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\"\r\n                            height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n                            <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n                                <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\" />\r\n                                <path\r\n                                    d=\"M4,4 L11.6314229,2.5691082 C11.8750185,2.52343403 12.1249815,2.52343403 12.3685771,2.5691082 L20,4 L20,13.2830094 C20,16.2173861 18.4883464,18.9447835 16,20.5 L12.5299989,22.6687507 C12.2057287,22.8714196 11.7942713,22.8714196 11.4700011,22.6687507 L8,20.5 C5.51165358,18.9447835 4,16.2173861 4,13.2830094 L4,4 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M12,11 C10.8954305,11 10,10.1045695 10,9 C10,7.8954305 10.8954305,7 12,7 C13.1045695,7 14,7.8954305 14,9 C14,10.1045695 13.1045695,11 12,11 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                                <path\r\n                                    d=\"M7.00036205,16.4995035 C7.21569918,13.5165724 9.36772908,12 11.9907452,12 C14.6506758,12 16.8360465,13.4332455 16.9988413,16.5 C17.0053266,16.6221713 16.9988413,17 16.5815,17 C14.5228466,17 11.463736,17 7.4041679,17 C7.26484009,17 6.98863236,16.6619875 7.00036205,16.4995035 Z\"\r\n                                    fill=\"#000000\" opacity=\"0.3\" />\r\n                            </g>\r\n                        </svg>'),
-(24,'ClassContent','ViewAssesment',NULL,NULL,NULL,NULL);
+(24,'ClassContent','ViewAssesment',NULL,NULL,NULL,NULL),
+(25,'Chat','ViewAllChats','ViewChats','Messenger',NULL,'<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" width=\"24px\" height=\"24px\" viewBox=\"0 0 24 24\" version=\"1.1\">\r\n    <g stroke=\"none\" stroke-width=\"1\" fill=\"none\" fill-rule=\"evenodd\">\r\n        <rect x=\"0\" y=\"0\" width=\"24\" height=\"24\"/>\r\n        <polygon fill=\"#000000\" opacity=\"0.3\" points=\"5 15 3 21.5 9.5 19.5\"/>\r\n        <path d=\"M13.5,21 C8.25329488,21 4,16.7467051 4,11.5 C4,6.25329488 8.25329488,2 13.5,2 C18.7467051,2 23,6.25329488 23,11.5 C23,16.7467051 18.7467051,21 13.5,21 Z M8.5,13 C9.32842712,13 10,12.3284271 10,11.5 C10,10.6715729 9.32842712,10 8.5,10 C7.67157288,10 7,10.6715729 7,11.5 C7,12.3284271 7.67157288,13 8.5,13 Z M13.5,13 C14.3284271,13 15,12.3284271 15,11.5 C15,10.6715729 14.3284271,10 13.5,10 C12.6715729,10 12,10.6715729 12,11.5 C12,12.3284271 12.6715729,13 13.5,13 Z M18.5,13 C19.3284271,13 20,12.3284271 20,11.5 C20,10.6715729 19.3284271,10 18.5,10 C17.6715729,10 17,10.6715729 17,11.5 C17,12.3284271 17.6715729,13 18.5,13 Z\" fill=\"#000000\"/>\r\n    </g>\r\n</svg>');
+
+/*Table structure for table `Tbl_NotificaionTo` */
+
+DROP TABLE IF EXISTS `Tbl_NotificaionTo`;
+
+CREATE TABLE `Tbl_NotificaionTo` (
+  `ID` int NOT NULL AUTO_INCREMENT,
+  `NotificationId` int DEFAULT NULL,
+  `To` int DEFAULT NULL,
+  `IsSeen` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`ID`),
+  KEY `NotificationId` (`NotificationId`),
+  KEY `To` (`To`),
+  CONSTRAINT `Tbl_NotificaionTo_ibfk_1` FOREIGN KEY (`NotificationId`) REFERENCES `Tbl_Notifications` (`Notification_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `Tbl_NotificaionTo_ibfk_2` FOREIGN KEY (`To`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_NotificaionTo` */
+
+insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values 
+(1,1,151,0),
+(2,1,122,0),
+(3,1,130,0),
+(4,1,119,0),
+(5,1,64,1),
+(6,1,75,0),
+(7,1,120,0),
+(8,1,129,0),
+(9,1,131,0),
+(10,1,139,0),
+(11,2,151,0),
+(12,2,122,0),
+(13,2,130,0),
+(14,2,119,0),
+(15,2,64,1),
+(16,2,75,0),
+(17,2,120,0),
+(18,2,129,0),
+(19,2,131,0),
+(20,2,139,0),
+(25,7,151,0),
+(26,7,122,0),
+(27,7,130,0),
+(28,7,119,0),
+(29,7,64,1),
+(30,7,75,0),
+(31,7,120,0),
+(32,7,129,0),
+(33,7,131,0),
+(34,7,139,0),
+(35,8,75,0),
+(36,8,64,1),
+(37,8,119,0),
+(38,8,120,0),
+(39,8,121,0),
+(40,8,129,0),
+(41,8,139,0),
+(42,8,151,0),
+(43,9,64,1),
+(44,9,75,0),
+(45,9,119,0),
+(46,9,120,0),
+(47,9,121,0),
+(48,9,129,0),
+(49,9,139,0),
+(50,9,151,0),
+(51,10,151,0),
+(52,10,122,0),
+(53,10,130,0),
+(54,10,119,0),
+(55,10,64,1),
+(56,10,75,0),
+(57,10,120,0),
+(58,10,129,0),
+(59,10,131,0),
+(60,10,139,0),
+(61,11,64,0),
+(62,11,75,0),
+(63,11,119,0),
+(64,11,120,0),
+(65,11,121,0),
+(66,11,129,0),
+(67,11,139,0),
+(68,11,151,0);
+
+/*Table structure for table `Tbl_NotificationType` */
+
+DROP TABLE IF EXISTS `Tbl_NotificationType`;
+
+CREATE TABLE `Tbl_NotificationType` (
+  `Type_Id` int NOT NULL AUTO_INCREMENT,
+  `Type` varchar(500) DEFAULT NULL,
+  `Icon` text CHARACTER SET latin1 COLLATE latin1_swedish_ci,
+  PRIMARY KEY (`Type_Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_NotificationType` */
+
+insert  into `Tbl_NotificationType`(`Type_Id`,`Type`,`Icon`) values 
+(1,'Assesment','https://img.icons8.com/color/50/000000/task--v1.png'),
+(2,'Lecture Material','https://img.icons8.com/color/48/000000/classroom.png'),
+(3,'Course Registration','https://img.icons8.com/external-wanicon-lineal-color-wanicon/64/000000/external-registration-hospital-wanicon-lineal-color-wanicon.png'),
+(4,'Attendence','https://img.icons8.com/external-flaticons-lineal-color-flat-icons/64/000000/external-report-back-to-work-flaticons-lineal-color-flat-icons.png'),
+(5,'Marks','https://img.icons8.com/external-konkapp-outline-color-konkapp/64/000000/external-grade-online-learning-konkapp-outline-color-konkapp.png');
+
+/*Table structure for table `Tbl_Notifications` */
+
+DROP TABLE IF EXISTS `Tbl_Notifications`;
+
+CREATE TABLE `Tbl_Notifications` (
+  `Notification_ID` int NOT NULL AUTO_INCREMENT,
+  `From` varchar(500) DEFAULT NULL,
+  `Type_Id` int DEFAULT NULL,
+  `Message` varchar(500) DEFAULT NULL,
+  `UploadedTime` datetime DEFAULT NULL,
+  `ClassId` int DEFAULT NULL,
+  PRIMARY KEY (`Notification_ID`),
+  KEY `From` (`From`),
+  KEY `Type_Id` (`Type_Id`),
+  CONSTRAINT `Tbl_Notifications_ibfk_3` FOREIGN KEY (`Type_Id`) REFERENCES `Tbl_NotificationType` (`Type_Id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+
+/*Data for the table `Tbl_Notifications` */
+
+insert  into `Tbl_Notifications`(`Notification_ID`,`From`,`Type_Id`,`Message`,`UploadedTime`,`ClassId`) values 
+(1,'BE Lab 79',2,'new reference Link has been added in 4 October - 10 October','2022-03-08 19:24:42',79),
+(2,'BE Lab 79',2,'new reference Link has been added in 4 October - 10 October','2022-03-10 16:00:18',79),
+(7,'BE Lab 79',2,'New Lecture File(s) has been uploaded in 8 November - 14 November','2022-03-11 16:00:18',79),
+(8,'DSA Lab 82',2,'New Lecture File(s) has been uploaded in 11 October - 17 October','2022-03-12 16:00:18',82),
+(9,'DSA Lab 82',2,'New Lecture video(s) has been uploaded in 27 September - 3 October','2022-03-12 17:00:18',82),
+(10,'BE Lab 79',2,'new reference Link has been added in 11 October - 17 October','2022-03-12 19:24:54',79),
+(11,'DSA Lab 82',1,'Quiz 5 has been assigned.','2022-03-12 19:30:00',82);
 
 /*Table structure for table `Tbl_ParentMenu` */
 
@@ -668,7 +807,7 @@ CREATE TABLE `Tbl_RoleMenu` (
   KEY `Role_ID` (`Role_ID`),
   CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=679 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=767 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_RoleMenu` */
 
@@ -694,69 +833,72 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (608,10,4,'\0'),
 (609,1,4,'\0'),
 (613,24,4,'\0'),
-(616,24,2,''),
-(617,19,2,''),
-(618,2,2,''),
-(619,3,2,'\0'),
-(620,4,2,'\0'),
-(621,5,2,''),
-(622,6,2,''),
-(623,7,2,'\0'),
-(624,8,2,''),
-(625,9,2,'\0'),
-(626,10,2,''),
-(627,11,2,'\0'),
-(628,12,2,'\0'),
-(629,13,2,'\0'),
-(630,14,2,'\0'),
-(631,15,2,'\0'),
-(632,16,2,'\0'),
-(633,17,2,'\0'),
-(634,18,2,''),
-(635,20,2,'\0'),
-(636,1,2,'\0'),
-(637,24,1,''),
-(638,19,1,''),
-(639,2,1,'\0'),
-(640,3,1,'\0'),
-(641,4,1,''),
-(642,5,1,''),
-(643,6,1,''),
-(644,7,1,''),
-(645,8,1,''),
-(646,9,1,'\0'),
-(647,10,1,'\0'),
-(648,11,1,''),
-(649,12,1,''),
-(650,13,1,''),
-(651,14,1,''),
-(652,15,1,''),
-(653,16,1,''),
-(654,17,1,''),
-(655,18,1,''),
-(656,20,1,''),
-(657,1,1,''),
-(658,24,3,''),
-(659,19,3,''),
-(660,2,3,'\0'),
-(661,3,3,''),
-(662,4,3,'\0'),
-(663,5,3,''),
-(664,6,3,''),
-(665,7,3,'\0'),
-(666,8,3,''),
-(667,9,3,''),
-(668,10,3,'\0'),
-(669,11,3,'\0'),
-(670,12,3,'\0'),
-(671,13,3,'\0'),
-(672,14,3,'\0'),
-(673,15,3,'\0'),
-(674,16,3,'\0'),
-(675,17,3,'\0'),
-(676,18,3,''),
-(677,20,3,'\0'),
-(678,1,3,'\0');
+(679,25,1,''),
+(680,20,1,''),
+(681,2,1,'\0'),
+(682,3,1,'\0'),
+(683,4,1,''),
+(684,5,1,''),
+(685,6,1,''),
+(686,7,1,''),
+(687,8,1,''),
+(688,9,1,'\0'),
+(689,24,1,''),
+(690,10,1,'\0'),
+(691,12,1,''),
+(692,13,1,''),
+(693,14,1,''),
+(694,15,1,''),
+(695,16,1,''),
+(696,17,1,''),
+(697,18,1,''),
+(698,19,1,''),
+(699,11,1,''),
+(700,1,1,''),
+(701,25,2,''),
+(702,20,2,'\0'),
+(703,2,2,''),
+(704,3,2,'\0'),
+(705,4,2,'\0'),
+(706,5,2,''),
+(707,6,2,''),
+(708,7,2,'\0'),
+(709,8,2,''),
+(710,9,2,'\0'),
+(711,24,2,''),
+(712,10,2,''),
+(713,12,2,'\0'),
+(714,13,2,'\0'),
+(715,14,2,'\0'),
+(716,15,2,'\0'),
+(717,16,2,'\0'),
+(718,17,2,'\0'),
+(719,18,2,''),
+(720,19,2,''),
+(721,11,2,'\0'),
+(722,1,2,'\0'),
+(745,25,3,''),
+(746,20,3,'\0'),
+(747,2,3,'\0'),
+(748,3,3,''),
+(749,4,3,'\0'),
+(750,5,3,''),
+(751,6,3,''),
+(752,7,3,'\0'),
+(753,8,3,''),
+(754,9,3,''),
+(755,24,3,''),
+(756,10,3,'\0'),
+(757,12,3,'\0'),
+(758,13,3,'\0'),
+(759,14,3,'\0'),
+(760,15,3,'\0'),
+(761,16,3,'\0'),
+(762,17,3,'\0'),
+(763,18,3,''),
+(764,19,3,''),
+(765,11,3,'\0'),
+(766,1,3,'\0');
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -943,7 +1085,7 @@ CREATE TABLE `Tbl_Url` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Url_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Url_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=113 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=119 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Url` */
 
@@ -951,7 +1093,13 @@ insert  into `Tbl_Url`(`Url_ID`,`Class_ID`,`Session_ID`,`DisplayName`,`Link`) va
 (107,79,196,'Github',NULL),
 (108,79,195,'Youtube',NULL),
 (110,79,195,'OneD',NULL),
-(112,82,195,'Github','adsa');
+(112,82,195,'Github','adsa'),
+(113,79,196,'Github Testing 0.2','https://www.youtube.com/watch?v=j5g45avErRM'),
+(114,79,200,'Youtube',NULL),
+(115,79,197,'Youtube',NULL),
+(116,79,196,'213 Youtube',NULL),
+(117,79,196,'453 Github',NULL),
+(118,79,197,'LMS',NULL);
 
 /*Table structure for table `Tbl_User` */
 
@@ -1019,13 +1167,16 @@ CREATE TABLE `Tbl_Videos` (
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Videos_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Videos_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Videos` */
 
 insert  into `Tbl_Videos`(`VideoID`,`YTube_Video_ID`,`Class_Id`,`Session_ID`) values 
 (1,'ixOfkBf4-OQ',82,195),
-(8,'tirokjiZgn4',79,196);
+(8,'tirokjiZgn4',79,196),
+(10,'kkW4oLiDR9I',79,199),
+(11,'e5hsOgycysk',79,199),
+(12,'',82,195);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

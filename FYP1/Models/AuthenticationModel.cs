@@ -61,7 +61,12 @@ namespace FYP1.Models
                         general.Icon = "success";
                         general.Text = "Login Succesfull!";
 
-                        // var youtube_token = await _youtube.GetAccessToken();
+                        if (TokenConfig.expiry_date < DateTime.Now)
+                        {
+                            Thread th = new Thread(async () => await _youtube.GetAccessToken());
+                            th.Start();
+                        }
+
                         // CookieOptions options = new CookieOptions()
                         // {
                         //     Expires = DateTime.Now.AddMinutes(59)

@@ -10,7 +10,7 @@ namespace FYP1.Repository
     {
         Task<GeneralDTO> AddUrl(UrlDTO dto);
         Task<List<UrlDTO>> GetUrls(int _sessionId, int _classId);
-        Task DeleteUrl(int _id);
+        void DeleteUrl(int _id);
         Task<UrlDTO> GetSingleUrl(int _id);
         Task<GeneralDTO> UploadAssesment(AssesmentDTO dto);
         Task<List<AssesmentDTO>> GetAssesment(int _sessionId, int _classId);

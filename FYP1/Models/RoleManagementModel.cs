@@ -124,26 +124,14 @@ namespace FYP1.Models
             {
                 if (Role_ID != 0)
                 {
-                    var db_list = await db.TblRoleMenus.Where(x => x.RoleId == Role_ID).Include(x => x.Menu).ToListAsync();
-                    if (db_list.Count != 0)
+                    var mnues_list = await db.TblMenus.ToListAsync();
+                    foreach (var item in mnues_list)
                     {
-                        foreach (var item in db_list)
-                        {
-                            GeneralDTO dto = new GeneralDTO();
-                            mapper.Map(item, dto.RoleMenu = new RoleMenuDTO());
-                            mapper.Map(item.Menu, dto.Menu = new MenuDTO());
-                            _list.Add(dto);
-                        }
-                    }
-                    else
-                    {
-                        var menus = await db.TblMenus.ToListAsync();
-                        foreach (var item in menus)
-                        {
-                            GeneralDTO dto = new GeneralDTO();
-                            mapper.Map(item, dto.Menu = new MenuDTO());
-                            _list.Add(dto);
-                        }
+                        var chk_permission = await db.TblRoleMenus.Where(x => x.MenuId == item.MenuId && x.RoleId == Role_ID).FirstOrDefaultAsync();
+                        GeneralDTO dto = new GeneralDTO();
+                        mapper.Map(item, dto.Menu = new MenuDTO());
+                        mapper.Map(chk_permission, dto.RoleMenu = new RoleMenuDTO());
+                        _list.Add(dto);
                     }
                 }
                 else
@@ -156,6 +144,8 @@ namespace FYP1.Models
                         _list.Add(dto);
                     }
                 }
+
+
                 return _list;
             }
             catch (System.Exception ex)

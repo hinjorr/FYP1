@@ -13,6 +13,7 @@ namespace FYP1.dbModels
             TblAttendences = new HashSet<TblAttendence>();
             TblFacultyCourseRegistrations = new HashSet<TblFacultyCourseRegistration>();
             TblMarks = new HashSet<TblMark>();
+            TblNotificaionTos = new HashSet<TblNotificaionTo>();
             TblStudentCourseRegistrations = new HashSet<TblStudentCourseRegistration>();
             TblStudents = new HashSet<TblStudent>();
         }
@@ -31,6 +32,7 @@ namespace FYP1.dbModels
         public virtual ICollection<TblAttendence> TblAttendences { get; set; }
         public virtual ICollection<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
         public virtual ICollection<TblMark> TblMarks { get; set; }
+        public virtual ICollection<TblNotificaionTo> TblNotificaionTos { get; set; }
         public virtual ICollection<TblStudentCourseRegistration> TblStudentCourseRegistrations { get; set; }
         public virtual ICollection<TblStudent> TblStudents { get; set; }
     }

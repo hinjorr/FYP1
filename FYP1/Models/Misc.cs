@@ -1,11 +1,15 @@
 using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net.Mail;
 using System.Text;
+using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
@@ -74,49 +78,91 @@ namespace FYP1.Models
                 throw;
             }
         }
-        public static void DeleteFile(IWebHostEnvironment Env, string path)
+        public static string TimeAgo(DateTime _dateTime)
         {
-            string Folder = Path.Combine(Env.WebRootPath + path);
-            FileInfo filepath = new FileInfo(Folder);
-            if (filepath.Exists)
+            string result = string.Empty;
+            var timeSpan = DateTime.Now.Subtract(_dateTime);
+
+            if (timeSpan <= TimeSpan.FromSeconds(60))
             {
-                filepath.Delete();
+                result = string.Format("{0} seconds ago", timeSpan.Seconds);
             }
+            else if (timeSpan <= TimeSpan.FromMinutes(60))
+            {
+                result = timeSpan.Minutes > 1 ?
+                    String.Format(" {0} minutes ago", timeSpan.Minutes) :
+                    " a minute ago";
+            }
+            else if (timeSpan <= TimeSpan.FromHours(24))
+            {
+                result = timeSpan.Hours > 1 ?
+                    String.Format(" {0} hours ago", timeSpan.Hours) :
+                    " an hour ago";
+            }
+            else if (timeSpan <= TimeSpan.FromDays(30))
+            {
+                result = timeSpan.Days > 1 ?
+                    String.Format(" {0} days ago", timeSpan.Days) :
+                    "yesterday";
+            }
+            else if (timeSpan <= TimeSpan.FromDays(365))
+            {
+                result = timeSpan.Days > 30 ?
+                    String.Format(" {0} months ago", timeSpan.Days / 30) :
+                    " a month ago";
+            }
+            else
+            {
+                result = timeSpan.Days > 365 ?
+                    String.Format(" {0} years ago", timeSpan.Days / 365) :
+                    " a year ago";
+            }
+
+            return result;
         }
+
+        // public static void DeleteFile(IWebHostEnvironment Env, string path)
+        // {
+        //     string Folder = Path.Combine(Env.WebRootPath + path);
+        //     FileInfo filepath = new FileInfo(Folder);
+        //     if (filepath.Exists)
+        //     {
+        //         filepath.Delete();
+        //     }
+        // }
         public static string UploadFile(IFormFile File, IWebHostEnvironment Env, string Filename = "")
         {
             try
             {
-                // string FilePath = null;
-                // string Extension = Path.GetExtension(File.FileName);
-                // string FolderUpload = Path.Combine(Env.WebRootPath, "Upload");
-                // if (!Directory.Exists(FolderUpload))
-                // {
-                //     Directory.CreateDirectory(FolderUpload);
-                // }
-                // if (Filename != "")
-                // {
-                //     FilePath = Path.Combine(FolderUpload, Filename + Extension);
-                // }
-                // else
-                // {
-                //     FilePath = Path.Combine(FolderUpload, File.FileName);
-                //     Filename = Path.GetFileNameWithoutExtension(File.FileName);
-                // }
-                // FileInfo path = new FileInfo(FilePath);
-                // if (path.Exists)
-                // {
-                //     path.Delete();
-                // }
+                string FilePath = null;
+                string Extension = Path.GetExtension(File.FileName);
+                string FolderUpload = Path.Combine(Env.WebRootPath, "Upload");
+                if (!Directory.Exists(FolderUpload))
+                {
+                    Directory.CreateDirectory(FolderUpload);
+                }
+                if (Filename != "")
+                {
+                    FilePath = Path.Combine(FolderUpload, Filename + Extension);
+                }
+                else
+                {
+                    FilePath = Path.Combine(FolderUpload, File.FileName);
+                    Filename = Path.GetFileNameWithoutExtension(File.FileName);
+                }
+                FileInfo path = new FileInfo(FilePath);
+                if (path.Exists)
+                {
+                    path.Delete();
+                }
 
-                // using (var filestream = new FileStream(FilePath, FileMode.Create))
-                // {
-                //     File.CopyTo(filestream);
-                // }
+                using (var filestream = new FileStream(FilePath, FileMode.Create))
+                {
+                    File.CopyTo(filestream);
+                }
 
 
-                // return "/Upload" + "/" + Filename + Extension;
-                return "";
+                return "/Upload" + "/" + Filename + Extension;
             }
             catch (System.Exception)
             {
@@ -124,16 +170,6 @@ namespace FYP1.Models
             }
         }
 
-        public static long CreateUnixTime(DateTime _date)
-        {
-            long i = new DateTimeOffset(_date).ToUnixTimeSeconds();
-            return i;
-        }
-        public static string DecodeUnixTime(int _date)
-        {
-            DateTime dateTime = new DateTime(1970, 1, 1, 0, 0, 0, 0, DateTimeKind.Utc);
-            string s = dateTime.AddSeconds(_date).ToLocalTime().ToString();
-            return s;
-        }
+
     }
 }

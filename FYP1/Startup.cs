@@ -56,6 +56,7 @@ namespace FYP1
             services.AddScoped<IRoleManagement, RoleManagementModel>();
             services.AddScoped<IClassContent, ClassContentModel>();
             services.AddScoped<IDropBoxMisc, DropBoxMiscModel>();
+            services.AddScoped<INotifications, NotificationsModel>();
             // services.AddDataProtection();
 
         }

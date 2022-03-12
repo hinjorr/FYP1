@@ -13,6 +13,9 @@ namespace FYP1.DTOs
         public int TotalSessions { get; set; }
 
         public List<AssesmetnAttachmentDTO> AssesmentAttachmentList { get; set; }
+        public NotificationDTO Notification { get; set; }
+        public NotificationToDTO NotificationTo { get; set; }
+        public NotificationTypeDTO notificationType { get; set; }
         public VideosDTO Videos { get; set; }
         public DocDTO Docs { get; set; }
         public AssesmentSubmissionDTO AssesmentSubmission { get; set; }

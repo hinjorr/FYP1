@@ -31,6 +31,9 @@ namespace FYP1.dbModels
         public virtual DbSet<TblFacultyCourseRegistration> TblFacultyCourseRegistrations { get; set; }
         public virtual DbSet<TblMark> TblMarks { get; set; }
         public virtual DbSet<TblMenu> TblMenus { get; set; }
+        public virtual DbSet<TblNotificaionTo> TblNotificaionTos { get; set; }
+        public virtual DbSet<TblNotification> TblNotifications { get; set; }
+        public virtual DbSet<TblNotificationType> TblNotificationTypes { get; set; }
         public virtual DbSet<TblParentMenu> TblParentMenus { get; set; }
         public virtual DbSet<TblProfile> TblProfiles { get; set; }
         public virtual DbSet<TblProgram> TblPrograms { get; set; }
@@ -525,6 +528,71 @@ namespace FYP1.dbModels
                     .WithMany(p => p.TblMenus)
                     .HasForeignKey(d => d.Parent)
                     .HasConstraintName("Tbl_Menu_ibfk_1");
+            });
+
+            modelBuilder.Entity<TblNotificaionTo>(entity =>
+            {
+                entity.ToTable("Tbl_NotificaionTo");
+
+                entity.HasIndex(e => e.NotificationId, "NotificationId");
+
+                entity.HasIndex(e => e.To, "To");
+
+                entity.Property(e => e.Id).HasColumnName("ID");
+
+                entity.HasOne(d => d.Notification)
+                    .WithMany(p => p.TblNotificaionTos)
+                    .HasForeignKey(d => d.NotificationId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_NotificaionTo_ibfk_1");
+
+                entity.HasOne(d => d.ToNavigation)
+                    .WithMany(p => p.TblNotificaionTos)
+                    .HasForeignKey(d => d.To)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_NotificaionTo_ibfk_2");
+            });
+
+            modelBuilder.Entity<TblNotification>(entity =>
+            {
+                entity.HasKey(e => e.NotificationId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_Notifications");
+
+                entity.HasIndex(e => e.From, "From");
+
+                entity.HasIndex(e => e.TypeId, "Type_Id");
+
+                entity.Property(e => e.NotificationId).HasColumnName("Notification_ID");
+
+                entity.Property(e => e.From).HasMaxLength(500);
+
+                entity.Property(e => e.Message).HasMaxLength(500);
+
+                entity.Property(e => e.TypeId).HasColumnName("Type_Id");
+
+                entity.Property(e => e.UploadedTime).HasColumnType("datetime");
+
+                entity.HasOne(d => d.Type)
+                    .WithMany(p => p.TblNotifications)
+                    .HasForeignKey(d => d.TypeId)
+                    .OnDelete(DeleteBehavior.Cascade)
+                    .HasConstraintName("Tbl_Notifications_ibfk_3");
+            });
+
+            modelBuilder.Entity<TblNotificationType>(entity =>
+            {
+                entity.HasKey(e => e.TypeId)
+                    .HasName("PRIMARY");
+
+                entity.ToTable("Tbl_NotificationType");
+
+                entity.Property(e => e.TypeId).HasColumnName("Type_Id");
+
+                entity.Property(e => e.Icon).HasColumnType("text");
+
+                entity.Property(e => e.Type).HasMaxLength(500);
             });
 
             modelBuilder.Entity<TblParentMenu>(entity =>

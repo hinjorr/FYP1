@@ -166,16 +166,16 @@ function _DropZone(assesmentId) {
         url: "#",
         paramName: "file",
         maxFiles: 1,
-        maxFilesize: 10,
+        maxFilesize: 200,
         addRemoveLinks: true,
-        acceptedFiles: "application/pdf,",
+        // acceptedFiles: "application/pdf,",
         accept: function (file, done) {
             data.append("Attachment", file)
             data.append("AssesmentId", assesmentId)
             done();
             //done("sakjdh")
         }
-       
+
     });
 }
 
