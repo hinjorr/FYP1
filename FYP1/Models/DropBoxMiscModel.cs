@@ -14,16 +14,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
-    public class DropBoxMiscModel : IDropBoxMisc
+    public class DropBoxMiscModel
     {
         private readonly IConfiguration config;
-        Guid guid = Guid.NewGuid();
-        YoutubeMix _youtube;
 
         public DropBoxMiscModel(IConfiguration _config)
         {
             config = _config;
-            _youtube = new YoutubeMix(_config);
         }
 
         private DropboxClient GetToken(IConfiguration _config)

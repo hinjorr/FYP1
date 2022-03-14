@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 using AutoMapper;
 using FYP1.dbModels;
 using FYP1.DTOs;
+using FYP1.Helpers__Filters;
 using FYP1.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -19,12 +21,18 @@ namespace FYP1.Models
         private readonly IConfiguration config;
         TblAttendence tbl = new TblAttendence();
         GeneralDTO general = new GeneralDTO();
+        private readonly INotifications notification;
+        private readonly IHttpContextAccessor http;
+        GeneralDTO session_data;
 
-        public AttendenceModel(LMS_DBContext _db, IMapper _mapper,IConfiguration config)
+        public AttendenceModel(LMS_DBContext _db, IMapper _mapper, IConfiguration config, INotifications notification, IHttpContextAccessor http)
         {
+            this.notification = notification;
+            this.http = http;
             db = _db;
             mapper = _mapper;
             this.config = config;
+            session_data = this.http.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
         }
 
         public async Task<List<GeneralDTO>> GetAttendenceStudents(AttendenceDTO dto)
@@ -100,7 +108,7 @@ namespace FYP1.Models
                 general.Icon = "error";
                 studentlist.Add(general);
                 return studentlist;
-                
+
             }
         }
         public async Task<GeneralDTO> MarkAttendence(List<AttendenceDTO> dto)
@@ -112,6 +120,7 @@ namespace FYP1.Models
                 {
                     var data = await db.TblAttendences.Where(x => x.ClassId == chkclass.ClassId && x.SessionId == chkclass.SessionId).ToListAsync();
                     db.TblAttendences.RemoveRange(data);
+                    await db.SaveChangesAsync();
                 }
                 List<AttendenceDTO> studentlist = new List<AttendenceDTO>();
                 foreach (var item in dto)
@@ -122,7 +131,8 @@ namespace FYP1.Models
                     await db.TblAttendences.AddAsync(tbl);
                     await db.SaveChangesAsync();
                 }
-
+                var sessionName = await db.TblClassSessions.Where(x => x.SessionId == dto[0].SessionId).FirstOrDefaultAsync();
+                await notification.Send_GroupNotification(Convert.ToInt32(dto[0].ClassId), 4, "Your attendence of " + sessionName.SessionName + " has been marked.");
                 general.Text = "Attendence Uploaded!";
                 general.Icon = "success";
                 return general;
@@ -137,14 +147,14 @@ namespace FYP1.Models
             }
         }
 
-        public async Task<List<GeneralDTO>> StudentAttendenceReport(string UserName)
+        public async Task<List<GeneralDTO>> StudentAttendenceReport()
         {
             List<GeneralDTO> studentList = new List<GeneralDTO>();
 
             try
             {
                 //student jis jis class me enroll h wo uthayae ge
-                var get_classes = await db.TblStudentCourseRegistrations.Where(x => x.Username == UserName).Include(x => x.Class).ToListAsync();
+                var get_classes = await db.TblStudentCourseRegistrations.Where(x => x.UserId == session_data.User.UserId && x.IsActive == Convert.ToUInt64(true)).Include(x => x.Class).ToListAsync();
                 if (get_classes != null)
                 {
                     foreach (var item in get_classes)
@@ -192,7 +202,8 @@ namespace FYP1.Models
                 }
                 if (studentList.Count != 0)
                 {
-                    return studentList;
+                    var _list = studentList.OrderBy(x => x.Course.CourseId).ToList();
+                    return _list;
                 }
                 else
                 {

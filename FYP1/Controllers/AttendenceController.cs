@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 namespace FYP1.Controllers
 {
 
-    
+
     public class AttendenceController : Controller
     {
         private readonly IAttendence repo;
@@ -22,14 +22,14 @@ namespace FYP1.Controllers
             repo = _repo;
         }
 
-         [AuthenticateFilter]
+        [AuthenticateFilter]
         [HttpGet("MarkAttendence")]
         public IActionResult MarkAttedence()
         {
             return View();
         }
-        
-         [AuthenticateFilter]
+
+        [AuthenticateFilter]
         [HttpGet("AttendenceReport")]
         public IActionResult AttendenceReport()
         {
@@ -47,10 +47,10 @@ namespace FYP1.Controllers
             var studetns = await repo.MarkAttendence(dto);
             return Ok(studetns);
         }
-        public async Task<IActionResult> StudentAttendenceReport(string UserName)
+        public async Task<IActionResult> StudentAttendenceReport()
         {
 
-            var data = await repo.StudentAttendenceReport(UserName);
+            var data = await repo.StudentAttendenceReport();
             return Ok(data);
         }
 

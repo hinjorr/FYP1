@@ -1,7 +1,7 @@
 $(document).ready(function () {
     var url = $(location).attr('href').split('/');
     var classId = url[url.length - 2]
-    var assesmentId = url[url.length - 1]
+    assesmentId = url[url.length - 1]
     GetAssesmentDeatils(assesmentId)
     role = $("#GetUsersRole").text();
     if (role == "Student") {
@@ -13,7 +13,7 @@ $(document).ready(function () {
         StudentsSubmissionListHTML(classId, assesmentId)
     }
 });
-
+var assesmentId;
 var role;
 var data = new FormData();
 
@@ -140,6 +140,7 @@ function StudentsSubmissionList(classId, AssesmentId) {
 }
 
 function SubmitAssesment() {
+    $("#UpladingProgress").show();
     $.ajax({
         type: "Post",
         url: "/ClassContent/AssesmentSubmission",
@@ -147,6 +148,8 @@ function SubmitAssesment() {
         contentType: false,
         processData: false,
         success: function (resp) {
+            $("#UpladingProgress").hide();
+            // GetUploadedAssesment(assesmentId)
             swal
                 .fire({
                     text: resp.text,
@@ -156,7 +159,9 @@ function SubmitAssesment() {
                     customClass: {
                         confirmButton: "btn font-weight-bold btn-light-primary",
                     },
-                })
+                }).then(function () {
+                    location.reload()
+                });
         }
     });
 }

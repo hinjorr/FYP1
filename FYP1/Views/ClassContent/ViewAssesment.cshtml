@@ -50,16 +50,20 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                     </div>
                 </div>
             </div>
-            <div class="card-header">
+            <!-- <div class="card-header" >
                 <div class="card-title">
                     <h3 class="card-label" id="submit_time" style="font-size: 12px;">Time:</h3>
                 </div>
-            </div>
+            </div> -->
             <div class="card-footer d-flex justify-content-between" id="submitBtnDiv">
                 <button class="btn btn-light-danger font-weight-bold btn-lg btn-block" style="display:none"
                     id="resubmitBtn">Resubmit</button>
                 <button class="btn btn-light-primary font-weight-bold btn-lg btn-block" id="assesmentSubmitBtn"
                     onClick="SubmitAssesment()">Submit</button>
+            </div>
+            <div class="progress" style="display: none;" id="UpladingProgress">
+                <div class="progress-bar progress-bar-striped progress-bar-animated bg-primary" role="progressbar"
+                    style="width: 100%" aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
         </div>
     </div>

@@ -33,12 +33,13 @@ CREATE TABLE `Tbl_AssesmentSubmission` (
   KEY `AssesmentID` (`AssesmentID`),
   CONSTRAINT `Tbl_AssesmentSubmission_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_AssesmentSubmission_ibfk_2` FOREIGN KEY (`AssesmentID`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmentSubmission` */
 
 insert  into `Tbl_AssesmentSubmission`(`SubmissionId`,`UserID`,`AssesmentID`,`FilePath`,`DisplayName`,`Link`,`SubmissionTime`) values 
-(16,64,58,'/Upload/student-Mohsin-Assignment 1-79.pdf','student-Mohsin-Assignment 1-79','https://www.dropbox.com/s/sf8adsgd140kyt8/student-Mohsin-Quiz%202%20Testing-79.pdf?dl=0','2022-02-07 14:39:26');
+(16,64,58,'/Upload/student-Mohsin-Assignment 1-79.pdf','student-Mohsin-Assignment 1-79','https://www.dropbox.com/s/sf8adsgd140kyt8/student-Mohsin-Quiz%202%20Testing-79.pdf?dl=0','2022-02-07 14:39:26'),
+(34,64,74,'/Assesments_Submission/student-Mohsin-Quiz 5-82.docx','student-Mohsin-Quiz 5-82.docx','https://www.dropbox.com/scl/fi/rx2ee84dqfrcf9rkpbxkk/student-Mohsin-Quiz-5-82.docx?dl=0&rlkey=en1mxqu1518agc82brtm7cpsz','2022-03-14 16:23:20');
 
 /*Table structure for table `Tbl_Assesments` */
 
@@ -107,7 +108,7 @@ CREATE TABLE `Tbl_Attendence` (
   CONSTRAINT `Tbl_Attendence_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Attendence_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Attendence_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=200 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Attendence` */
 
@@ -150,7 +151,17 @@ insert  into `Tbl_Attendence`(`Id`,`Class_ID`,`Session_ID`,`User_ID`,`User_Name`
 (194,50,179,64,'student','\0','\0'),
 (197,50,179,120,'24691','\0',''),
 (198,50,179,121,'183492','\0','\0'),
-(199,50,179,122,'793093','\0','\0');
+(199,50,179,122,'793093','\0','\0'),
+(230,79,195,151,'Std22107','',''),
+(231,79,195,122,'793093','\0',''),
+(232,79,195,130,'525395','\0','\0'),
+(233,79,195,119,'518290','\0','\0'),
+(234,79,195,64,'student','',''),
+(235,79,195,75,'44560','\0',''),
+(236,79,195,120,'24691','\0','\0'),
+(237,79,195,129,'408494','\0',''),
+(238,79,195,131,'341996','\0','\0'),
+(239,79,195,139,'Std29100','','\0');
 
 /*Table structure for table `Tbl_ClassSessions` */
 
@@ -365,7 +376,7 @@ CREATE TABLE `Tbl_Docs` (
   KEY `CLassId` (`CLassId`),
   CONSTRAINT `Tbl_Docs_ibfk_1` FOREIGN KEY (`SessionId`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Docs_ibfk_2` FOREIGN KEY (`CLassId`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Docs` */
 
@@ -379,7 +390,8 @@ insert  into `Tbl_Docs`(`Doc_Id`,`SessionId`,`CLassId`,`Display_Name`,`Path`,`Li
 (18,199,79,'NICU (1)-585515.xlsx','/Lectures/NICU (1)-585515.xlsx','https://www.dropbox.com/scl/fi/b6vh0ll5vhqj580tnl99w/NICU-1-585515.xlsx?dl=0&rlkey=6e5vbup15m4p1hczw59ns4zle'),
 (19,201,79,'Resume Masood Arif-193843.pdf','/Lectures/Resume Masood Arif-193843.pdf','https://www.dropbox.com/s/79ani5d5hxp8ien/Resume%20Masood%20Arif-193843.pdf?dl=0'),
 (20,197,82,'Resume Masood Arif-426625.pdf','/Lectures/Resume Masood Arif-426625.pdf','https://www.dropbox.com/s/nt626yzr5zgpcpw/Resume%20Masood%20Arif-426625.pdf?dl=0'),
-(21,197,82,'Resume Masood Arif-791743.docx','/Lectures/Resume Masood Arif-791743.docx','https://www.dropbox.com/scl/fi/xptpiqx73yadw8jrcidow/Resume-Masood-Arif-791743.docx?dl=0&rlkey=hzk3b7qsixlhympztra215it7');
+(21,197,82,'Resume Masood Arif-791743.docx','/Lectures/Resume Masood Arif-791743.docx','https://www.dropbox.com/scl/fi/xptpiqx73yadw8jrcidow/Resume-Masood-Arif-791743.docx?dl=0&rlkey=hzk3b7qsixlhympztra215it7'),
+(22,202,79,'Assigment 1 Masood Arif 9763pdf-146355','/Lectures/Assigment 1 Masood Arif 9763pdf-146355','https://www.dropbox.com/s/qpt790xieekvybf/Assigment%201%20Masood%20Arif%209763pdf-146355?dl=0');
 
 /*Table structure for table `Tbl_EmailConfiguration` */
 
@@ -449,9 +461,21 @@ CREATE TABLE `Tbl_Marks` (
   CONSTRAINT `Tbl_Marks_ibfk_1` FOREIGN KEY (`Class_Id`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Marks_ibfk_2` FOREIGN KEY (`User_Id`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Marks_ibfk_3` FOREIGN KEY (`AssesmentId`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=153 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=173 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Marks` */
+
+insert  into `Tbl_Marks`(`Marks_Id`,`Class_Id`,`AssesmentId`,`User_Id`,`Total_Marks`,`Obtained_Makrs`) values 
+(163,79,58,139,12,0),
+(164,79,58,129,12,0),
+(165,79,58,120,12,30),
+(166,79,58,75,12,3),
+(167,79,58,64,12,4),
+(168,79,58,119,12,30),
+(169,79,58,130,12,30),
+(170,79,58,122,12,3),
+(171,79,58,131,12,0),
+(172,79,58,151,12,2);
 
 /*Table structure for table `Tbl_Menu` */
 
@@ -510,7 +534,7 @@ CREATE TABLE `Tbl_NotificaionTo` (
   KEY `To` (`To`),
   CONSTRAINT `Tbl_NotificaionTo_ibfk_1` FOREIGN KEY (`NotificationId`) REFERENCES `Tbl_Notifications` (`Notification_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_NotificaionTo_ibfk_2` FOREIGN KEY (`To`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=69 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_NotificaionTo` */
 
@@ -571,14 +595,72 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (58,10,129,0),
 (59,10,131,0),
 (60,10,139,0),
-(61,11,64,0),
+(61,11,64,1),
 (62,11,75,0),
 (63,11,119,0),
 (64,11,120,0),
 (65,11,121,0),
 (66,11,129,0),
 (67,11,139,0),
-(68,11,151,0);
+(68,11,151,0),
+(69,12,151,0),
+(70,12,122,0),
+(71,12,130,0),
+(72,12,119,0),
+(73,12,64,1),
+(74,12,75,0),
+(75,12,120,0),
+(76,12,129,0),
+(77,12,131,0),
+(78,12,139,0),
+(82,16,69,1),
+(83,17,64,1),
+(84,18,151,0),
+(85,18,122,0),
+(86,18,130,0),
+(87,18,119,0),
+(88,18,64,1),
+(89,18,75,0),
+(90,18,120,0),
+(91,18,129,0),
+(92,18,131,0),
+(93,18,139,0),
+(94,19,151,0),
+(95,19,122,0),
+(96,19,130,0),
+(97,19,119,0),
+(98,19,64,1),
+(99,19,75,0),
+(100,19,120,0),
+(101,19,129,0),
+(102,19,131,0),
+(103,19,139,0),
+(104,20,69,1),
+(105,21,64,1),
+(106,22,69,1),
+(107,23,64,1),
+(108,24,69,1),
+(109,25,64,1),
+(110,26,69,1),
+(111,27,64,1),
+(112,28,69,1),
+(113,29,64,1),
+(114,30,69,1),
+(115,31,64,1),
+(116,32,69,1),
+(117,33,64,1),
+(118,34,69,1),
+(119,35,64,1),
+(130,37,139,0),
+(131,37,131,0),
+(132,37,129,0),
+(133,37,120,0),
+(134,37,75,0),
+(135,37,64,1),
+(136,37,119,0),
+(137,37,130,0),
+(138,37,122,0),
+(139,37,151,0);
 
 /*Table structure for table `Tbl_NotificationType` */
 
@@ -615,7 +697,7 @@ CREATE TABLE `Tbl_Notifications` (
   KEY `From` (`From`),
   KEY `Type_Id` (`Type_Id`),
   CONSTRAINT `Tbl_Notifications_ibfk_3` FOREIGN KEY (`Type_Id`) REFERENCES `Tbl_NotificationType` (`Type_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Notifications` */
 
@@ -626,7 +708,32 @@ insert  into `Tbl_Notifications`(`Notification_ID`,`From`,`Type_Id`,`Message`,`U
 (8,'DSA Lab 82',2,'New Lecture File(s) has been uploaded in 11 October - 17 October','2022-03-12 16:00:18',82),
 (9,'DSA Lab 82',2,'New Lecture video(s) has been uploaded in 27 September - 3 October','2022-03-12 17:00:18',82),
 (10,'BE Lab 79',2,'new reference Link has been added in 11 October - 17 October','2022-03-12 19:24:54',79),
-(11,'DSA Lab 82',1,'Quiz 5 has been assigned.','2022-03-12 19:30:00',82);
+(11,'DSA Lab 82',1,'Quiz 5 has been assigned.','2022-03-12 19:30:00',82),
+(12,'BE Lab 79',2,'New Lecture File(s) has been uploaded in 15 November - 21 November','2022-03-12 20:11:54',79),
+(13,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-12 22:01:19',82),
+(14,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-12 22:04:19',82),
+(15,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-12 22:11:50',82),
+(16,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-12 22:14:47',82),
+(17,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-12 22:14:48',82),
+(18,'BE Lab 79',4,'Your attendence of 27 September - 3 October has been marked.','2022-03-14 15:22:07',79),
+(19,'BE Lab 79',4,'Your attendence of 27 September - 3 October has been marked.','2022-03-14 15:46:06',79),
+(20,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:08:23',82),
+(21,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:08:23',82),
+(22,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:11:28',82),
+(23,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:11:28',82),
+(24,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:15:01',82),
+(25,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:15:01',82),
+(26,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:16:06',82),
+(27,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:16:06',82),
+(28,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:19:19',82),
+(29,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:19:19',82),
+(30,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:19:43',82),
+(31,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:19:43',82),
+(32,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:20:42',82),
+(33,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:20:42',82),
+(34,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:23:24',82),
+(35,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:23:24',82),
+(37,'BE Lab 79',5,'Assignment 1 Marks have veen uploaded.','2022-03-14 16:41:13',79);
 
 /*Table structure for table `Tbl_ParentMenu` */
 

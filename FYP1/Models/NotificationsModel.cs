@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using FYP1.dbModels;
@@ -9,6 +10,7 @@ using FYP1.Helpers__Filters;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace FYP1.Models
 {
@@ -17,13 +19,15 @@ namespace FYP1.Models
         private readonly LMS_DBContext db;
         private readonly IMapper mapper;
         private readonly IHttpContextAccessor http;
+        private readonly IConfiguration config;
         private readonly GeneralDTO session_data;
 
-        public NotificationsModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor http)
+        public NotificationsModel(LMS_DBContext db, IMapper mapper, IHttpContextAccessor http, IConfiguration config)
         {
             this.db = db;
             this.mapper = mapper;
             this.http = http;
+            this.config = config;
             session_data = this.http.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
 
         }
@@ -57,9 +61,40 @@ namespace FYP1.Models
                 await db.TblNotificaionTos.AddRangeAsync(tos_list);
                 await db.SaveChangesAsync();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                // TODO
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
+            }
+        }
+        public async Task SendSingleNotification(int _To, string _From, int _Type, string _Message, int _ClassId)
+        {
+            try
+            {
+                
+                TblNotification tbl_notfication = new TblNotification()
+                {
+                    From = _From,
+                    TypeId = _Type,
+                    Message = _Message,
+                    UploadedTime = DateTime.Now,
+                    ClassId = _ClassId
+                };
+                await db.TblNotifications.AddAsync(tbl_notfication);
+                await db.SaveChangesAsync();    
+                TblNotificaionTo tbl_to = new TblNotificaionTo()
+                {
+                    IsSeen = false,
+                    To = _To,
+                    NotificationId = tbl_notfication.NotificationId
+                };
+                await db.TblNotificaionTos.AddAsync(tbl_to);
+                await db.SaveChangesAsync();
+            }
+            catch (System.Exception ex)
+            {
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
             }
         }
         public async Task<List<GeneralDTO>> ReceiveNotifications()
@@ -81,7 +116,7 @@ namespace FYP1.Models
                 var new_list = _list.OrderByDescending(x => x.Notification.NotificationId).ToList();
                 return new_list;
             }
-            catch (System.Exception)
+            catch (System.Exception )
             {
                 return null;
             }
@@ -94,9 +129,10 @@ namespace FYP1.Models
                 read.ForEach(x => x.IsSeen = true);
                 await db.SaveChangesAsync();
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
-                // TODO
+                Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
+                thr.Start();
             }
         }
     }

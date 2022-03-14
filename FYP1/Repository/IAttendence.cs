@@ -10,6 +10,6 @@ namespace FYP1.Repository
     {
         Task<List<GeneralDTO>> GetAttendenceStudents(AttendenceDTO dto);
         Task<GeneralDTO> MarkAttendence(List<AttendenceDTO> dto);
-        Task<List<GeneralDTO>> StudentAttendenceReport(string UserName);
+        Task<List<GeneralDTO>> StudentAttendenceReport();
     }
 }

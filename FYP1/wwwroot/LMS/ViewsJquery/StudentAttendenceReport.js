@@ -1,11 +1,10 @@
 $(document).ready(function () {
-  var user_id = $("#GetUserName").html();
-  GetAttendence(user_id);
+  GetAttendence();
 });
 
-function GetAttendence(user_id) {
+function GetAttendence() {
   $.ajax({
-    url: "/Attendence/StudentAttendenceReport?UserName=" + user_id,
+    url: "/Attendence/StudentAttendenceReport",
     success: function (resp) {
       var data = resp[0];
       if (data.icon != null) {
@@ -26,12 +25,12 @@ function GetAttendence(user_id) {
         var html = "";
         $(resp).each(function (indexInArray, item) {
           html += `<tr>
-            <td>`+item.course.courseId+` </td>
-            <td>`+item.course.fullName+` </td>
-            <td>`+item.profile.name+` </td>
-            <td>`+item.attendence.totalMarkedSesion+` </td>
-            <td>`+item.attendence.totalPresent+` </td>
-            <td>`+item.attendence.totalAbsent+` </td>
+            <td>`+ item.course.courseId + ` </td>
+            <td>`+ item.course.fullName + ` </td>
+            <td>`+ item.profile.name + ` </td>
+            <td>`+ item.attendence.totalMarkedSesion + ` </td>
+            <td>`+ item.attendence.totalPresent + ` </td>
+            <td>`+ item.attendence.totalAbsent + ` </td>
             </tr>`;
         });
         $("#tblAttendence").html(html);

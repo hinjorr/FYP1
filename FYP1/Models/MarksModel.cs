@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading;
@@ -19,15 +20,17 @@ namespace FYP1.Models
         private readonly IMapper mapper;
         private readonly IConfiguration config;
         private readonly IHttpContextAccessor http;
+        private readonly INotifications notifications;
         TblMark tbl = new TblMark();
         GeneralDTO generel = new GeneralDTO();
         GeneralDTO session_data;
-        public MarksModel(LMS_DBContext _db, IMapper _mapper, IConfiguration config, IHttpContextAccessor _http)
+        public MarksModel(LMS_DBContext _db, IMapper _mapper, IConfiguration config, IHttpContextAccessor _http, INotifications notifications)
         {
             db = _db;
             mapper = _mapper;
             this.config = config;
             http = _http;
+            this.notifications = notifications;
             session_data = http.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
         }
 
@@ -36,17 +39,22 @@ namespace FYP1.Models
             try
             {
                 var obj = dto.ElementAt(0);
-                var chk = await db.TblMarks.Where(x => x.AssesmentId == obj.AssesmentId).ToListAsync();
+                var chk = await db.TblMarks.Where(x => x.AssesmentId == obj.AssesmentId).Include(x => x.Assesment).ToListAsync();
                 if (chk.Count != 0)
                 {
                     db.TblMarks.RemoveRange(chk);
                 }
+
+
                 List<TblMark> tbl_list = new List<TblMark>();
                 mapper.Map(dto, tbl_list);
                 await db.TblMarks.AddRangeAsync(tbl_list);
                 await db.SaveChangesAsync();
                 generel.Text = "Marks Uploaded";
                 generel.Icon = "success";
+
+                var assesment_name = await db.TblAssesments.Where(x => x.AssesmentId == dto[0].AssesmentId).FirstOrDefaultAsync();
+                await notifications.Send_GroupNotification(Convert.ToInt32(dto[0].ClassId), 5, assesment_name.AssesmentName + " Marks have veen uploaded.");
                 return generel;
             }
             catch (System.Exception ex)
@@ -103,6 +111,7 @@ namespace FYP1.Models
                     TotalMarks = x.TotalMarks,
                     ObtainedMakrs = x.ObtainedMakrs
                 }).ToListAsync();
+
                 return data;
             }
             catch (System.Exception ex)

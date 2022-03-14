@@ -29,7 +29,7 @@ namespace FYP1.Models
         GeneralDTO general = new GeneralDTO();
         GeneralDTO session_data;
         TblAssesment tbl_assesment = new TblAssesment();
-        IDropBoxMisc _dropbox;
+        DropBoxMiscModel _dropbox;
         YoutubeMix _youtube;
         public ClassContentModel(LMS_DBContext _db, IMapper _mapper, IWebHostEnvironment env, IConfiguration config, IHttpContextAccessor http, INotifications notifications)
         {
@@ -193,7 +193,7 @@ namespace FYP1.Models
             var chk = await db.TblAssesmetnAttachments.Where(x => x.FileId == fileId).FirstOrDefaultAsync();
             if (chk != null)
             {
-                Thread th = new Thread(() => _dropbox.DeleteFile(chk.Path));
+                Thread th = new Thread(() => _dropbox.DeleteFile(chk.Path).GetAwaiter());
                 th.Start();
                 db.TblAssesmetnAttachments.Remove(chk);
             }
@@ -236,7 +236,7 @@ namespace FYP1.Models
                 {
                     foreach (var item in files)
                     {
-                        Thread th = new Thread(() => _dropbox.DeleteFile(item.Path));
+                        Thread th = new Thread(() => _dropbox.DeleteFile(item.Path).GetAwaiter());
                         th.Start();
                         // Misc.DeleteFile(Env, item.Path);
                     }
@@ -279,6 +279,7 @@ namespace FYP1.Models
 
         public async Task<List<GeneralDTO>> AssesmentStudents(int class_id, int assesment_id)
         {
+            //it will show the list of uploaded assesment in faculty view
             List<GeneralDTO> _list = new List<GeneralDTO>();
             try
             {
@@ -324,18 +325,12 @@ namespace FYP1.Models
                 if (chkAlreadyFile != null)
                 {
                     db.TblAssesmentSubmissions.Remove(chkAlreadyFile);
+                    await db.SaveChangesAsync();
                 }
                 dto.UserId = session_data.User.UserId;
                 var assesment_info = await db.TblAssesments.Where(x => x.AssesmentId == dto.AssesmentId).FirstOrDefaultAsync();
                 dto.DisplayName = session_data.User.UserName + "-" + session_data.Profile.Name + "-" + assesment_info.AssesmentName + "-" + assesment_info.ClassId + Path.GetExtension(dto.Attachment.FileName);
                 dto.SubmissionTime = DateTime.Now;
-
-                // TimeSpan t = assesment_info.End.Value.Subtract(dto.SubmissionTime.Value);
-                // general.AssesmentSubmission.TimeRemarks = t.ToString();
-                if (assesment_info.End < dto.SubmissionTime)
-                {
-                    general.message = "Late Submission";
-                }
                 var data = await _dropbox.UploadFile(dto.Attachment, "Assesments_Submission", dto.DisplayName);
                 dto.FilePath = data.Path;
                 dto.Link = data.Link;
@@ -343,8 +338,17 @@ namespace FYP1.Models
                 mapper.Map(dto, tbl);
                 await db.TblAssesmentSubmissions.AddAsync(tbl);
                 await db.SaveChangesAsync();
+
                 general.Icon = "success";
                 general.Text = "Assesment Submitted";
+                {
+                    //notfication
+                    var course_info = await db.TblClasses.Where(x => x.ClassId == assesment_info.ClassId).Include(x => x.Course).FirstOrDefaultAsync();
+                    var faculty_info = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == assesment_info.ClassId).FirstOrDefaultAsync();
+                    await notifications.SendSingleNotification(Convert.ToInt32(faculty_info.UserId), course_info.Course.ShortName + " " + assesment_info.ClassId, 1, dto.UserId + " Submitted " + assesment_info.AssesmentName, Convert.ToInt32(assesment_info.ClassId));
+                    await notifications.SendSingleNotification(Convert.ToInt32(dto.UserId), course_info.Course.ShortName + " " + assesment_info.ClassId, 1, "Your " + assesment_info.AssesmentName + " has been Submitted ", Convert.ToInt32(assesment_info.ClassId));
+                }
+
                 return general;
             }
             catch (System.Exception ex)
@@ -532,7 +536,7 @@ namespace FYP1.Models
                 if (chk != null)
                 {
                     db.TblDocs.Remove(chk);
-                    Thread th = new Thread(() => _dropbox.DeleteFile(chk.Path));
+                    Thread th = new Thread(() => _dropbox.DeleteFile(chk.Path).GetAwaiter());
                     th.Start();
                 }
                 await db.SaveChangesAsync();
