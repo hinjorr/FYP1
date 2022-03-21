@@ -4,7 +4,6 @@ $(document).ready(function () {
   GetProfile(UserID);
 
   var role = $("#GetUsersRole").text();
-  alert(role)
 });
 
 function GetProfile(username) {

@@ -67,11 +67,10 @@ namespace FYP1.Models
                 thr.Start();
             }
         }
-        public async Task SendSingleNotification(int _To, string _From, int _Type, string _Message, int _ClassId)
+        public async Task SendSingleNotification(int _To, string _From, int _Type, string _Message, int? _ClassId)
         {
             try
             {
-                
                 TblNotification tbl_notfication = new TblNotification()
                 {
                     From = _From,
@@ -81,7 +80,7 @@ namespace FYP1.Models
                     ClassId = _ClassId
                 };
                 await db.TblNotifications.AddAsync(tbl_notfication);
-                await db.SaveChangesAsync();    
+                await db.SaveChangesAsync();
                 TblNotificaionTo tbl_to = new TblNotificaionTo()
                 {
                     IsSeen = false,
@@ -116,7 +115,7 @@ namespace FYP1.Models
                 var new_list = _list.OrderByDescending(x => x.Notification.NotificationId).ToList();
                 return new_list;
             }
-            catch (System.Exception )
+            catch (System.Exception)
             {
                 return null;
             }

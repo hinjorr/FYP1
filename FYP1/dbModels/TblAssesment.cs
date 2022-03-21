@@ -22,6 +22,8 @@ namespace FYP1.dbModels
         public DateTime? Start { get; set; }
         public DateTime? End { get; set; }
         public ulong? LateSubmission { get; set; }
+        public string SubmissionFolder { get; set; }
+        public string FolderPath { get; set; }
 
         public virtual TblClass Class { get; set; }
         public virtual TblClassSession Session { get; set; }

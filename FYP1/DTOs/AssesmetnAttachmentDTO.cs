@@ -12,6 +12,7 @@ namespace FYP1.DTOs
         public string DisplayName { get; set; }
         public string Path { get; set; }
         public string Link { get; set; }
+        public string Submission_Folder { get; set; }
 
     }
 }

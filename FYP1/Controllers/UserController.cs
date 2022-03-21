@@ -13,13 +13,15 @@ namespace FYP1.Controllers
     public class UserController : Controller
     {
         private readonly IUser repo;
+        private readonly ICalender calender;
 
         public IWebHostEnvironment Env { get; }
 
-        public UserController(IUser _repo, IWebHostEnvironment Env)
+        public UserController(IUser _repo, IWebHostEnvironment Env, ICalender calender)
         {
             repo = _repo;
             this.Env = Env;
+            this.calender = calender;
         }
         [AuthenticateFilter]
         [HttpGet("NewUser")]
@@ -108,6 +110,11 @@ namespace FYP1.Controllers
         public IActionResult Calender()
         {
             return View();
+        }
+        public async Task<IActionResult> GetCalender()
+        {
+            var _data = await calender.GetCalender();
+            return Json(new { data = _data });
         }
 
 

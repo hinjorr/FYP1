@@ -57,6 +57,7 @@ namespace FYP1
             services.AddScoped<IClassContent, ClassContentModel>();
             services.AddScoped<INotifications, NotificationsModel>();
             services.AddScoped<IChat, ChatModel>();
+            services.AddScoped<ICalender, CalenderModel>();
             // services.AddDataProtection();
 
         }

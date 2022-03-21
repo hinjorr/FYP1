@@ -190,19 +190,19 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                                 <label class="col-xl-3 col-lg-3 text-right col-form-label">Date of Birth</label>
                                 <div class="col-lg-9 col-xl-6">
                                     <input type="text" class="form-control kt_datepicker_1" id="txtDOB"
-                                        readonly="readonly" placeholder="Select date" />
+                                        readonly="readonly" placeholder="Select date" disabled/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 text-right col-form-label">Gender</label>
                                 <div class="col-lg-9 col-xl-6 radio">
                                     <label>
-                                        <input type="radio" name="gender" id="rad1" value="male">
+                                        <input type="radio" name="gender" id="rad1" value="male" disabled>
                                         Male
                                     </label>
                                     &nbsp;
                                     <label>
-                                        <input type="radio" name="gender" id="rad2" value="female">
+                                        <input type="radio" name="gender" id="rad2" value="female" disabled>
                                         Female
                                     </label>
                                 </div>
@@ -211,25 +211,24 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                                 <label class="col-xl-3 col-lg-3 text-right col-form-label">Residential Address</label>
                                 <div class="col-lg-9 col-xl-6">
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        id="txtAddress" />
+                                        id="txtAddress" disabled/>
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 text-right col-form-label">City</label>
                                 <div class="col-lg-9 col-xl-6">
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        id="txtCity" />
+                                        id="txtCity" disabled />
                                 </div>
                             </div>
                             <div class="form-group row">
                                 <label class="col-xl-3 col-lg-3 text-right col-form-label">Country</label>
                                 <div class="col-lg-9 col-xl-6">
                                     <input class="form-control form-control-lg form-control-solid" type="text"
-                                        id="txtCountry" />
+                                        id="txtCountry" disabled/>
                                 </div>
                             </div>
 
-                            <button type="submit" class="btn btn-primary btn-lg " id="btnSubmitProfile">Update</button>
                     </div>
                     <!--end::Tab Content-->
                     <!--begin::Tab Content-->
@@ -259,7 +258,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                                             </span>
                                         </div>
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            id="txtEmail" placeholder="Email" />
+                                            id="txtEmail" placeholder="Email" disabled/>
                                     </div>
 
                                 </div>
@@ -274,47 +273,17 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                                             </span>
                                         </div>
                                         <input type="text" class="form-control form-control-lg form-control-solid"
-                                            id="txtPhone" placeholder="Phone" />
+                                            id="txtPhone" placeholder="Phone" disabled/>
                                     </div>
 
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-primary btn-lg " >Update</button>
 
                     </div>
                     <!--end::Tab Content-->
+                   
                     <!--begin::Tab Content-->
-                    <div class="tab-pane" id="kt_apps_contacts_view_tab_4" role="tabpanel">
-                            <div class="row">
-                                <label class="col-xl-3"></label>
-                                <div class="col-lg-9 col-xl-6">
-                                    <h3 class="font-size-h6 mb-5">Change Password:</h3>
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 text-right col-form-label">Current Password</label>
-                                <div class="col-lg-9 col-xl-6">
-                                    <input class="form-control form-control-lg form-control-solid" type="text" />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 text-right col-form-label">New Password</label>
-                                <div class="col-lg-9 col-xl-6">
-                                    <input class="form-control form-control-lg form-control-solid" type="text" />
-                                </div>
-                            </div>
-                            <div class="form-group row">
-                                <label class="col-xl-3 col-lg-3 text-right col-form-label">Verify Password</label>
-                                <div class="col-lg-9 col-xl-6">
-                                    <input class="form-control form-control-lg form-control-solid" type="text" />
-                                </div>
-                            </div>
-                            <button type="submit" class="btn btn-primary btn-lg " >Update</button>
-
-                    </div>
-                    <!--end::Tab Content-->
-                    <!--begin::Tab Content-->
-                    <div class="tab-pane" id="kt_apps_contacts_view_tab_1" role="tabpanel">
+                    @* <div class="tab-pane" id="kt_apps_contacts_view_tab_1" role="tabpanel">
                             <div class="row">
                                 <label class="col-xl-3"></label>
                                 <div class="col-lg-9 col-xl-6">
@@ -344,7 +313,7 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                             </div>
 
 
-                    </div>
+                    </div> *@
                     <!--end::Tab Content-->
                 </div>
             </div>

@@ -6,6 +6,7 @@ $(document).ready(function () {
     role = $("#GetUsersRole").text();
     if (role == "Student") {
         _DropZone(assesmentId)
+        $("#_folderArea").remove();
         GetUploadedAssesment(assesmentId)
     }
     else {
@@ -38,6 +39,8 @@ function GetAssesmentDeatils(id) {
             $("#assesment_name").text(resp.assesment.assesmentName);
             $(".assesment_description").text(resp.assesment.description);
             $("#course_header").text(resp.course.fullName + " " + resp.course.courseId);
+            $("#folder_link").html(`<a href="` + resp.assesment.submissionFolder + `" target="_blank"><img src="https://img.icons8.com/color/48/000000/cloud-folder.png" style="height: 30px;"/>` + resp.assesment.submissionFolder + `</a>`);
+
             if (resp.assesmentAttachmentList[0] != null) {
                 var html = `<br><br><h3 class="card-label">Attachment(s)</h3><ul>`
                 $(resp.assesmentAttachmentList).each(function (indexInArray, item) {

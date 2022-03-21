@@ -11,7 +11,8 @@ namespace FYP1.DTOs
         public string message { get; set; }
         public string ReturnUrl { get; set; }
         public int TotalSessions { get; set; }
-
+        public MessageDTO _Message { get; set; }
+        public List<MessageDTO> Message_List { get; set; }
         public List<AssesmetnAttachmentDTO> AssesmentAttachmentList { get; set; }
         public NotificationDTO Notification { get; set; }
         public NotificationToDTO NotificationTo { get; set; }

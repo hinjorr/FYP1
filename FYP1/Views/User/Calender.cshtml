@@ -9,14 +9,22 @@ Layout = "~/Views/Shared/_Layout.cshtml";
     <div class="card-title">
       <h3 class="card-label">@ViewData["Title"]</h3>
     </div>
-    <div class="card-toolbar">
-      <a href="#" class="btn btn-light-primary font-weight-bold">
-        <i class="ki ki-plus icon-md mr-2"></i>Add Event</a>
-    </div>
+
   </div>
   <div class="card-body">
-    <div id="kt_calendar"></div>
+    <table class="table table-bordered table-hover table-checkable mt-10" id="_schedule">
+      <thead>
+        <tr>
+          <th>Day</th>
+          <th>Time</th>
+          <th>Course</th>
+          <th>Class Id</th>
+        </tr>
+      </thead>
+    </table>
   </div>
 </div>
 <!--end::Card-->
-<script src="~/LMS/assets/js/pages/features/calendar/list-view.js"></script>
+<script src="~/LMS/lib/jquery-3.6.0.js"></script>
+<script src="~/LMS/lib/jquery.validate.min.js"></script>
+<script type="text/javascript" src="~/LMS/ViewsJquery/AdminCalender.js"></script>

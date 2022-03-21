@@ -275,7 +275,7 @@ namespace FYP1.Models
                 var chk_StudentClass = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == Cid && x.Username == user_data.User.UserName).FirstOrDefaultAsync();
 
                 GeneralDTO dto = new GeneralDTO();
-                if (chk_FacultyClass != null || chk_StudentClass != null || user_data.Role.RoleId == 1)
+                if (chk_FacultyClass != null || chk_StudentClass != null || user_data.Role.RoleId == 1 ||user_data.Role.RoleId == 6)
                 {
                     var class_info = await db.TblClasses.Where(x => x.ClassId == Cid).
                     Include(x => x.Course).

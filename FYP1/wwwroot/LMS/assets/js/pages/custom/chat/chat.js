@@ -11,10 +11,10 @@ var KTAppChat = function () {
 		// Mobile offcanvas for mobile mode
 		_chatAsideOffcanvasObj = new KTOffcanvas(_chatAsideEl, {
 			overlay: true,
-            baseClass: 'offcanvas-mobile',
-            //closeBy: 'kt_chat_aside_close',
-            toggleBy: 'kt_app_chat_toggle'
-        });
+			baseClass: 'offcanvas-mobile',
+			//closeBy: 'kt_chat_aside_close',
+			toggleBy: 'kt_app_chat_toggle'
+		});
 
 		// User listing
 		var cardScrollEl = KTUtil.find(_chatAsideEl, '.scroll');
@@ -29,7 +29,7 @@ var KTAppChat = function () {
 				resetHeightOnDestroy: true,  // Reset css height on scroll feature destroyed
 				handleWindowResize: true, // Recalculate hight on window resize
 				rememberPosition: true, // Remember scroll position in cookie
-				height: function() {  // Calculate height
+				height: function () {  // Calculate height
 					var height;
 
 					if (KTUtil.isBreakpointUp('lg')) {
@@ -67,20 +67,21 @@ var KTAppChat = function () {
 
 	return {
 		// Public functions
-		init: function() {
+		init: function () {
 			// Elements
+			// debugger
 			_chatAsideEl = KTUtil.getById('kt_chat_aside');
-			_chatContentEl = KTUtil.getById('kt_chat_content');
+			// _chatContentEl = KTUtil.getById('kt_chat_content');
 
 			// Init aside and user list
 			_initAside();
 
 			// Init inline chat example
-			KTLayoutChat.setup(KTUtil.getById('kt_chat_content'));
+			// KTLayoutChat.setup(KTUtil.getById('kt_chat_content'));
 
 			// Trigger click to show popup modal chat on page load
 			if (KTUtil.getById('kt_app_chat_toggle')) {
-				setTimeout(function() {
+				setTimeout(function () {
 					KTUtil.getById('kt_app_chat_toggle').click();
 				}, 1000);
 			}
@@ -88,6 +89,6 @@ var KTAppChat = function () {
 	};
 }();
 
-jQuery(document).ready(function() {
+jQuery(document).ready(function () {
 	KTAppChat.init();
 });

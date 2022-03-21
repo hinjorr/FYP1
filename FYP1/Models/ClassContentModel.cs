@@ -141,6 +141,7 @@ namespace FYP1.Models
                 try
                 {
                     int primary_key = 0;
+
                     if (dto.AssesmentId != 0)
                     {
                         var chk = await db.TblAssesments.Where(x => x.AssesmentId == dto.AssesmentId).FirstOrDefaultAsync();
@@ -151,6 +152,10 @@ namespace FYP1.Models
                     }
                     else
                     {
+                        var class_info = await db.TblClasses.Where(x => x.ClassId == dto.ClassId).Include(x => x.Course).FirstOrDefaultAsync();
+                        var file_path = "/Assesments_Submission/" + class_info.Course.ShortName + " " + class_info.ClassId + "/" + dto.AssesmentName;
+                        dto.SubmissionFolder = await _dropbox.CreateFolder(file_path);
+                        dto.FolderPath = file_path;
                         mapper.Map(dto, tbl_assesment);
                         await db.TblAssesments.AddAsync(tbl_assesment);
                         await db.SaveChangesAsync();
@@ -161,7 +166,8 @@ namespace FYP1.Models
                     {
                         foreach (var item in dto.Attachments)
                         {
-                            var data = await _dropbox.UploadFile(item, "Assesment_Attachment");
+
+                            var data = await _dropbox.UploadFile(item, "/Assesment_Attachment");
                             TblAssesmetnAttachment tbl = new TblAssesmetnAttachment();
                             tbl.AssesmentId = primary_key;
                             tbl.DisplayName = data.DisplayName;
@@ -328,10 +334,10 @@ namespace FYP1.Models
                     await db.SaveChangesAsync();
                 }
                 dto.UserId = session_data.User.UserId;
-                var assesment_info = await db.TblAssesments.Where(x => x.AssesmentId == dto.AssesmentId).FirstOrDefaultAsync();
+                var assesment_info = await db.TblAssesments.Where(x => x.AssesmentId == dto.AssesmentId).Include(x => x.Class.Course).FirstOrDefaultAsync();
                 dto.DisplayName = session_data.User.UserName + "-" + session_data.Profile.Name + "-" + assesment_info.AssesmentName + "-" + assesment_info.ClassId + Path.GetExtension(dto.Attachment.FileName);
                 dto.SubmissionTime = DateTime.Now;
-                var data = await _dropbox.UploadFile(dto.Attachment, "Assesments_Submission", dto.DisplayName);
+                var data = await _dropbox.UploadFile(dto.Attachment, assesment_info.FolderPath, dto.DisplayName);
                 dto.FilePath = data.Path;
                 dto.Link = data.Link;
                 dto.DisplayName = data.DisplayName;
@@ -341,6 +347,7 @@ namespace FYP1.Models
 
                 general.Icon = "success";
                 general.Text = "Assesment Submitted";
+
                 {
                     //notfication
                     var course_info = await db.TblClasses.Where(x => x.ClassId == assesment_info.ClassId).Include(x => x.Course).FirstOrDefaultAsync();
@@ -472,7 +479,9 @@ namespace FYP1.Models
                 {
                     if (!VideoExtensions.Contains(Path.GetExtension(file.FileName)))
                     {
-                        var data = await _dropbox.UploadFile(file, "Lectures");
+                        var class_info = await db.TblClasses.Where(x => x.ClassId == dto.ClassId).Include(x => x.Course).FirstOrDefaultAsync();
+                        var session_info = await db.TblClassSessions.Where(x => x.SessionId == dto.SessionId).FirstOrDefaultAsync();
+                        var data = await _dropbox.UploadFile(file, "/Lectures/" + class_info.Course.ShortName + " " + class_info.ClassId + "/" + session_info.SessionName);
                         if (data != null)
                         {
                             TblDoc obj = new TblDoc();

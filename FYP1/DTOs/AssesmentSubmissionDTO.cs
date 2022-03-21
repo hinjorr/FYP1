@@ -19,6 +19,7 @@ namespace FYP1.DTOs
         public DateTime? SubmissionTime { get; set; }
         public string TimeRemarks { get; set; }
         public bool LateSubmit { get; set; }
+        
 
         [JsonIgnore]
         public IFormFile Attachment { get; set; }

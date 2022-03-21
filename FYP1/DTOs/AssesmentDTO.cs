@@ -21,6 +21,10 @@ namespace FYP1.DTOs
         public string EndString { get; set; }
         public long UnixTime { get; set; }
         public bool? LateSubmission { get; set; }
+        public string SubmissionFolder { get; set; }
+        public string FolderPath { get; set; }
+
+
 
         [JsonIgnore]
         public List<IFormFile> Attachments { get; set; }

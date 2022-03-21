@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using FYP1.dbModels;
 using FYP1.Helpers__Filters;
 using FYP1.Repository;
 using Microsoft.AspNetCore.Mvc;
@@ -30,10 +31,22 @@ namespace FYP1.Controllers
             var data = await repo.GetAllUsers();
             return Ok(data);
         }
-        public async Task<IActionResult> SingleChat(int UserId)
+        public async Task<IActionResult> OpenChat(int UserId)
         {
-            var data = await repo.SingleChat(UserId);
+            var data = await repo.OpenChat(UserId);
             return Ok(data);
+        }
+        public async Task<IActionResult> GetMessages(int UserId)
+        {
+            var data = await repo.GetMessages(UserId);
+            return Ok(data);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> SendMessage(Message dto)
+        {
+            await repo.SendMessage(dto);
+            return Ok();
         }
     }
 }

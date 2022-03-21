@@ -33,13 +33,14 @@ CREATE TABLE `Tbl_AssesmentSubmission` (
   KEY `AssesmentID` (`AssesmentID`),
   CONSTRAINT `Tbl_AssesmentSubmission_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_AssesmentSubmission_ibfk_2` FOREIGN KEY (`AssesmentID`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=35 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=41 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmentSubmission` */
 
 insert  into `Tbl_AssesmentSubmission`(`SubmissionId`,`UserID`,`AssesmentID`,`FilePath`,`DisplayName`,`Link`,`SubmissionTime`) values 
 (16,64,58,'/Upload/student-Mohsin-Assignment 1-79.pdf','student-Mohsin-Assignment 1-79','https://www.dropbox.com/s/sf8adsgd140kyt8/student-Mohsin-Quiz%202%20Testing-79.pdf?dl=0','2022-02-07 14:39:26'),
-(34,64,74,'/Assesments_Submission/student-Mohsin-Quiz 5-82.docx','student-Mohsin-Quiz 5-82.docx','https://www.dropbox.com/scl/fi/rx2ee84dqfrcf9rkpbxkk/student-Mohsin-Quiz-5-82.docx?dl=0&rlkey=en1mxqu1518agc82brtm7cpsz','2022-03-14 16:23:20');
+(37,64,76,'/Assesments_Submission/DSA Lab 82/Assignment 1/student-Mohsin-Assignment 1-82.json','student-Mohsin-Assignment 1-82.json','https://www.dropbox.com/sh/qrtd2p9d31yeajr/AACys5n9Co5E2Ad1KG57ghYna?dl=0','2022-03-15 23:45:27'),
+(40,64,82,'/Assesments_Submission/DSA Lab 82/Quiz 2/student-Mohsin-Quiz 2-82.json','student-Mohsin-Quiz 2-82.json','https://www.dropbox.com/s/d1swqk5j5xqm2e1/student-Mohsin-Quiz%202-82.json?dl=0','2022-03-18 23:11:55');
 
 /*Table structure for table `Tbl_Assesments` */
 
@@ -54,18 +55,22 @@ CREATE TABLE `Tbl_Assesments` (
   `Start` datetime DEFAULT NULL,
   `End` datetime DEFAULT NULL,
   `LateSubmission` bit(1) DEFAULT b'0',
+  `Submission_Folder` varchar(500) DEFAULT NULL,
+  `FolderPath` varchar(500) DEFAULT NULL,
   PRIMARY KEY (`AssesmentId`),
   KEY `Class_ID` (`Class_ID`),
   KEY `Session_ID` (`Session_ID`),
   CONSTRAINT `Tbl_Assesments_ibfk_1` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`),
   CONSTRAINT `Tbl_Assesments_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`)
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Assesments` */
 
-insert  into `Tbl_Assesments`(`AssesmentId`,`Class_ID`,`Session_ID`,`AssesmentName`,`Description`,`Start`,`End`,`LateSubmission`) values 
-(58,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00',''),
-(74,82,199,'Quiz 5',NULL,'2022-03-12 19:29:00','2022-03-24 19:29:00','\0');
+insert  into `Tbl_Assesments`(`AssesmentId`,`Class_ID`,`Session_ID`,`AssesmentName`,`Description`,`Start`,`End`,`LateSubmission`,`Submission_Folder`,`FolderPath`) values 
+(58,79,195,'Assignment 1',NULL,'2022-02-07 13:38:00','2022-02-07 23:33:00','',NULL,NULL),
+(75,79,197,'Project Presentation',NULL,'2022-03-15 22:45:00','2022-04-09 22:45:00','\0',NULL,NULL),
+(76,82,195,'Assignment 1',NULL,'2022-03-15 23:25:00','2022-04-08 23:25:00','\0','https://www.dropbox.com/sh/qrtd2p9d31yeajr/AACys5n9Co5E2Ad1KG57ghYna?dl=0','/Assesments_Submission/DSA Lab 82/Assignment 1'),
+(82,82,196,'Quiz 2',NULL,'2022-03-18 23:09:00','2022-03-25 23:09:00','\0','https://www.dropbox.com/sh/wrplxg18hfpdgir/AADqf5GLvittyjLG1yL14I8Wa?dl=0','/Assesments_Submission/DSA Lab 82/Quiz 2');
 
 /*Table structure for table `Tbl_AssesmetnAttachments` */
 
@@ -80,14 +85,14 @@ CREATE TABLE `Tbl_AssesmetnAttachments` (
   PRIMARY KEY (`File_ID`),
   KEY `Tbl_AssesmetnAttachments_ibfk_1` (`AssesmentId`),
   CONSTRAINT `Tbl_AssesmetnAttachments_ibfk_1` FOREIGN KEY (`AssesmentId`) REFERENCES `Tbl_Assesments` (`AssesmentId`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=211 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=215 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_AssesmetnAttachments` */
 
 insert  into `Tbl_AssesmetnAttachments`(`File_ID`,`AssesmentId`,`DisplayName`,`Path`,`Link`) values 
 (198,58,'Screenshot from 2022-02-03 00-29-29-835757.png','/Assesment_Attachment/Screenshot from 2022-02-03 00-29-29-835757.png','https://www.dropbox.com/s/1i7b2un9v1m37pd/Screenshot%20from%202022-02-03%2000-29-29-835757.png?dl=0'),
 (199,58,'image3.1-192441.jpg','/Assesment_Attachment/image3.1-192441.jpg','https://www.dropbox.com/s/27skdox0x6pm3xa/image3.1-192441.jpg?dl=0'),
-(210,74,'NICU (1)-455908.xlsx','/Assesment_Attachment/NICU (1)-455908.xlsx','https://www.dropbox.com/scl/fi/dbtqjd89t3z53c16nrg5l/NICU-1-455908.xlsx?dl=0&rlkey=h37rot4r2fzrs2s0bcb4x12a4');
+(214,82,'adept-cosine-342316-e7c94bbd1a61-26849.json','/Assesment_Attachment/adept-cosine-342316-e7c94bbd1a61-26849.json','https://www.dropbox.com/s/1vonndoogd5n3lb/adept-cosine-342316-e7c94bbd1a61-26849.json?dl=0');
 
 /*Table structure for table `Tbl_Attendence` */
 
@@ -108,7 +113,7 @@ CREATE TABLE `Tbl_Attendence` (
   CONSTRAINT `Tbl_Attendence_ibfk_1` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Attendence_ibfk_2` FOREIGN KEY (`Session_ID`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Attendence_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=240 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=272 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Attendence` */
 
@@ -152,7 +157,6 @@ insert  into `Tbl_Attendence`(`Id`,`Class_ID`,`Session_ID`,`User_ID`,`User_Name`
 (197,50,179,120,'24691','\0',''),
 (198,50,179,121,'183492','\0','\0'),
 (199,50,179,122,'793093','\0','\0'),
-(230,79,195,151,'Std22107','',''),
 (231,79,195,122,'793093','\0',''),
 (232,79,195,130,'525395','\0','\0'),
 (233,79,195,119,'518290','\0','\0'),
@@ -161,7 +165,15 @@ insert  into `Tbl_Attendence`(`Id`,`Class_ID`,`Session_ID`,`User_ID`,`User_Name`
 (236,79,195,120,'24691','\0','\0'),
 (237,79,195,129,'408494','\0',''),
 (238,79,195,131,'341996','\0','\0'),
-(239,79,195,139,'Std29100','','\0');
+(239,79,195,139,'Std29100','','\0'),
+(264,80,195,119,'518290','\0','\0'),
+(265,80,195,122,'793093','\0',''),
+(266,80,195,130,'525395','','\0'),
+(267,80,195,64,'student','',''),
+(268,80,196,119,'518290','','\0'),
+(269,80,196,122,'793093','','\0'),
+(270,80,196,130,'525395','',''),
+(271,80,196,64,'student','','');
 
 /*Table structure for table `Tbl_ClassSessions` */
 
@@ -376,7 +388,7 @@ CREATE TABLE `Tbl_Docs` (
   KEY `CLassId` (`CLassId`),
   CONSTRAINT `Tbl_Docs_ibfk_1` FOREIGN KEY (`SessionId`) REFERENCES `Tbl_ClassSessions` (`Session_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_Docs_ibfk_2` FOREIGN KEY (`CLassId`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=28 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Docs` */
 
@@ -391,7 +403,10 @@ insert  into `Tbl_Docs`(`Doc_Id`,`SessionId`,`CLassId`,`Display_Name`,`Path`,`Li
 (19,201,79,'Resume Masood Arif-193843.pdf','/Lectures/Resume Masood Arif-193843.pdf','https://www.dropbox.com/s/79ani5d5hxp8ien/Resume%20Masood%20Arif-193843.pdf?dl=0'),
 (20,197,82,'Resume Masood Arif-426625.pdf','/Lectures/Resume Masood Arif-426625.pdf','https://www.dropbox.com/s/nt626yzr5zgpcpw/Resume%20Masood%20Arif-426625.pdf?dl=0'),
 (21,197,82,'Resume Masood Arif-791743.docx','/Lectures/Resume Masood Arif-791743.docx','https://www.dropbox.com/scl/fi/xptpiqx73yadw8jrcidow/Resume-Masood-Arif-791743.docx?dl=0&rlkey=hzk3b7qsixlhympztra215it7'),
-(22,202,79,'Assigment 1 Masood Arif 9763pdf-146355','/Lectures/Assigment 1 Masood Arif 9763pdf-146355','https://www.dropbox.com/s/qpt790xieekvybf/Assigment%201%20Masood%20Arif%209763pdf-146355?dl=0');
+(22,202,79,'Assigment 1 Masood Arif 9763pdf-146355','/Lectures/Assigment 1 Masood Arif 9763pdf-146355','https://www.dropbox.com/s/qpt790xieekvybf/Assigment%201%20Masood%20Arif%209763pdf-146355?dl=0'),
+(23,196,79,'GPL License Terms-394287.pdf','/Lectures/GPL License Terms-394287.pdf','https://www.dropbox.com/s/vkzstqb0vzayio6/GPL%20License%20Terms-394287.pdf?dl=0'),
+(24,198,79,'MAD SP2022 Assign# 1-252029.docx','/Lectures/BE Lab79/18 October - 24 October/MAD SP2022 Assign# 1-252029.docx','https://www.dropbox.com/scl/fi/z48771rl78ew03ov2eg1m/MAD-SP2022-Assign-1-252029.docx?dl=0&rlkey=thb2j9z4c6d3yukav1kzq2fsg'),
+(25,195,82,'Assigment 1 Masood Arif 9763pdf-211781','/Lectures/DSA Lab 82/27 September - 3 October/Assigment 1 Masood Arif 9763pdf-211781','https://www.dropbox.com/sh/s17mkvonbsgukeg/AADAeFl7-r0GQKrXWml_q8sha?dl=0');
 
 /*Table structure for table `Tbl_EmailConfiguration` */
 
@@ -474,8 +489,7 @@ insert  into `Tbl_Marks`(`Marks_Id`,`Class_Id`,`AssesmentId`,`User_Id`,`Total_Ma
 (168,79,58,119,12,30),
 (169,79,58,130,12,30),
 (170,79,58,122,12,3),
-(171,79,58,131,12,0),
-(172,79,58,151,12,2);
+(171,79,58,131,12,0);
 
 /*Table structure for table `Tbl_Menu` */
 
@@ -534,12 +548,11 @@ CREATE TABLE `Tbl_NotificaionTo` (
   KEY `To` (`To`),
   CONSTRAINT `Tbl_NotificaionTo_ibfk_1` FOREIGN KEY (`NotificationId`) REFERENCES `Tbl_Notifications` (`Notification_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_NotificaionTo_ibfk_2` FOREIGN KEY (`To`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=140 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=282 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_NotificaionTo` */
 
 insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values 
-(1,1,151,0),
 (2,1,122,0),
 (3,1,130,0),
 (4,1,119,0),
@@ -549,7 +562,6 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (8,1,129,0),
 (9,1,131,0),
 (10,1,139,0),
-(11,2,151,0),
 (12,2,122,0),
 (13,2,130,0),
 (14,2,119,0),
@@ -559,7 +571,6 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (18,2,129,0),
 (19,2,131,0),
 (20,2,139,0),
-(25,7,151,0),
 (26,7,122,0),
 (27,7,130,0),
 (28,7,119,0),
@@ -576,7 +587,6 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (39,8,121,0),
 (40,8,129,0),
 (41,8,139,0),
-(42,8,151,0),
 (43,9,64,1),
 (44,9,75,0),
 (45,9,119,0),
@@ -584,8 +594,6 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (47,9,121,0),
 (48,9,129,0),
 (49,9,139,0),
-(50,9,151,0),
-(51,10,151,0),
 (52,10,122,0),
 (53,10,130,0),
 (54,10,119,0),
@@ -602,8 +610,6 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (65,11,121,0),
 (66,11,129,0),
 (67,11,139,0),
-(68,11,151,0),
-(69,12,151,0),
 (70,12,122,0),
 (71,12,130,0),
 (72,12,119,0),
@@ -615,7 +621,6 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (78,12,139,0),
 (82,16,69,1),
 (83,17,64,1),
-(84,18,151,0),
 (85,18,122,0),
 (86,18,130,0),
 (87,18,119,0),
@@ -625,7 +630,6 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (91,18,129,0),
 (92,18,131,0),
 (93,18,139,0),
-(94,19,151,0),
 (95,19,122,0),
 (96,19,130,0),
 (97,19,119,0),
@@ -660,7 +664,135 @@ insert  into `Tbl_NotificaionTo`(`ID`,`NotificationId`,`To`,`IsSeen`) values
 (136,37,119,0),
 (137,37,130,0),
 (138,37,122,0),
-(139,37,151,0);
+(141,38,122,0),
+(142,38,130,0),
+(143,38,119,0),
+(144,38,64,1),
+(145,38,75,0),
+(146,38,120,0),
+(147,38,129,0),
+(148,38,131,0),
+(149,38,139,0),
+(151,39,122,0),
+(152,39,130,0),
+(153,39,119,0),
+(154,39,64,1),
+(155,39,75,0),
+(156,39,120,0),
+(157,39,129,0),
+(158,39,131,0),
+(159,39,139,0),
+(160,40,69,1),
+(161,41,64,1),
+(162,42,69,1),
+(163,43,64,1),
+(165,44,122,0),
+(166,44,130,0),
+(167,44,119,0),
+(168,44,64,1),
+(169,44,75,0),
+(170,44,120,0),
+(171,44,129,0),
+(172,44,131,0),
+(173,44,139,0),
+(174,45,64,1),
+(175,45,75,0),
+(176,45,119,0),
+(177,45,120,0),
+(178,45,121,0),
+(179,45,129,0),
+(180,45,139,0),
+(182,46,69,1),
+(183,47,64,1),
+(184,48,119,0),
+(185,48,75,0),
+(186,48,64,1),
+(187,48,120,0),
+(188,48,121,0),
+(189,48,129,0),
+(190,48,139,0),
+(193,52,64,1),
+(195,54,64,1),
+(196,55,64,1),
+(197,56,64,1),
+(198,57,64,1),
+(199,58,64,1),
+(200,59,64,1),
+(201,60,64,1),
+(202,61,64,1),
+(203,62,64,0),
+(204,63,64,0),
+(205,64,64,0),
+(206,65,64,0),
+(207,66,64,0),
+(208,67,119,0),
+(209,67,122,0),
+(210,67,130,0),
+(211,67,64,0),
+(212,68,119,0),
+(213,68,122,0),
+(214,68,130,0),
+(215,68,64,0),
+(216,69,119,0),
+(217,69,122,0),
+(218,69,130,0),
+(219,69,64,0),
+(220,70,119,0),
+(221,70,122,0),
+(222,70,130,0),
+(223,70,64,0),
+(224,71,119,0),
+(225,71,122,0),
+(226,71,130,0),
+(227,71,64,0),
+(228,72,64,0),
+(229,72,75,0),
+(230,72,119,0),
+(231,72,120,0),
+(232,72,121,0),
+(233,72,129,0),
+(234,72,139,0),
+(236,73,69,1),
+(237,74,64,0),
+(238,75,64,0),
+(239,75,75,0),
+(240,75,119,0),
+(241,75,120,0),
+(242,75,121,0),
+(243,75,129,0),
+(244,75,139,0),
+(246,76,69,1),
+(247,77,64,0),
+(248,78,64,0),
+(249,78,75,0),
+(250,78,119,0),
+(251,78,120,0),
+(252,78,121,0),
+(253,78,129,0),
+(254,78,139,0),
+(256,79,64,0),
+(257,79,75,0),
+(258,79,119,0),
+(259,79,120,0),
+(260,79,121,0),
+(261,79,129,0),
+(262,79,139,0),
+(264,80,64,0),
+(265,80,75,0),
+(266,80,119,0),
+(267,80,120,0),
+(268,80,121,0),
+(269,80,129,0),
+(270,80,139,0),
+(272,81,64,0),
+(273,81,75,0),
+(274,81,119,0),
+(275,81,120,0),
+(276,81,121,0),
+(277,81,129,0),
+(278,81,139,0),
+(280,82,69,1),
+(281,83,64,0);
 
 /*Table structure for table `Tbl_NotificationType` */
 
@@ -692,12 +824,12 @@ CREATE TABLE `Tbl_Notifications` (
   `Type_Id` int DEFAULT NULL,
   `Message` varchar(500) DEFAULT NULL,
   `UploadedTime` datetime DEFAULT NULL,
-  `ClassId` int DEFAULT NULL,
+  `ClassId` int DEFAULT '0',
   PRIMARY KEY (`Notification_ID`),
   KEY `From` (`From`),
   KEY `Type_Id` (`Type_Id`),
   CONSTRAINT `Tbl_Notifications_ibfk_3` FOREIGN KEY (`Type_Id`) REFERENCES `Tbl_NotificationType` (`Type_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=84 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_Notifications` */
 
@@ -733,7 +865,51 @@ insert  into `Tbl_Notifications`(`Notification_ID`,`From`,`Type_Id`,`Message`,`U
 (33,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:20:42',82),
 (34,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-14 16:23:24',82),
 (35,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-14 16:23:24',82),
-(37,'BE Lab 79',5,'Assignment 1 Marks have veen uploaded.','2022-03-14 16:41:13',79);
+(37,'BE Lab 79',5,'Assignment 1 Marks have veen uploaded.','2022-03-14 16:41:13',79),
+(38,'BE Lab 79',2,'New Lecture File(s) has been uploaded in 4 October - 10 October','2022-03-15 12:06:44',79),
+(39,'BE Lab 79',2,'New Lecture File(s) has been uploaded in 18 October - 24 October','2022-03-15 22:14:30',79),
+(40,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-15 22:35:17',82),
+(41,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-15 22:35:18',82),
+(42,'DSA Lab 82',1,'64 Submitted Quiz 5','2022-03-15 22:41:47',82),
+(43,'DSA Lab 82',1,'Your Quiz 5 has been Submitted ','2022-03-15 22:41:47',82),
+(44,'BE Lab 79',1,'Project Presentation has been assigned.','2022-03-15 22:45:41',79),
+(45,'DSA Lab 82',1,'Assignment 1 has been assigned.','2022-03-15 23:26:57',82),
+(46,'DSA Lab 82',1,'64 Submitted Assignment 1','2022-03-15 23:53:17',82),
+(47,'DSA Lab 82',1,'Your Assignment 1 has been Submitted ','2022-03-15 23:53:19',82),
+(48,'DSA Lab 82',2,'New Lecture File(s) has been uploaded in 27 September - 3 October','2022-03-16 00:17:57',82),
+(51,'Academics',3,'DLD Lab 80 has been dropped','2022-03-17 18:54:25',0),
+(52,'Academics',3,'DLD Lab 80 has been registered.','2022-03-17 19:00:13',80),
+(53,'Academics',3,'DLD Lab 80 has been dropped','2022-03-17 19:01:37',NULL),
+(54,'Academics',3,'DLD Lab 80 has been registered.','2022-03-17 19:37:57',80),
+(55,'Academics',3,'DLD Lab 80 has been dropped.','2022-03-17 19:38:13',NULL),
+(56,'Academics',3,'DLD Lab 80 has been registered.','2022-03-17 19:53:06',80),
+(57,'Academics',3,'DLD Lab 80 has been dropped.','2022-03-17 19:57:37',NULL),
+(58,'Academics',3,'DLD Lab 80 has been registered.','2022-03-17 19:57:45',80),
+(59,'Academics',3,'DLD Lab 80 has been dropped.','2022-03-17 19:57:54',NULL),
+(60,'Academics',3,'DLD Lab 80 has been registered.','2022-03-17 19:58:03',80),
+(61,'Academics',3,'DLD Lab 80 has been dropped.','2022-03-17 19:58:36',NULL),
+(62,'Academics',3,'DLD Lab 80 has been registered.','2022-03-17 19:59:01',80),
+(63,'Academics',3,'DLD Lab 80 has been dropped.','2022-03-17 19:59:12',NULL),
+(64,'Academics',3,'DLD Lab 80 has been registered.','2022-03-17 20:14:20',80),
+(65,'Academics',3,'DLD Lab 80 has been dropped.','2022-03-17 20:14:25',NULL),
+(66,'Academics',3,'DLD Lab 80 has been registered.','2022-03-17 20:14:29',80),
+(67,'DLD Lab 80',4,'Your attendence of 27 September - 3 October has been marked.','2022-03-17 20:33:23',80),
+(68,'DLD Lab 80',4,'Your attendence of 27 September - 3 October has been marked.','2022-03-17 20:34:03',80),
+(69,'DLD Lab 80',4,'Your attendence of 27 September - 3 October has been marked.','2022-03-17 20:34:24',80),
+(70,'DLD Lab 80',4,'Your attendence of 27 September - 3 October has been marked.','2022-03-17 20:34:40',80),
+(71,'DLD Lab 80',4,'Your attendence of 4 October - 10 October has been marked.','2022-03-17 20:35:09',80),
+(72,'DSA Lab 82',1,'Testing Assesment has been assigned.','2022-03-18 22:38:24',82),
+(73,'DSA Lab 82',1,'64 Submitted Testing Assesment','2022-03-18 22:40:08',82),
+(74,'DSA Lab 82',1,'Your Testing Assesment has been Submitted ','2022-03-18 22:40:08',82),
+(75,'DSA Lab 82',1,'Quiz 9763 has been assigned.','2022-03-18 22:48:52',82),
+(76,'DSA Lab 82',1,'64 Submitted Quiz 9763','2022-03-18 22:55:14',82),
+(77,'DSA Lab 82',1,'Your Quiz 9763 has been Submitted ','2022-03-18 22:55:15',82),
+(78,'DSA Lab 82',1,'Quiz 9763 has been assigned.','2022-03-18 22:56:13',82),
+(79,'DSA Lab 82',1,'Quiz 43 has been assigned.','2022-03-18 23:01:48',82),
+(80,'DSA Lab 82',1,'Quiz 23 has been assigned.','2022-03-18 23:03:27',82),
+(81,'DSA Lab 82',1,'Quiz 2 has been assigned.','2022-03-18 23:11:14',82),
+(82,'DSA Lab 82',1,'64 Submitted Quiz 2','2022-03-18 23:12:45',82),
+(83,'DSA Lab 82',1,'Your Quiz 2 has been Submitted ','2022-03-18 23:12:45',82);
 
 /*Table structure for table `Tbl_ParentMenu` */
 
@@ -795,14 +971,10 @@ insert  into `Tbl_Profile`(`ProfileID`,`Name`,`FatherName`,`Email`,`NIC`,`Addres
 (95,'Niaz ','Hussain','masoodarif1313@gmail.com','1234567895321','6','Karachi','Pakistan','/Upload/1234567895321.jpg','01/20/2022','male','03172945903','10/01/2022'),
 (96,'Liaqat  Khan','Ali hsaan','masoodarif1313@gmail.com','6784567895321','6','Karachi','Pakistan','/Upload/6784567895321.jpg','01/20/2022','male','03172945903','10/01/2022'),
 (97,'Masood ','Muhammad Arif','masoodarif1313@gmail.com','4130783292999','R:36 sector 17/c','Karachi','Pakistan','/Upload/4130783292999.jpg','01/12/2022','male','03172945903','16/01/2022'),
-(99,'Ali','Saqib','masoodarif1313@gmail.com','4130782563299','6','Karachi','Pakistan','/Upload/4130782563299.jpg','01/13/2022','male','03172945903','24/01/2022'),
 (100,'Masood Arif',NULL,'masoodarif1313@gmail.com','1234567890332','R:36 sector 17/c','Karachi','Pakistan','/Upload/1234567890332.jpg','01/12/2022','male','03172945903','27/01/2022'),
 (102,'Mohsin',NULL,'masoodarif1313@gmail.com','1111123421111','6','Karachi','Pakistan','/Upload/1111123421111.jpg','01-01-2014','male','03172945903','27/01/2022'),
-(103,'Mohsin',NULL,'masoodarif1313@gmail.com','1134511111111','6','Karachi','Pakistan','/Upload/1134511111111.jpg','01-01-2014','male','03172945903','27/01/2022'),
 (104,'Mohsin',NULL,'masoodarif1313@gmail.com','1134511341111','6','Karachi','Pakistan','/Upload/1134511341111.jpg','01-01-2014','male','03172945903','27/01/2022'),
-(105,'Mohsin',NULL,'masoodarif1313@gmail.com','1134517841111','6','Karachi','Pakistan','/Upload/1134517841111.jpg','01-01-2014','male','03172945903','27/01/2022'),
-(106,'Masood Arif',NULL,'masoodarif1313@gmail.com','1234567890122','6','Karachi','Pakistan','/Upload/1234567890122.jpg','12/28/2021','male','03172945903','28/01/2022'),
-(107,'Masood Arif','Muhammad Arif','masoodarif1313@gmail.com','7453471234578','6','Karachi','Pakistan','/Upload/7453471234578.jpg','01/11/2022','male','03172945903','29/01/2022');
+(106,'Masood Arif',NULL,'masoodarif1313@gmail.com','1234567890122','6','Karachi','Pakistan','/Upload/1234567890122.jpg','12/28/2021','male','03172945903','28/01/2022');
 
 /*Table structure for table `Tbl_ProgramSyllabus` */
 
@@ -914,7 +1086,7 @@ CREATE TABLE `Tbl_RoleMenu` (
   KEY `Role_ID` (`Role_ID`),
   CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=767 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=965 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_RoleMenu` */
 
@@ -940,72 +1112,94 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (608,10,4,'\0'),
 (609,1,4,'\0'),
 (613,24,4,'\0'),
-(679,25,1,''),
-(680,20,1,''),
-(681,2,1,'\0'),
-(682,3,1,'\0'),
-(683,4,1,''),
-(684,5,1,''),
-(685,6,1,''),
-(686,7,1,''),
-(687,8,1,''),
-(688,9,1,'\0'),
-(689,24,1,''),
-(690,10,1,'\0'),
-(691,12,1,''),
-(692,13,1,''),
-(693,14,1,''),
-(694,15,1,''),
-(695,16,1,''),
-(696,17,1,''),
-(697,18,1,''),
-(698,19,1,''),
-(699,11,1,''),
-(700,1,1,''),
-(701,25,2,''),
-(702,20,2,'\0'),
-(703,2,2,''),
-(704,3,2,'\0'),
-(705,4,2,'\0'),
-(706,5,2,''),
-(707,6,2,''),
-(708,7,2,'\0'),
-(709,8,2,''),
-(710,9,2,'\0'),
-(711,24,2,''),
-(712,10,2,''),
-(713,12,2,'\0'),
-(714,13,2,'\0'),
-(715,14,2,'\0'),
-(716,15,2,'\0'),
-(717,16,2,'\0'),
-(718,17,2,'\0'),
-(719,18,2,''),
-(720,19,2,''),
-(721,11,2,'\0'),
-(722,1,2,'\0'),
-(745,25,3,''),
-(746,20,3,'\0'),
-(747,2,3,'\0'),
-(748,3,3,''),
-(749,4,3,'\0'),
-(750,5,3,''),
-(751,6,3,''),
-(752,7,3,'\0'),
-(753,8,3,''),
-(754,9,3,''),
-(755,24,3,''),
-(756,10,3,'\0'),
-(757,12,3,'\0'),
-(758,13,3,'\0'),
-(759,14,3,'\0'),
-(760,15,3,'\0'),
-(761,16,3,'\0'),
-(762,17,3,'\0'),
-(763,18,3,''),
-(764,19,3,''),
-(765,11,3,'\0'),
-(766,1,3,'\0');
+(877,25,2,''),
+(878,20,2,'\0'),
+(879,2,2,''),
+(880,3,2,'\0'),
+(881,4,2,'\0'),
+(882,5,2,''),
+(883,6,2,''),
+(884,7,2,'\0'),
+(885,8,2,''),
+(886,9,2,'\0'),
+(887,24,2,''),
+(888,10,2,''),
+(889,12,2,'\0'),
+(890,13,2,'\0'),
+(891,14,2,'\0'),
+(892,15,2,'\0'),
+(893,16,2,'\0'),
+(894,17,2,'\0'),
+(895,18,2,''),
+(896,19,2,''),
+(897,11,2,'\0'),
+(898,1,2,'\0'),
+(899,25,6,'\0'),
+(900,20,6,'\0'),
+(901,2,6,'\0'),
+(902,3,6,'\0'),
+(903,4,6,''),
+(904,5,6,'\0'),
+(905,6,6,''),
+(906,7,6,''),
+(907,8,6,''),
+(908,9,6,'\0'),
+(909,24,6,'\0'),
+(910,10,6,'\0'),
+(911,12,6,'\0'),
+(912,13,6,''),
+(913,14,6,''),
+(914,15,6,'\0'),
+(915,16,6,'\0'),
+(916,17,6,'\0'),
+(917,18,6,'\0'),
+(918,19,6,''),
+(919,11,6,'\0'),
+(920,1,6,''),
+(921,25,1,''),
+(922,20,1,''),
+(923,2,1,'\0'),
+(924,3,1,'\0'),
+(925,4,1,''),
+(926,5,1,''),
+(927,6,1,''),
+(928,7,1,''),
+(929,8,1,''),
+(930,9,1,'\0'),
+(931,24,1,''),
+(932,10,1,'\0'),
+(933,12,1,''),
+(934,13,1,''),
+(935,14,1,''),
+(936,15,1,''),
+(937,16,1,''),
+(938,17,1,''),
+(939,18,1,''),
+(940,19,1,''),
+(941,11,1,''),
+(942,1,1,''),
+(943,25,3,''),
+(944,20,3,'\0'),
+(945,2,3,'\0'),
+(946,3,3,''),
+(947,4,3,'\0'),
+(948,5,3,''),
+(949,6,3,''),
+(950,7,3,'\0'),
+(951,8,3,''),
+(952,9,3,''),
+(953,24,3,''),
+(954,10,3,'\0'),
+(955,12,3,'\0'),
+(956,13,3,''),
+(957,14,3,'\0'),
+(958,15,3,'\0'),
+(959,16,3,'\0'),
+(960,17,3,'\0'),
+(961,18,3,''),
+(962,19,3,''),
+(963,11,3,'\0'),
+(964,1,3,'\0');
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -1097,8 +1291,7 @@ insert  into `Tbl_Student`(`Student_Id`,`ProgramID`,`UserID`) values
 (23,6,129),
 (24,6,130),
 (25,6,131),
-(26,1,139),
-(27,1,151);
+(26,1,139);
 
 /*Table structure for table `Tbl_StudentCourseRegistration` */
 
@@ -1118,7 +1311,7 @@ CREATE TABLE `Tbl_StudentCourseRegistration` (
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_2` FOREIGN KEY (`User_ID`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_3` FOREIGN KEY (`Class_ID`) REFERENCES `Tbl_Classes` (`Class_Id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_StudentCourseRegistration_ibfk_4` FOREIGN KEY (`SemesterId`) REFERENCES `Tbl_Semester` (`Semester_Id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=75 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=83 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_StudentCourseRegistration` */
 
@@ -1136,8 +1329,6 @@ insert  into `Tbl_StudentCourseRegistration`(`SCR_Id`,`Username`,`User_ID`,`Clas
 (42,'341996',131,57,52,'\0'),
 (44,'44560',75,46,52,'\0'),
 (48,'793093',122,78,72,''),
-(49,'Std22107',151,79,72,''),
-(51,'student',64,80,72,''),
 (52,'518290',119,80,72,''),
 (53,'793093',122,79,72,''),
 (54,'793093',122,80,72,''),
@@ -1153,12 +1344,12 @@ insert  into `Tbl_StudentCourseRegistration`(`SCR_Id`,`Username`,`User_ID`,`Clas
 (66,'183492',121,82,72,''),
 (67,'408494',129,82,72,''),
 (68,'Std29100',139,82,72,''),
-(69,'Std22107',151,82,72,''),
 (70,'44560',75,79,72,''),
 (71,'24691',120,79,72,''),
 (72,'408494',129,79,72,''),
 (73,'341996',131,79,72,''),
-(74,'Std29100',139,79,72,'');
+(74,'Std29100',139,79,72,''),
+(82,'student',64,80,72,'');
 
 /*Table structure for table `Tbl_Time` */
 
@@ -1246,19 +1437,12 @@ insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsA
 (131,'341996','1050',3,96,'','10/01/2022'),
 (132,'admin','1050',1,97,'','16/01/2022'),
 (135,'700490','1050',1,90,'','19/01/2022'),
-(138,'382499','1050',4,99,'','24/01/2022'),
 (139,'Std29100','1050',3,100,'','27/01/2022'),
 (142,'Emp4955','1050',4,55,'','27/01/2022'),
 (143,'Emp5055','1050',6,55,'','27/01/2022'),
-(144,'Emp5055','1050',6,55,'','27/01/2022'),
 (145,'Emp50102','1050',2,102,'','27/01/2022'),
-(146,'Emp58103','1050',4,103,'','27/01/2022'),
 (147,'Emp36104','1050',2,104,'','27/01/2022'),
-(148,'Emp46105','1050',2,105,'','27/01/2022'),
-(149,'Emp51105','masood',4,105,'','27/01/2022'),
-(150,'Emp58106','1050',2,106,'','28/01/2022'),
-(151,'Std22107','1050',3,107,'','29/01/2022'),
-(152,'Emp34107','1050',4,107,'','29/01/2022');
+(150,'Emp58106','1050',2,106,'','28/01/2022');
 
 /*Table structure for table `Tbl_Videos` */
 
@@ -1284,6 +1468,114 @@ insert  into `Tbl_Videos`(`VideoID`,`YTube_Video_ID`,`Class_Id`,`Session_ID`) va
 (10,'kkW4oLiDR9I',79,199),
 (11,'e5hsOgycysk',79,199),
 (12,'',82,195);
+
+/*Table structure for table `messages` */
+
+DROP TABLE IF EXISTS `messages`;
+
+CREATE TABLE `messages` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `user_to` int NOT NULL,
+  `user_from` int NOT NULL,
+  `body` text,
+  `date` datetime NOT NULL,
+  `isSeen` tinyint(1) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `user_to` (`user_to`),
+  KEY `user_from` (`user_from`),
+  CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_to`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`user_from`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=104 DEFAULT CHARSET=latin1;
+
+/*Data for the table `messages` */
+
+insert  into `messages`(`id`,`user_to`,`user_from`,`body`,`date`,`isSeen`) values 
+(1,64,132,'Hy how r u','2022-03-17 12:21:48',1),
+(5,132,64,'I\'m fine you say?','2022-03-17 15:16:37',1),
+(7,132,64,'Whats going on?','2022-03-19 01:07:53',1),
+(8,64,132,'Nothing much just boring boring....','2022-03-19 01:09:04',1),
+(9,64,132,'wht r u doing?','2022-03-19 01:43:04',1),
+(10,64,132,'wht r u doing?\n','2022-03-19 01:43:06',1),
+(11,64,132,'whst going on','2022-03-19 01:43:48',1),
+(12,64,132,'hy','2022-03-19 01:44:31',1),
+(13,64,132,'buys?','2022-03-19 01:44:46',1),
+(14,64,132,'whst up?','2022-03-19 01:52:48',1),
+(15,64,132,'whst up?\n','2022-03-19 01:52:54',1),
+(16,119,132,'sadasd','2022-03-19 01:54:00',1),
+(17,119,132,'I\'m admin President has called yout ommy morning.','2022-03-19 01:54:32',1),
+(18,69,132,'Come to president office urgent','2022-03-19 02:00:06',1),
+(19,69,132,' President has called you','2022-03-19 02:00:21',1),
+(20,64,132,'still busy?','2022-03-19 02:03:21',1),
+(23,69,132,'You r not answring','2022-03-19 14:52:44',1),
+(26,69,132,' hy','2022-03-19 14:53:04',1),
+(31,69,132,'answer please','2022-03-19 14:54:32',1),
+(32,64,132,'hy','2022-03-19 14:55:21',1),
+(33,64,132,' wstapp?','2022-03-19 14:55:28',1),
+(34,69,132,' still seen?','2022-03-19 14:55:45',1),
+(35,69,132,' still seen?','2022-03-19 14:55:45',1),
+(36,69,132,' still seen?','2022-03-19 14:55:45',1),
+(37,69,132,' seen','2022-03-19 14:55:51',1),
+(38,69,132,' seen','2022-03-19 14:55:51',1),
+(39,69,132,' seen','2022-03-19 14:55:51',1),
+(40,64,132,' hy','2022-03-19 14:56:15',1),
+(41,64,132,' hy','2022-03-19 14:56:15',1),
+(42,64,132,' hy','2022-03-19 14:56:15',1),
+(43,64,132,' hy','2022-03-19 14:56:15',1),
+(44,64,132,' 12','2022-03-19 14:56:34',1),
+(45,64,132,' 12','2022-03-19 14:56:34',1),
+(46,64,132,' 12','2022-03-19 14:56:34',1),
+(47,64,132,' 12','2022-03-19 14:56:34',1),
+(48,150,132,'hy','2022-03-19 14:57:04',1),
+(49,150,132,'my name is masood','2022-03-19 14:57:14',1),
+(50,69,132,'my name is masood\n','2022-03-19 14:57:24',1),
+(51,69,132,'my name is masood\n','2022-03-19 14:57:24',1),
+(52,69,132,'your name\n\n','2022-03-19 14:57:38',1),
+(53,69,132,'your name\n\n','2022-03-19 14:57:38',1),
+(54,64,132,'your name\n\n\n','2022-03-19 14:57:47',1),
+(55,64,132,'your name\n\n\n','2022-03-19 14:57:47',1),
+(56,64,132,'your name\n\n\n','2022-03-19 14:57:47',1),
+(57,64,132,'hy','2022-03-19 15:00:52',1),
+(58,64,132,'hy','2022-03-19 15:00:52',1),
+(59,76,132,'hy','2022-03-19 15:06:05',1),
+(60,76,132,'hy','2022-03-19 15:06:54',1),
+(61,76,132,'hy','2022-03-19 15:06:54',1),
+(62,135,132,'hy','2022-03-19 15:11:37',1),
+(63,135,132,'hy','2022-03-19 15:11:37',1),
+(64,135,132,'hy','2022-03-19 15:11:37',1),
+(65,69,132,' test','2022-03-19 15:11:54',1),
+(66,69,132,' test','2022-03-19 15:11:54',1),
+(67,69,132,' test','2022-03-19 15:11:54',1),
+(68,69,132,' test','2022-03-19 15:11:54',1),
+(69,69,132,'masood','2022-03-19 15:30:43',1),
+(70,69,132,'masood','2022-03-19 15:30:43',1),
+(71,69,132,'masood','2022-03-19 15:30:43',1),
+(72,69,132,'masood','2022-03-19 15:30:43',1),
+(73,76,132,'aaaa','2022-03-19 15:35:49',1),
+(74,76,132,'aaa','2022-03-19 15:38:11',1),
+(75,91,132,' fwfewf','2022-03-19 15:38:53',1),
+(76,101,132,' jhds','2022-03-19 15:39:13',1),
+(77,101,132,' jhds','2022-03-19 15:39:13',1),
+(78,101,132,' jhds','2022-03-19 15:39:13',1),
+(79,101,132,' jhds','2022-03-19 15:39:13',1),
+(80,101,132,' fffffff','2022-03-19 15:39:28',1),
+(81,147,132,'hello hi','2022-03-19 15:39:55',1),
+(82,147,132,'hello hi','2022-03-19 15:39:55',1),
+(83,147,132,'hello hi','2022-03-19 15:39:55',1),
+(84,147,132,'hello hi','2022-03-19 15:39:55',1),
+(85,147,132,'hello hi','2022-03-19 15:39:55',1),
+(86,147,132,' hello r','2022-03-19 15:40:06',1),
+(87,76,132,'hy 123','2022-03-19 15:43:06',1),
+(88,76,132,' hy 24','2022-03-19 15:43:12',1),
+(89,76,132,' hy 24','2022-03-19 15:43:12',1),
+(90,76,132,'hy masood','2022-03-19 15:49:46',1),
+(91,76,132,' 12345','2022-03-19 15:49:51',1),
+(97,91,132,'hy\n\n','2022-03-19 15:52:19',1),
+(98,64,122,'hy','2022-03-19 17:41:30',0),
+(99,122,64,'hy how r you','2022-03-19 17:41:41',1),
+(100,64,122,' fine u say','2022-03-19 17:41:52',1),
+(101,69,64,'Asslam u Alikum sir\n','2022-03-19 18:26:29',1),
+(102,64,69,'W slam','2022-03-19 18:26:37',1),
+(103,69,64,' free ?\n','2022-03-19 18:26:47',1);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;

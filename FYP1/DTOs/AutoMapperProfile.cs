@@ -14,6 +14,9 @@ namespace FYP1.DTOs
             CreateMap<UserDTO, TblUser>();
             CreateMap<TblUser, UserDTO>();
 
+            CreateMap<Message, MessageDTO>();
+            CreateMap<MessageDTO, Message>();
+
             CreateMap<TblNotification, NotificationDTO>();
             CreateMap<NotificationDTO, TblNotification>();
 

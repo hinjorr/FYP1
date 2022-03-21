@@ -11,6 +11,7 @@ using FYP1.Repository;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using MoreLinq;
 
 namespace FYP1.Models
 {
@@ -37,10 +38,19 @@ namespace FYP1.Models
             try
             {
                 List<GeneralDTO> _list = null;
+                var Userid = session_data.User.UserId;
+                var Role = session_data.Role.RoleId;
 
-                if (session_data.Role.RoleId == 1)
+                if (Role == 3)
                 {
-
+                    _list = await GetUsersForStudent(Userid);
+                }
+                else if (Role == 2)
+                {
+                    _list = await GetUsersForFaculty(Userid);
+                }
+                else
+                {
                     _list = await db.TblUsers.Where(x => x.IsActive == Convert.ToUInt16(true))
                      .Select(x => new GeneralDTO
                      {
@@ -72,12 +82,85 @@ namespace FYP1.Models
             }
         }
 
-        public async Task<GeneralDTO> SingleChat(int userId)
+        private async Task<List<GeneralDTO>> GetUsersForStudent(int userId)
         {
             try
             {
-                var data = await db.TblUsers.Where(x => x.UserId == userId)
-                .Include(x => x.Profile)
+                List<GeneralDTO> students = new List<GeneralDTO>();
+                var user_enrolledClasses = await db.TblStudentCourseRegistrations.Where(x => x.UserId == userId && x.IsActive == 1).ToListAsync();
+                foreach (var _class in user_enrolledClasses)
+                {
+                    //faculty chat
+                    var class_user = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == _class.ClassId).ToListAsync();
+                    foreach (var classes in class_user)
+                    {
+                        var faculty = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == classes.ClassId).Include(x => x.User.Role).Include(x => x.User).Include(x => x.User.Profile).FirstOrDefaultAsync();
+                        var chk_msg = await db.Messages.Where(x => x.UserTo == userId && x.UserFrom == faculty.UserId || x.IsSeen == false).LastOrDefaultAsync();
+                        GeneralDTO dto = new GeneralDTO();
+                        mapper.Map(chk_msg, dto._Message = new MessageDTO());
+                        mapper.Map(faculty.User, dto.User = new UserDTO());
+                        mapper.Map(faculty.User.Profile, dto.Profile = new ProfileDTO());
+                        mapper.Map(faculty.User.Role, dto.Role = new RoleDTO());
+                        students.Add(dto);
+                    }
+
+                    //students chat
+                    foreach (var student in class_user)
+                    {
+                        GeneralDTO dto = new GeneralDTO();
+                        var _student = await db.TblUsers.Where(x => x.UserId == student.UserId).Include(x => x.Profile).Include(x => x.Role).FirstOrDefaultAsync();
+                        var chk_msg = await db.Messages.Where(x => x.UserTo == userId && x.UserFrom == _student.UserId || x.IsSeen == false).LastOrDefaultAsync();
+                        mapper.Map(chk_msg, dto._Message = new MessageDTO());
+                        mapper.Map(_student, dto.User = new UserDTO());
+                        mapper.Map(_student.Profile, dto.Profile = new ProfileDTO());
+                        mapper.Map(_student.Role, dto.Role = new RoleDTO());
+                        students.Add(dto);
+                    }
+
+                    //incoming messages
+                    var msgs = await GetMessages(userId);
+
+                }
+                var distinct_list = students.DistinctBy(x => x.User.UserId).OrderBy(x => x.Role.RoleId).ToList();
+                return distinct_list;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+        }
+        private async Task<List<GeneralDTO>> GetUsersForFaculty(int userId)
+        {
+            try
+            {
+                List<GeneralDTO> students = new List<GeneralDTO>();
+                var user_enrolledClasses = await db.TblFacultyCourseRegistrations.Where(x => x.UserId == userId && x.IsActive == 1).ToListAsync();
+                foreach (var _class in user_enrolledClasses)
+                {
+                    var class_user = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == _class.ClassId).ToListAsync();
+                    foreach (var student in class_user)
+                    {
+                        GeneralDTO dto = new GeneralDTO();
+                        var _student = await db.TblUsers.Where(x => x.UserId == student.UserId).Include(x => x.Profile).Include(x => x.Role).FirstOrDefaultAsync();
+                        mapper.Map(_student, dto.User = new UserDTO());
+                        mapper.Map(_student.Profile, dto.Profile = new ProfileDTO());
+                        mapper.Map(_student.Role, dto.Role = new RoleDTO());
+                        students.Add(dto);
+                    }
+                }
+                var distinct_list = students.DistinctBy(x => x.User.UserId).ToList();
+                return distinct_list;
+            }
+            catch (System.Exception ex)
+            {
+                return null;
+            }
+        }
+        public async Task<GeneralDTO> OpenChat(int userId)
+        {
+            try
+            {
+                var data = await db.TblUsers.Where(x => x.UserId == userId).Include(x => x.Profile)
                 .FirstOrDefaultAsync();
                 mapper.Map(data, general.User = new UserDTO());
                 mapper.Map(data.Profile, general.Profile = new ProfileDTO());
@@ -87,6 +170,74 @@ namespace FYP1.Models
             {
                 // TODO
                 return null;
+            }
+        }
+
+        async Task<List<MessageDTO>> GetAllMessages(int User)
+        {
+            try
+            {
+                List<MessageDTO> _list = new List<MessageDTO>();
+                var messages = await db.Messages.Where(x => x.UserTo == User).ToListAsync();
+                mapper.Map(messages, _list);
+                return _list;
+            }
+            catch (System.Exception ex)
+            {
+                // TODO
+                return null;
+            }
+        }
+        public async Task<List<MessageDTO>> GetMessages(int UserId)
+        {
+            try
+            {
+                List<MessageDTO> _list = new List<MessageDTO>();
+                var _messages = await db.Messages.Where(x => (x.UserFrom == session_data.User.UserId && x.UserTo == UserId) || x.UserFrom == UserId && x.UserTo == session_data.User.UserId).ToListAsync();
+                foreach (var item in _messages)
+                {
+                    if (item.UserFrom == session_data.User.UserId)
+                    {
+                        MessageDTO dto = new MessageDTO();
+                        mapper.Map(item, dto);
+                        dto.Timespan = Misc.TimeAgo(item.Date);
+                        _list.Add(dto);
+                        dto.Mine = true;
+                    }
+                    else
+                    {
+                        MessageDTO dto = new MessageDTO();
+                        mapper.Map(item, dto);
+                        dto.Timespan = Misc.TimeAgo(item.Date);
+                        _list.Add(dto);
+                    }
+                }
+                var order_list = _list.OrderBy(x => x.Date).ToList();
+                return order_list;
+            }
+            catch (System.Exception)
+            {
+                // TODO
+                return null;
+            }
+        }
+        public async Task SendMessage(Message dto)
+        {
+            try
+            {
+                Message tbl = new Message()
+                {
+                    Body = dto.Body,
+                    Date = DateTime.Now,
+                    UserTo = dto.UserTo,
+                    UserFrom = session_data.User.UserId
+                };
+                await db.Messages.AddAsync(tbl);
+                await db.SaveChangesAsync();
+            }
+            catch (System.Exception ex)
+            {
+                // TODO
             }
         }
     }

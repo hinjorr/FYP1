@@ -11,6 +11,6 @@ namespace FYP1.Repository
         Task Send_GroupNotification(int class_id, int notification_type, string message);
         Task<List<GeneralDTO>> ReceiveNotifications();
         Task MarkAsReadNotifications();
-        Task SendSingleNotification(int _To, string _From, int _Type, string _Message, int _ClassId);
+        Task SendSingleNotification(int _To, string _From, int _Type, string _Message, int? _ClassId);
     }
 }

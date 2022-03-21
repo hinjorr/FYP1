@@ -17,6 +17,7 @@ namespace FYP1.dbModels
         {
         }
 
+        public virtual DbSet<Message> Messages { get; set; }
         public virtual DbSet<TblAssesment> TblAssesments { get; set; }
         public virtual DbSet<TblAssesmentSubmission> TblAssesmentSubmissions { get; set; }
         public virtual DbSet<TblAssesmetnAttachment> TblAssesmetnAttachments { get; set; }
@@ -61,6 +62,41 @@ namespace FYP1.dbModels
         {
             modelBuilder.HasCharSet("latin1");
 
+            modelBuilder.Entity<Message>(entity =>
+            {
+                entity.ToTable("messages");
+
+                entity.HasIndex(e => e.UserFrom, "user_from");
+
+                entity.HasIndex(e => e.UserTo, "user_to");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Body)
+                    .HasColumnType("text")
+                    .HasColumnName("body");
+
+                entity.Property(e => e.Date)
+                    .HasColumnType("datetime")
+                    .HasColumnName("date");
+
+                entity.Property(e => e.IsSeen).HasColumnName("isSeen");
+
+                entity.Property(e => e.UserFrom).HasColumnName("user_from");
+
+                entity.Property(e => e.UserTo).HasColumnName("user_to");
+
+                entity.HasOne(d => d.UserFromNavigation)
+                    .WithMany(p => p.MessageUserFromNavigations)
+                    .HasForeignKey(d => d.UserFrom)
+                    .HasConstraintName("messages_ibfk_2");
+
+                entity.HasOne(d => d.UserToNavigation)
+                    .WithMany(p => p.MessageUserToNavigations)
+                    .HasForeignKey(d => d.UserTo)
+                    .HasConstraintName("messages_ibfk_1");
+            });
+
             modelBuilder.Entity<TblAssesment>(entity =>
             {
                 entity.HasKey(e => e.AssesmentId)
@@ -80,6 +116,8 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.End).HasColumnType("datetime");
 
+                entity.Property(e => e.FolderPath).HasMaxLength(500);
+
                 entity.Property(e => e.LateSubmission)
                     .HasColumnType("bit(1)")
                     .HasDefaultValueSql("b'0'");
@@ -87,6 +125,10 @@ namespace FYP1.dbModels
                 entity.Property(e => e.SessionId).HasColumnName("Session_ID");
 
                 entity.Property(e => e.Start).HasColumnType("datetime");
+
+                entity.Property(e => e.SubmissionFolder)
+                    .HasMaxLength(500)
+                    .HasColumnName("Submission_Folder");
 
                 entity.HasOne(d => d.Class)
                     .WithMany(p => p.TblAssesments)
@@ -565,6 +607,8 @@ namespace FYP1.dbModels
                 entity.HasIndex(e => e.TypeId, "Type_Id");
 
                 entity.Property(e => e.NotificationId).HasColumnName("Notification_ID");
+
+                entity.Property(e => e.ClassId).HasDefaultValueSql("'0'");
 
                 entity.Property(e => e.From).HasMaxLength(500);
 

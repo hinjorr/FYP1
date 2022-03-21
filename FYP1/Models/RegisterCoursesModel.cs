@@ -8,6 +8,7 @@ using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Helpers__Filters;
 using FYP1.Repository;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
@@ -22,11 +23,18 @@ namespace FYP1.Models
         GeneralDTO general = new GeneralDTO();
         TblStudentCourseRegistration tbl = new TblStudentCourseRegistration();
         TblFacultyCourseRegistration tblfaculty = new TblFacultyCourseRegistration();
-        public RegisterCoursesModel(IMapper _mapper, LMS_DBContext _db, IConfiguration config)
+        private readonly INotifications notifications;
+        private readonly IHttpContextAccessor http;
+        GeneralDTO session_data;
+
+        public RegisterCoursesModel(IMapper _mapper, LMS_DBContext _db, IConfiguration config, INotifications notifications, IHttpContextAccessor http)
         {
+            this.notifications = notifications;
+            this.http = http;
             mapper = _mapper;
             db = _db;
             this.config = config;
+            session_data = this.http.HttpContext.Session.GetObjectFromJson<GeneralDTO>("UserDetails");
         }
 
 
@@ -43,19 +51,16 @@ namespace FYP1.Models
                 {
                     general.Text = "Course Already Registered!";
                     general.Icon = "error";
-                    return general;
                 }
                 else if (class_data.ClassStrength == class_data.EnrolledStd)
                 {
                     general.Text = "Class Id full!";
                     general.Icon = "error";
-                    return general;
                 }
                 else if (chkclash == true)
                 {
                     general.Text = "Day and Time Clash occured with another Class";
                     general.Icon = "error";
-                    return general;
                 }
                 else
                 {
@@ -66,12 +71,14 @@ namespace FYP1.Models
                     await db.TblStudentCourseRegistrations.AddAsync(tbl);
                     class_data.EnrolledStd = class_data.EnrolledStd + 1;
                     await db.SaveChangesAsync();
+
                     general.Text = "Course Registered!";
                     general.Icon = "success";
-                    return general;
+                    var course = await db.TblClasses.Where(x => x.ClassId == dto.ClassId).Include(x => x.Course).FirstOrDefaultAsync();
+                    await notifications.SendSingleNotification(dto.UserId, "Academics", 3, course.Course.ShortName + " " + dto.ClassId + " has been registered.", dto.ClassId);
                 }
 
-
+                return general;
             }
             catch (Exception ex)
             {
@@ -140,15 +147,18 @@ namespace FYP1.Models
         {
             try
             {
-                var class_data = await db.TblClasses.Where(x => x.ClassId == dto.ClassId && x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
+                var class_data = await db.TblClasses.Where(x => x.ClassId == dto.ClassId && x.IsActive == Convert.ToUInt16(true)).Include(x => x.Course).FirstOrDefaultAsync();
                 var data = await db.TblStudentCourseRegistrations.Where(x => x.ClassId == dto.ClassId && x.Username == dto.Username && x.IsActive == Convert.ToUInt16(true)).FirstOrDefaultAsync();
                 if (data != null)
                 {
+                    var userId = data.UserId;
                     db.TblStudentCourseRegistrations.Remove(data);
                     class_data.EnrolledStd = class_data.EnrolledStd - 1;
                     await db.SaveChangesAsync();
                     general.Text = "Course Dropped!";
                     general.Icon = "success";
+                    await notifications.SendSingleNotification(userId, "Academics", 3, class_data.Course.ShortName + " " + dto.ClassId + " has been dropped.", null);
+
                 }
                 return general;
             }

@@ -1,11 +1,22 @@
 $(document).ready(function () {
   CommonFunctions.GetAllActiveCourses("#GetActiveCourse");
   CommonFunctions.GetCurrentSemester();
+  userName = $("#GetUserName").html();
+  userRole = $("#GetUsersRole").html();
+  if (userRole != "Student") {
+    GetAllStudents();
+  }
+  else {
+    RegisteredCourses(userName)
+    DTO.Username = userName
+    $("#txtStudent").remove();
+    $("#admin_panel").remove();
+  }
   DTO.SemesterId = CommonFunctions.SemesterDTO.SemesterId
-  GetAllStudents();
   GetStudentInfo();
 });
-
+var userName;
+var userRole;
 function GetAllStudents() {
   var html = "<option value=0>Search Student</option>";
   $.ajax({
@@ -182,11 +193,18 @@ function RegisteredCourses(username) {
     },
   });
 }
+var model = {};
 
 $("#btnDrop").click(function (e) {
-  var model = {};
   model.ClassId = $("input[name=radio-button12]:checked").val();
-  model.Username = $("#txtStudent").val();
+  // debugger
+  if (userRole == "Student") {
+    model.Username = userName
+  }
+  else {
+    model.Username = $("#txtStudent").val();
+
+  }
   if (model.ClassId != undefined && model.Username != 0) {
     $.ajax({
       url: "/RegisterCourses/DropCourse",

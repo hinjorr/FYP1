@@ -83,7 +83,7 @@ function GetSessions(Cid) {
         var html = `<details style="margin-left:40px;font-size:15px"><summary>Files</summary>`
         if (resp[0] != null) {
           $(resp).each(function (index, item) {
-            html += `<img src="https://img.icons8.com/color/48/4a90e2/attach.png" style="height: 20px;"><a href="` + item.link + `" target="_blank">` + item.displayName + `</a><br>`
+            html += `<img src="https://img.icons8.com/color/48/4a90e2/attach.png" style="height: 20px;"><a href="` + item.link + `" target="_blank">` + item.displayName + `</a>`
             if (role == "Faculty") {
               html += `&nbsp&nbsp<button type="button" class="btn btn-sm btn-icon btn-hover-light-danger"><i class="fas fa-trash" title="Delete" onclick="DeleteDoc(` + item.docId + `,` + session_id + `)"></i></button><br>`
             }
