@@ -20,12 +20,36 @@ namespace FYP1.Controllers
             repo = _repo;
         }
         [AuthenticateFilter]
-        [HttpGet("ViewChats")]
-        public IActionResult ViewAllChats()
+        [HttpGet("NewChat")]
+        public IActionResult NewChat()
         {
             return View();
         }
 
+        [AuthenticateFilter]
+        [HttpGet("Inbox")]
+        public IActionResult Inbox()
+        {
+            return View();
+        }
+        
+        [AuthenticateFilter]
+        [HttpGet("MessageSent")]
+        public IActionResult Sent_Message()
+        {
+            return View();
+        }
+
+        public async Task<IActionResult> UnReadMessages()
+        {
+            var data = await repo.Inbox();
+            return Ok(data);
+        }
+        public async Task<IActionResult> Sent_Messages()
+        {
+            var data = await repo.Sent_Message();
+            return Ok(data);
+        }
         public async Task<IActionResult> GetAllUsers()
         {
             var data = await repo.GetAllUsers();

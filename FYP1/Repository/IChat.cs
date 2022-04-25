@@ -13,5 +13,7 @@ namespace FYP1.Repository
         Task<GeneralDTO> OpenChat(int userId);
         Task<List<MessageDTO>> GetMessages(int UserId);
         Task SendMessage(Message dto);
+        Task<List<GeneralDTO>> Inbox();
+        Task<List<GeneralDTO>> Sent_Message();
     }
 }
