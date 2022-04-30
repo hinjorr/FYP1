@@ -23,7 +23,6 @@ function GetAllUsers() {
                      </div>
                  </div>
                  <div class="d-flex flex-column align-items-end">
-                     <span class="text-muted font-weight-bold font-size-sm">35 mins</span>
                  </div> 
              </div>`
             });
@@ -114,6 +113,8 @@ function SendMessage() {
         url: "/Chat/SendMessage",
         data: Message,
         success: function (response) {
+            SentMessages()
+            UnReadMessages()
             $("#body_txt").val(" ");
         }
     });
@@ -139,9 +140,12 @@ function UnReadMessages() {
                      </div>
                  </div>
                  <div class="d-flex flex-column align-items-end">
-                     
-                     <span class="label label-sm label-success">`+ item._Message.totalUnread + `</span>
-                 </div>
+                 <span class="text-muted font-weight-bold font-size-sm">`+ item._Message.timespan + `</span>`
+                if (item._Message.totalUnread > 0) {
+                    html += ` <span class="label label-sm label-success">` + item._Message.totalUnread + `</span>`
+                }
+
+                html += `</div>
              </div>`
             });
             $("#unReadsers").html(html);
@@ -167,8 +171,7 @@ function SentMessages() {
                      </div>
                  </div>
                  <div class="d-flex flex-column align-items-end">
-                     
-                     <span class="label label-sm label-success">`+ item._Message.totalUnread + `</span>
+                 <span class="text-muted font-weight-bold font-size-sm">`+ item._Message.timespan + `</span>
                  </div>
              </div>`
             });

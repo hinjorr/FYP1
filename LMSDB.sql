@@ -1089,7 +1089,7 @@ CREATE TABLE `Tbl_RoleMenu` (
   KEY `Role_ID` (`Role_ID`),
   CONSTRAINT `Tbl_RoleMenu_ibfk_1` FOREIGN KEY (`Menu_ID`) REFERENCES `Tbl_Menu` (`Menu_ID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `Tbl_RoleMenu_ibfk_2` FOREIGN KEY (`Role_ID`) REFERENCES `Tbl_Roles` (`RoleID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=1200 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=1224 DEFAULT CHARSET=latin1;
 
 /*Data for the table `Tbl_RoleMenu` */
 
@@ -1166,30 +1166,6 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (1149,24,3,''),
 (1150,12,3,'\0'),
 (1151,1,3,'\0'),
-(1152,27,4,''),
-(1153,25,4,'\0'),
-(1154,2,4,'\0'),
-(1155,3,4,'\0'),
-(1156,4,4,'\0'),
-(1157,5,4,'\0'),
-(1158,6,4,'\0'),
-(1159,7,4,'\0'),
-(1160,8,4,''),
-(1161,9,4,'\0'),
-(1162,10,4,'\0'),
-(1163,26,4,''),
-(1164,11,4,''),
-(1165,13,4,'\0'),
-(1166,14,4,'\0'),
-(1167,15,4,'\0'),
-(1168,16,4,'\0'),
-(1169,17,4,'\0'),
-(1170,18,4,''),
-(1171,19,4,'\0'),
-(1172,20,4,'\0'),
-(1173,24,4,'\0'),
-(1174,12,4,''),
-(1175,1,4,'\0'),
 (1176,27,6,''),
 (1177,25,6,''),
 (1178,2,6,'\0'),
@@ -1213,7 +1189,31 @@ insert  into `Tbl_RoleMenu`(`Id`,`Menu_ID`,`Role_ID`,`Check`) values
 (1196,20,6,'\0'),
 (1197,24,6,'\0'),
 (1198,12,6,'\0'),
-(1199,1,6,'');
+(1199,1,6,''),
+(1200,27,4,''),
+(1201,25,4,''),
+(1202,2,4,'\0'),
+(1203,3,4,'\0'),
+(1204,4,4,'\0'),
+(1205,5,4,'\0'),
+(1206,6,4,'\0'),
+(1207,7,4,'\0'),
+(1208,8,4,''),
+(1209,9,4,'\0'),
+(1210,10,4,'\0'),
+(1211,26,4,''),
+(1212,11,4,''),
+(1213,13,4,'\0'),
+(1214,14,4,'\0'),
+(1215,15,4,'\0'),
+(1216,16,4,'\0'),
+(1217,17,4,'\0'),
+(1218,18,4,''),
+(1219,19,4,'\0'),
+(1220,20,4,'\0'),
+(1221,24,4,'\0'),
+(1222,12,4,''),
+(1223,1,4,'\0');
 
 /*Table structure for table `Tbl_Roles` */
 
@@ -1499,7 +1499,7 @@ CREATE TABLE `messages` (
   KEY `user_from` (`user_from`),
   CONSTRAINT `messages_ibfk_1` FOREIGN KEY (`user_to`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `messages_ibfk_2` FOREIGN KEY (`user_from`) REFERENCES `Tbl_User` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=107 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=124 DEFAULT CHARSET=latin1;
 
 /*Data for the table `messages` */
 
@@ -1592,7 +1592,24 @@ insert  into `messages`(`id`,`user_to`,`user_from`,`body`,`date`,`isSeen`) value
 (103,132,64,' free ?\n','2022-03-19 18:26:47',1),
 (104,132,139,'hy whstup?\n','2022-04-23 12:53:05',1),
 (105,132,139,'hy whstup?\n\n','2022-04-23 12:53:05',1),
-(106,64,132,'nope\n','2022-04-25 14:11:26',NULL);
+(106,64,132,'nope\n','2022-04-25 14:11:26',1),
+(107,132,132,'hy\n','2022-04-25 21:32:13',1),
+(108,69,132,'hy\n','2022-04-25 21:42:47',1),
+(109,69,132,'masood','2022-04-25 22:27:11',1),
+(110,145,132,' hy\n','2022-04-25 22:27:35',1),
+(111,147,132,'er','2022-04-25 22:30:41',1),
+(112,132,64,'free kub hoge?\n','2022-04-30 12:49:28',1),
+(113,132,64,'free kub hoge?\n','2022-04-30 12:49:28',1),
+(114,132,64,'?','2022-04-30 12:49:49',1),
+(115,132,139,'reply please','2022-04-30 13:06:50',1),
+(116,145,132,'hy','2022-04-30 13:15:09',0),
+(117,69,132,'heloo','2022-04-30 13:15:28',0),
+(118,119,132,'hello','2022-04-30 13:16:49',0),
+(119,145,132,'sa','2022-04-30 13:23:01',0),
+(120,150,132,'President is calling you','2022-04-30 13:26:00',0),
+(121,147,132,'reply on time','2022-04-30 13:26:49',0),
+(122,147,132,'hy','2022-04-30 13:35:05',0),
+(123,64,132,'hy','2022-04-30 13:35:27',0);
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
