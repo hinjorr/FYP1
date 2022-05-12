@@ -59,7 +59,7 @@ namespace FYP1.Models
                         if (dto.Profile.ProfileImage != null)
                         {
 
-                            string ImagePath = Misc.UploadFile(dto.Profile.ProfileImage, Env, dto.Profile.Nic);
+                            string ImagePath = Misc.UploadasBase64(dto.Profile.ProfileImage);
                             if (ImagePath != null)
                             {
                                 dto.Profile.Picture = ImagePath;
@@ -84,7 +84,7 @@ namespace FYP1.Models
                 catch (System.Exception ex)
                 {
                     Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
-                thr.Start();
+                    thr.Start();
                     general.Text = "Server Error";
                     general.Icon = "error";
                     return general;

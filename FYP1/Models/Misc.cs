@@ -130,6 +130,26 @@ namespace FYP1.Models
         //         filepath.Delete();
         //     }
         // }
+
+        public static string UploadasBase64(IFormFile file)
+        {
+            try
+            {
+                string converted = "";
+                using (var ms = new MemoryStream())
+                {
+                    file.CopyTo(ms);
+                    var fileBytes = ms.ToArray();
+                    converted = Convert.ToBase64String(fileBytes);
+                }
+                return converted;
+            }
+            catch (System.Exception ex)
+            {
+                // TODO
+                return null;
+            }
+        }
         public static string UploadFile(IFormFile File, IWebHostEnvironment Env, string Filename = "")
         {
             try

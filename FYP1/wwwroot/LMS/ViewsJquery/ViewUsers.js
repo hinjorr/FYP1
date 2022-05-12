@@ -16,7 +16,7 @@ function GetUsers() {
         render: function (picture) {
           return (
             '<div class="symbol symbol-50 flex-shrink-0">' +
-            '<img src="' +
+            '<img src="data:image/png;base64,' +
             picture +
             '">' +
             "</div>"

@@ -167,7 +167,7 @@ $("#txtNic").change(function (e) {
         $("#txtAddress").val(resp.profile.address).prop("disabled", true);
         $("#txtCity").val(resp.profile.city).prop("disabled", true);
         $("#txtCountry").val(resp.profile.country).prop("disabled", true);
-        $(".GetImage").css("background-image", "url(" + resp.profile.picture + ")");
+        $(".GetImage").css("background-image", "url(data:image/png;base64," + resp.profile.picture + ")");
         ProgramHide(resp.role.roleId);
       }
     },

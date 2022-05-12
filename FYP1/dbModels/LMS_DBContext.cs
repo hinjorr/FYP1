@@ -54,7 +54,7 @@ namespace FYP1.dbModels
             if (!optionsBuilder.IsConfigured)
             {
 #warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
-                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.28-mysql"));
+                optionsBuilder.UseMySql("server=localhost;port=3306;user=root;password=masood1050;database=LMS", Microsoft.EntityFrameworkCore.ServerVersion.Parse("8.0.29-mysql"));
             }
         }
 
@@ -684,7 +684,7 @@ namespace FYP1.dbModels
 
                 entity.Property(e => e.PhoneNumber).HasMaxLength(50);
 
-                entity.Property(e => e.Picture).HasMaxLength(1000);
+                entity.Property(e => e.Picture).HasColumnType("text");
 
                 entity.Property(e => e.ProfileDate)
                     .HasMaxLength(50)

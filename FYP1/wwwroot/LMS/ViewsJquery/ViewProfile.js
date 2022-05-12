@@ -12,7 +12,7 @@ function GetProfile(username) {
     success: function (resp) {
       $(".GetImage").css(
         "background-image",
-        "url(" + resp.profile.picture + ")"
+        "url(data:image/jpeg;base64," + resp.profile.picture + ")"
       );
       $("#txtName").val(resp.profile.name);
       $("#txtFatherName").val(resp.profile.fatherName);
