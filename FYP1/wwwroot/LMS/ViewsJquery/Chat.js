@@ -14,7 +14,7 @@ function GetAllUsers() {
                 html += `<div class="d-flex align-items-center justify-content-between mb-5">
                  <div class="d-flex align-items-center">
                      <div class="symbol symbol-circle symbol-50 mr-3">
-                         <img alt="Pic" src="`+ item.profile.picture + `" />
+                         <img alt="Pic" src="data:image/jpeg;base64,`+ item.profile.picture + `" />
                      </div>
                      <div class="d-flex flex-column">
                          <a onClick="oPenChat(`+ item.user.userId + `)" style=" cursor: pointer;"
@@ -52,7 +52,7 @@ function GetChat(userId) {
         url: "/Chat/OpenChat?UserId=" + userId,
         success: function (resp) {
             UnReadMessages()
-            $("#chat_pic").html(`<img alt="Pic" src="` + resp.profile.picture + `">`);
+            $("#chat_pic").html(`<img alt="Pic" src="data:image/jpeg;base64,` + resp.profile.picture + `">`);
             $("#chat_name").html(resp.profile.name);
             $.ajax({
                 url: "/Chat/GetMessages?UserId=" + userId,
@@ -131,7 +131,7 @@ function UnReadMessages() {
                 html += `<div class="d-flex align-items-center justify-content-between mb-5">
                  <div class="d-flex align-items-center">
                      <div class="symbol symbol-circle symbol-50 mr-3">
-                         <img alt="Pic" src="`+ item.profile.picture + `" />
+                         <img alt="Pic" src="data:image/jpeg;base64,`+ item.profile.picture + `" />
                      </div>
                      <div class="d-flex flex-column">
                          <a onClick="oPenChat(`+ item.user.userId + `)" style=" cursor: pointer;"
@@ -162,7 +162,7 @@ function SentMessages() {
                 html += `<div class="d-flex align-items-center justify-content-between mb-5">
                  <div class="d-flex align-items-center">
                      <div class="symbol symbol-circle symbol-50 mr-3">
-                         <img alt="Pic" src="`+ item.profile.picture + `" />
+                         <img alt="Pic" src="data:image/jpeg;base64,`+ item.profile.picture + `" />
                      </div>
                      <div class="d-flex flex-column">
                          <a onClick="oPenChat(`+ item.user.userId + `)" style=" cursor: pointer;"
