@@ -144,7 +144,7 @@ namespace FYP1.Models
                 }
                 return converted;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 // TODO
                 return null;

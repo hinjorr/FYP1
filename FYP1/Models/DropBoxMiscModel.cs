@@ -55,7 +55,7 @@ namespace FYP1.Models
                 // }
                 return link;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 // Thread thr = new Thread(() => Misc.SendExceptionEmail(ex, config));
                 // thr.Start();

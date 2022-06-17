@@ -144,39 +144,41 @@ namespace FYP1.dbModels
             {
                 entity.ToTable("messages");
 
-                entity.HasIndex(e => e.UserFrom, "user_from");
-
-                entity.HasIndex(e => e.UserTo, "user_to");
-
                 entity.Property(e => e.Id)
                     .HasColumnType("int(11)")
                     .HasColumnName("id");
 
                 entity.Property(e => e.Body)
+                    .IsRequired()
                     .HasColumnType("text")
                     .HasColumnName("body");
 
                 entity.Property(e => e.Date).HasColumnName("date");
 
-                entity.Property(e => e.IsSeen).HasColumnName("isSeen");
+                entity.Property(e => e.Deleted)
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasColumnName("deleted");
+
+                entity.Property(e => e.Opened)
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasColumnName("opened");
 
                 entity.Property(e => e.UserFrom)
-                    .HasColumnType("int(11)")
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .HasColumnName("user_from");
 
                 entity.Property(e => e.UserTo)
-                    .HasColumnType("int(11)")
+                    .IsRequired()
+                    .HasMaxLength(50)
                     .HasColumnName("user_to");
 
-                entity.HasOne(d => d.UserFromNavigation)
-                    .WithMany(p => p.MessageUserFromNavigations)
-                    .HasForeignKey(d => d.UserFrom)
-                    .HasConstraintName("messages_ibfk_2");
-
-                entity.HasOne(d => d.UserToNavigation)
-                    .WithMany(p => p.MessageUserToNavigations)
-                    .HasForeignKey(d => d.UserTo)
-                    .HasConstraintName("messages_ibfk_1");
+                entity.Property(e => e.Viewed)
+                    .IsRequired()
+                    .HasMaxLength(3)
+                    .HasColumnName("viewed");
             });
 
             modelBuilder.Entity<Notification>(entity =>

@@ -95,7 +95,7 @@ namespace FYP1.Models
                     foreach (var classes in class_user)
                     {
                         var faculty = await db.TblFacultyCourseRegistrations.Where(x => x.ClassId == classes.ClassId).Include(x => x.User.Role).Include(x => x.User).Include(x => x.User.Profile).FirstOrDefaultAsync();
-                        var chk_msg = await db.Messages.Where(x => x.UserTo == userId && x.UserFrom == faculty.UserId).FirstOrDefaultAsync();
+                        var chk_msg = await db.Messages.Where(x => x.UserTo == session_data.User.UserName && x.UserFrom == faculty.User.UserName).FirstOrDefaultAsync();
                         GeneralDTO dto = new GeneralDTO();
                         mapper.Map(chk_msg, dto._Message = new MessageDTO());
                         mapper.Map(faculty.User, dto.User = new UserDTO());
@@ -109,7 +109,7 @@ namespace FYP1.Models
                     {
                         GeneralDTO dto = new GeneralDTO();
                         var _student = await db.TblUsers.Where(x => x.UserId == student.UserId).Include(x => x.Profile).Include(x => x.Role).FirstOrDefaultAsync();
-                        var chk_msg = await db.Messages.Where(x => x.UserTo == userId && x.UserFrom == _student.UserId).FirstOrDefaultAsync();
+                        var chk_msg = await db.Messages.Where(x => x.UserTo == session_data.User.UserName && x.UserFrom == _student.UserName).FirstOrDefaultAsync();
                         mapper.Map(chk_msg, dto._Message = new MessageDTO());
                         mapper.Map(_student, dto.User = new UserDTO());
                         mapper.Map(_student.Profile, dto.Profile = new ProfileDTO());
@@ -166,7 +166,7 @@ namespace FYP1.Models
 
                 return general;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 // TODO
                 return null;
@@ -174,20 +174,21 @@ namespace FYP1.Models
         }
 
 
-        public async Task<List<MessageDTO>> GetMessages(int UserId)
+        public async Task<List<MessageDTO>> GetMessages(int _UserId)
         {
             try
             {
                 // it will show which msg is mine and which msg is other's
+                var User = await db.TblUsers.Where(x => x.UserId == _UserId).FirstOrDefaultAsync();
                 List<MessageDTO> _list = new List<MessageDTO>();
-                var _messages = await db.Messages.Where(x => (x.UserFrom == session_data.User.UserId && x.UserTo == UserId) || x.UserFrom == UserId && x.UserTo == session_data.User.UserId).ToListAsync();
-                var unRead = await db.Messages.Where(x => x.UserTo == session_data.User.UserId && x.UserFrom == UserId && x.IsSeen == false).ToListAsync();
-                unRead.ForEach(x => x.IsSeen = true);
+                var _messages = await db.Messages.Where(x => (x.UserFrom == session_data.User.UserName && x.UserTo == User.UserName) || x.UserFrom == User.UserName && x.UserTo == session_data.User.UserName).ToListAsync();
+                var unRead = await db.Messages.Where(x => x.UserTo == session_data.User.UserName && x.UserFrom == User.UserName && x.Opened == "no").ToListAsync();
+                unRead.ForEach(x => x.Opened = "yes");
                 await db.SaveChangesAsync();
 
                 foreach (var item in _messages)
                 {
-                    if (item.UserFrom == session_data.User.UserId)
+                    if (item.UserFrom == session_data.User.UserName)
                     {
                         MessageDTO dto = new MessageDTO();
                         mapper.Map(item, dto);
@@ -209,7 +210,7 @@ namespace FYP1.Models
                 var order_list = _list.OrderBy(x => x.Date).ToList();
                 return order_list;
             }
-            catch (System.Exception)
+            catch (System.Exception ex)
             {
                 // TODO
                 return null;
@@ -221,23 +222,30 @@ namespace FYP1.Models
             try
             {
                 List<GeneralDTO> _unreadUsers = new List<GeneralDTO>();
-                var _messages = await db.Messages.Where(x => x.UserTo == session_data.User.UserId).OrderByDescending(x => x.Date).Include(x => x.UserFromNavigation.Profile).Include(x => x.UserFromNavigation.Role).ToListAsync();
-                var distinct_list = _messages.DistinctBy(x => x.UserFrom).ToList();
+                var _messages = await db.Messages.Where(x => x.UserTo == session_data.User.UserName).OrderByDescending(x => x.Date).ToListAsync();
+                var userFromList = new List<TblUser>();
+                foreach (var item in _messages)
+                {
+                    var userFrom = await db.TblUsers.Where(x => x.UserName == item.UserFrom).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
+                    userFromList.Add(userFrom);
+                }
+
+                var distinct_list = userFromList.DistinctBy(x => x.UserId).ToList();
                 foreach (var item in distinct_list)
                 {
                     GeneralDTO dto = new GeneralDTO();
-                    var all_msg = await db.Messages.Where(x => x.UserTo == session_data.User.UserId && x.UserFrom == item.UserFrom).ToListAsync();
+                    var all_msg = await db.Messages.Where(x => x.UserTo == session_data.User.UserName && x.UserFrom == item.UserName).ToListAsync();
                     var last_msg = all_msg.LastOrDefault();
-                    var total_count = await db.Messages.Where(x => x.UserTo == session_data.User.UserId && x.UserFrom == item.UserFrom && x.IsSeen == false).CountAsync();
+                    var total_count = await db.Messages.Where(x => x.UserTo == session_data.User.UserName && x.UserFrom == item.UserName && x.Opened == "no").CountAsync();
 
                     dto._Message = new MessageDTO()
                     {
                         Timespan = Misc.TimeAgo(last_msg.Date),
                         TotalUnread = total_count
                     };
-                    mapper.Map(item.UserFromNavigation.Profile, dto.Profile = new ProfileDTO());
-                    mapper.Map(item.UserFromNavigation.Role, dto.Role = new RoleDTO());
-                    mapper.Map(item.UserFromNavigation, dto.User = new UserDTO());
+                    mapper.Map(item.Profile, dto.Profile = new ProfileDTO());
+                    mapper.Map(item.Role, dto.Role = new RoleDTO());
+                    mapper.Map(item, dto.User = new UserDTO());
                     _unreadUsers.Add(dto);
                 }
 
@@ -255,20 +263,27 @@ namespace FYP1.Models
             try
             {
                 List<GeneralDTO> _receivers = new List<GeneralDTO>();
-                var _messages = await db.Messages.Where(x => x.UserFrom == session_data.User.UserId).OrderByDescending(x => x.Date).Include(x => x.UserToNavigation.Profile).Include(x => x.UserToNavigation.Role).ToListAsync();
-                var distinct_list = _messages.DistinctBy(x => x.UserTo).ToList();
+                var all_messages = await db.Messages.Where(x => x.UserFrom == session_data.User.UserName).OrderByDescending(x => x.Date).ToListAsync();
+                var UserToList = new List<TblUser>();
+                foreach (var item in all_messages)
+                {
+                    var userTo = await db.TblUsers.Where(x => x.UserName == item.UserFrom).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
+                    UserToList.Add(userTo);
+                }
+
+                var distinct_list = UserToList.DistinctBy(x => x.UserId).ToList();
                 foreach (var item in distinct_list)
                 {
                     GeneralDTO dto = new GeneralDTO();
-                    var all_msg = await db.Messages.Where(x => x.UserTo == item.UserTo && x.UserFrom == session_data.User.UserId).ToListAsync();
+                    var all_msg = await db.Messages.Where(x => x.UserTo == item.UserName && x.UserFrom == session_data.User.UserName).ToListAsync();
                     var last_msg = all_msg.LastOrDefault();
                     dto._Message = new MessageDTO()
                     {
                         Timespan = Misc.TimeAgo(last_msg.Date)
                     };
-                    mapper.Map(item.UserToNavigation.Profile, dto.Profile = new ProfileDTO());
-                    mapper.Map(item.UserToNavigation.Role, dto.Role = new RoleDTO());
-                    mapper.Map(item.UserToNavigation, dto.User = new UserDTO());
+                    mapper.Map(item.Profile, dto.Profile = new ProfileDTO());
+                    mapper.Map(item.Role, dto.Role = new RoleDTO());
+                    mapper.Map(item, dto.User = new UserDTO());
                     _receivers.Add(dto);
                 }
                 return _receivers;
@@ -283,13 +298,16 @@ namespace FYP1.Models
         {
             try
             {
+                var userTo = await db.TblUsers.Where(x => x.UserId == Convert.ToInt32(dto.UserTo)).FirstOrDefaultAsync();
                 Message tbl = new Message()
                 {
                     Body = dto.Body,
                     Date = DateTime.Now,
-                    UserTo = dto.UserTo,
-                    UserFrom = session_data.User.UserId,
-                    IsSeen = false
+                    UserTo = userTo.UserName,
+                    UserFrom = session_data.User.UserName,
+                    Opened = "no",
+                    Deleted = "no",
+                    Viewed = "no"
                 };
                 await db.Messages.AddAsync(tbl);
                 await db.SaveChangesAsync();

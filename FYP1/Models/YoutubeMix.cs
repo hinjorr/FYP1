@@ -43,7 +43,7 @@ namespace FYP1.Models
                 TokenConfig.access_token = access_token;
                 TokenConfig.expiry_date = DateTime.Now.AddMinutes(59);
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 // TODO
             }
@@ -86,7 +86,7 @@ namespace FYP1.Models
                 }
                 return _videoId;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 return null;
             }
@@ -111,7 +111,7 @@ namespace FYP1.Models
                 var video_id = json_converted["id"].ToString();
                 return video_id;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 return null;
                 // TODO
@@ -141,7 +141,7 @@ namespace FYP1.Models
                 var playlist_id = json_converted["id"].ToString();
                 return playlist_id;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 return null;
             }

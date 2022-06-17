@@ -51,7 +51,7 @@ namespace FYP1.Models
                 .ToListAsync();
                 return data;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 // TODO
                 return null;
@@ -85,7 +85,7 @@ namespace FYP1.Models
                 .ToListAsync();
                 return data;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 // TODO
                 return null;
@@ -119,7 +119,7 @@ namespace FYP1.Models
                 return classes;
 
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 // TODO
                 return null;
@@ -147,7 +147,7 @@ namespace FYP1.Models
                 }
                 return _list;
             }
-            catch (System.Exception ex)
+            catch (System.Exception)
             {
                 // TODO
                 return null;
