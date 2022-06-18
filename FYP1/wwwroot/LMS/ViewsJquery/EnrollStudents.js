@@ -51,7 +51,7 @@ function ShowStudent(id, name, img) {
     `</span>
   </div>
   <span class="symbol symbol-40">
-      <img alt="Pic" src="` +
+      <img src="data:image/png;base64,` +
     img +
     `" />
   </span>

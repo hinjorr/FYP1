@@ -267,7 +267,7 @@ namespace FYP1.Models
                 var UserToList = new List<TblUser>();
                 foreach (var item in all_messages)
                 {
-                    var userTo = await db.TblUsers.Where(x => x.UserName == item.UserFrom).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
+                    var userTo = await db.TblUsers.Where(x => x.UserName == item.UserTo).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
                     UserToList.Add(userTo);
                 }
 

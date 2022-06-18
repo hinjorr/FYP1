@@ -1,5 +1,5 @@
 //kill port
-sudo kill -9 $(sudo lsof -t -i:8080)
+sudo kill -9 $(sudo lsof -t -i:5008)
 
 //chekck pot running
 sudo netstat -tulpn  | grep LISTEN 
@@ -9,7 +9,7 @@ ef core tools
 pomelo mysql
 dotnet-ef
 
-dotnet ef dbcontext scaffold "server=sql6.freemysqlhosting.net;port=3306;user=sql6500250;password=7tb3Qkq1Uh;database=sql6500250" Pomelo.EntityFrameworkCore.MySql -c LMS_DBContext -o dbModels -f 
+dotnet ef dbcontext scaffold "server=localhost;port=3306;user=root;password=masood1050;database=sql6500250" Pomelo.EntityFrameworkCore.MySql -c LMS_DBContext -o dbModels -f 
 
 dpkg --list
 sudo apt-get remove

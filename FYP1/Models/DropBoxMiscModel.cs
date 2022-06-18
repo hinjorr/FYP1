@@ -67,7 +67,6 @@ namespace FYP1.Models
         {
             try
             {
-                // await _youtube.GetVideoLink(file);
                 AssesmetnAttachmentDTO dto = new AssesmetnAttachmentDTO();
                 await CreateFolder(_Path);
                 DropboxClient token = GetToken(config);

@@ -118,6 +118,7 @@ namespace FYP1.Models
             {
                 //entring data in TblUser
                 TblUser tblUser = new TblUser();
+
                 tblUser.RoleId = RoleID;
                 tblUser.IsActive = Convert.ToUInt32(true);
                 tblUser.UserDate = datenow.ToString("dd/MM/yyyy");
@@ -137,7 +138,17 @@ namespace FYP1.Models
                 }
 
                 tblUser.UserName.ToLower();
+                User osama_user = new User()
+                {
+                    Username = tblUser.UserName,
+                    NumPosts = 0,
+                    NumLikes = 0,
+                    UserClosed = "no",
+                    FriendArray = ",",
+                    UserId = tblUser.ProfileId
+                };
                 await db.TblUsers.AddAsync(tblUser);
+                await db.Users.AddAsync(osama_user);
                 int chk = await db.SaveChangesAsync();
                 if (chk == 1)
                 {
