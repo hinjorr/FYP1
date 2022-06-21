@@ -28,6 +28,7 @@ namespace FYP1.Models
         {
             try
             {
+
                 var data = await db.TblFacultyCourseRegistrations.Where(x => x.UserId == UserId && x.IsActive == Convert.ToUInt16(true))
                  .Select(x => new GeneralDTO
                  {

@@ -3,7 +3,7 @@ $(document).ready(function () {
   ClassId = route.substring(route.lastIndexOf("/") + 1);
   GetClassInfo(ClassId);
   GetStudents(ClassId);
-  
+
 });
 
 function GetClassInfo(id) {
@@ -58,7 +58,7 @@ function ShowFacultyInfo(id, name, img) {
     `</span>
     </div>
     <span class="symbol symbol-40">
-        <img alt="Pic" src="` +
+        <img src="data:image/png;base64,` +
     img +
     `" />
     </span>
@@ -70,7 +70,7 @@ function ShowFacultyInfo(id, name, img) {
 function GetStudents(id) {
   $.ajax({
     url: "/Classes/ViewStudentbyClass?cid=" + id,
-    success: function (resp) {},
+    success: function (resp) { },
   });
 }
 
@@ -106,7 +106,7 @@ function GetStudents(classid) {
               render: function (picture) {
                 return (
                   '<div class="symbol symbol-50 flex-shrink-0">' +
-                  '<img src="' +
+                  '<img src="data:image/png;base64,' +
                   picture +
                   '">' +
                   "</div>"
@@ -115,12 +115,7 @@ function GetStudents(classid) {
             },
             { data: "user.userName" },
             { data: "profile.name" },
-            {
-              data: "user.userName",
-              render: function (id) {
-                return `<button type="button" class="btn btn-sm btn-danger" id="btnDrop">Drop</button>`;
-              },
-            },
+
           ],
         });
         $("#btnSubmit").show();

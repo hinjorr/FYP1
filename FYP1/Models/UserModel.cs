@@ -150,12 +150,10 @@ namespace FYP1.Models
                 await db.TblUsers.AddAsync(tblUser);
                 await db.Users.AddAsync(osama_user);
                 int chk = await db.SaveChangesAsync();
-                if (chk == 1)
-                {
-                    Thread thread = new Thread(() => Misc.NewUserEmail(profile_name, tblUser.UserName, tblUser.Password, Email, Env, config));
-                    thread.Start();
 
-                }
+                Thread thread = new Thread(() => Misc.NewUserEmail(profile_name, tblUser.UserName, tblUser.Password, Email, Env, config));
+                thread.Start();
+
                 return tblUser.UserId;
             }
             catch (System.Exception ex)

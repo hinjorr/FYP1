@@ -144,7 +144,7 @@ namespace FYP1.Models
                     Thread thread = new Thread(() => Misc.ForgetPasswordEmail(_username, verification_code, _email, Env, config));
                     thread.Start();
                     general.Icon = "success";
-                    general.Text = "A verification code has been sent to your registered Email Address";
+                    general.Text = "A verification Link has been sent to your registered Email Address";
                 }
                 else
                 {
