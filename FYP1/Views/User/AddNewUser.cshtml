@@ -27,11 +27,11 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                         Name
                         <span class="error">*</span>
                     </label>
-                    <input type="text" class="form-control" placeholder="" id="txtName" name="name">
+                    <input type="text" class="form-control" placeholder="" id="txtName" pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$" name="name">
                 </div>
                 <div class="col-sm-3">
                     <label>Father's Name</label>
-                    <input type="text" class="form-control" placeholder="" id="txtFatherName">
+                    <input type="text" class="form-control" placeholder="" id="txtFatherName" pattern="^([A-Za-z]+[,.]?[ ]?|[A-Za-z]+['-]?)+$">
                 </div>
 
 
@@ -45,14 +45,14 @@ Layout = "~/Views/Shared/_Layout.cshtml";
                                 Email
                                 <span class="error">*</span>
                             </label>
-                            <input type="text" class="form-control" placeholder="" id="txtEmail" name="email">
+                            <input type="email" class="form-control" placeholder="" id="txtEmail" name="email">
                         </div>
                         <div class="col-sm-4">
                             <label>
                                 Phone Number
                                 <span class="error">*</span>
                             </label>
-                            <input type="text" class="form-control" placeholder="" id="txtNumber" name="number">
+                            <input type="tel" pattern="[0-9]{4}-[0-9]{7}" class="form-control" placeholder="" id="txtNumber" name="number" >
                         </div>
                         <div class="col-sm-4">
                             <label>Date of birth</label>
