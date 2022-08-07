@@ -22,5 +22,8 @@ namespace FYP1
                 {
                     webBuilder.UseStartup<Startup>();
                 });
+        // 64-31-43-194.cprapid.com
+        // tgksscom_masood
+        // F_pbkqiDLGuC
     }
 }

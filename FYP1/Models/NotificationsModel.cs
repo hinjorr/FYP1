@@ -60,6 +60,7 @@ namespace FYP1.Models
                 }
                 await db.TblNotificaionTos.AddRangeAsync(tos_list);
                 await db.SaveChangesAsync();
+                await db.DisposeAsync();
             }
             catch (System.Exception ex)
             {
@@ -89,6 +90,7 @@ namespace FYP1.Models
                 };
                 await db.TblNotificaionTos.AddAsync(tbl_to);
                 await db.SaveChangesAsync();
+                await db.DisposeAsync();
             }
             catch (System.Exception ex)
             {
@@ -113,6 +115,7 @@ namespace FYP1.Models
                     _list.Add(dto);
                 }
                 var new_list = _list.OrderByDescending(x => x.Notification.NotificationId).ToList();
+                await db.DisposeAsync();
                 return new_list;
             }
             catch (System.Exception)
@@ -127,6 +130,7 @@ namespace FYP1.Models
                 var read = await db.TblNotificaionTos.Where(x => x.To == session_data.User.UserId).ToListAsync();
                 read.ForEach(x => x.IsSeen = true);
                 await db.SaveChangesAsync();
+                await db.DisposeAsync();
             }
             catch (System.Exception ex)
             {

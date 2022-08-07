@@ -42,6 +42,7 @@ namespace FYP1.Models
                 dto.UserName.ToLower();
                 GeneralDTO general = new GeneralDTO();
                 var data = await db.TblUsers.Where(x => x.UserName == dto.UserName && x.Password == dto.Password).Include(x => x.Role).Include(x => x.Profile).FirstOrDefaultAsync();
+
                 if (data != null)
                 {
                     if (data.IsActive == Convert.ToUInt16(false))
@@ -52,12 +53,13 @@ namespace FYP1.Models
                     }
                     else
                     {
+                        await GetPermissions(data.Role.RoleId);
                         general.ReturnUrl = _httpContext.HttpContext.Session.GetString("ReturnUrl");
                         mapper.Map(data, general.User = new UserDTO());
                         mapper.Map(data.Role, general.Role = new RoleDTO());
                         mapper.Map(data.Profile, general.Profile = new ProfileDTO());
                         _httpContext.HttpContext.Session.SetObjectAsJson("UserDetails", general);
-                        await GetPermissions(general.Role.RoleId);
+
                         general.Icon = "success";
                         general.Text = "Login Succesfull!";
 

@@ -208,6 +208,7 @@ namespace FYP1.Models
                 }
 
                 var order_list = _list.OrderBy(x => x.Date).ToList();
+                await db.DisposeAsync();
                 return order_list;
             }
             catch (System.Exception ex)
@@ -249,7 +250,7 @@ namespace FYP1.Models
                     _unreadUsers.Add(dto);
                 }
 
-
+                await db.DisposeAsync();
                 return _unreadUsers;
             }
             catch (System.Exception ex)
@@ -286,6 +287,7 @@ namespace FYP1.Models
                     mapper.Map(item, dto.User = new UserDTO());
                     _receivers.Add(dto);
                 }
+                await db.DisposeAsync();
                 return _receivers;
             }
             catch (System.Exception ex)
@@ -311,6 +313,7 @@ namespace FYP1.Models
                 };
                 await db.Messages.AddAsync(tbl);
                 await db.SaveChangesAsync();
+                await db.DisposeAsync();
             }
             catch (System.Exception ex)
             {

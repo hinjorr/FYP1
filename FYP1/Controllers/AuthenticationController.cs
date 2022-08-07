@@ -1,6 +1,7 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using FYP1.dbModels;
 using FYP1.DTOs;
 using FYP1.Helpers__Filters;
 using FYP1.Repository;
@@ -14,11 +15,13 @@ namespace FYP1.Controllers
     {
         private readonly IAuthentication repo;
         private readonly IHttpContextAccessor _httpContext;
+        private readonly LMS_DBContext db;
 
-        public AuthenticationController(IAuthentication repo, IHttpContextAccessor httpContext)
+        public AuthenticationController(IAuthentication repo, IHttpContextAccessor httpContext, LMS_DBContext db)
         {
             this.repo = repo;
             _httpContext = httpContext;
+            this.db = db;
         }
         public IActionResult Login()
         {
@@ -47,7 +50,7 @@ namespace FYP1.Controllers
         {
 
             _httpContext.HttpContext.Session.Remove("UserDetails");
-
+            db.DisposeAsync();
             return View("Login");
         }
 
