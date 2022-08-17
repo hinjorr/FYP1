@@ -1358,7 +1358,7 @@ CREATE TABLE `Tbl_User` (
 
 insert  into `Tbl_User`(`UserID`,`UserName`,`Password`,`RoleID`,`ProfileID`,`IsActive`,`User_Date`) values 
 (64,'Subhana','1050',3,55,'','10/11/2021'),
-(69,'Admin','1050',2,56,'','12/11/2021'),
+(69,'Admin','1050',2,56,'\0','12/11/2021'),
 (72,'Osama','1050',2,59,'\0','12/11/2021'),
 (75,'Altaf','1050',3,60,'\0','12/11/2021'),
 (76,'Faisal','1050',1,61,'','12/11/2021'),
@@ -1496,7 +1496,7 @@ CREATE TABLE `messages` (
   `viewed` varchar(3) NOT NULL,
   `deleted` varchar(3) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=168 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=171 DEFAULT CHARSET=latin1;
 
 /*Data for the table `messages` */
 
@@ -1667,7 +1667,10 @@ insert  into `messages`(`id`,`user_to`,`user_from`,`body`,`date`,`opened`,`viewe
 (164,'Faisal','Disha','DB integrated?','2022-06-22 00:06:17','yes','yes','no'),
 (165,'Faisal','Disha',' ??','2022-06-22 00:08:13','yes','yes','no'),
 (166,'Faisal','Disha',' ??','2022-06-22 00:12:59','yes','yes','no'),
-(167,'Admin','Admin1655','hy ','2022-08-07 15:14:35','no','no','no');
+(167,'Admin','Admin1655','hy ','2022-08-07 15:14:35','no','no','no'),
+(168,'Masood','Admin1655','hy\n','2022-08-12 22:26:51','yes','yes','no'),
+(169,'Admin1655','Masood','How are you','2022-08-12 10:28:04','yes','no','no'),
+(170,'Admin1655','Masood','Hi','2022-08-12 22:51:27','no','no','no');
 
 /*Table structure for table `notifications` */
 
@@ -1742,7 +1745,7 @@ CREATE TABLE `posts` (
   `likes` int(11) NOT NULL,
   `image` varchar(500) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=96 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=103 DEFAULT CHARSET=latin1;
 
 /*Data for the table `posts` */
 
@@ -1776,7 +1779,14 @@ insert  into `posts`(`id`,`body`,`added_by`,`user_to`,`date_added`,`user_closed`
 (92,'asdsadadsa','Subhana','none','2022-04-21 20:01:13','no','no',0,'assets/images/posts/6261a9f9008a7h-2.jpg'),
 (93,'asdsadadsa','Subhana','none','2022-04-21 20:05:02','no','no',0,'assets/images/posts/6261aade8968bh-2.jpg'),
 (94,'my car','Muzammil','none','2022-06-18 23:16:53','no','no',0,'assets/images/posts/62ae4ed502b45bb-9.jpg'),
-(95,'my car','Muzammil','none','2022-06-18 23:16:55','no','no',0,'assets/images/posts/62ae4ed748ac5bb-9.jpg');
+(95,'my car','Muzammil','none','2022-06-18 23:16:55','no','no',0,'assets/images/posts/62ae4ed748ac5bb-9.jpg'),
+(96,'Hello osama','Masood','none','2022-08-11 23:34:51','no','no',0,''),
+(97,'Hello osama','Masood','none','2022-08-11 23:43:19','no','no',0,''),
+(98,'Hello osama','Masood','none','2022-08-11 23:47:58','no','no',0,''),
+(99,'Hello osama','Masood','none','2022-08-11 23:56:09','no','no',0,''),
+(100,'Hello osama','Masood','none','2022-08-11 23:56:54','no','no',0,''),
+(101,'Hello osama','Masood','none','2022-08-12 00:25:41','no','no',0,''),
+(102,'Hello osama','Masood','none','2022-08-12 00:30:32','no','no',0,'');
 
 /*Table structure for table `users` */
 
@@ -1803,7 +1813,7 @@ insert  into `users`(`id`,`username`,`num_posts`,`num_likes`,`user_closed`,`frie
 (66,'Faisal',0,0,'no',',',76),
 (67,'Ayesha',0,0,'no',',',101),
 (68,'Disha',0,0,'no',',',119),
-(69,'Masood',0,0,'no',',',120),
+(69,'Masood',7,0,'no',',',120),
 (70,'Muzammil',0,0,'no',',',121),
 (71,'Osama',0,0,'no',',',72),
 (72,'Admin1655',0,0,'no',',',156),
